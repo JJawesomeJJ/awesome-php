@@ -1,0 +1,9 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Administrator
+ * Date: 2019/3/30 0030
+ * Time: 下午 10:32
+ */
+require_once __DIR__."/load/auto_load.php";
+new \system\awesome();
