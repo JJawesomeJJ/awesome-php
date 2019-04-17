@@ -10,6 +10,7 @@ use request\request;
 use controller\controller;
 use db\db;
 use system\file;
+use system\queue;
 use system\template;
 use system\token;
 use system\Exception;
@@ -20,16 +21,12 @@ use task\task;
 
 class auth_controller extends controller
 {
-    function __construct()
-    {
-
-    }
     public function user_login()
     {
         session_start();
         $rules=[
             "name"=>"required:post",
-            "password"=>"required:post|min:1|max:12",
+            "password"=>"required:post|min:1|max:100",
             "code"=>"required:post"
         ];
         $request=new request($rules);
@@ -101,6 +98,9 @@ class auth_controller extends controller
             $token->set_token("user",$request->get("email"));
             return ["code" => "200", "msg" => "suceess", "head_img" => $url,"email"=>$request->get("email")];
         }
+        else{
+            return ["code"=>"403","msg"=>"fail","data"=>"code_error"];
+        }
     }
     public function auth_login(){
         $rules=[
@@ -119,7 +119,10 @@ class auth_controller extends controller
         return $result;
     }
     public function auth($name,$store_name=false,$parms_list=false){
-        session_start();
+        if(!isset($_SESSION))
+        {
+            session_start();
+        }
         if(isset($_SESSION[$name]))
         {
             return $_SESSION[$name];
@@ -178,5 +181,26 @@ class auth_controller extends controller
         else{
             return ["code"=>"405","message"=>"password_error"];
         }
+    }
+    public function request_connect_websocket(){
+        $queue=new queue();
+        $redis=$queue->redis;
+        if($this->auth("user")!=null)//授权用户是否可以登录websocket服务器
+        {
+            $server_token=md5(time().$this->auth('user'));
+            $token=["token_value"=>$server_token,"expire"=>"604800"];
+            $redis->hSet("users",$this->auth("user"),json_encode($token));
+            return ["code"=>"200","server_token"=>$server_token];
+        }
+    }
+    public function get_head_img(){
+        $rules=[
+            "name"=>"required:get"
+        ];
+        $request=new request($rules);
+        $name=$request->get("name");
+        $db=new db();
+        $result=$db->query("user",["head_img"],"name='$name'");
+        return $result;
     }
 }

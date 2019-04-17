@@ -55,6 +55,7 @@ class routes
             }
         }
         echo json_encode(['code'=>'404','message'=>'page_not_exist']);
+        // when no url match routes then app echo 404 page
     }
     function LoadMethod($object, $fun)
     {

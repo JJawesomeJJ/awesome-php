@@ -35,32 +35,57 @@ class db
             $column = $column . ")";
             $values = $values . ")";
             $sql = "insert into $table_name $column values $values";
-            echo $sql;
             if ($this->con->query($sql) == true) {
                 return true;
             } else {
+                //echo $sql;
                 return false;
             }
         } catch (Exception $E) {
             return $E;
         }
     }
-    public function query($table_name,array $arr,$condition){
-        $sql="";
-        $query_list="";
-        $result_list=[];
-        foreach ($arr as $value)
-        {
-            $query_list.="$value,";
+    public function query($table_name,array $arr,$condition=false)
+    {
+        $sql = "";
+        $query_list = "";
+        $result_list = [];
+        $link = "";
+        $key_list=[];
+        if (!$table_name) {
+            $table_name_string = "";
+            foreach ($arr["table_name"] as $key => $value) {
+                $table_name_string .= "$key,";
+                foreach ($value as $value1) {
+                    $query_list .= "$key.$value1,";
+                    $key_list[]=$value1;
+                }
+            }
+            foreach ($arr["link"] as $key=>$value)
+            {
+                $link.="$key.$value=";
+            }
+            $table_name_string = substr($table_name_string, 0, strlen($table_name_string) - 1);
+            $link = substr($link, 0, strlen($link) - 1);
+            $query_list = substr($query_list, 0, strlen($query_list) - 1);
+            if ($condition != false) {
+                $sql = "select $query_list from $table_name_string where $link and $condition";
+            } else {
+                $sql = "select $query_list from $table_name_string where $link";
+            }
+            $arr=$key_list;
         }
-        $query_list=substr($query_list, 0, strlen($query_list) - 1);
-        if($condition!=false){
-            $sql="select $query_list from $table_name where $condition";
+        else {
+            foreach ($arr as $value) {
+                $query_list .= "$value,";
+            }
+            $query_list = substr($query_list, 0, strlen($query_list) - 1);
+            if ($condition != false) {
+                $sql = "select $query_list from $table_name where $condition";
+            } else {
+                $sql = "select $query_list from $table_name";
+            }
         }
-        else{
-            $sql="select $query_list from $table_name";
-        }
-        //echo $sql;
         $result=$this->con->query($sql);
         if($result==false)
         {
@@ -91,7 +116,7 @@ class db
             }
         }
         return $result_list;
-    }
+    }//when $table_name==false the db->querey is multi-table queries use is as $db->query(false,["table_name"=>["comment_list"=>["user_id","comment_content"],"user"=>["head_img"]],"link"=>["comment_list"=>"user_id","user"=>"name"]]);
     public function create_table($table_name,$arr){
         $sql="create table $table_name(";
             foreach ($arr as $key=>$value){

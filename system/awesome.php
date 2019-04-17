@@ -11,6 +11,8 @@ namespace system;
 
 use load\auto_load;
 use load\provider;
+use system\cache\cache;
+use system\config\config;
 
 class awesome
 {
@@ -19,7 +21,7 @@ class awesome
     public function __construct()
     {
         if ($this->is_cli() == false) {
-            echo "please operate in cli!";
+            $this->cli_echo_color_red("please operate in cli!");
             exit();
         }
         $this->home_path = dirname(dirname(__FILE__)) . "/";
@@ -108,6 +110,7 @@ class provider_register extends provider
     public function update()
     {
         $this->register_provider();
+        $this->cli_echo_color_yello("provider_has_been_updated");
     }
 
     private function make($operate_type, $params)
@@ -124,13 +127,14 @@ class provider_register extends provider
 
     private function create_controller($name)
     {
+        $name=str_replace("\\","/",$name);
         $controller_path = $this->home_path . "controller/" . $name . ".php";
         $time = date('Y-m-d h:i:s', time());
         $arr = explode("/", $name);
         $controller_name = $arr[count($arr) - 1];
         $namespace = "controller";
         for ($i = 0; $i < count($arr) - 1; $i++) {
-            $namespace .= "/" . $arr[$i];
+            $namespace .= "\\" . $arr[$i];
         }
         $controller_template = "<?php
 /**
@@ -147,6 +151,7 @@ class $controller_name extends controller
         $file = new file();
         $file->write_file($controller_path, $controller_template);
         $this->update();
+        $this->cli_echo_blue("controller_has_been_created");
     }
 
     public function create_middleware($name)
@@ -176,6 +181,7 @@ class $middleware_name extends middleware
         $file = new file();
         $file->write_file($middleware_path, $middleware_template);
         $this->update();
+        $this->cli_echo_blue("middleware_has_been_created");
     }
 
     public function help()
@@ -209,5 +215,96 @@ class $middleware_name extends middleware
     {
         $command = "echo \"\033[42;37m $message \033[0m\" ";
         system($command);
+    }
+    public function cli_echo_color_green($message){
+        $command=" echo  \"\033[32m$message \033[0m\"";
+        system($command);
+    }
+    public function cli_echo_color_blue($message){
+        $command=" echo  \"\033[34m$message \033[0m\"";
+        system($command);
+    }
+    public function cli_echo_color_red($message){
+        $command=" echo  \"\033[31m$message \033[0m\"";
+        system($command);
+    }
+    public function cli_echo_color_yello($message){
+        $command=" echo  \"\033[33m$message \033[0m\"";
+        system($command);
+    }
+    public function update_config()
+    {
+        $cache = new cache();
+        $config_cache = null;
+        $md5_key = md5_file($this->home_path . "system/config/config.php");
+        if($cache->get_cacahe("config")==null||$cache->get_cacahe("config")!=$md5_key){
+            $cache->set_cache("config",$md5_key,2073600);
+            $this->update_cache_config();
+        }
+    }
+    public function update_cache_config()
+    {
+        $data = config::cache();
+        $cache = new cache();
+        if ($cache->get_cacahe("cache_config") == null || $cache->get_cacahe("cache_config") != $data) {
+            $time = date("Y-m-d H:i:s");
+            $cache_template = "<?php
+/**
+ * Created by aweomse
+ * Date: $time
+ */
+
+namespace system\cache;
+
+
+use system\\file;
+use system\config\config;
+
+class cache extends cache_
+{
+    protected \$diver={{driver}};
+    protected \$path={{path}};
+    //delete all cache
+}";
+            $cache_template = $this->replace(["driver" => $data["driver"], "path" => $data["path"]], $cache_template);
+            $file = new file();
+            $file->write_file($this->home_path . "system/cache/cache.php", $cache_template);
+            //cache_config_has_been_change_so_update_it!
+            $cache->set_cache("cache_config",$data,"2073600");
+            $this->cli_echo_color_green("cache_config_has_been_updated");
+        }
+    }
+    public function load(){
+        $this->load_dependencies(["system","controller"]);
+    }
+    public function load_dependencies(array $dependencies_path){
+        $list=[];
+        $file=new file();
+        foreach($dependencies_path as $value) {
+            foreach ($file->file_walk($this->home_path ."$value/") as $value) {
+                if (substr($value, -3) == "php") {
+                    $dependency_class_name = substr($value, strrpos($value, "/") + 1, strlen($value) - strrpos($value, "/"));
+                    $class_path = str_replace($this->home_path, "", $value);
+                    $class_path=str_replace("/","\\",$class_path);
+                    $class_path=str_replace(".php","",$class_path);
+                    $list[$dependency_class_name] = $class_path;
+                }
+            }
+        }
+        print_r($this->array_to_string("dependencies",$list));
+    }
+    protected function replace(array $params,$template){
+        foreach ($params as $key=>$value){
+            $template=str_replace("{{{$key}}}","\"$value\"",$template);
+        }
+        return $template;
+    }
+    public function array_to_string($arr_name,$arr){
+        $arr_string="";
+        foreach ($arr as $key=>$value){
+            $arr_string.="        \"$key\"=>$value::class,". "\n";
+        }
+        $arr_name=sprintf("protected \$$arr_name=[\n%s];",$arr_string);
+        return $arr_name;
     }
 }

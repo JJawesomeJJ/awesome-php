@@ -108,6 +108,9 @@ class request
     public function unique($column,$column_value,$table_name){
         $db=new db();
         $result=$db->query($table_name,[$column],"$column='$column_value'");
+        if(count($result)==0){
+            return true;
+        }
         if(count($result[$column])>0){
            new Exception("400","column_not_only_$column");
         }

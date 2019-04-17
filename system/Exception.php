@@ -14,14 +14,8 @@ class Exception
     private $code;
     public function __construct($code,$message)
     {
-        $this->code=$code;
-        try {
-            $this->throw_exception($message);
-        }
-        catch (\Exception $exception)
-        {
-            $this->exception_json($exception);
-        }
+        echo json_encode(["code"=>$this->code,"message"=>$message]);
+        exit();
     }
     public function throw_exception($message){
         throw new \Exception($message);

@@ -12,6 +12,7 @@ namespace system;
 class file
 {
     private $arr=array();
+    protected $array_string="";
     private $path;
     public function get_file_list($dir){
         if($this->path!=$dir)
@@ -58,13 +59,15 @@ class file
         }
     }
     public function read_file($path){
+        if(!file_exists($path)){
+            return false;
+        }
         $myfile = fopen($path, "r") or die("Unable to open file!");
         $data=fread($myfile,filesize($path));
         fclose($myfile);
         return $data;
     }
     public function write_file($path,$data){
-        echo $path;
         $name_list=explode("/",$path);
         $path_=str_replace($name_list[count($name_list)-1],"",$path);
         if(!file_exists($path_))
@@ -75,5 +78,19 @@ class file
         $fd = fopen($path,"w");
         $result = fwrite($fd,$data);
         fclose($fd);
+    }
+    public function delete_file($path){
+        if(file_exists($path))
+        {
+            unlink($path);
+        }
+    }
+    public function array_to_arraystring(){
+
+    }
+    public function array_string($arr){
+        foreach ($arr as $key=>$value){
+
+        }
     }
 }
