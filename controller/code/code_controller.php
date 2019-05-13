@@ -25,7 +25,7 @@ class code_controller
         $rules=[
             "name"=>"required:get",
         ];
-        $request=new request($rules);
+        $request=$this->request()->verifacation($rules);
         $name=$request->get('name');
         $db=new db();
         $result=$db->query('admin_user',['email'],"name='$name'");

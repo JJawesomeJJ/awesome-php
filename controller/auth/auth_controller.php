@@ -6,18 +6,24 @@
  * Time: 下午 2:29
  */
 namespace controller\auth;
+use db\model\user\user;
 use request\request;
 use controller\controller;
 use db\db;
+use system\cache\cache;
+use system\cache\cache_;
+use system\config\config;
 use system\file;
-use system\queue;
 use system\template;
 use system\token;
 use system\Exception;
 use system\mail;
 use system\vertify_code;
 use task\add_task;
+use task\queue\queue;
 use task\task;
+use template\compile;
+use view\view;
 
 class auth_controller extends controller
 {
@@ -29,7 +35,7 @@ class auth_controller extends controller
             "password"=>"required:post|min:1|max:100",
             "code"=>"required:post"
         ];
-        $request=new request($rules);
+        $request=$this->request()->verifacation($rules);
         $db=new db();
         $name=$request->get("name");
         $result=$db->query("user",["password","email","head_img"],"name='$name'");
@@ -46,7 +52,8 @@ class auth_controller extends controller
             $_SESSION['user']=$name;
             $token=new token();
             $token->set_token($name,$result["email"]);
-            return["code" => "200", "msg" => "suceess", "data" => "ok","email"=>$result["email"],"head_img"=>$result["head_img"]];
+            return["code" => "200", "msg" => "suceess", "data" => "ok","email"=>$result["email"],"head_img"=>$result["head_img"],"csrf_token"=>$this->sign_csrf_token($request->get("name"))];
+            //csrf_token client should store this value by localstorage when request client request server we will check this token if fail the server refuse this request
         }
         else{
             return ["code" => "404", "msg" => "fail", "data" => "password_error"];
@@ -66,7 +73,7 @@ class auth_controller extends controller
             "code"=>"required:post",
             "email"=>"required:post|email:ture|unique:user"
         ];
-        $request=new request($rules);
+        $request=$this->request()->verifacation($rules);
         session_start();
         if($_SESSION['code']==$request->get("code"))
         {
@@ -96,7 +103,7 @@ class auth_controller extends controller
             $_SESSION['email']=$request->get("email");
             $token=new token();
             $token->set_token("user",$request->get("email"));
-            return ["code" => "200", "msg" => "suceess", "head_img" => $url,"email"=>$request->get("email")];
+            return ["code" => "200", "msg" => "suceess", "head_img" => $url,"email"=>$request->get("email"),"csrf_token"=>$this->sign_csrf_token($request->get("name"))];
         }
         else{
             return ["code"=>"403","msg"=>"fail","data"=>"code_error"];
@@ -108,7 +115,7 @@ class auth_controller extends controller
             "password"=>"required:get",
             "code"=>"required:get"
         ];
-        $request=new request($rules);
+        $request=$this->request()->verifacation($rules);
         if(strtolower($request->get("code"))!=strtolower($_SESSION['code']))
         {
             return ['code'=>'400','message'=>'code_error'];
@@ -125,6 +132,7 @@ class auth_controller extends controller
         }
         if(isset($_SESSION[$name]))
         {
+            self::check_csrf_token($_SESSION[$name]);
             return $_SESSION[$name];
         }
         else{
@@ -133,6 +141,7 @@ class auth_controller extends controller
             {
                 if($token->check_token($store_name)==true)
                 {
+                    self::check_csrf_token($_SESSION[$name]);
                     return $_SESSION[$name];
                 }
             }
@@ -140,11 +149,13 @@ class auth_controller extends controller
             {
                 if($token->check_token($store_name,$parms_list)==true)
                 {
+                    self::check_csrf_token($_SESSION[$name]);
                     return $_SESSION[$name];
                 }
             }
             if($token->check_token()==true)
             {
+                self::check_csrf_token($_SESSION[$name]);
                 return $_SESSION[$name];
             }
             else{
@@ -159,7 +170,7 @@ class auth_controller extends controller
             "password"=>"required:get",
             "admin_email_code"=>"required:get",
         ];
-        $request=new request($rules);
+        $request=$this->request()->verifacation($rules);
 //        if($_SESSION["admin_email_code"]!=$request->get("admin_email_code"));
 //        {
 //            return ["code"=>"405","message"=>"code_error"];
@@ -183,8 +194,8 @@ class auth_controller extends controller
         }
     }
     public function request_connect_websocket(){
-        $queue=new queue();
-        $redis=$queue->redis;
+       $redis=new \Redis();
+       $redis->connect(config::redis()["host"],config::redis()["port"]);
         if($this->auth("user")!=null)//授权用户是否可以登录websocket服务器
         {
             $server_token=md5(time().$this->auth('user'));
@@ -197,10 +208,58 @@ class auth_controller extends controller
         $rules=[
             "name"=>"required:get"
         ];
-        $request=new request($rules);
+        $request=$this->request()->verifacation($rules);
         $name=$request->get("name");
         $db=new db();
         $result=$db->query("user",["head_img"],"name='$name'");
         return $result;
+    }
+    protected function sign_csrf_token($name){
+        $csrf_token=md5($this->time().$name);
+        $this->cache()->set_cache($name."csrf_token",$csrf_token,2592000);
+        return $csrf_token;
+    }
+    protected function check_csrf_token($name){
+        $request=new request([]);
+        $cache=new cache();
+        if($request->try_get("csrf_token")==false||$request->try_get("csrf_token")!=$cache->get_cache($name."csrf_token"))
+        {
+            new Exception("403","csrf_attack");
+        }
+    }
+    public function reset_password(){
+        if(!isset($_SESSION)){
+            session_start();
+        }
+        if(strtolower($_SESSION['code'])<>strtolower($this->request()->get("code"))||$_SESSION['code']==null){
+            unset($_SESSION['code']);
+            return ["code"=>"403","message"=>"code_error"];
+        }
+        unset($_SESSION['code']);
+        $user=new user();
+        $user->where("name",$this->request()->get("user_id"));
+        $user->or_where("email",$this->request()->get("user_id"))->get();
+        $name=$user->name;
+        $token=md5($user->name.$this->time());
+        $this->cache()->set_cache($user->name."reset_token",$token,108000);
+        $queue=new queue();
+        $queue->push("email",["title"=>"忘记密码","url"=>"http://39.108.236.127/php/public/index.php/user/reset?token=$token&name=$name","template"=>"reset_link","user"=>$user->email],"email");
+        return ["code"=>"200","message"=>"ok"];
+    }
+    public function update_password(){
+        $name=$this->request()->get("name");
+        if($this->cache()->get_cache($name."reset_token")==$this->request()->get("token")){
+            $user=new user();
+            $user->where("name",$name)->get();
+            $user->password=$this->request()->get("password");
+            $user->update();
+            $this->cache()->delete_key($name."reset_token");
+            header("Location: http://39.108.236.127/#/home");
+        }
+        return ["code"=>"403","message"=>"token_error"];
+    }
+    public function reset_password_page(){
+        $complie=new compile();
+        return $complie->view("user/reset_password",["token"=>$this->request()->get("token"),"name"=>$this->request()->get("name"),"list"=>[["name"=>"赵李杰","age"=>"2"],["name"=>"php","age"=>"16"]]]);
     }
 }

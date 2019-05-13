@@ -29,12 +29,11 @@ class map_controller extends controller
             "img2"=>"required:post",
             "img3"=>"required:post"
         ];
-        $request=new request($rules);
+        $request=$this->request()->verifacation($rules);
         $http=new http();
         $key=$request->get("latitude").','.$request->get("longitude");
         $location_info=json_decode($http->get("http://api.map.baidu.com/geocoder/v2/?callback=&location=$key&output=json&pois=1&ak=4nthVhrx2bl2m8bciabolGutzg44OI3Q"),true)["result"];
         $db=new db();
-        echo json_encode($location_info);
         $arr=[
             "id"=>md5($key+$request->get("tele")),
             "city"=>$location_info["addressComponent"]["city"],
@@ -93,7 +92,7 @@ class map_controller extends controller
             "check_condition"=>"required:get",
             "sort"=>"required:get"
         ];
-        $request=new request($rules);
+        $request=$this->request()->verifacation($rules);
         $db=new db();
         $condition="";
         $city_condition=$this->required_condition("city",$request->get("city"));
@@ -121,7 +120,7 @@ class map_controller extends controller
             "id"=>"required:get",
             "privince"=>"required:get"
         ];
-        $request=new request($rule);
+        $request=$this->request()->verifacation($rule);
         $db=new db();
         $id=$request->get("id");
         if($request->get("is_pass")=="true")
@@ -138,7 +137,7 @@ class map_controller extends controller
             "privince"=>"required:get",
             "city"=>"required:get",
         ];
-        $request=new request($rules);
+        $request=$this->request()->verifacation($rules);
         $db=new db();
         $condition="";
         $city_condition=$this->required_condition("city",$request->get("city"));

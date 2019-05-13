@@ -14,7 +14,7 @@ class Exception
     private $code;
     public function __construct($code,$message)
     {
-        echo json_encode(["code"=>$this->code,"message"=>$message]);
+        echo json_encode(["code"=>$code,"message"=>$message]);
         exit();
     }
     public function throw_exception($message){

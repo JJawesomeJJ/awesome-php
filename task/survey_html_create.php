@@ -16,11 +16,12 @@ class survey_html_create
     {
         $this->con=mysqli_connect("localhost","register","zlj19971998","register");
         $this->arr=$arr;
+        mysqli_set_charset($this->con,"utf8");
     }
     public function get_post_info()
     {
         try {
-            $data =get_object_vars($this->arr);
+            $data =$this->arr;
             $survey_table_name = $data["to"];
             $answer = explode(";", $data["answer"]);
             $sql = "SELECT * FROM $survey_table_name";

@@ -29,7 +29,7 @@ class add_task
     }//add task of queue the method will judge whether start handle task process
     public function add_notify($handle_type,$params){
         $this->redis->lPush("notify_list",json_encode(["handle_type"=>$handle_type,"handle_params"=>$params]));
-        if($this->redis->lLen("notify_list")==1)
+        if($this->redis->lLen("notify_list")>1)
         {
             exec("node $this->home_path"."/node/rouser.js".' > /dev/null &');//if the length of notify_list equal 1,start the 'rouser' process to tell the server handle task
         }

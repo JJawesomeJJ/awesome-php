@@ -23,6 +23,7 @@ class survey_controller extends controller
         $this->redis = new \Redis();
         $this->redis->connect("127.0.0.1", 6379);
         $this->con=mysqli_connect("localhost","register","zlj19971998","register");
+        mysqli_set_charset($this->con,"utf8");
     }
     public function vote()
     {
@@ -38,7 +39,7 @@ class survey_controller extends controller
         $index = 1;
         while ($row = mysqli_fetch_array($result)) {
             $result_arr = array();
-            $result_arr["q" + $index] = $row['1'] . ";" . $row['2'] . ";" . $row['3'] . ";" . $row['4'];
+            $result_arr["q" . $index] = $row['1'] . ";" . $row['2'] . ";" . $row['3'] . ";" . $row['4'];
             $index++;
             echo json_encode($result_arr);
         }
@@ -144,6 +145,148 @@ class survey_controller extends controller
             return $arr;
         }
     }
+    public function get_post_info()
+    {
+        try {
+            $data =get_object_vars($this->arr);
+            $survey_table_name = $data["to"];
+            $answer = explode(";", $data["answer"]);
+            $sql = "SELECT * FROM $survey_table_name";
+            $this->con->query("LOCK TABLE $survey_table_name WRITE");
+            $result = $this->con->query($sql);
+            $i = 0;
+            $arr_anwser = array(
+                'A' => array(),
+                'B' => array(),
+                'C' => array(),
+                'D' => array()
+            );
+            $arr_data_from_datase = array(
+                'A' => array(),
+                'B' => array(),
+                'C' => array(),
+                'D' => array()
+            );
+            $end = "WHERE q_num IN(";
+            $i = 0;
+            while ($row = mysqli_fetch_array($result)) {
+                $end .= "'q" . ($i + 1) . "',";
+                switch ($answer[$i]) {
+                    case 'A':
+                        array_push($arr_data_from_datase['A'], $row['A']);
+                        array_push($arr_anwser['A'], "q" . ($i + 1));
+                        break;
+                    case 'B':
+                        array_push($arr_data_from_datase['B'], $row['B']);
+                        array_push($arr_anwser['B'], "q" . ($i + 1));
+                        break;
+                    case 'C':
+                        array_push($arr_data_from_datase['C'], $row['C']);
+                        array_push($arr_anwser['C'], "q" . ($i + 1));
+                        break;
+                    case 'D':
+                        array_push($arr_data_from_datase['D'], $row['D']);
+                        array_push($arr_anwser['D'], "q" . ($i + 1));
+                        break;
+                    default:
+                        break;
+                }
+                $i++;
+            }
+            $sql_arr = array();
+            $test = array();
+            $update = "update $survey_table_name SET ";
+            foreach ($arr_anwser as $key => $val) {
+                switch ($key) {
+                    case 'A':
+                        if (count($val) == 0) {
+                            break;
+                        }
+                        $end = "WHERE q_num IN(";
+                        $sql_arr['A'] = $update . "A = CASE q_num";
+                        $arr_from = $arr_data_from_datase["A"];
+                        for ($i = 0; $i < count($val); $i++) {
+                            $num = (int)$arr_from[$i] + 1;
+                            $sql_arr['A'] .= " WHEN '$val[$i]' THEN $num ";
+                        }
+                        $sql_arr['A'] .= " END ";
+                        foreach ($arr_anwser['A'] as $key => $val) {
+                            $end .= "'$val',";
+                        }
+                        $end = substr($end, 0, -1) . ")";
+                        $sql_arr['A'] .= $end;
+                        break;
+                    case 'B':
+                        if (count($val) == 0) {
+                            break;
+                        }
+                        $end = "WHERE q_num IN(";
+                        $sql_arr['B'] = $update . "B = CASE q_num";
+                        $arr_from = $arr_data_from_datase["B"];
+                        for ($i = 0; $i < count($val); $i++) {
+                            $num = (int)$arr_from[$i] + 1;
+                            $sql_arr['B'] .= " WHEN '$val[$i]' THEN $num ";
+                        }
+                        $sql_arr['B'] .= " END ";
+                        foreach ($arr_anwser['B'] as $key => $val) {
+                            $end .= "'$val',";
+                        }
+                        $end = substr($end, 0, -1) . ")";
+                        $sql_arr['B'] .= $end;
+                        break;
+                    case 'C':
+                        if (count($val) == 0) {
+                            break;
+                        }
+                        $end = "WHERE q_num IN(";
+                        $sql_arr['C'] = $update . "C = CASE q_num";
+                        $arr_from = $arr_data_from_datase["C"];
+                        for ($i = 0; $i < count($val); $i++) {
+                            $num = (int)$arr_from[$i] + 1;
+                            $sql_arr['C'] .= " WHEN '$val[$i]' THEN $num ";
+                        }
+                        $sql_arr['C'] .= " END ";
+                        foreach ($arr_anwser['C'] as $key => $val) {
+                            $end .= "'$val',";
+                        }
+                        $end = substr($end, 0, -1) . ")";
+                        $sql_arr['C'] .= $end;
+                        break;
+                    case 'D':
+                        if (count($val) == 0) {
+                            break;
+                        }
+                        $end = "WHERE q_num IN(";
+                        $sql_arr['D'] = $update . "D = CASE q_num";
+                        $arr_from = $arr_data_from_datase["D"];
+                        for ($i = 0; $i < count($val); $i++) {
+                            $num = (int)$arr_from[$i] + 1;
+                            $sql_arr['D'] .= " WHEN '$val[$i]' THEN $num ";
+                        }
+                        $sql_arr['D'] .= " END ";
+                        foreach ($arr_anwser['D'] as $key => $val) {
+                            $end .= "'$val',";
+                        }
+                        $end = substr($end, 0, -1) . ")";
+                        $sql_arr['D'] .= $end;
+                        break;
+                    default;
+                        break;
+                }
+            }
+            foreach ($sql_arr as $key => $val) {
+                $this->con->query($val);
+            }
+
+            //echo json_encode($sql_arr);
+            $result = $this->con->query($sql);
+            $index = 1;
+            $this->con->query("UNLOCK TABLES");
+            //echo json_encode($result_arr);
+        } catch (Exception $E) {
+            $this->con->query("UNLOCK TABLES");
+        }
+    }
     public function delete_database_file()
     {
         $writer=auth_controller::auth('user');
@@ -175,7 +318,7 @@ class survey_controller extends controller
             "title"=>"required:post",
             "code"=>"required:post",
         ];
-        $request=new request($rules);
+        $request=$this->request()->verifacation($rules);
         $arr=$request->get("question_arr");
         $writer=auth_controller::auth('user');
         $title=$request->get("title");

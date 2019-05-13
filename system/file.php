@@ -12,15 +12,17 @@ namespace system;
 class file
 {
     private $arr=array();
+    private $file_arr=[];
     protected $array_string="";
+    private $fd=null;
     private $path;
-    public function get_file_list($dir){
+    private function get_file_list($dir){
         if($this->path!=$dir)
         if(@$handle = opendir($dir)) { //注意这里要加一个@，不然会有warning错误提示：）
             while(($file = readdir($handle)) !== false) {
                 if($file != ".." && $file != ".") {
                     if(is_dir($dir."/".$file)) {
-                        $files[] =$this->get_file_list($dir.$file);
+                        $files[] =$this->get_file_list($dir."/".$file);
                     } else {
                         $files[] = $file;
                         $this->arr[]=str_replace("//","/",$dir."/".$file);
@@ -67,6 +69,20 @@ class file
         fclose($myfile);
         return $data;
     }
+    public function img_base64($img_path){
+        if(!file_exists($img_path)){
+            return false;
+        }
+        if($fp = fopen($img_path,"rb", 0))
+        {
+            $gambar = fread($fp,filesize($img_path));
+            fclose($fp);
+            $base64 = chunk_split(base64_encode($gambar));
+            $encode = "data:image/jpg/png/gif;base64,$base64";
+            return $encode;
+        }
+        return false;
+    }
     public function write_file($path,$data){
         $name_list=explode("/",$path);
         $path_=str_replace($name_list[count($name_list)-1],"",$path);
@@ -79,18 +95,68 @@ class file
         $result = fwrite($fd,$data);
         fclose($fd);
     }
+    public function safy_read_file($path){
+        if(!file_exists($path)){
+            return false;
+        }
+        if(!is_null($this->fd)){
+            $this->unlock_cache($this->fd);
+            $index = array_keys($this->file_arr,$this->fd);
+            foreach ($index as $value) {
+                unset($this->file_arr[$value]);
+            }//try unlock file
+            //if read_file_just_now_and_this_file_has_been_lock_so_try_to_unlock_it
+        }
+        $myfile = fopen($path, "r+") or die("Unable to open file!");
+        $this->fd=$myfile;
+        $this->file_arr[]=$myfile;
+        flock($myfile,LOCK_EX);
+        $data="";
+        while(!feof($myfile)) {
+            $data.=fgetc($myfile);
+        }//set the point of file ponit to start of file;
+        return $data;
+    }
+    //this file has been locked so you can use write it or unlock it
+    public function safy_write($key,$data){
+        if($this->fd!=null) {
+            ftruncate($this->fd,0);         // 将文件截断到给定的长度
+            rewind($this->fd);
+            $result = fwrite($this->fd, $data);
+            fclose($this->fd);
+            $index = array_keys($this->file_arr,$this->fd);
+            foreach ($index as $value) {
+                unset($this->file_arr[$value]);
+            }//try unlock file
+            $this->fd=null;
+        }
+        else{
+            $this->write_file($key,$data);
+        }
+    }
+    public function unlock_cache($fd){
+        flock($fd,LOCK_UN);
+        fclose($fd);
+    }
     public function delete_file($path){
         if(file_exists($path))
         {
             unlink($path);
         }
     }
-    public function array_to_arraystring(){
-
-    }
-    public function array_string($arr){
-        foreach ($arr as $key=>$value){
-
+    public function __destruct()
+    {
+        try {
+            foreach ($this->file_arr as $value) {
+                flock($value, LOCK_UN);
+            }
         }
+        catch (\Exception $exception){
+            //echo $exception;
+        }
+        catch (\Error $error){
+            //echo $error;
+        }
+        //check the file whether locked if true unlock it
     }
 }

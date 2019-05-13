@@ -15,7 +15,7 @@ class token
         $time=(string)time();
         $token_store_name="token_list";
         $token_id = md5((base64_encode($user)));
-        $remember_me=md5($user+time());
+        $remember_me=md5($user.time());
         $user_data = array(
             "remember_me"=>$remember_me,
             "name" => $user,

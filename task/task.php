@@ -33,6 +33,7 @@ class task{
         }
         echo "task_on_workig".PHP_EOL;
         if ($this->redis->lLen("task_list") > 0) {
+            echo "load";
             while (strlen($value = $this->redis->lpop("task_list")) > 2) {
                 $task_arr = json_decode($value,true);
                 $this->LoadMethod($task_arr["controller_name"], $task_arr["method"], $task_arr["arg"]);

@@ -11,7 +11,7 @@ namespace system;
 
 class vertify_code
 {
-    public function random_code($number){
+    public static function random_code($number){
         $code='';
         $data = 'abcdefghijklmnopqrstuvwxyz0123456789';
         for($i=0;$i<$number;$i++)

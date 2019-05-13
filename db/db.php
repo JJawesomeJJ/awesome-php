@@ -14,6 +14,7 @@ class db
         $user="register";
         $password="zlj19971998";
         $this->con=mysqli_connect("localhost",$user,$password,"register");
+        mysqli_set_charset($this->con,"utf8");
         if(mysqli_connect_errno())
         {
             return "error";
@@ -45,7 +46,7 @@ class db
             return $E;
         }
     }
-    public function query($table_name,array $arr,$condition=false)
+    public function query($table_name,array $arr,$condition=false,$order_by="")
     {
         $sql = "";
         $query_list = "";
@@ -69,9 +70,9 @@ class db
             $link = substr($link, 0, strlen($link) - 1);
             $query_list = substr($query_list, 0, strlen($query_list) - 1);
             if ($condition != false) {
-                $sql = "select $query_list from $table_name_string where $link and $condition";
+                $sql = "select $query_list from $table_name_string where $link and $condition $order_by";
             } else {
-                $sql = "select $query_list from $table_name_string where $link";
+                $sql = "select $query_list from $table_name_string where $link $order_by";
             }
             $arr=$key_list;
         }
@@ -81,12 +82,12 @@ class db
             }
             $query_list = substr($query_list, 0, strlen($query_list) - 1);
             if ($condition != false) {
-                $sql = "select $query_list from $table_name where $condition";
+                $sql = "select $query_list from $table_name where $condition $order_by";
             } else {
-                $sql = "select $query_list from $table_name";
+                $sql = "select $query_list from $table_name $order_by";
             }
         }
-        $result=$this->con->query($sql);
+        $result=$this->con->query($sql.";");
         if($result==false)
         {
             return [];
@@ -143,6 +144,20 @@ class db
             $sql=$sql." ".$condition;
         }
         return $this->con->query($sql);
+    }
+    public function delete_data($table_name,$condition){
+        $sql="delete from $table_name where $condition";
+        echo $sql;
+        return $this->con->query($sql);
+    }
+    public function show_columns($table_name){
+        $result_arr=[];
+        $sql="SHOW FULL COLUMNS FROM $table_name";
+        $result=$this->con->query($sql);
+        while($row=mysqli_fetch_array($result)){
+            $result_arr[]=$row[0];
+        }
+        return $result_arr;
     }
 }
 //$table_name="user";

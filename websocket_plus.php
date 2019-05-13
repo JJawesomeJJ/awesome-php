@@ -4,16 +4,19 @@ global $time;
 class server
 {
     private $addr = "0.0.0.0";
+    //监听地址本机
     private $port = "9502";
+    //监听端口
     public $time = 0;
     public $redis;
     public $name;
     private $error_file_path;
     public $users = array();
-
+    //上线用户的数量
     function __construct()
     {
         $this->error_file_path = dirname(__FILE__) . "/error.txt";
+        //错误日志地址
         $this->lock = new swoole_lock(SWOOLE_MUTEX);
         $this->server = new swoole_websocket_server($this->addr, $this->port);
         $this->server->set(array(
@@ -27,7 +30,7 @@ class server
         $this->redis->connect("127.0.0.1", 6379);
         $this->redis->del("users");
         $this->redis->del("user_list");
-        $this->server->on('open', array($this, 'onopen'));
+        $this->server->on('open', array($this, 'onopen'));//
         $this->server->on('message', array($this, 'onmessage'));
         $this->server->on('task', array($this, 'onTask'));
         $this->server->on('finish', array($this, 'onfinish'));

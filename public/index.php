@@ -6,20 +6,22 @@
  * Time: 下午 3:01
  */
 header('Access-Control-Allow-Origin:*');
-define("extend",__DIR__.'/../extent/');
-define("routes",__DIR__.'/../routes/');
-define("system",__DIR__.'/../system/');
-define("request",__DIR__.'/../request/');
-define("db",__DIR__."/../db/");
-use controller\auth\auth_controller;
 use routes\routes;
-use routes\route_entrance;
 class index
 {
     public function __construct()
     {
+        $GLOBALS["time"]=microtime(true);
         require_once __DIR__."/../load/auto_load.php";
-        $routes=new route_entrance();
+        require_once __DIR__."/../routes/route_entrance.php";
+        require_once __DIR__."/../load/common.php";
+        try {
+            new routes();
+        }
+        catch (Throwable $throwable){
+            echo $throwable;
+            app()->call_back();
+        }
     }
 }
 $index=new index();

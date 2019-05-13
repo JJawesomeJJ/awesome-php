@@ -25,10 +25,35 @@ class config
     ];
     //session config
     //when test redis and file as cache driver but i find when data not enough much file faster than redis write 2019/4/12
+    protected static $dependendcies=[
+        "system",
+        "extend"
+    ];
+    //dependendcies_config
+    //the path awesome_cli will load dependendies use php awesome load
     public static function cache(){
         return self::$cache;
     }
     public static function session(){
         return self::$session;
+    }
+    public static function depenendcies(){
+        return self::$dependendcies;
+    }
+    public static function database(){
+        return [
+            "type"=>"mysql",
+            "hostname"=>"127.0.0.1",
+            "hostport"=>"3306",
+            "database"=>"register",
+            "username"=>"register",
+            "password"=>"zlj19971998",
+        ];
+    }
+    public static function redis(){
+        return [
+            "host"=>"127.0.0.1",
+            "port"=>"6379"
+        ];
     }
 }

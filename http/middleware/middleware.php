@@ -9,78 +9,79 @@
 namespace http\middleware;
 
 
+use request\request;
+use system\cache\cache_;
 use system\Exception;
 
 abstract class middleware
 {
     public $user_input;
+    protected $request_=null;
+    protected $cache_=null;
+    protected $params=null;
     abstract function check();//入口
-    public function __construct()
+    public function __construct(request $request)
     {
-        $this->user_input=$this->get_user_input();
+        $this->request_=$request;
+        $this->user_input=$this->request()->all();
         $this->xxs_filter();
-        $this->sql_filter();
+        //$this->sql_filter();
         $this->check();
     }
-    public function get_user_input(){
-        if($_SERVER['REQUEST_METHOD']=='GET')
-        {
-            $parmas_list=[];
-            $url=$_SERVER['REQUEST_URI'];
-            $url_data=explode("?",$url);
-            $get_params=explode("&",$url_data[1]);
-            foreach ($get_params as $value)
-            {
-                $parms_key_value=explode('=',$value);
-                $parmas_list[$parms_key_value[0]]=$parms_key_value[1];
-            }
-            return $parmas_list;
+    public function request(){
+        if($this->request_==null){
+            $this->request_=new request();
+            return $this->request_;
         }
-        if($_SERVER['REQUEST_METHOD']=='POST')
-        {
-            $parms=file_get_contents("php://input");
-            $get_params=explode("&",$parms);
-            foreach ($get_params as $value)
-            {
-                $parms_key_value=explode('=',$value);
-                $parmas_list[$parms_key_value[0]]=$parms_key_value[1];
-            }
-            return $parmas_list;
+        else{
+            return $this->request_;
         }
     }
     public function xxs_filter(){
         $black_list=array(
             "&"=>"&amp;",
-            "<=>&lt;",
+            "<"=>"&lt;",
             ">"=>"&gt;",
             "”"=>"&quot;",
             "‘"=>"&#x27;",
             "/"=>"&#x2f;"
         );
-        foreach ($this->user_input as $input_value)
+        foreach ($this->user_input as $key=>$input_value)
         {
             foreach($black_list as $black_list_value=>$value)
             {
-                if(strpos(urldecode($input_value),$black_list_value)!==false)
+                if(strpos($input_value,$black_list_value)!==false)
                 {
-                    new Exception("403","danger_input_$input_value");
+                    $this->user_input[$key]=str_replace($black_list_value,$value,$this->user_input[$key]);
                 }
             }
         }
     }
     function sql_filter()
     {
-        $black_list=["\\", "\\",">","<","<SCRIPT>", "\\", "</SCRIPT>", "<script>", "</script>", "select", "select", "join", "join", "union", "union", "where", "where", "insert", "insert", "delete", "delete", "update", "update", "like", "like", "drop", "drop", "create", "create", "modify", "modify", "rename", "rename", "alter", "alter", "cas", "cast", "&", "&", ">", ">", "<", "<", " ", " ", "    ", "&", "'", "<br />", "''", "'", "css", "'", "CSS", "'"];
+        $black_list=[">","<","<SCRIPT>", "\\", "</SCRIPT>", "<script>", "</script>", "select", "select", "join", "join", "union", "union", "where", "where", "insert", "insert", "delete", "delete", "update", "update", "like", "like", "drop", "drop", "create", "create", "modify", "modify", "rename", "rename", "alter", "alter", "cas", "cast", "&", "&", ">", ">", "<", "<", " ", " ", "    ", "&", "'", "<br />", "''", "'", "css", "'", "CSS", "'"];
         foreach ($this->user_input as $input_value)
         {
             foreach($black_list as $black_list_value)
             {
                 if(strpos(urldecode($input_value),$black_list_value)!==false)
                 {
-                    new Exception("403","danger_input_$input_value");
+                    new Exception("403","danger_input_$input_value.$black_list_value");
                 }
             }
         }
-
+    }
+    public function next(){
+        $this->request()->user_input=$this->user_input;//return userinput which has been handled by this middleware
+        return $this->request();
+    }
+    public function cache(){
+        if($this->cache_==null){
+            $this->cache_=new cache_();
+            return $this->cache_;
+        }
+        else{
+            return $this->cache_;
+        }
     }
 }

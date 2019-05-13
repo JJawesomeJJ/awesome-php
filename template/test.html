@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+@foreach($data as $value1)
+@if('{{$value1['sex']}}'=='wome')
+<div class="alert alert-success">
+    <strong>{{$value1["name"]}}</strong>
+</div>
+<div class="alert alert-info">
+    <strong>{{$value1["password"]}}</strong>
+</div>
+<div class="alert alert-warning">
+    <strong>{{$value1["updated_at"]}}</strong>
+</div>
+@elseif('{{$value1['sex']}}'=='man3')
+<div class="alert alert-danger">
+    <strong>{{$value1["name"]}}</strong>
+</div>
+@end
+@elseif('{{$value1['sex']}}'=='man')
+<div class="alert alert-dark">
+    <strong>{{$value1["name"]}}</strong>
+</div>
+@end
+@else
+<div class="alert alert-success">
+    <strong>{{$value1["name"]}}</strong>
+</div>
+@endif
+@endforeach
+</body>
+</html>

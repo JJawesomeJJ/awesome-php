@@ -11,8 +11,10 @@ namespace system;
 
 use load\auto_load;
 use load\provider;
+use load\provider_register;
 use system\cache\cache;
 use system\config\config;
+require_once @"/var/www/html/php/pay/aop/SignData.php";
 
 class awesome
 {
@@ -24,6 +26,7 @@ class awesome
             $this->cli_echo_color_red("please operate in cli!");
             exit();
         }
+        //require_once __DIR__."/../load/auto_load.php";
         $this->home_path = dirname(dirname(__FILE__)) . "/";
         $this->load_method();
     }
@@ -76,6 +79,7 @@ class provider_register extends provider
     protected \$controller=[
      {{controller}}
     ];
+    protected \$dependencies=[];
 }";
         $home_path = dirname(dirname(__FILE__));
         $controller_path = "$home_path/controller/";
@@ -110,6 +114,7 @@ class provider_register extends provider
     public function update()
     {
         $this->register_provider();
+        $this->load();
         $this->cli_echo_color_yello("provider_has_been_updated");
     }
 
@@ -237,7 +242,7 @@ class $middleware_name extends middleware
         $cache = new cache();
         $config_cache = null;
         $md5_key = md5_file($this->home_path . "system/config/config.php");
-        if($cache->get_cacahe("config")==null||$cache->get_cacahe("config")!=$md5_key){
+        if($cache->get_cache("config")==null||$cache->get_cache("config")!=$md5_key){
             $cache->set_cache("config",$md5_key,2073600);
             $this->update_cache_config();
         }
@@ -246,7 +251,7 @@ class $middleware_name extends middleware
     {
         $data = config::cache();
         $cache = new cache();
-        if ($cache->get_cacahe("cache_config") == null || $cache->get_cacahe("cache_config") != $data) {
+        if ($cache->get_cache("cache_config") == null || $cache->get_cache("cache_config") != $data) {
             $time = date("Y-m-d H:i:s");
             $cache_template = "<?php
 /**
@@ -275,7 +280,21 @@ class cache extends cache_
         }
     }
     public function load(){
-        $this->load_dependencies(["system","controller"]);
+        $file=new file();
+        $dependencies_string=$this->load_dependencies(config::depenendcies());
+        $provider_register=$file->read_file($this->home_path."/load/provider_register.php");
+        $dependencies_string=preg_replace("/protected \\\$dependencies([\s\S])*?];/",$dependencies_string,$provider_register);
+        preg_match_all("/namespace load([\s\S]*?)class/",$dependencies_string, $matchs, PREG_SET_ORDER);
+        $name_space_=substr($matchs[0][0],0,strlen($matchs[0][0])-5);
+        $name_space=$name_space_;
+        foreach (config::depenendcies() as $value){
+            if(strpos($name_space,$value)==false){
+                $name_space.="use $value;\n";
+            }
+        }
+        $time = date("Y-m-d H:i:s");
+        $dependencies_string=str_replace($name_space_,$name_space,$dependencies_string);
+        $file->write_file($this->home_path."/load/provider_register.php",preg_replace("/\\*update_at.*?;/","*update_at $time",$dependencies_string));
     }
     public function load_dependencies(array $dependencies_path){
         $list=[];
@@ -283,7 +302,7 @@ class cache extends cache_
         foreach($dependencies_path as $value) {
             foreach ($file->file_walk($this->home_path ."$value/") as $value) {
                 if (substr($value, -3) == "php") {
-                    $dependency_class_name = substr($value, strrpos($value, "/") + 1, strlen($value) - strrpos($value, "/"));
+                    $dependency_class_name = str_replace(".php","",substr($value, strrpos($value, "/") + 1, strlen($value) - strrpos($value, "/")));
                     $class_path = str_replace($this->home_path, "", $value);
                     $class_path=str_replace("/","\\",$class_path);
                     $class_path=str_replace(".php","",$class_path);
@@ -291,7 +310,7 @@ class cache extends cache_
                 }
             }
         }
-        print_r($this->array_to_string("dependencies",$list));
+      return $this->array_to_string("dependencies",$list);
     }
     protected function replace(array $params,$template){
         foreach ($params as $key=>$value){
