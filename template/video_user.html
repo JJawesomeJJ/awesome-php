@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<canvas id="user_show" width="300px;" height="200px;"></canvas>
+</body>
+<script>
+    var canvas=document.querySelector("#user_show");
+    var contenx=canvas.getContext('2d');
+    var img=new Image();
+    var ws = new WebSocket("ws://39.108.236.127:9501");
+    ws.onopen = function()
+    {
+        // Web Socket 已连接上，使用 send() 方法发送数据
+    };
+
+    ws.onmessage = function (evt)
+    {
+        var data=eval('('+evt.data+')');
+        data=eval('('+data+')');
+        img.crossOrigin = 'Anonymous';
+        img.src=data["base64"];
+        contenx.drawImage(img,0,0,img.width,img.height);
+    };
+
+    ws.onclose = function()
+    {
+        // 关闭 websocket
+        alert("连接已关闭...");
+    };
+</script>
+</html>

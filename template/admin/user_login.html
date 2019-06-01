@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>titang控制台登录</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../asset/css/reset_password.css" rel="stylesheet">
+    <link href="../asset/font-icon/iconfont.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<style>
+    .get_email_code{
+        position: relative;
+        right: 0px;
+        width:80px;
+        height: 39px;
+        background-color: #666666;
+        border-bottom-right-radius: 3px;
+        border-top-right-radius: 3px;
+        overflow: hidden;
+    }
+    .get_email_code .iconfont{
+        display: block;
+        color: white;
+        height: 39px;
+        text-align: center;
+        font-size: 35px;
+        line-height: 39px;
+    }
+</style>
+<body>
+<div id="app">
+<div class="container">
+    <a href="http://39.108.236.127/#/home">
+        <div class="logo">
+            <img src="http://39.108.236.127/image/logo.png" alt="logo">
+        </div>
+    </a>
+    <div class="show_user">
+        <h1>登录控制台</h1>
+    </div>
+    <div class="reset" style="top:0px;margin-bottom: 20px;">
+        <div class="alert alert-danger" v-if="error!=null&&error!='success'">
+            <strong>{{error}}</strong>
+        </div>
+        <div class="alert alert-success" v-if="error=='success'">
+            <strong>验证成功</strong>
+        </div>
+        @component(component/vertify/slide_vertify)
+        <form action="http://39.108.236.127/php/public/index.php/user/reset" method="post" onsubmit="return false" style="top:10px;">
+            <h1>用户名|邮箱</h1>
+            <input type="text" name="name" id="name" v-model="name">
+            <br>
+            <h1>邮箱验证码</h1>
+            <div class="bottom_container" style="width: 100%;display: flex;">
+                <input type="text" name="name" id="emial_code"v-model="code">
+                <div class="get_email_code"  @click="slide_vertify()">
+                    <div class="iconfont icon-xinfeng"></div>
+                </div>
+            </div>
+            <h1>密码</h1>
+            <input type="password" name="password_sure" id="password_sure" v-model="password">
+            <input type="button" value="立即登录" @click="login" style="top: 20px;position:relative;margin-bottom: 50px;">
+        </form>
+    </div>
+</div>
+</div>
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            name:null,
+            vertify:null,
+            error:null,
+            password:null,
+            code:null,
+        },
+        created(){
+        },
+        methods:{
+            slide_vertify(){
+                var self=this;
+                if(self.verify==null) {
+                    self.verify= new Slidevertify(function () {
+                        axios.post('http://39.108.236.127/php/public/index.php/admin_user/login/email', {
+                            name:self.name,
+                        }).then(function (response) {
+                            console.log(response);
+                            if (response["data"]["code"] == 200) {
+                                self.error="success";
+                            }
+                            else {
+                                self.error=response["data"]["message"];
+                            }
+                        }).catch(function (error) {
+                            console.log(error);
+                        });
+                    }, function () {
+                       self.error="验证失败";
+                    });
+                    self.verify.show();
+                }else {
+                    console.log(self.verify);
+                    self.verify.show();
+                }
+            },
+            login(){
+                var self=this;
+                if(self.name==null||self.name==""){
+                    self.error="管理员账号不可为空";
+                    return;
+                }
+                if(self.password==null||self.password==""){
+                    self.error="管理员密码不可为空";
+                    return;
+                }
+                if(self.code==null||self.code==""){
+                    self.error="管理员邮箱验证码不可为空";
+                    return;
+                }
+                axios.post('http://39.108.236.127/php/public/index.php/admin_user/login', {
+                    name: self.name,
+                    password:sha256(self.password),
+                    code:self.code
+                }).then(function (response) {
+                    if (response["data"]["code"] == 200) {
+                        self.error='success';
+                        localStorage.setItem("admin_user_data",JSON.stringify(response["data"]));
+                        window.location.href="http://39.108.236.127/php/public/index.php/admin/control";
+                    }
+                    else {
+                        self.error=response["data"]["message"];
+                    }
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        }
+    })
+</script>
+</html>

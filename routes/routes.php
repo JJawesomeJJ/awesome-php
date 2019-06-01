@@ -22,7 +22,7 @@ class routes
     public function __construct()
     {
         $this->routes=self::$route;
-        $this->request = new request();
+        $this->request =make("request");
         $this->request_check();
     }
     private function request_check()
@@ -30,8 +30,10 @@ class routes
         foreach ($this->routes as $values) {
             if ($values["request_method"] == $this->request->request_mothod() && $values["url"] == $this->request->get_url()) {
                 $provider = new provider_register();
-                if(gettype($values["middleware"][0])=='string'){
-                    $values["middleware"]=[$values["middleware"]];
+                if(count($values["middleware"])>0) {
+                    if (gettype($values["middleware"][0]) == 'string') {
+                        $values["middleware"] = [$values["middleware"]];
+                    }
                 }
                 foreach ($values["middleware"] as $middleware) {
                     if(gettype($middleware)=="array"){
@@ -116,7 +118,7 @@ class routes
     }
     public static function put($url,$controller_method,array $middleware=[]){
         self::$route[]=["request_method"=>"PUT","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
-}
+    }
     public static function any($url,$controller_method,array $middleware=[]){
         self::$route[]=["request_method"=>"ANY","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
     }

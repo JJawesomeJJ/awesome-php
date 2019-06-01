@@ -36,13 +36,31 @@ class provider
         }
         $object=null;
         $class_name_fact=null;
-        try{
-            $object=new \ReflectionClass($this->dependencies[$class_name]);
-            $class_name_fact=$this->dependencies[$class_name];
+//        try{
+//            $object=new \ReflectionClass($this->dependencies[$class_name]);
+//            $class_name_fact=$this->dependencies[$class_name];
+//        }
+        try {
+            if (array_key_exists($class_name, $this->dependencies)) {
+                try {
+                    $object = new \ReflectionClass($this->dependencies[$class_name]);
+                    $class_name_fact = $this->dependencies[$class_name];
+                }
+                catch (\Throwable $throwable){
+                    $object = new \ReflectionClass("/".$this->dependencies[$class_name]);
+                    $class_name_fact = $this->dependencies[$class_name];
+                }
+            } else {
+                $object = new \ReflectionClass("\\$class_name");
+                $class_name_fact = "\\$class_name";
+            }
         }
         catch (\Throwable $throwable){
-            $object=new \ReflectionClass("\\$class_name");
-            $class_name_fact="\\$class_name";
+            $class_name_list=explode("\\",$class_name);
+            $class_name_=$class_name_list[count($class_name_list)-1];
+            $object=new \ReflectionClass("\\$class_name_");
+        }
+        catch (\Throwable $throwable){
         }
         $contruct_params_list=$this->get_class_contruct_params($object);
         if ($contruct_params_list==null||count($contruct_params_list) == 0) {
@@ -51,7 +69,7 @@ class provider
         } else {
             foreach ($contruct_params_list as $value) {
                 if($value==null){
-                    return;
+                    continue;
                 }
                 if (!array_key_exists($value, $this->controller)) {
                     $this->make($value);
@@ -69,11 +87,10 @@ class provider
     public function get_class_contruct_params(\ReflectionClass $object)
     {
         $params_list = [];
-        $params = $object->getConstructor();
+        $params = $object->getConstructor()->getParameters();
         if($params==null){
             return $params_list;
         }
-        $params=$params->getParameters();
         foreach ($params as $value) {
             try {
                 $class_object=$value->getClass();

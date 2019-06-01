@@ -4,22 +4,35 @@
  * Date: 2019-04-10 10:34:30
  */
 namespace controller\index;
+use controller\code\code_controller;
 use controller\controller;
 use db\db;
+use db\factory\migration\migration;
+use db\factory\migration\migration_list\migration_comment_list;
 use db\factory\soft_db;
 use db\model\comment_list\comment_list;
 use db\model\model;
 use db\model\user\user;
 use load\provider_register;
 use request\request;
+use SuperClosure\Serializer;
 use system\cache\cache;
+use system\class_define;
+use system\common;
+use system\config\config;
+use system\config\service_config;
+use system\config\timed_task_config;
 use system\file;
+use system\mail;
+use system\system_excu;
 use task\queue\queue;
 use template\compile;
+use view\view;
 
 class index_controller extends controller
 {
-    public function index(){
+    public function index()
+    {
 //        $db=new db();
 ////        return $db->show_columns("user");
 //          return soft_db::table("test11")
@@ -80,13 +93,52 @@ class index_controller extends controller
 //        $queue=new queue();
 //        $queue->push("email",["title"=>"欢迎注册","template"=>"login","user"=>"1293777844@qq.com","code"=>"sada"],"email");
 //        return "ok";
-        $user1=new user();
-        $user1->where("name","赵李杰")->get();
-        $user1->sex="women";
-        $user1->update();
-        $user=new user();
-        $user->get();
-        $complie=new compile();
-        return $complie->view("test",$user->all());
+//        $user1=new user();
+//        $user1->where("name","赵李杰")->get();
+//        $user1->sex="women";
+//        $user1->update();
+//        $user=new user();
+//        $user->get();
+//        $complie=new compile();
+//        return $complie->view("test",$user->all());
+//        $this->cache()->set_cache("sada","asd",10);
+//        foreach ($this->cache()->get_all() as $value){
+//            $value = json_decode($value, true);
+//            if($value["expire"]!="forever") {
+//                echo $value["key"] . date('Y-m-d H:i:s', $value["expire"]) . "<br>";
+//            }
+//            else{
+//                echo $value["key"] .$value["expire"]. "<br>";
+//            }
+//        }
+//    }
+//        $user=new user();
+//        return $user->get()->all();
+//        $request=$this->request();
+//        queue::asyn(function () use ($request){
+//            echo "test";
+//            $user=new user();
+//            $user->where("name", $request->get("name"))->get();
+//            $mail=new mail();
+//            $mail->send_email($user->email,"test","test");
+//        });
+//        return microtime(true)-$GLOBALS["time"];
+//        $compile=new compile();
+//        $user=new user();
+//        return $compile->view("test3",["user"=>$user->get()->all(),"head_img"=>"http://39.108.236.127/image/logo.png","name"=>"test"]);
+//        $user=new user();
+//        $user->where("name","赵李杰")->get();
+//        $mail=new mail();
+//        $mail->send_email($user->email,"test","test");
+//        $this->cache()->delete_key(timed_task_config::timed_task_schedule()[0]);
+//        //return $user->email;
+//        return code_controller::code(10);
+//        var_dump(system_excu::get_pid_php_script_name(4785));
+//        return service_config::service_config();
+//        $user_list=array_keys(class_define::redis()->hGetAll("user_list"));
+//        $user=new user();
+//        return $user->where_in("name",$user_list)->get()->all(["name","head_img"]);
+        view("test");
+        return microtime(true)-$GLOBALS["time"];
     }
 }

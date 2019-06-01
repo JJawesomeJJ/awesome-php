@@ -12,6 +12,9 @@ $provider=new \load\provider_register();
 //set_exception_handler("on_app_stop");
 function make($class_name)
 {
+    if(!isset($GLOBALS["provider"])){
+        $GLOBALS["provider"]=new \load\provider_register();
+    }
     return $GLOBALS["provider"]->make($class_name);
 }
 function app(){
@@ -23,4 +26,13 @@ function app(){
     else{
         return $GLOBALS["app"];
     }
+}
+function view($path,$data=[]){
+    if(!isset($GLOBALS["compile"])){
+        $GLOBALS["compile"]=new \template\compile();
+    }
+    return $GLOBALS["compile"]->view($path,$data);
+}
+function redirect($path){
+    header("Location: $path");
 }

@@ -14,7 +14,6 @@ use load\provider;
 use load\provider_register;
 use system\cache\cache;
 use system\config\config;
-require_once @"/var/www/html/php/pay/aop/SignData.php";
 
 class awesome
 {
@@ -325,5 +324,24 @@ class cache extends cache_
         }
         $arr_name=sprintf("protected \$$arr_name=[\n%s];",$arr_string);
         return $arr_name;
+    }
+    public function make_new_queue($queue_name){
+
+    }
+    public function migrate(...$arr){
+        $file=new file();
+        $file_name_list=$file->file_walk($this->home_path."db/");
+        foreach ($file_name_list as $value){
+            if(strpos($value,"migration_")!==false){
+                if(count($arr)==0){
+                    $class_name=str_replace(".php","",str_replace("/","\\",str_replace($this->home_path,"\\",$value)));
+                    $object=new $class_name();
+                    $object->create();
+                    $object->create_();
+                    $migration_name=explode("\\",$class_name);
+                    $this->cli_echo_color_green($migration_name[count($migration_name)-1]." has been created");
+                }
+            }
+        }
     }
 }

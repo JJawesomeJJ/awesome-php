@@ -119,3 +119,40 @@ function refresh_code() {
     var code=document.querySelector("#vertify_code");
     code.src="http://39.108.236.127/php/admin/code.php"+"?"+new Date().getTime();
 }
+function getCookies(cookieName) {
+    var strCookie = document.cookie;
+    if(document.cookie=="")
+    {
+        if(localStorage.getItem(cookieName)!=null)
+        {
+            return localStorage.getItem(cookieName);
+        }
+        else {
+            return "";
+        }
+    }
+    var arrCookie = strCookie.split("; ");
+    for(var i = 0; i < arrCookie.length; i++){
+        var arr = arrCookie[i].split("=");
+        if(cookieName == arr[0]){
+            return decodeURIComponent(arr[1]);
+        }
+    }
+    return "";
+}
+function is_pc() {
+    var sUserAgent = navigator.userAgent.toLowerCase();
+    var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+    var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+    var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+    var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+    var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+    var bIsAndroid = sUserAgent.match(/android/i) == "android";
+    var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+    var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+    if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+        return false;
+    } else {
+        return true;
+    }
+}

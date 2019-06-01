@@ -10,7 +10,7 @@
 //use db\db;
 //use system\file;
 
-require_once ("../pay/aop/SignData.php");
+require_once ("../load/auto_load.php");
 class test
 {
     private $redis;
@@ -87,6 +87,15 @@ class test2{
         echo json_encode($arr);
     }
 }
+class st_{
+    public function __construct()
+    {
+        echo "load";
+    }
+    public static function test(){
+        echo "jingtai";
+    }
+}
 //$test=new test();
 //$data=json_encode(serialize($test));
 //$compile=new \template\compile();
@@ -121,5 +130,33 @@ class test2{
 //} else {
 //    echo '不是一维数组';
 //}
-$test=[[]];
-echo gettype($test);
+//$todaytime=microtime(true);
+//function between_days_to_last_month($day_timestamps){
+//    $date=date("Y-m-d",$day_timestamps);
+//    $date_list=explode("-",$date);
+//    $date_list[1]=$date_list[1]+1;
+//    $data_1=$date_list[0]."-".$date_list[1]."-".$date_list[2];
+//    $second1 = strtotime($data_1);
+//    $second2 = strtotime($date);
+//    if ($second1 < $second2) {
+//        return ($second2-$second1)/86400;
+//    }
+//    return ($second1 - $second2) / 86400;
+//}
+//echo between_days_to_last_month(microtime(true));
+//$process_info=shell_exec("ps -aux | grep 4785");
+//echo $process_info."<br>";
+////$process_info="root 2623 0.0 1.4 302904 29416 ? S 10:39 0:00 php timed_task.php www-data 4469 0.0 0.0 4628 796 ? S 20:12 0:00 sh -c ps -aux | grep 2623 www-data 4471 0.0 0.0 11464 1000 ? S 20:12 0:00 grep 2623";
+//preg_match_all("/php (.*?).php/",$process_info,$process_name,PREG_SET_ORDER);
+//preg_match_all("/S  ([0-9|:| ]*?) [a-zA-Z]/",$process_info,$time_info,PREG_SET_ORDER);
+//if(!isset($process_name[0][1])){
+//    echo "process has been killed";
+//}
+//if(!isset($time_info[2][0])){
+//    echo "process has been killed";
+//}
+//$da=exec("php /var/www/html/php/task/test2.php " . ' > /dev/null &',$out,$d);
+//print_r($da);
+//echo basename(__FILE__,".php");
+//echo getmypid();
+\system\system_excu::record_my_pid();

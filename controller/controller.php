@@ -19,6 +19,10 @@ class controller
         if($request!=false){
             $this->request_=$request;
         }
+        $this->construct();
+    }
+    public function construct(){
+
     }
     public function response(){
 
@@ -33,6 +37,13 @@ class controller
     public function time()
     {
         return date("Y-m-d H:i:s");
+    }
+    public function is_1_array(array $arr){
+        if (count($arr) == count($arr, 1)) {
+            return true;
+        } else {
+            return false;
+        }
     }
     public function cache(){
         if($this->cache_==null){

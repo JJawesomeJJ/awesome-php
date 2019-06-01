@@ -12,7 +12,7 @@ use system\Exception;
 class request
 {
     public $user_input;
-    public function __construct($rules=false)
+    public function __construct()
     {
         $this->user_input=$this->all();
     }
@@ -23,10 +23,12 @@ class request
             foreach ($choose_list as $value) {
                 $list = explode(":", $value);
                 $rule_list = $list[0];
-                $rule_list_var = $list[1];
+                if(isset($list[1])) {
+                    $rule_list_var = $list[1];
+                }
                 switch ($rule_list) {
                     case "required":
-                        $this->required($key, $rule_list_var);
+                        $this->required($key);
                         break;
                     case "min":
                         $this->min($this->get($key), $rule_list_var);
@@ -71,10 +73,11 @@ class request
         else{
            new Exception("400","request_key_not_exist_expect_$key");
         }
-    }
+    }//get user input but if key not exist process will throw new Exception and process will shutdown
     public function get_ip_address(){
         return $_SERVER['REMOTE_ADDR'];
     }
+    // get user ip address but this not only
     public function try_get($key){
         if(isset($this->user_input[$key])){
             return $this->user_input[$key];
@@ -83,6 +86,7 @@ class request
            return false;
         }
     }
+    //try to get user input if not exist will return false
     public function min($numer,$min){
         if(strlen($numer)>$min){
             return $numer;
@@ -91,6 +95,7 @@ class request
            new Exception("400","number_less_than_min_expect_$min");
         }
     }
+    //vertify user input set min value
     public function max($numer,$max){
         if(strlen($numer)<(int)(int)$max){
             return $numer;
@@ -99,17 +104,10 @@ class request
            new Exception("400","number_more_than_max_except_$max");
         }
     }
-    public function required($variable,$request_method){
-        if(strtolower($_SERVER['REQUEST_METHOD'])==strtolower($request_method)){
-            if(isset($_REQUEST[$variable]))
-            {
-                return $_REQUEST[$variable];
-            }
-            else{
-               new Exception("400","variable_not_exist_expect_$variable");
-            }
-        }else{
-           new Exception("400","request_methoh_error_expect_$request_method");
+    //set max input
+    public function required($variable){
+        if(!isset($this->user_input[$variable])){
+            new Exception("400","variable_not_exist_expect_$variable");
         }
     }
     public function get_oringin($key){
@@ -126,13 +124,13 @@ class request
         if(count($result)==0){
             return true;
         }
-        if(count($result[$column])>0){
+        if(count($result)>0){
            new Exception("400","column_not_only_$column");
         }
         else{
             return true;
         }
-    }
+    }//get data whether unique data in database
     public function equal($numer,$standard){
         if(strlen($numer)==(int)(int)$standard){
             return $numer;
@@ -140,7 +138,7 @@ class request
         else{
            new Exception("400","variable_length_not_equal_standard_expect_$standard");
         }
-    }
+    }//vertify the number is equal another number
     public function accepet($variable,array $arr){
         if(in_array($variable,$arr)){
             return $variable;
@@ -149,7 +147,7 @@ class request
             $message=json_encode($arr);
            new Exception("400","variable_accept_$message");
         }
-    }
+    }//user input must be in we set
     public function email($str){
         if( filter_var($str, FILTER_VALIDATE_EMAIL) )
         {
@@ -159,6 +157,7 @@ class request
            new Exception("400","variable_is_not_a_email");
         }
     }
+    //user input is a email
     public function confirm($str,$key){
         if($this->get($key)==$str)
         {
@@ -186,6 +185,9 @@ class request
 
     }
     public function all(){
+        if($_SERVER["CONTENT_TYPE"]=="application/json;charset=UTF-8"){
+            return json_decode(file_get_contents('php://input'),true);
+        }
         if($_SERVER['REQUEST_METHOD']=="GET"){
             return $_GET;
         }
@@ -205,7 +207,7 @@ class request
     public function get_url(){
         $url=explode('.php/',$_SERVER['PHP_SELF']);
         if(count($url)=='1') {
-            return false;
+            return substr($_SERVER["PHP_SELF"],1,strlen($_SERVER["PHP_SELF"]));
         }
         else{
             return $url[1];
@@ -221,5 +223,14 @@ class request
             $arr[$key]=$this->get($key);
         }
         return $arr;
+    }
+    public function get_cookies($key){
+        return $_COOKIE[$key];
+    }
+    public function get_cookies_all(){
+        if(!isset($_COOKIE)){
+            return null;
+        }
+        return $_COOKIE;
     }
 }

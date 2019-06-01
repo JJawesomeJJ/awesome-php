@@ -7,6 +7,7 @@
  */
 namespace db\factory;
 use system\cache\cache_;
+use system\config\config;
 
 class soft_db
 {
@@ -26,10 +27,10 @@ class soft_db
     protected $databse_name=null;
     public function __construct()
     {
-        $user="register";
-        $password="zlj19971998";
-        $this->databse_name="register";
-        $this->con=mysqli_connect("localhost",$user,$password,$this->databse_name);
+        $user=config::database()["username"];
+        $password=config::database()["password"];
+        $this->databse_name=config::database()["database"];
+        $this->con=mysqli_connect(config::database()["hostname"],$user,$password,$this->databse_name);
         mysqli_set_charset($this->con,"utf8");
         $this->table_name=self::$table_name_;
         if(mysqli_connect_errno())
@@ -196,6 +197,9 @@ class soft_db
         return $this;
     }
     public function select(...$query_list){
+        if(!$this->is_1_array($query_list)){
+            $query_list=$query_list[0];
+        }
         $this->query_list=$query_list;
         return $this;
     }
@@ -282,6 +286,7 @@ class soft_db
             while ($row = mysqli_fetch_array($result)) {
                 $re = [];
                 foreach ($this->query_list as $value) {
+                    $value=str_replace($this->table_name.'.',"",$value);
                     $re[$value] = $row[$value];
                 }
                 $result_list[] = $re;
@@ -307,11 +312,11 @@ class soft_db
         return $table_column;
     }
     public function string($create_column_name,$length,$default_null=true,$primary_key=false){
-        if($default_null==true){
+        if($default_null===true){
             $default_null="default null";
         }
         else{
-            $default_null="default $default_null";
+            $default_null="default '$default_null'";
         }
         if($primary_key==false){
             $primary_key="";
@@ -323,12 +328,16 @@ class soft_db
         $this->create_table_column_list[]="$create_column_name varchar($length) $default_null $primary_key,";
         return $this;
     }
+    public function unique(){
+        $length=count($this->create_table_column_list);
+        $this->create_table_column_list[$length-1]=str_replace(",,","",$this->create_table_column_list[$length-1].",unique,");
+    }
     public function char($create_column_name,$length,$default_null=true,$primary_key=false){
-        if($default_null==true){
+        if($default_null===true){
             $default_null="default null";
         }
         else{
-            $default_null="default $default_null";
+            $default_null="default '$default_null'";
         }
         if($primary_key=false){
             $primary_key="";
@@ -349,7 +358,7 @@ class soft_db
             $default_null="default null";
         }
         else{
-            $default_null="default $default_null";
+            $default_null="default '$default_null'";
         }
         if($primary_key==false){
             $primary_key="";
@@ -365,25 +374,25 @@ class soft_db
         return $this;
     }
     public function timestamp($create_column_name){
-        $this->create_table_column_list[]="$create_column_name TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,c";
+        $this->create_table_column_list[]="$create_column_name TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,";
         return $this;
     }
     public function text($create_column_name,$default_null=true){
-        if($default_null==true){
+        if($default_null===true){
             $default_null="default null";
         }
         else{
-            $default_null="default $default_null";
+            $default_null="default '$default_null'";
         }
         $this->create_table_column_list[]="$create_column_name text $default_null,";
         return $this;
     }
     public function decimal($create_column_name,$length,$precison,$default_null=true){
-        if($default_null==true){
+        if($default_null===true){
             $default_null="default null";
         }
         else{
-            $default_null="default $default_null";
+            $default_null="default '$default_null'";
         }
         $this->create_table_column_list[]="$create_column_name decimal($length,$precison) $default_null,";
         return $this;
@@ -401,7 +410,6 @@ class soft_db
         $sql=str_replace("  "," ",$sql);
         $sql=str_replace(",)",")",$sql);
         $sql=str_replace("default not null","not null",$sql);
-        echo $sql;
         $this->con->query($sql);
     }
     public function set($set_column_name,$set_value){

@@ -12,17 +12,19 @@ namespace controller\survey;
 use controller\auth\auth_controller;
 use controller\controller;
 use request\request;
+use system\config\config;
 use task\add_task;
+use template\compile;
 
 class survey_controller extends controller
 {
     private $con;
     private $redis;
-    public function __construct()
+    public function construct()
     {
         $this->redis = new \Redis();
-        $this->redis->connect("127.0.0.1", 6379);
-        $this->con=mysqli_connect("localhost","register","zlj19971998","register");
+        $this->redis->connect(config::redis()["host"], config::redis()["port"]);
+        $this->con=mysqli_connect(config::database()["hostname"],config::database()["username"],config::database()["password"],config::database()["database"]);
         mysqli_set_charset($this->con,"utf8");
     }
     public function vote()
@@ -52,13 +54,14 @@ class survey_controller extends controller
         $result=$this->con->query($sql);
         $sql_list="select * from %s where q_num='q1'";
         $sql_all="";
+        $data=[];
         while($row=mysqli_fetch_array($result))
         {
             if($row['result']=="") {
                 $row_list = array(
                     "name" => $row['survey_name'],
                     "state" => $row["flag"],
-                    "time" => $row["time"],
+                    "time" => $row["created_at"],
                     "num" => ""
                 );
                 $number_list[]=$number;
@@ -83,7 +86,7 @@ class survey_controller extends controller
                 $row_list = array(
                     "name" => $row['survey_name'],
                     "state" => $row["flag"],
-                    "time" => $row["time"],
+                    "time" => $row["created_at"],
                     "num" => $all
                 );
             }
@@ -122,7 +125,7 @@ class survey_controller extends controller
             $index = 1;
             while ($row = mysqli_fetch_array($result)) {
                 $result_arr = array();
-                $result_arr["q" + $index] = $row['1'] . ";" . $row['2'] . ";" . $row['3'] . ";" . $row['4'];
+                $result_arr["q" . $index] = $row['1'] . ";" . $row['2'] . ";" . $row['3'] . ";" . $row['4'];
                 $index++;
                 $data .= json_encode($result_arr);
             }
@@ -329,7 +332,8 @@ class survey_controller extends controller
         $name=$writer;
         $time=date("Y-m-d H:i:s");
         $arr_data=json_encode($arr);
-        $sql="insert into survey(writer,survey_name,data,time,flag)values('$name','$writer1','$arr_data','$time','on_survey')";
+        $sql="insert into survey(writer,survey_name,data,created_at,flag)values('$name','$writer1','$arr_data','$time','on_survey')";
+        echo $sql;
         $this->con->query($sql);
         $index = 1;
         $html = "";
@@ -351,8 +355,8 @@ class survey_controller extends controller
         }
         $arr["title"]=$title."_".$writer;
         $tpi='<script type="text/html" id="TPI">'.json_encode($arr).'</script>';
-        $myfile = fopen("/var/www/html/php/api/survey_html1.html", "r") or die("Unable to open file!");
-        $str=fread($myfile,filesize("/var/www/html/php/api/survey_html1.html"));
+        $myfile = fopen("/var/www/html/php/template/survey/survey_html.html", "r") or die("Unable to open file!");
+        $str=fread($myfile,filesize("/var/www/html/php/template/survey/survey_html.html"));
         fclose($myfile);
         $html=str_replace("&&question&&;",$html,$str);
         $html=str_replace("&&作者&&",$writer,$html);

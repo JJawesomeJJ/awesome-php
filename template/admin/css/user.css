@@ -1,0 +1,11 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.user_container{
+    position:relative;
+    width: 500px;
+    height:400px;
+    background-color: #00aaff;
+    margin: 0 auto;
+}

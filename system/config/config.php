@@ -9,6 +9,7 @@
 namespace system\config;
 
 
+use request\request;
 use system\cache\cache;
 
 class config
@@ -27,7 +28,8 @@ class config
     //when test redis and file as cache driver but i find when data not enough much file faster than redis write 2019/4/12
     protected static $dependendcies=[
         "system",
-        "extend"
+        "request",
+        "extend/test/"
     ];
     //dependendcies_config
     //the path awesome_cli will load dependendies use php awesome load
@@ -46,14 +48,30 @@ class config
             "hostname"=>"127.0.0.1",
             "hostport"=>"3306",
             "database"=>"register",
-            "username"=>"register",
-            "password"=>"zlj19971998",
+            "username"=>"root",
+            "password"=>".zlj19971998",
+        ];
+    }
+    public static function task_record_list(){
+        return [
+            "name"=>"task_record_list",
         ];
     }
     public static function redis(){
         return [
             "host"=>"127.0.0.1",
             "port"=>"6379"
+        ];
+    }
+    public static function class_path(){
+        return [
+            "SuperClosure"=>"extend/SuperClosure/src",
+            "PhpParser"=>"extend/SuperClosure/vendor/nikic/php-parser/lib/PhpParser"
+        ];//define class_path
+    }
+    public static function server(){
+        return[
+           "host_ip"=>"39.108.236.127"
         ];
     }
 }

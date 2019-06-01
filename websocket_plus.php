@@ -1,4 +1,5 @@
 <?php
+require_once ("load/auto_load.php");
 $server=new server();
 global $time;
 class server
@@ -13,12 +14,12 @@ class server
     private $error_file_path;
     public $users = array();
     //上线用户的数量
-    function __construct()
+    public function __construct()
     {
         $this->error_file_path = dirname(__FILE__) . "/error.txt";
         //错误日志地址
-        $this->lock = new swoole_lock(SWOOLE_MUTEX);
-        $this->server = new swoole_websocket_server($this->addr, $this->port);
+        $this->lock = new \swoole_lock(SWOOLE_MUTEX);
+        $this->server = new \swoole_websocket_server($this->addr, $this->port);
         $this->server->set(array(
             'daemonize' => 0,
             'worker_num' => 4,
@@ -26,7 +27,7 @@ class server
             'max_request' => 1000,
             'log_file' => dirname(__FILE__) . "/error.txt"
         ));
-        $this->redis = new Redis();
+        $this->redis = new \Redis();
         $this->redis->connect("127.0.0.1", 6379);
         $this->redis->del("users");
         $this->redis->del("user_list");
@@ -35,6 +36,7 @@ class server
         $this->server->on('task', array($this, 'onTask'));
         $this->server->on('finish', array($this, 'onfinish'));
         $this->server->on('close', array($this, 'onclose'));
+        \system\system_excu::record_my_pid(__FILE__);
         $this->server->start();
     }
 
@@ -80,7 +82,7 @@ class server
                         if ($data->message == "handle_task") {
                             try {
                                 $this->handle_notify();
-                            } catch (Exception $exception) {
+                            } catch (\Exception $exception) {
                                 $this->write_error($exception);
                             }
                             return;//处理队列中的人物
@@ -220,7 +222,7 @@ class server
             $method_name = $data["handle_type"];
             try {
                 $this->$method_name($data);
-            } catch (Exception $exception) {
+            } catch (\Exception $exception) {
                 $this->redis->lPush("fail_hanle_list", json_encode($data));
                 $this->write_error($exception);
             }

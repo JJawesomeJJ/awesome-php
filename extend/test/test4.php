@@ -8,7 +8,7 @@
 
 class test4
 {
-    public function __construct(test3 $test)
+    public function __construct(test3 $test3)
     {
         echo "test4";
     }

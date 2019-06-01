@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tiang后台系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../asset/bootstrap4/bootstrap4.min.css">
+    <link href="../asset/font_3giswyavnyx/iconfont1.css" rel="stylesheet">
+    <script src="../asset/bootstrap4/1.12.5popper.min.js"></script>
+    <script src="../asset/bootstrap4/bootstrap4.10.min.js"></script>
+    <link href="css/controller_pannel.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+    @component(component/header/header)
+    <div class="container no-gutters">
+        <div class="monitor d-flex flex-row no-gutters p-0 flex-wrap container-fluid">
+            <div class="time_task_monitor col-md-4 p-0 col-md--4 panel col-12 col-xl-4" style="height: 200px;z-index:999;">
+                <div class="title ml-md-auto"><h5 class="text-center text-white">timed service monitor</h5></div>
+                <div class="row d-flex flex-row">
+                    <span class="iconfont ml-2 icon-icon-test5 " style="font-size: 100px;"></span>
+                    <div class="timed_task_info mt-4 ml-1" style="position:relative;top:15px;">
+                        <div class="time ml-auto"><h6>上次运行时间{{timed_task_time}}</h6></div>
+                        <div class="time ml-auto d-flex flex-row"><h6>目前任务数量{{time_num}}件</h6><span class="iconfont icon-icon-test text-primary" data-toggle="collapse" data-target="#task_info"></span></div>
+                        @if((time()-strtotime('{{timed_task_time}}'))>60)
+                        <div class="time ml-auto d-flex flex-row">
+                            <h6>态势感知:停止运行</h6>
+                            <span class="iconfont icon-icon-test48 text-danger"></span>
+                            <span class="iconfont icon-icon-test19 bg-primary text-white text-center rounded-circle p-0" style="width: 19px;height: 19px;line-height: 20px;margin-top: 2px;" data-toggle="tooltip" title="重启定时器任务?"></span>
+                        </div>
+                        @else
+                        <div class="time ml-auto d-flex flex-row">
+                            <h6>态势感知:正在运行</h6>
+                            <span class="iconfont icon-icon-test45 text-success"></span>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+                <div class="timed_task_info collapse no-gutters p-0" id="task_info" style="background-color: white;top:0px;z-index: 999">
+                    <table class="table table-striped table-responsive">
+                        <thead>
+                        <tr>
+                            <th>任务名称</th>
+                            <th>任务执行时间</th>
+                            <th>执行次数</th>
+                            <th>间隔时间</th>
+                            <th>任务类型</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($data['timed_task_list'] as $key=>$value)
+                        <tr>
+                            <td>{{$value['task_name']}}</td>
+                            <td>{&date("Y-m-d H:i",'{{$value['time']}}')&}</td>
+                            <td>{{$value['times']}}</td>
+                            <td>{{$value['interval']}}</td>
+                            <td>{{$value['type']}}</td>
+                        </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        <div class="websocket_monitor panel p-0 mt-5 mt-lg-0 mt-md-0 col-12 col-md-4 col-xl-4 ml-lg-5" style="height: 200px;z-index:998;">
+            <div class="title ml-md-auto"><h5 class="text-center text-white">websocket service monitor</h5></div>
+            <div class="row d-flex flex-row">
+                <span class="iconfont ml-2 icon-icon-test79 text-success" style="font-size: 100px;"></span>
+                <div class="timed_task_info mt-4 ml-1" style="position:relative;top:15px;">
+                    @if({{websocket_status}}==true)
+                    <div class="time ml-auto d-flex flex-wrap"><h6>当前状态:</h6><h6 class="text-success">正常运行</h6></div>
+                    @else
+                    <div class="time ml-auto d-flex flex-wrap"><h6>当前状态:</h6><h6 class="text-danger">服务已停止</h6></div>
+                    @endif
+                    <div class="time ml-auto d-flex flex-row"><h6>当前在线用户:</h6><h6 class="text-success">{{online_user}}</h6><span class="iconfont icon-icon-test text-primary" data-toggle="collapse" data-target="#user_list"></span></div>
+                    @if({{websocket_status}}==false)
+                    <div class="time ml-auto d-flex flex-row">
+                        <h6>态势感知:停止运行</h6>
+                        <span class="iconfont icon-icon-test48 text-danger"></span>
+                        <span class="iconfont icon-icon-test19 bg-primary text-white text-center rounded-circle p-0" style="width: 19px;height: 19px;line-height: 20px;margin-top: 2px;" data-toggle="tooltip" title="重启定时器任务?"></span>
+                    </div>
+                    @else
+                    <div class="time ml-auto d-flex flex-row">
+                        <h6>态势感知:正在运行</h6>
+                        <span class="iconfont icon-icon-test45 text-success"></span>
+                    </div>
+                    @endif
+                </div>
+            </div>
+            <div class="timed_task_info collapse no-gutters p-0" id="user_list" style="background-color: white;top:0px;z-index: 999;">
+                <table class="table table-striped table-responsive">
+                    <thead>
+                    <tr>
+                        <th>Head portrait</th>
+                        <th>user_name</th>
+                        <th>operate</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($data['user_list'] as $value)
+                    <tr>
+                        <td><img src="{{$value['head_img']}}" class="rounded-circle" style="width: 50px;height: 50px;" alt=""></td>
+                        <td>{{$value['name']}}</td>
+                        <td><span class="iconfont mr-md-auto text-center icon-icon-test47 text-warning"></span></td>
+                    </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+</div>
+</div>
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+    new Vue({
+        el: '#app',
+        data: {
+            user_info:{
+                name:"",
+                permission:"",
+                email:"",
+                head_img:"",
+                admin_csrf_token:"",
+            }
+        },
+        created(){
+            this.get_user_info();
+        },
+        methods:{
+            get_user_info(){
+                this.user_info=eval('('+localStorage.getItem("admin_user_data")+')');
+            }
+        }
+    })
+</script>
+</body>
+</html>

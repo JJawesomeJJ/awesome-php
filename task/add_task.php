@@ -24,6 +24,7 @@ class add_task
         {
             exec("php $this->home_path"."task.php".' > /dev/null &');
         }
+        echo "php $this->home_path"."task.php".' > /dev/null &';
         $arr=["controller_name"=>$controller_name,"method"=>$method,"arg"=>$is_arg];
         $this->redis->rPush("task_list",json_encode($arr));
     }//add task of queue the method will judge whether start handle task process

@@ -11,8 +11,8 @@ class db
     public $con;
     public function __construct()
     {
-        $user="register";
-        $password="zlj19971998";
+        $user="root";
+        $password=".zlj19971998";
         $this->con=mysqli_connect("localhost",$user,$password,"register");
         mysqli_set_charset($this->con,"utf8");
         if(mysqli_connect_errno())

@@ -7,6 +7,7 @@
  */
 
 namespace task\queue;
+use SuperClosure\Serializer;
 use system\config\config;
 use system\Exception;
 
@@ -36,5 +37,15 @@ class queue
             $command=$command_array[$queue_handle];
             exec("php $command".' > /dev/null &');
         }
-    }
+    }//检查任务队列标识位是否需要创建进程进行处理；
+    public static function asyn(\Closure $function){
+        if(!$function instanceof \Closure){
+            new Exception("403","please use Closure");
+        }
+        $queue=new queue();
+        $serialize=new Serializer();
+        $function=$serialize->serialize($function);
+        $queue->push("asyn",$function,"asyn");
+    }//创建一个异步任务默认接受一个闭包
+    //闭包php默认不可以吧被序列化我们采用superclosure 进行对闭包的序列化
 }

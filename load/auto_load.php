@@ -8,6 +8,8 @@
 
 namespace load;
 
+use system\config\config;
+
 class auto_load
 {
     public function __construct()
@@ -17,6 +19,18 @@ class auto_load
             $file = str_replace("\\","/",$file_path.$class . '.php');
             if (is_file($file)) {
                 require_once(@$file);
+            }
+            else{
+                foreach (config::class_path() as $key=>$value){
+                    if(strpos($file,$key)!==false){
+                        $file=str_replace($key,$value,$file);
+                        $file=str_replace("\\","/",$file);
+                        if(is_file($file)){
+                            require_once(@$file);
+                            break;
+                        }
+                    }
+                }
             }
         });
     }

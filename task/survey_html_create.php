@@ -14,7 +14,7 @@ class survey_html_create
     private $arr;
     public function __construct($arr)
     {
-        $this->con=mysqli_connect("localhost","register","zlj19971998","register");
+        $this->con=mysqli_connect("localhost","root",".zlj19971998","register");
         $this->arr=$arr;
         mysqli_set_charset($this->con,"utf8");
     }

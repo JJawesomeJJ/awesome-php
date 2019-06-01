@@ -97,8 +97,8 @@ class auth_controller extends controller
                 $url=$head_list[array_rand($head_list)];
             }
             $arr=["name"=>$request->get("name"),"password"=>$request->get("password"),"email"=>$request->get("email"),"sex"=>$request->get("sex"),"head_img"=>$url];
-            $db=new db();
-            $db->insert_databse("user",$arr);
+            $user=new user();
+            $user->create($arr);
             $_SESSION['user']=$request->get("name");
             $_SESSION['email']=$request->get("email");
             $token=new token();
@@ -243,7 +243,7 @@ class auth_controller extends controller
         $token=md5($user->name.$this->time());
         $this->cache()->set_cache($user->name."reset_token",$token,108000);
         $queue=new queue();
-        $queue->push("email",["title"=>"忘记密码","url"=>"http://39.108.236.127/php/public/index.php/user/reset?token=$token&name=$name","template"=>"reset_link","user"=>$user->email],"email");
+        $queue->push("email",["title"=>"忘记密码","url"=>"http://39.108.236.127/php/public/index.php/user/reset?token=$token&name=$name","template"=>"user/reset_link","user"=>$user->email],"email");
         return ["code"=>"200","message"=>"ok"];
     }
     public function update_password(){

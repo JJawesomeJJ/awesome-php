@@ -190,7 +190,7 @@ class survey_html_create
         $name=$writer;
         $time=date("Y-m-d H:i:s");
         $arr_data=json_encode($arr);
-        $sql="insert into survey(writer,survey_name,data,time,flag)values('$name','$writer1','$arr_data','$time','on_survey')";
+        $sql="insert into survey(writer,survey_name,data,created_at,flag)values('$name','$writer1','$arr_data','$time','on_survey')";
         $this->con->query($sql);
         $index = 1;
         $html = "";

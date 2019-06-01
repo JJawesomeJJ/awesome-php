@@ -11,19 +11,20 @@ namespace system;
 
 class Exception
 {
-    private $code;
     public function __construct($code,$message)
     {
+        if($this->is_cli()){
+            $this->throw_exception($message);
+            return;
+        }
         echo json_encode(["code"=>$code,"message"=>$message]);
         exit();
     }
-    public function throw_exception($message){
+    protected function throw_exception($message){
         throw new \Exception($message);
     }
-    public function exception_json($message)
+    protected function is_cli()
     {
-        preg_match_all("/Exception: ([\s\S]*?) in/",$message, $matchs, PREG_SET_ORDER);
-        echo json_encode(["code"=>$this->code,"message"=>$matchs[0][1]]);
-        exit();
+        return preg_match("/cli/i", php_sapi_name()) ? true : false;
     }
 }

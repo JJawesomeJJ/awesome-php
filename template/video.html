@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+</head>
+<style>
+
+</style>
+<body>
+<p>
+    <button onclick="openMedia()">打开</button>
+    <button onclick="closeMedia()">关闭</button>
+    <button onclick="drawMedia()">截取</button>
+</p>
+<video id="video" class="bg" style="width: 100%;height:300px;position:relative;margin:0 auto;"></video>
+<canvas id="qr-canvas" style="width: 300px;"></canvas>
+<canvas id="show" style="width: 100%;"></canvas>
+<img src="" width="100%" height="100%" id="show11">
+</body>
+<script type="text/javascript">
+    var task_flag;
+    var video = document.querySelector('video');
+    var canvas1 = document.getElementById('qr-canvas');
+    var context1 = canvas1.getContext('2d');
+    var showcanvas=document.querySelector("#show");
+    var con=showcanvas.getContext('2d');
+    var mediaStreamTrack;
+    var flag=false;
+    var init_flag=false;
+    canvas1.setAttribute("width", 640);
+    canvas1.setAttribute("height", 480);
+    showcanvas.setAttribute("width",640);
+    showcanvas.setAttribute("height", 480);
+    var img1=document.querySelector("#show11");
+    // 一堆兼容代码
+    window.URL = (window.URL || window.webkitURL || window.mozURL || window.msURL);
+    if (navigator.mediaDevices === undefined) {
+        navigator.mediaDevices = {};
+    }
+    if (navigator.mediaDevices.getUserMedia === undefined) {
+        navigator.mediaDevices.getUserMedia = function(constraints) {
+            var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+            if (!getUserMedia) {
+                return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+            }
+            return new Promise(function(resolve, reject) {
+                getUserMedia.call(navigator, constraints, resolve, reject);
+            });
+        }
+    }
+    //摄像头调用配置
+    var mediaOpts = {
+        audio: false,
+        video: true,
+        video: { facingMode: "environment"}, // 或者 "user"
+        video: { width: 1280, height: 720 },
+    }
+    // 回调
+    function successFunc(stream) {
+        mediaStreamTrack = stream;
+        console.log(stream);
+        video = document.querySelector('video');
+        if ("srcObject" in video) {
+            video.srcObject = stream
+        } else {
+            video.src = window.URL && window.URL.createObjectURL(stream) || stream
+        }
+        video.play();
+        get_canvas_to_base64();
+    }
+    function errorFunc(err) {
+        alert(err.name);
+    }
+    // 正式启动摄像头
+    function openMedia(){
+        navigator.mediaDevices.getUserMedia(mediaOpts).then(successFunc).catch(errorFunc);
+    }
+    //关闭摄像头
+    function closeMedia(){
+        mediaStreamTrack.getVideoTracks().forEach(function (track) {
+            track.stop();
+            context1.clearRect(0, 0,context1.width, context1.height);//清除画布
+        });
+        clearInterval(task_flag);
+    }
+    //截取视频
+    function drawMedia(){
+        context1.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+    }
+    function get_canvas_to_base64() {
+        task_flag=setInterval(function () {
+            context1.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+            ws.send(JSON.stringify({"type":"base64","base64":canvas1.toDataURL('image/jpeg',0.4)}));
+        },200);
+    }
+    var ws = new WebSocket("ws://39.108.236.127:9501");
+
+    ws.onopen = function()
+    {
+        // Web Socket 已连接上，使用 send() 方法发送数据
+    };
+
+    ws.onmessage = function (evt)
+    {
+        var data=eval('('+evt.data+')');
+        data=eval('('+data+')');
+        var img=new Image();
+        img.crossOrigin = 'Anonymous';
+        img.src=data["base64"];
+        img1.setAttribute("src",data["base64"]);
+        con.drawImage(img,0,0,img.width,img.height);
+    };
+
+    ws.onclose = function()
+    {
+        // 关闭 websocket
+        alert("连接已关闭...");
+    };
+</script>
+</html>

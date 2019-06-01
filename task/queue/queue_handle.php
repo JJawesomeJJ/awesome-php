@@ -9,6 +9,7 @@
 namespace task\queue;
 
 
+use system\cache\cache;
 use system\config\config;
 use system\Exception;
 use task\job\email_queue;
@@ -46,6 +47,10 @@ abstract class queue_handle
                 $this->onfinish();
                 new Exception("500",$throwable->getMessage());
             }
+            catch (\Error $error){
+                echo $error->getMessage().PHP_EOL;
+                $this->onfinish();
+            }
         }
         $this->now_wait_time=$this->now_wait_time+$this->sleep_time;
         if($this->now_wait_time<$this->max_time_out){
@@ -57,6 +62,7 @@ abstract class queue_handle
     public function onfinish(){
         $this->redis->hDel(\system\config\queue::$job_list,$this->listen_queue);
     }
+
     public function __destruct()
     {
         echo "程序执行完毕".PHP_EOL;

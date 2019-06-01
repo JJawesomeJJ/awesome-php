@@ -116,3 +116,21 @@ routes::get("user/forget",function (){
     $complie=new compile();
     return $complie->view("user/forget");
 });
+routes::get("user/bitch",function (){
+    $complie=new compile();
+    return $complie->view("vivo/main");
+});
+routes::get("user/bitch/buy",function (){
+    $complie=new compile();
+    return $complie->view("vivo/buy");
+});
+routes::post("admin_user/register","admin_user_controller@register");
+routes::post("admin_user/login","admin_user_controller@login");
+routes::post("admin_user/login/email","admin_user_controller@email_code_login");
+routes::get("vertify","code_controller@img_cut_square",[["limit_flow_middleware","ip_limit","50"]]);
+routes::get("vertify/slide","code_controller@slide_code");
+routes::post("vertify/silde/x","code_controller@vertify_slide");
+routes::get("admin/user","admin_user_controller@user_login");
+routes::get("admin/control","admin_user_controller@system_controller_pannel");
+routes::get("admin/service","admin_user_controller@start_service");
+routes::get("admin/service/status","admin_user_controller@get_all_service_info");

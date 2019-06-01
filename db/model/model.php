@@ -145,9 +145,6 @@ abstract class model
             return false;
         }
     }
-    public function crate(array $arr){
-        return $this->db->insert($arr);
-    }
     public function update(){
         $this->db->update();
     }
@@ -172,12 +169,48 @@ abstract class model
         //实例化模型的具体方法
         //根据设置的外键设置条件
     }
-    public function all(){
-        return $this->model_list;
+    public function all(array $filed=[]){
+        if(empty($this->model_list)){
+            return [];
+        }
+        if(empty($filed)) {
+            return $this->model_list;
+        }
+        else{
+            $filed_list=[];
+            foreach ($filed as $key){
+                if(!in_array($key,$this->table_column_list)){
+                    new Exception("400","this_key_not_exist");
+                }
+            }
+            if(!$this->is_1_array($this->model_list)) {
+                foreach ($this->model_list as $model) {
+                    $data = [];
+                    foreach ($filed as $item) {
+                        $data[$item] = $model[$item];
+                    }
+                    $filed_list[] = $data;
+                }
+            }
+            else{
+                $data = [];
+                foreach ($filed as $item) {
+                    $data[$item] = $this->model_list[$item];
+                }
+                $filed_list[] = $data;
+            }
+            return $filed_list;
+        }
     }
     //数据被删除之后对应的模型重置
     public function delete(){
         $this->db->delete();
         $this->model_list = [];
+    }
+    public function create(array $filed_arr){
+        if(in_array("created_at",$this->table_column_list)){
+            $filed_arr["created_at"]=date("Y-m-d H:i:s");
+        }
+        $this->db->insert($filed_arr);
     }
 }

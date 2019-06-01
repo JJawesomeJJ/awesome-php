@@ -19,7 +19,8 @@ class queue
             self::$home_path=dirname(dirname(__DIR__));
         }
         return [
-            "email"=>self::$home_path."/task/job/email_queue.php"
+            "email"=>self::$home_path."/task/job/email_queue.php",
+            "asyn"=>self::$home_path."/task/job/asyn_queue.php"
         ];
     }//此处配置
     public static function homepath(){
@@ -28,4 +29,5 @@ class queue
         }
         return self::$home_path;
     }
+
 }
