@@ -24,7 +24,7 @@ class cache_
     private $redis_lock=[];//when you lock a cache object but forget unlock it when end of process cache try to help unlock it and avoid deadlock when driver is file when file object destory process will unlock it
     public function __construct()
     {
-        //$this->init_config();//init cache config set the driver and path/key;
+        $this->init_config();//init cache config set the driver and path/key;
         if($this->driver=="redis") {
             $this->redis = new \Redis();
             $this->redis->connect("127.0.0.1", 6379);

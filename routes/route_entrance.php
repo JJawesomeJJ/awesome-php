@@ -13,6 +13,7 @@ namespace routes;
 //    protected $routes=[
 //        [
 //            "post","user/login","auth_controller","user_login","limit_flow_middleware"
+use request\request;
 use template\compile;
 
 routes::post("user/login","auth_controller@user_login",["limit_flow_middleware"],["limit_flow_middleware"=>["method"=>"ip_limit","time"=>50]]);
@@ -84,7 +85,7 @@ routes::get("code/email_code","code_controller@map_admin_email");
 //        [
 //            "get","system/notify_user","system_controller","notify_user_all"
 //        ],
-routes::get("system/notify_user","system_controller@notify_user_all");
+routes::post("system/notify_user","system_controller@notify_user_all");
 //        [
 //            "get","post/comment","post_controller","comment","basic_middleware"
 //        ],
@@ -131,6 +132,25 @@ routes::get("vertify","code_controller@img_cut_square",[["limit_flow_middleware"
 routes::get("vertify/slide","code_controller@slide_code");
 routes::post("vertify/silde/x","code_controller@vertify_slide");
 routes::get("admin/user","admin_user_controller@user_login");
-routes::get("admin/control","admin_user_controller@system_controller_pannel");
-routes::get("admin/service","admin_user_controller@start_service");
+routes::get("admin/user/list","admin_user_controller@get_online_user_info");
+routes::get("admin/control/{service}","admin_user_controller@system_controller_pannel");
+routes::post("admin/service","admin_user_controller@start_service");
+routes::post("admin/service/restart","admin_user_controller@restart_service");
+routes::post("admin/service/close","admin_user_controller@abort_service");
+//routes::post("admin/{service}/{operate}",function (){
+//
+//});
 routes::get("admin/service/status","admin_user_controller@get_all_service_info");
+routes::get("system/notify/list","test_controller@test");
+routes::get("test/{name}/{password}",function (request $request){
+    $requet=make("request");
+    echo $requet->get("name");
+    return microtime(true)-$GLOBALS["time"];
+});
+routes::post("admin/nitify","admin_user_controller@add_websocket_nitify");
+routes::get("test","test_controller@test");
+routes::post("admin/theme","admin_user_controller@theme");
+routes::post("admin/theme/set","admin_user_controller@set_current_theme");
+routes::get("admin/theme/get","admin_user_controller@get_current_theme");
+routes::get("admin/theme/list","admin_user_controller@get_theme_list");
+routes::post("admin/theme/delete","admin_user_controller@delete_theme");

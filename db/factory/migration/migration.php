@@ -10,6 +10,7 @@ namespace db\factory\migration;
 
 
 use db\factory\soft_db;
+use system\cache\cache;
 use system\Exception;
 
 abstract class migration
@@ -31,6 +32,7 @@ abstract class migration
     }
     public function create_(){
         $this->db->create();
+        $this->db->get_table_column_cache(true);
     }
     public function refresh(){
         $this->db->delete();

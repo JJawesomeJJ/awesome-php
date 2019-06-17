@@ -6,6 +6,7 @@
  * Time: 下午 3:01
  */
 header('Access-Control-Allow-Origin:*');
+define("home_path",dirname(__DIR__));
 use routes\routes;
 class index
 {

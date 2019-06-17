@@ -13,6 +13,6 @@ class user extends model
     protected $table_name="user";
     protected $guard=["name","id","email"];
     public function comment_list(){
-        return $this->has("db\model\comment_list_model","name","user_id");
+        return $this->has("db\model\comment_list\comment_list","name","user_id");
     }
 }

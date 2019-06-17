@@ -19,12 +19,13 @@ class provider
     protected $dependencies=[];
     protected $container=[];
     public function controller($controller_name,$params=false){
-        if($params==false) {
-            return new $this->controller[$controller_name]();
-        }
-        else{
-            return new $this->controller[$controller_name]($params);
-        }
+//        if($params==false) {
+//            return new $this->controller[$controller_name]();
+//        }
+//        else{
+//            return new $this->controller[$controller_name]($params);
+//        }
+        return $this->controller[$controller_name];
     }
     public function middleware($middleware,$request){
         return new $this->middleware[$middleware]($request);
@@ -83,6 +84,27 @@ class provider
         $class_object = $object->newInstanceArgs($params_list);
         $this->container[$class_name] = $class_object;
         return $class_object;
+    }
+    public function make_method($method,$class_name=false){
+        if($class_name!=false) {
+            $class_name_ = $class_name;
+            $method_ = $method;
+            $class_name = new \ReflectionClass($class_name);
+            if ($class_name->hasMethod($method)) {
+                $method = $class_name->getMethod($method);
+                $method_params = [];
+                foreach ($method->getParameters() as $parameter) {
+                    $method_params[] = make($parameter->getClass()->getShortName());
+                }
+                return call_user_func_array([make($class_name_), $method_], $method_params);
+            }
+            new Exception("500", "method_can't be resolve");
+        }
+        else{
+//            $method_=$method;
+//            $method=new \ReflectionObject($method);
+//            print_r($method->getConstructor()->getParameters());
+        }
     }
     public function get_class_contruct_params(\ReflectionClass $object)
     {

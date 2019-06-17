@@ -1,0 +1,9 @@
+.card{
+    height:150px;
+    padding: 5px 5px;
+}
+@media screen and (max-width:767px) {
+    .content-timed{
+        margin-bottom: 200px;
+    }
+}

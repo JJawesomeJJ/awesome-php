@@ -1,119 +1,196 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/request/request.php" line="13" />
+    <bookmark url="file://$PROJECT_DIR$/request/request.php" line="15" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c14f6098-fa7f-43ad-a3d3-0833492a1ddb" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/factory/migration/migration.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_admin_user.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_comment_list.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_survey.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/model/admin_user_new/admin_user_new.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/swoole/native_view.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/swoole/swoole_task.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/system/class_define.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/system/common.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/system/config/service.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/system/config/service_config.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/system/config/timed_task_config.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/system/system_excu.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/job/asyn_queue.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/queue/timed_task.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/timed_task/timed_task.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/timed_task/timed_task_handle.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/timed_task/timed_task_list/clear_expire_cache.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/timed_task/timed_task_list/closure_task.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/timed_task/timed_task_list/timed_task_schedule.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/admin/css/controller_pannel.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/admin/css/user.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/admin/titang_controller_pannel.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/admin/user_login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/bootstrap4/1.12.5popper.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/bootstrap4/bootstrap4.10.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/bootstrap4/bootstrap4.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/font-icon/demo.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/font-icon/demo_fontclass.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/font-icon/demo_symbol.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/font-icon/demo_unicode.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/font-icon/iconfont.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/font-icon/iconfont.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/font-icon/iconfont.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/font-icon/iconfont.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/font-icon/iconfont.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/font-icon/iconfont.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/font_3giswyavnyx/demo.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/font_3giswyavnyx/demo_index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/font_3giswyavnyx/iconfont.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/font_3giswyavnyx/iconfont.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/font_3giswyavnyx/iconfont.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/font_3giswyavnyx/iconfont.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/font_3giswyavnyx/iconfont.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/font_3giswyavnyx/iconfont.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/font_3giswyavnyx/iconfont1.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/fonts/FontAwesome.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/fonts/font-awesome.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/fonts/fontawesome-webfont.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/fonts/fontawesome-webfont.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/fonts/fontawesome-webfont.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/fonts/fontawesome-webfont.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/fonts/fontawesome-webfont.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/fonts/glyphicons-halflings-regular.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/fonts/glyphicons-halflings-regular.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/fonts/glyphicons-halflings-regular.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/asset/fonts/glyphicons-halflings-regular.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/component/header/css/header.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/component/header/header.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/component/vertify/css/vertify.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/component/vertify/js/vertify.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/component/vertify/slide_vertify.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/set_back/css/head.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/set_back/head.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/set_back/set_back.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/survey/survey_html.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/tool/email.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/video.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/video2.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/video_user.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_notify_list.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_titang_theme.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/model/model_auto/model_auto.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/system/session.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/system/upload_file.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/admin/controller_index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/admin/css/controller_pannel_layui.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/admin/css/timed_task.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/admin/css/titang_theme.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/admin/js/controller_index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/admin/js/websocket_service.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/admin/test.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/admin/timed_service.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/admin/titang_service.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/admin/websocket_service.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/css/common.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/js/dom_op.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layer-v3.1.1/layer/layer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layer-v3.1.1/layer/mobile/layer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layer-v3.1.1/layer/mobile/need/layer.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layer-v3.1.1/layer/theme/default/icon-ext.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layer-v3.1.1/layer/theme/default/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layer-v3.1.1/layer/theme/default/layer.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layer-v3.1.1/layer/theme/default/loading-0.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layer-v3.1.1/layer/theme/default/loading-1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layer-v3.1.1/layer/theme/default/loading-2.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layer-v3.1.1/test.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layer-v3.1.1/文档/jquery下载.url" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layer-v3.1.1/文档/layer官网.url" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layer-v3.1.1/文档/layer文档.url" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layer-v3.1.1/文档/layui社区.url" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layer-v3.1.1/文档/获得layim.url" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layer-v3.1.1/更新日志.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/css/layui.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/css/layui.mobile.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/css/modules/code.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/css/modules/laydate/default/laydate.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/css/modules/layer/default/icon-ext.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/css/modules/layer/default/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/css/modules/layer/default/layer.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/css/modules/layer/default/loading-0.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/css/modules/layer/default/loading-1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/css/modules/layer/default/loading-2.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/font/iconfont.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/font/iconfont.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/font/iconfont.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/font/iconfont.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/font/iconfont.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/0.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/10.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/11.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/12.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/13.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/14.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/15.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/16.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/17.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/18.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/19.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/2.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/20.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/21.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/22.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/23.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/24.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/25.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/26.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/27.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/28.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/29.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/3.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/30.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/31.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/32.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/33.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/34.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/35.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/36.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/37.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/38.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/39.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/4.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/40.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/41.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/42.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/43.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/44.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/45.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/46.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/47.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/48.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/49.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/5.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/50.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/51.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/52.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/53.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/54.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/55.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/56.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/57.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/58.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/59.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/6.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/60.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/61.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/62.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/63.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/64.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/65.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/66.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/67.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/68.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/69.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/7.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/70.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/71.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/8.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/images/face/9.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/lay/modules/carousel.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/lay/modules/code.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/lay/modules/colorpicker.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/lay/modules/element.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/lay/modules/flow.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/lay/modules/form.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/lay/modules/jquery.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/lay/modules/laydate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/lay/modules/layedit.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/lay/modules/layer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/lay/modules/laypage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/lay/modules/laytpl.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/lay/modules/mobile.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/lay/modules/rate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/lay/modules/slider.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/lay/modules/table.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/lay/modules/transfer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/lay/modules/tree.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/lay/modules/upload.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/lay/modules/util.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/layui.all.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/layui/layui.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/文档与示例/GitHub.url" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/文档与示例/Git码云.url" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/文档与示例/在线示例.url" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/文档与示例/快速上手.url" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/layui-v2.5.3/更新日志.url" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/asset/vue/vue2.2.2_min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/component/notify/window.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/test123.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/template/tool/xiaoyi.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/admin_user/admin_user_controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/admin_user/admin_user_controller.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/auth/auth_controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/auth/auth_controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/code/code_controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/code/code_controller.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/controller.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/index/index_controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/index/index_controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/post/post_controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/post/post_controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/survey/survey_controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/survey/survey_controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/survey/survey_html_create.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/survey/survey_html_create.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/system/system_controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/system/system_controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/db.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/db.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/factory/migration/migration.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/factory/migration/migration.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/factory/soft_db.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/factory/soft_db.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/model/model.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/model/model.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/extend/test/test4.php" beforeDir="false" afterPath="$PROJECT_DIR$/extend/test/test4.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/load/auto_load.php" beforeDir="false" afterPath="$PROJECT_DIR$/load/auto_load.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/model/user/user.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/model/user/user.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/load/common.php" beforeDir="false" afterPath="$PROJECT_DIR$/load/common.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/load/provider.php" beforeDir="false" afterPath="$PROJECT_DIR$/load/provider.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/load/provider_register.php" beforeDir="false" afterPath="$PROJECT_DIR$/load/provider_register.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/request/request.php" beforeDir="false" afterPath="$PROJECT_DIR$/request/request.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/request/survey/vode_survey_request.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/route_entrance.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/route_entrance.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/routes.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/Exception.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Exception.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/system/awesome.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/awesome.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/cache/cache_.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/cache/cache_.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/common.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/common.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/system/config/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/config/config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/config/queue.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/config/queue.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/mail.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/mail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/system_excu.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/system_excu.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/task/add_task.php" beforeDir="false" afterPath="$PROJECT_DIR$/task/add_task.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/queue/queue.php" beforeDir="false" afterPath="$PROJECT_DIR$/task/queue/queue.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/queue/queue_handle.php" beforeDir="false" afterPath="$PROJECT_DIR$/task/queue/queue_handle.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/survey_html_create.php" beforeDir="false" afterPath="$PROJECT_DIR$/task/survey_html_create.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/node/rouser.js" beforeDir="false" afterPath="$PROJECT_DIR$/task/node/rouser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/queue/timed_task.php" beforeDir="false" afterPath="$PROJECT_DIR$/task/queue/timed_task.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/task/test.php" beforeDir="false" afterPath="$PROJECT_DIR$/task/test.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/asset/css/reset_password.css" beforeDir="false" afterPath="$PROJECT_DIR$/template/asset/css/reset_password.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/timed_task/timed_task_list/timed_task_schedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/task/timed_task/timed_task_list/timed_task_schedule.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/admin/titang_controller_pannel.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/admin/titang_controller_pannel.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/admin/user_login.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/admin/user_login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/template/asset/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/template/asset/js/common.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/template/compile.php" beforeDir="false" afterPath="$PROJECT_DIR$/template/compile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/component/header/css/header.css" beforeDir="false" afterPath="$PROJECT_DIR$/template/component/header/css/header.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/component/header/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/component/header/header.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/template/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/test.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template/user/reset_password.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/user/reset_password.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/websocket_plus.php" beforeDir="false" afterPath="$PROJECT_DIR$/websocket_plus.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -125,84 +202,42 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="titang_controller_pannel.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/template/admin/titang_controller_pannel.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="28">
-              <caret line="20" column="120" selection-start-line="20" selection-start-column="120" selection-end-line="20" selection-end-column="120" />
-              <folding>
-                <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="admin_user_controller.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/controller/admin_user/admin_user_controller.php">
+      <file leaf-file-name="timed_service.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/template/admin/timed_service.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="173">
-              <caret line="74" column="50" lean-forward="true" selection-start-line="74" selection-start-column="50" selection-end-line="74" selection-end-column="50" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="system_excu.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/system/system_excu.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1792">
-              <caret line="70" column="87" selection-start-line="70" selection-start-column="87" selection-end-line="70" selection-end-column="87" />
+              <caret line="88" column="55" selection-start-line="88" selection-start-column="55" selection-end-line="88" selection-end-column="55" />
               <folding>
-                <element signature="e#123#148#0#PHP" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h1#0;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h1#1;n#div#1;n#div#0;n#div#2;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#0;n#div#0;n#div#0;n#div#3;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h1#1;n#div#1;n#div#0;n#div#3;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#table#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#th#0;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#th#1;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#th#2;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#th#3;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#th#4;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="controller_pannel.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/template/admin/css/controller_pannel.css">
+      <file leaf-file-name="admin_user_controller.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/controller/admin_user/admin_user_controller.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="1" selection-start-column="1" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="user.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/template/admin/css/user.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="112">
-              <caret line="4" column="5" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index_controller.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/controller/index/index_controller.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="141" column="48" selection-start-line="141" selection-start-column="48" selection-end-line="141" selection-end-column="48" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test3.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/template/test3.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="644">
-              <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/template/test.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="213">
-              <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
+            <state relative-caret-position="31">
+              <caret line="406" column="65" selection-start-line="406" selection-start-column="65" selection-end-line="406" selection-end-column="65" />
+              <folding>
+                <element signature="e#99#135#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -210,17 +245,111 @@
       <file leaf-file-name="model.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/db/model/model.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4676">
-              <caret line="173" column="22" selection-start-line="173" selection-start-column="22" selection-end-line="173" selection-end-column="22" />
+            <state relative-caret-position="505">
+              <caret line="161" column="21" lean-forward="true" selection-start-line="161" selection-start-column="21" selection-end-line="161" selection-end-column="21" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="compile.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/template/compile.php">
+      <file leaf-file-name="controller_index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/template/admin/controller_index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2632">
-              <caret line="102" column="17" selection-start-line="102" selection-start-column="17" selection-end-line="102" selection-end-column="17" />
+            <state relative-caret-position="-1997">
+              <caret line="7" column="69" lean-forward="true" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="69" />
+              <folding>
+                <element signature="n#style#0;n#i#0;n#li#0;n#ul#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#li#0;n#ul#2;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index_controller.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/controller/index/index_controller.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="517">
+              <caret line="153" column="7" selection-start-line="153" selection-start-column="7" selection-end-line="153" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="titang_service.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/template/admin/titang_service.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="423">
+              <caret line="214" column="37" lean-forward="true" selection-start-line="214" selection-start-column="37" selection-end-line="214" selection-end-column="37" />
+              <folding>
+                <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#div#2;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#3;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#div#3;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#th#0;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#th#1;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#th#2;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#th#3;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#th#4;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#th#5;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#th#6;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#th#7;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#td#1;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#td#2;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#td#3;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="titang_controller_pannel.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/template/admin/titang_controller_pannel.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="28">
+              <caret line="5" column="72" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="72" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="soft_db.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/db/factory/soft_db.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="355">
+              <caret line="438" column="9" lean-forward="true" selection-start-line="438" selection-start-column="9" selection-end-line="438" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/template/admin/test.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="639">
+              <caret line="51" column="9" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="db.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/db/db.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="28">
+              <caret line="1" column="3" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -238,45 +367,38 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>request</find>
-      <find>openMedia()</find>
-      <find>drawMedia()</find>
-      <find>showcanvas</find>
-      <find>(src|href)=&quot;((?!http).)(.*[\s\S])&quot;</find>
-      <find>&lt;</find>
-      <find>(src|href)=&quot;(?!http)(.*?)&quot;</find>
-      <find>scan_task</find>
-      <find>print_r</find>
-      <find>$class_name_fact</find>
-      <find>is_cli</find>
-      <find>$des_path</find>
-      <find>setcoo</find>
-      <find>console</find>
-      <find>width: 300px;</find>
-      <find>none</find>
-      <find>$(&quot;.vertify_container&quot;).slideToggle(200);</find>
-      <find>console.log(</find>
-      <find>code</find>
-      <find>get</find>
-      <find>passowrd</find>
-      <find>@for</find>
-      <find>eval</find>
-      <find>data</find>
-      <find>excu</find>
-      <find>in_arr</find>
+      <find>请输入</find>
+      <find>where</find>
+      <find>echi</find>
+      <find>查询</find>
+      <find>print</find>
+      <find>accepet</find>
+      <find>accept</find>
+      <find>system_controller_pannel</find>
+      <find>hight_</find>
+      <find>hight_match_parent</find>
+      <find>h1</find>
+      <find>text</find>
+      <find>timed_task_status</find>
+      <find>timed_task_stat</find>
+      <find>han</find>
+      <find>timed_task_stuts</find>
       <find>echo</find>
-      <find>prin</find>
-      <find>printf</find>
-      <find>z-index</find>
+      <find>text-b</find>
+      <find>layui-col-md3</find>
+      <find>now_theme_list</find>
+      <find>morning</find>
+      <find>noon</find>
+      <find>afternoon</find>
+      <find>night</find>
+      <find>create</find>
+      <find>create(</find>
+      <find>请</find>
+      <find>model</find>
+      <find>up</find>
+      <find>set_list</find>
     </findStrings>
     <replaceStrings>
-      <replace>new</replace>
-      <replace>strpos</replace>
-      <replace>$this-&gt;</replace>
-      <replace />
-      <replace>driver</replace>
-      <replace>$re</replace>
-      <replace>$request=$this-&gt;request()-</replace>
       <replace>$request=$this-&gt;request()-&gt;verifacation($rules);</replace>
       <replace>$this-&gt;get($key)</replace>
       <replace>$this-&gt;redis_lock[]=$key;</replace>
@@ -300,6 +422,13 @@
       <replace>namespace extend\super\src\SuperClosure</replace>
       <replace>use extend\super\src\SuperClosure</replace>
       <replace>width:100%;</replace>
+      <replace>self::$file_name</replace>
+      <replace>//$this-&gt;server-&gt;close($frame-&gt;fd);</replace>
+      <replace>height_match_parent</replace>
+      <replace>timed_task_status</replace>
+      <replace>layui-col-md3 title_container</replace>
+      <replace>layui-col-md3 img_container</replace>
+      <replace>v-bind:src</replace>
     </replaceStrings>
     <dirStrings>
       <dir />
@@ -312,57 +441,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/controller/auth/auth_controller.php" />
-        <option value="$PROJECT_DIR$/task/timed_task/timed_task_list/closure_task.php" />
-        <option value="$PROJECT_DIR$/task/timed_task/timed_task_handle.php" />
-        <option value="$PROJECT_DIR$/task/timed_task/timed_task.php" />
-        <option value="$PROJECT_DIR$/system/config/timed_task_config.php" />
-        <option value="$PROJECT_DIR$/db/factory/migration/migration_list/migration_admin_user.php" />
-        <option value="$PROJECT_DIR$/db/model/admin_user_new/admin_user_new.php" />
+        <option value="$PROJECT_DIR$/template/admin/css/controller_pannel.css" />
+        <option value="$PROJECT_DIR$/template/admin/js/websocket_service.js" />
+        <option value="$PROJECT_DIR$/template/test123.php" />
         <option value="$PROJECT_DIR$/controller/controller.php" />
-        <option value="$PROJECT_DIR$/extend/test/test4.php" />
-        <option value="$PROJECT_DIR$/load/provider.php" />
         <option value="$PROJECT_DIR$/load/provider_register.php" />
-        <option value="$PROJECT_DIR$/load/auto_load.php" />
+        <option value="$PROJECT_DIR$/system/awesome.php" />
+        <option value="$PROJECT_DIR$/task/test.php" />
+        <option value="$PROJECT_DIR$/load/provider.php" />
+        <option value="$PROJECT_DIR$/public/index.php" />
+        <option value="$PROJECT_DIR$/template/admin/titang_controller_pannel.html" />
+        <option value="$PROJECT_DIR$/template/component/notify/window.html" />
+        <option value="$PROJECT_DIR$/load/common.php" />
+        <option value="$PROJECT_DIR$/task/node/rouser.js" />
+        <option value="$PROJECT_DIR$/db/model/user/model_auto.php" />
+        <option value="$PROJECT_DIR$/system/upload_file.php" />
+        <option value="$PROJECT_DIR$/task/add_task.php" />
+        <option value="$PROJECT_DIR$/db/factory/migration/migration_list/migration_notify_list.php" />
+        <option value="$PROJECT_DIR$/db/factory/migration/migration.php" />
+        <option value="$PROJECT_DIR$/controller/test/test_controller.php" />
+        <option value="$PROJECT_DIR$/controller/system/system_controller.php" />
+        <option value="$PROJECT_DIR$/template/admin/css/controller_pannel_layui.css" />
+        <option value="$PROJECT_DIR$/template/admin/css/timed_task.css" />
+        <option value="$PROJECT_DIR$/template/admin/websocket_service.html" />
+        <option value="$PROJECT_DIR$/template/tool/xiaoyi.html" />
+        <option value="$PROJECT_DIR$/template/admin/user_login.html" />
+        <option value="$PROJECT_DIR$/template/admin/test.html" />
+        <option value="$PROJECT_DIR$/template/admin/js/titang_service.html" />
+        <option value="$PROJECT_DIR$/system/system_excu.php" />
+        <option value="$PROJECT_DIR$/websocket_plus.php" />
+        <option value="$PROJECT_DIR$/template/admin/controller_index.html" />
+        <option value="$PROJECT_DIR$/task/timed_task/timed_task_list/timed_task_schedule.php" />
+        <option value="$PROJECT_DIR$/task/queue/timed_task.php" />
+        <option value="$PROJECT_DIR$/system/cache/cache_.php" />
+        <option value="$PROJECT_DIR$/controller/auth/auth_controller.php" />
+        <option value="$PROJECT_DIR$/controller/index/index_controller.php" />
+        <option value="$PROJECT_DIR$/system/config/config.php" />
+        <option value="$PROJECT_DIR$/template/admin/css/titang_theme.css" />
+        <option value="$PROJECT_DIR$/template/admin/timed_service.html" />
+        <option value="$PROJECT_DIR$/template/compile.php" />
+        <option value="$PROJECT_DIR$/request/request.php" />
+        <option value="$PROJECT_DIR$/template/asset/css/common.css" />
+        <option value="$PROJECT_DIR$/db/model/model_auto/model_auto.php" />
+        <option value="$PROJECT_DIR$/db/factory/migration/migration_list/migration_titang_theme.php" />
         <option value="$PROJECT_DIR$/routes/routes.php" />
-        <option value="$PROJECT_DIR$/system/config/queue.php" />
-        <option value="$PROJECT_DIR$/template/tool/email.html" />
-        <option value="$PROJECT_DIR$/template/component/vertify/vertify.js" />
         <option value="$PROJECT_DIR$/system/common.php" />
         <option value="$PROJECT_DIR$/template/asset/js/common.js" />
-        <option value="$PROJECT_DIR$/template/admin/css/user.css" />
-        <option value="$PROJECT_DIR$/template/user/reset_password.html" />
-        <option value="$PROJECT_DIR$/controller/code/code_controller.php" />
-        <option value="$PROJECT_DIR$/template/test3.html" />
-        <option value="$PROJECT_DIR$/template/component/vertify/js/vertify.js" />
-        <option value="$PROJECT_DIR$/template/component/vertify/css/vertify.css" />
-        <option value="$PROJECT_DIR$/template/asset/css/reset_password.css" />
-        <option value="$PROJECT_DIR$/request/request.php" />
-        <option value="$PROJECT_DIR$/template/admin/css/controller_pannel.html" />
-        <option value="$PROJECT_DIR$/template/component/vertify/slide_vertify.html" />
-        <option value="$PROJECT_DIR$/template/component/header/css/header.css" />
-        <option value="$PROJECT_DIR$/template/admin/user_login.html" />
-        <option value="$PROJECT_DIR$/system/config/config.php" />
-        <option value="$PROJECT_DIR$/system/mail.php" />
-        <option value="$PROJECT_DIR$/load/common.php" />
-        <option value="$PROJECT_DIR$/template/component/header/header.html" />
-        <option value="$PROJECT_DIR$/task/timed_task/timed_task_list/timed_task_schedule.php" />
-        <option value="$PROJECT_DIR$/system/config/service_config.php" />
-        <option value="$PROJECT_DIR$/system/config/service.php" />
-        <option value="$PROJECT_DIR$/system/class_define.php" />
-        <option value="$PROJECT_DIR$/task/test2.php" />
-        <option value="$PROJECT_DIR$/task/test.php" />
-        <option value="$PROJECT_DIR$/task/queue/timed_task.php" />
-        <option value="$PROJECT_DIR$/websocket_plus.php" />
-        <option value="$PROJECT_DIR$/template/admin/css/controller_pannel.css" />
         <option value="$PROJECT_DIR$/routes/route_entrance.php" />
-        <option value="$PROJECT_DIR$/system/system_excu.php" />
+        <option value="$PROJECT_DIR$/template/admin/titang_service.html" />
         <option value="$PROJECT_DIR$/db/model/model.php" />
-        <option value="$PROJECT_DIR$/template/compile.php" />
-        <option value="$PROJECT_DIR$/template/admin/titang_controller_pannel.html" />
+        <option value="$PROJECT_DIR$/db/factory/soft_db.php" />
         <option value="$PROJECT_DIR$/controller/admin_user/admin_user_controller.php" />
-        <option value="$PROJECT_DIR$/template/test.html" />
-        <option value="$PROJECT_DIR$/controller/index/index_controller.php" />
       </list>
     </option>
   </component>
@@ -385,10 +514,10 @@
       <path value="$APPLICATION_HOME_DIR$/swoole-ide-helper-master" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="540" />
-    <option name="y" value="25" />
-    <option name="width" value="1205" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="115" />
+    <option name="y" value="40" />
+    <option name="width" value="1680" />
     <option name="height" value="895" />
   </component>
   <component name="ProjectView">
@@ -412,6 +541,12 @@
               <item name="php" type="b2602c69:ProjectViewProjectNode" />
               <item name="php" type="462c0819:PsiDirectoryNode" />
               <item name="controller" type="462c0819:PsiDirectoryNode" />
+              <item name="admin_user" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="php" type="b2602c69:ProjectViewProjectNode" />
+              <item name="php" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
               <item name="index" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -422,8 +557,12 @@
             <path>
               <item name="php" type="b2602c69:ProjectViewProjectNode" />
               <item name="php" type="462c0819:PsiDirectoryNode" />
-              <item name="db" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="php" type="b2602c69:ProjectViewProjectNode" />
+              <item name="php" type="462c0819:PsiDirectoryNode" />
+              <item name="system" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="php" type="b2602c69:ProjectViewProjectNode" />
@@ -440,12 +579,14 @@
               <item name="php" type="b2602c69:ProjectViewProjectNode" />
               <item name="php" type="462c0819:PsiDirectoryNode" />
               <item name="template" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
+              <item name="asset" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="php" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="bcb0276e:PhpExternalLibrariesNodePatcher$PatchedExternalLibrariesNode" />
+              <item name="php" type="462c0819:PsiDirectoryNode" />
+              <item name="template" type="462c0819:PsiDirectoryNode" />
+              <item name="asset" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -467,11 +608,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\PhpStorm 2018.1.3\php\template\admin" />
       <recent name="E:\PhpStorm 2018.1.3\php\template\asset" />
       <recent name="E:\PhpStorm 2018.1.3\php\template\asset\bootstrap4" />
       <recent name="E:\PhpStorm 2018.1.3\php\template\asset\fonts" />
       <recent name="E:\PhpStorm 2018.1.3\php\template" />
-      <recent name="E:\PhpStorm 2018.1.3\php\extend" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\PhpStorm 2018.1.3\php\template\component\vertify\js" />
@@ -657,21 +798,40 @@
       <workItem from="1559205310838" duration="2202000" />
       <workItem from="1559215852615" duration="27870000" />
       <workItem from="1559363808401" duration="15508000" />
-      <workItem from="1559389844419" duration="1593000" />
+      <workItem from="1559389844419" duration="13699000" />
+      <workItem from="1559523136045" duration="17607000" />
+      <workItem from="1559570438664" duration="2459000" />
+      <workItem from="1559611150528" duration="1595000" />
+      <workItem from="1559643866499" duration="62594000" />
+      <workItem from="1559902982027" duration="7490000" />
+      <workItem from="1559965773513" duration="8898000" />
+      <workItem from="1560073312780" duration="14562000" />
+      <workItem from="1560132129679" duration="33150000" />
+      <workItem from="1560212842210" duration="4894000" />
+      <workItem from="1560228097784" duration="2235000" />
+      <workItem from="1560234804433" duration="18340000" />
+      <workItem from="1560324408344" duration="24184000" />
+      <workItem from="1560387239957" duration="3941000" />
+      <workItem from="1560401193697" duration="14355000" />
+      <workItem from="1560425991329" duration="5892000" />
+      <workItem from="1560471839107" duration="30964000" />
+      <workItem from="1560565585688" duration="16933000" />
+      <workItem from="1560595028339" duration="10379000" />
+      <workItem from="1560606578321" duration="4532000" />
+      <workItem from="1560613140359" duration="71988000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1395397000" />
+    <option name="totallyTimeSpent" value="1764495000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.16015625" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.18684895" />
       <window_info anchor="bottom" id="TODO" order="11" />
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.5019531" side_tool="true" visible="true" weight="0.32876712" />
+      <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.5019531" side_tool="true" weight="0.008219178" />
       <window_info anchor="right" id="Database" order="0" />
       <window_info anchor="bottom" id="Database Changes" order="1" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="4" />
@@ -697,288 +857,382 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="17" />
+      <option name="time" value="20" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/load/app.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-515" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template/asset/font_3giswyavnyx/demo.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controller/auth/auth_controller.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/load/common.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="896">
-          <caret line="32" column="5" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template/component/header/header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="896">
-          <caret line="32" column="10" selection-start-line="32" selection-start-column="10" selection-end-line="32" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/Exception.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="560">
-          <caret line="25" column="31" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/task/job/asyn_queue.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/task/timed_task/timed_task_list/clear_expire_cache.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/task/timed_task/timed_task_list/closure_task.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/queue.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/awesome.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/task/timed_task/timed_task_list/timed_task_schedule.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="482">
-          <caret line="43" column="5" lean-forward="true" selection-start-line="43" selection-start-column="5" selection-end-line="43" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controller/system/system_controller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-165" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/config/timed_task_config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-123">
-          <caret line="17" column="9" lean-forward="true" selection-start-line="15" selection-start-column="7" selection-end-line="17" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/common.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/config/queue.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-420" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/mail.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="30" column="40" selection-start-line="30" selection-start-column="40" selection-end-line="30" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/class_define.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="15" column="28" lean-forward="true" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/task/test2.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="7" column="8" lean-forward="true" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/task/test11.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/task/survey_html_create.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/token.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/task/test.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3329">
-          <caret line="12" column="39" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/task/alter_table.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-319" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/task/excu_task.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/task/store.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/task/queue/timed_task.php">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="353">
+          <caret line="118" column="44" selection-start-line="118" selection-start-column="44" selection-end-line="118" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller/test/test_controller.php">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
-          <caret line="42" column="5" lean-forward="true" selection-start-line="42" selection-start-column="5" selection-end-line="42" selection-end-column="5" />
+          <caret line="19" column="16" lean-forward="true" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/task/timed_task/timed_task.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/task/timed_task/timed_task_handle.php">
+    <entry file="file://$PROJECT_DIR$/system/cache/cache_.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-361" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/config/service.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="31" column="5" lean-forward="true" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
+        <state relative-caret-position="251">
+          <caret line="37" column="33" lean-forward="true" selection-start-line="37" selection-start-column="33" selection-end-line="37" selection-end-column="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/vertify_code.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template/video_user.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template/video2.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template/video.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template/admin/user_login.html">
+    <entry file="file://$PROJECT_DIR$/system/cache/cache.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="364">
-          <caret line="13" column="69" selection-start-line="12" selection-start-column="3" selection-end-line="13" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/websocket_plus.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="32" column="23" lean-forward="true" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/routes.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/route_entrance.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="135" column="81" selection-start-line="135" selection-start-column="81" selection-end-line="135" selection-end-column="81" />
+          <caret line="17" column="1" lean-forward="true" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/system/config/config.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-277">
-          <caret line="57" column="10" lean-forward="true" selection-start-line="57" selection-start-column="10" selection-end-line="57" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/config/service_config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="16" column="33" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template/asset/font_3giswyavnyx/demo_index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/system_excu.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1792">
-          <caret line="70" column="87" selection-start-line="70" selection-start-column="87" selection-end-line="70" selection-end-column="87" />
-          <folding>
-            <element signature="e#123#148#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/model/model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4676">
-          <caret line="173" column="22" selection-start-line="173" selection-start-column="22" selection-end-line="173" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template/admin/css/user.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="4" column="5" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
+        <state relative-caret-position="363">
+          <caret line="24" column="11" lean-forward="true" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/template/admin/css/controller_pannel.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template/admin/css/controller_pannel_layui.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="1" selection-start-column="1" selection-end-column="1" />
+        <state relative-caret-position="639">
+          <caret line="124" column="1" selection-start-line="124" selection-start-column="1" selection-end-line="124" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template/admin/css/timed_task.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="6" column="29" selection-start-line="6" selection-start-column="29" selection-end-line="6" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template/admin/css/titang_theme.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="6" column="19" lean-forward="true" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/template/compile.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2632">
-          <caret line="102" column="17" selection-start-line="102" selection-start-column="17" selection-end-line="102" selection-end-column="17" />
+        <state relative-caret-position="279">
+          <caret line="184" column="50" selection-start-line="184" selection-start-column="50" selection-end-line="184" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller/auth/auth_controller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6203">
+          <caret line="24" column="21" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
+          <folding>
+            <element signature="e#129#152#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/factory/migration/migration_list/migration_admin_user.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="15" column="38" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/factory/migration/migration_list/migration_comment_list.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/factory/migration/migration_list/migration_notify_list.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/factory/migration/migration_list/migration_survey.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/request/request.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="102" column="46" lean-forward="true" selection-start-line="102" selection-start-column="46" selection-end-line="102" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template/asset/css/common.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="419">
+          <caret line="55" column="8" lean-forward="true" selection-start-line="55" selection-start-column="8" selection-end-line="55" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/Exception.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/file.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/http.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/mail.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/queue.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/session.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/template.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/upload_file.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/vertify_code.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/factory/migration/migration.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="701">
+          <caret line="39" column="1" lean-forward="true" selection-start-line="39" selection-start-column="1" selection-end-line="39" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/model/model_auto/model_auto.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="12" column="14" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller/controller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="653">
+          <caret line="32" column="20" selection-start-line="32" selection-start-column="20" selection-end-line="32" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/factory/migration/migration_list/migration_titang_theme.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="24" column="53" selection-start-line="24" selection-start-column="53" selection-end-line="24" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="74" column="17" selection-start-line="74" selection-start-column="17" selection-end-line="74" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller/system/system_controller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="607">
+          <caret line="111" column="8" lean-forward="true" selection-start-line="111" selection-start-column="8" selection-end-line="111" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/awesome.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-9081" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/class_define.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/common.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="28" column="9" selection-start-line="28" selection-start-column="9" selection-end-line="28" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template/admin/user_login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="134" column="112" selection-start-line="134" selection-start-column="112" selection-end-line="134" selection-end-column="112" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template/asset/js/dom_op.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-275" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template/asset/js/common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="747">
+          <caret line="268" column="1" selection-start-line="268" selection-start-column="1" selection-end-line="268" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/system_excu.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="559">
+          <caret line="67" column="38" selection-start-line="67" selection-start-column="38" selection-end-line="67" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template/admin/websocket_service.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="365" column="40" lean-forward="true" selection-start-line="364" selection-start-column="11" selection-end-line="365" selection-end-column="40" />
+          <folding>
+            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#form#0;n#div#1;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#1;n#form#0;n#div#1;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#div#2;n#form#0;n#div#1;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#th#1;n#tr#0;n#thead#0;n#table#0;n#div#3;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#1;n#tr#0;n#tbody#0;n#table#0;n#div#3;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#textarea#0;n#div#0;n#form#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/route_entrance.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="523">
+          <caret line="155" column="69" selection-start-line="155" selection-start-column="69" selection-end-line="155" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller/index/index_controller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="517">
+          <caret line="153" column="7" selection-start-line="153" selection-start-column="7" selection-end-line="153" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/db.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="1" column="3" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template/admin/controller_index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1997">
+          <caret line="7" column="69" lean-forward="true" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="69" />
+          <folding>
+            <element signature="n#style#0;n#i#0;n#li#0;n#ul#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#li#0;n#ul#2;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template/admin/test.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="639">
+          <caret line="51" column="9" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template/admin/timed_service.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="88" column="55" selection-start-line="88" selection-start-column="55" selection-end-line="88" selection-end-column="55" />
+          <folding>
+            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h1#0;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h1#1;n#div#1;n#div#0;n#div#2;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#div#0;n#div#0;n#div#3;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h1#1;n#div#1;n#div#0;n#div#3;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#table#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#th#0;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#th#1;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#th#2;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#th#3;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#th#4;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/template/admin/titang_controller_pannel.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="28">
-          <caret line="20" column="120" selection-start-line="20" selection-start-column="120" selection-end-line="20" selection-end-column="120" />
+          <caret line="5" column="72" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template/admin/titang_service.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="423">
+          <caret line="214" column="37" lean-forward="true" selection-start-line="214" selection-start-column="37" selection-end-line="214" selection-end-column="37" />
           <folding>
-            <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#2;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#3;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#th#0;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#th#1;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#th#2;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#th#3;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#th#4;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#th#5;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#th#6;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#th#7;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#td#1;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#td#2;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#td#3;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/model/model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="505">
+          <caret line="161" column="21" lean-forward="true" selection-start-line="161" selection-start-column="21" selection-end-line="161" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/factory/soft_db.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="355">
+          <caret line="438" column="9" lean-forward="true" selection-start-line="438" selection-start-column="9" selection-end-line="438" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controller/admin_user/admin_user_controller.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="74" column="50" lean-forward="true" selection-start-line="74" selection-start-column="50" selection-end-line="74" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template/test3.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="644">
-          <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template/test.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controller/index/index_controller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="141" column="48" selection-start-line="141" selection-start-column="48" selection-end-line="141" selection-end-column="48" />
+        <state relative-caret-position="31">
+          <caret line="406" column="65" selection-start-line="406" selection-start-column="65" selection-end-line="406" selection-end-column="65" />
+          <folding>
+            <element signature="e#99#135#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

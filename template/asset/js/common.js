@@ -156,3 +156,114 @@ function is_pc() {
         return true;
     }
 }
+function get_current_time() {//获取当前时间
+    var date = new Date();
+    var seperator1 = "-";
+    var seperator2 = ":";
+    var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+    var strDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+        + " " + date.getHours() + seperator2 + date.getMinutes()
+        + seperator2 + date.getSeconds();
+    return currentdate;
+}
+function get_html_width() {
+    return document.getElementsByTagName('html')[0].getBoundingClientRect().width;
+}
+function get_diffTime(start_time,end_time) {
+    var return_string="";
+    var diff=Math.abs(end_time-start_time);
+    var day=parseInt(diff/(60*60*24));
+    var res=diff%(60*60*24);
+    var hour=parseInt(res/(60*60));
+    res=res%(60*60);
+    var minutes=parseInt(res/(60));
+    res=res%60;
+    var sencond=res/1;
+    if(day>0){
+        return_string=return_string+day+"天";
+    }
+    if(hour>0){
+        return_string=return_string+hour+"小时";
+    }
+    if(minutes>0){
+        return_string=return_string+minutes+"分"
+    }
+    return return_string+sencond+"秒";
+}
+function is_equal(a,b){
+    //如果a和b本来就全等
+    if(a===b){
+        //判断是否为0和-0
+        return a !== 0 || 1/a ===1/b;
+    }
+    //判断是否为null和undefined
+    if(a==null||b==null){
+        return a===b;
+    }
+    //接下来判断a和b的数据类型
+    var classNameA=toString.call(a),
+        classNameB=toString.call(b);
+    //如果数据类型不相等，则返回false
+    if(classNameA !== classNameB){
+        return false;
+    }
+    //如果数据类型相等，再根据不同数据类型分别判断
+    switch(classNameA){
+        case '[object RegExp]':
+        case '[object String]':
+            //进行字符串转换比较
+            return '' + a ==='' + b;
+        case '[object Number]':
+            //进行数字转换比较,判断是否为NaN
+            if(+a !== +a){
+                return +b !== +b;
+            }
+            //判断是否为0或-0
+            return +a === 0?1/ +a === 1/b : +a === +b;
+        case '[object Date]':
+        case '[object Boolean]':
+            return +a === +b;
+    }
+    //如果是对象类型
+    if(classNameA == '[object Object]'){
+        //获取a和b的属性长度
+        var propsA = Object.getOwnPropertyNames(a),
+            propsB = Object.getOwnPropertyNames(b);
+        if(propsA.length != propsB.length){
+            return false;
+        }
+        for(var i=0;i<propsA.length;i++){
+            var propName=propsA[i];
+            //如果对应属性对应值不相等，则返回false
+            if(a[propName] !== b[propName]){
+                return false;
+            }
+        }
+        return true;
+    }
+    //如果是数组类型
+    if(classNameA == '[object Array]'){
+        if(a.toString() == b.toString()){
+            return true;
+        }
+        return false;
+    }
+}
+function object_content_equal(object1,object2) {
+    var key=Object.keys(object1);
+    for (var i of key) {
+        if(object1[i]!=object2[i]){
+            return false;
+        }
+    }
+    return true;
+}
+function object_content_copy(object1) {
+    var key=Object.keys(object1);
+    var object2={};
+    for (var i of key) {
+        object2[i]=object1[i];
+    }
+    return object2;
+}

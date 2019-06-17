@@ -194,7 +194,8 @@ class $middleware_name extends middleware
         $help_list = [
             "make:controller controller_name" => "it can create a controller to control your work at the same time tool will update provider_register",
             "make:middleware middleware_name" => "it can create a middleware at same time tool will update provider_register,it can hlep you to filter danger_input",
-            "update" => "it can update provider_register"
+            "update" => "it can update provider_register",
+            "migrate"=>"to do migation file"
         ];
         foreach ($help_list as $key=>$value)
         {
@@ -288,6 +289,10 @@ class cache extends cache_
         $name_space=$name_space_;
         foreach (config::depenendcies() as $value){
             if(strpos($name_space,$value)==false){
+                $value=str_replace("/","\\",$value);
+                if($value[strlen($value)-1]=="\\"){
+                    $value=substr($value,0,strlen($value)-1);
+                }
                 $name_space.="use $value;\n";
             }
         }

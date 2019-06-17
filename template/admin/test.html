@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../asset/layui-v2.5.3/layui/css/layui.css">
+    <script src="../asset/layui-v2.5.3/layui/layui.js"></script>
+</head>
+<body>
+<div>
+<form class="layui-form" action="">
+    <input type="text" name="title" required v-model="notify_data.title"  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+    <select name="notify_way" lay-filter="notify_way" lay-verify="notify_way" id="notify_way" v-model="notify_data.notify_way" @change="get_select_value">
+        <option value="window">弹窗通知</option>
+        <option value="text">文本通知</option>
+        <option value="html">自定html</option>
+    </select>
+    <div class="layui-input-block magin-left-0">
+        <textarea v-model="notify_data.notify_content" name="" required lay-verify="required" placeholder="请输入通知内容" class="layui-textarea" style="height: 280px;"></textarea>
+    </div>
+</form>
+</div>
+<script>
+    // layui.use('form', function () {
+    //     var form = layui.form;
+    // });
+    // layui.use('form', function() {
+    //     var form = layui.form
+    //     form.on('select(notify_way)', function (data) {
+    //         console.log(data.elem); //得到select原始DOM对象
+    //         console.log(data.value); //得到被选中的值
+    //         console.log(data.othis); //得到美化后的DOM对象
+    //     });
+    // });
+    get_diiff(1560615790,1560651408);
+    function get_time_diff(start_time,end_time) {
+        var return_string="";
+        var diff=Math.abs(end_time-start_time);
+        var day=parseInt(diff/(60*60*24));
+        var res=diff%(60*60*24);
+        var hour=parseInt(res/(60*60));
+        res=res%(60*60);
+        var minutes=parseInt(res/(60));
+        res=res%60;
+        var sencond=res/1;
+        if(day>0){
+            return_string=return_string+day+"天";
+        }
+        if(hour>0){
+            return_string=return_string+hour+"小时";
+        }
+        if(minutes>0){
+            return_string=return_string+minutes+"分"
+        }
+        return return_string+sencond+"秒";
+    }
+</script>
+</body>
+</html>

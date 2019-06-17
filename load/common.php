@@ -36,3 +36,13 @@ function view($path,$data=[]){
 function redirect($path){
     header("Location: $path");
 }
+function make_method($method,$class_name=false){
+    if(!isset($GLOBALS["provider"])){
+        $GLOBALS["provider"]=new \load\provider_register();
+    }
+    return $GLOBALS["provider"]->make_method($method,$class_name);
+}
+function is_cli()
+{
+    return preg_match("/cli/i", php_sapi_name()) ? true : false;
+}

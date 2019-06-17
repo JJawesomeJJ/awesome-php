@@ -4,9 +4,12 @@
  * Date: 2019-05-24 03:05:05
  */
 namespace controller\admin_user;
+use controller\auth\auth_controller;
 use controller\code\code_controller;
 use controller\controller;
+use db\factory\migration\migration_list\migration_survey;
 use db\model\admin_user_new\admin_user_new;
+use db\model\model_auto\model_auto;
 use db\model\user\user;
 use request\request;
 use system\cache\cache;
@@ -16,11 +19,11 @@ use system\config\config;
 use system\config\service_config;
 use system\file;
 use system\mail;
+use system\session;
 use system\system_excu;
 use task\queue\queue;
 use task\task;
 use template\compile;
-use view\view;
 use system\Exception;
 
 class admin_user_controller extends controller
@@ -79,19 +82,18 @@ class admin_user_controller extends controller
             $admin_user_info = $cache->get_cache($_COOKIE['admin_token']);
             if($admin_user_info==null){
                 redirect("http://39.108.236.127/php/public/index.php/admin/user");
-                return ["code"=>200,"message"=>"admin_token_has_been_expired"];
+                //return ["code"=>200,"message"=>"admin_token_has_been_expired"];
             }
             $admin_user_info=$cache->get_cache($admin_user_info["name"]);
             if ($admin_user_info == null || $admin_user_info['token'] != $_COOKIE['admin_token']) {
                 $cache->delete_key($_COOKIE["admin_token"]);
-                new Exception("403", "admin_token_has_been_expired");
+                redirect("http://39.108.236.127/php/public/index.php/admin/user");
             } else {
                 $_SESSION["admin_permission"] = $admin_user_info;
             }
         }
         return $_SESSION["admin_permission"];
     }
-
     public function set_token($name, $permission)
     {
         $token = md5($name . microtime());
@@ -99,7 +101,6 @@ class admin_user_controller extends controller
         $this->cache()->set_cache("admin" . $name, ["permission" => $permission, "name" => $name, "token" => $token], 604800);
         setcookie("admin_token", $token, time() + 604800, "/", $_SERVER['HTTP_HOST'], false, true);
     }
-
     public function login()
     {
         $rule = [
@@ -136,13 +137,13 @@ class admin_user_controller extends controller
     }
     public function sign_csrf_token($name){
         $token=md5($name.microtime(true));
-        $this->cache()->set_cache("admin_csrf_token",$token,604800);
+        $this->cache()->set_cache("admin_csrf_token".$name,$token,604800);
         return $token;
     }
     public static function check_csrf_token(){
         $cache=make("cache");
-        $request=new make("request");
-        if($cache->get_cache($_SESSION["admin_permission"]["name"])!=$request->get("admin_csrf_token")||$cache->get_cache($_SESSION["admin_permission"]["name"]==null)) {
+        $request=make("request");
+        if($cache->get_cache("admin_csrf_token".self::permission()["name"])!=$request->try_get("admin_csrf_token")) {
             new Exception("403","CSRF_ATTACK");
         }
     }
@@ -175,25 +176,82 @@ class admin_user_controller extends controller
         $redis->connect(config::redis()["host"],config::redis()["port"]);
         $time=$redis->hGet(config::task_record_list()["name"]."time","timed_task");
         $task_list=json_decode($redis->get("timed_task"),true);
-        return ["time"=>$time,"timed_task_list"=>$task_list];
+        $task_handle_num=$this->cache()->get_cache("timed_task_handle_num");
+        return ["time"=>$time,"timed_task_list"=>$task_list,"timed_task_handle_num"=>$task_handle_num];
     }
-    public function system_controller_pannel(){
-        $time_list=$this->get_timed_task_info();
-        $websocket_status=$this->get_service_status("websocket_chat");
+    public function system_controller_pannel(request $request){
+        $rules=[
+            "service"=>"requred|accept:websocket,timed,titang"
+        ];
+        $request->verifacation($rules);
+        switch ($request->get("service")){
+            case "websocket":
+                $time_list=$this->get_timed_task_info();
+                $websocket_status=$this->get_service_status("websocket_chat");
+                $user=new user();
+                $user_list=$user->where_in("name",array_keys(class_define::redis()->hGetAll("user_list")))->get()->all(["name","head_img"]);
+                return view("admin/controller_index",
+                    [
+                        "permission"=>self::permission()["permission"],
+                        "name"=>self::permission()["name"],
+                        "is_active"=>$request->get("service"),
+                        "timed_task_time"=>$time_list["time"],
+                        "time_num"=>strval(count($time_list["timed_task_list"])),
+                        "timed_task_list"=>$time_list["timed_task_list"],
+                        "websocket_status"=>$websocket_status,
+                        "service"=>$request->get("service"),
+                        "user_list"=>$user_list,
+                        "online_user"=>count($user_list),
+                        "created"=>date('Y-m-s h:i:s',system_excu::service_info("websocket_chat")["created_at"]),
+                    ]);
+                break;
+            case "timed":
+                $time_list=$this->get_timed_task_info();
+                $user=new user();
+                $user_list=$user->where_in("name",array_keys(class_define::redis()->hGetAll("user_list")))->get()->all(["name","head_img"]);
+                return view("admin/controller_index",
+                    [
+                        "permission"=>self::permission()["permission"],
+                        "name"=>self::permission()["name"],
+                        "timed_task_time"=>$time_list["time"],
+                        "is_active"=>$request->get("service"),
+                        "time_num"=>strval(count($time_list["timed_task_list"])),
+                        "timed_task_list"=>$time_list["timed_task_list"],
+                        "service"=>$request->get("service"),
+                        "timed_task_status"=>$this->get_service_status("timed_task"),
+                        "user_list"=>$user_list,
+                        "created"=>system_excu::service_info("timed_task")["created_at"],
+                        "timed_task_handle_num"=>$time_list["timed_task_handle_num"]
+                    ]);
+                break;
+            case "titang":
+                $time_list=$this->get_timed_task_info();
+                $user=new user();
+                $user_list=$user->where_in("name",array_keys(class_define::redis()->hGetAll("user_list")))->get()->all(["name","head_img"]);
+                return view("admin/controller_index",
+                    [
+                        "permission"=>self::permission()["permission"],
+                        "name"=>self::permission()["name"],
+                        "timed_task_time"=>$time_list["time"],
+                        "is_active"=>$request->get("service"),
+                        "time_num"=>strval(count($time_list["timed_task_list"])),
+                        "timed_task_list"=>$time_list["timed_task_list"],
+                        "service"=>$request->get("service"),
+                        "timed_task_status"=>$this->get_service_status("timed_task"),
+                        "user_list"=>$user_list,
+                        "created"=>system_excu::service_info("timed_task")["created_at"],
+                        "timed_task_handle_num"=>$time_list["timed_task_handle_num"]
+                    ]);
+                break;
+            default:
+                break;
+        }
+    }
+    public function get_online_user_info(){
         $user=new user();
-        $user_list=$user->where_in("name",array_keys(class_define::redis()->hGetAll("user_list")))->get()->all(["name","head_img"]);
-        view("admin/titang_controller_pannel",
-            [
-                "permission"=>self::permission()["permission"],
-                "name"=>self::permission()["name"],
-                "timed_task_time"=>$time_list["time"],
-                "time_num"=>strval(count($time_list["timed_task_list"])),
-                "timed_task_list"=>$time_list["timed_task_list"],
-                "websocket_status"=>$websocket_status,
-                "user_list"=>$user_list,
-                "online_user"=>count($user_list)
-            ]);
-        return microtime(true)-$GLOBALS["time"];
+        $user_list=$user->where_in("name",array_keys(class_define::redis()->hGetAll("user_list")))->get()->all(["id","name","head_img","sex"]);
+//        $user_list=$user->where_in("name",array_keys(class_define::redis()->hGetAll("user_list")))->get()->all(["id","name","head_img","sex"]);
+        return ["code"=>0,"msg"=>"","count"=>count($user_list),"data"=>$user_list];
     }
     public function get_service_status($service_name){
         if(!array_key_exists($service_name,service_config::service_config())){
@@ -221,14 +279,157 @@ class admin_user_controller extends controller
         return $service_info;
     }
     public function start_service(){
-        $service_name=$this->request()->get("service");
-        if(!array_key_exists($service_name,service_config::service_config())){
-            new Exception("403","service_not_exist");
+        if(self::permission()["permission"]=="super_admin") {
+            self::check_csrf_token();
+            $service_name = $this->request()->get("service");
+            if (!array_key_exists($service_name, service_config::service_config())) {
+                new Exception("403", "service_not_exist");
+            }
+            if (system_excu::get_task_info($this->request()->get("service")) == false) {
+                system_excu::excu_asyn(service_config::service_config()[$service_name]);
+                return ["code" => 200, "message" => service_config::service_config()[$service_name]];
+            }
+            return ["code" => 200, "message" => "service_has_been_start"];
         }
-        if(system_excu::get_task_info($this->request()->get("service"))==false){
-            system_excu::excu_asyn(service_config::service_config()[$service_name]);
-            return ["code"=>200,"message"=>service_config::service_config()[$service_name]];
+        else{
+            return ["code"=>403,"message"=>"without of permission"];
         }
-        return ["code"=>200,"message"=>"service_has_been_start"];
+    }
+    public function restart_service(){
+        if(self::permission()["permission"]=="super_admin") {
+            self::check_csrf_token();
+            $service_name = $this->request()->get("service");
+            if (!array_key_exists($service_name, service_config::service_config())) {
+                new Exception("403", "service_not_exist");
+            }
+            system_excu::restart_service($service_name);
+            return ["code"=>200,"message"=>"ok"];
+        }
+        else{
+            return ["code"=>403,"message"=>"without of permission"];
+        }
+    }
+    public function abort_service(){
+        if(self::permission()["permission"]=="super_admin") {
+            self::check_csrf_token();
+            $service_name = $this->request()->get("service");
+            if (!array_key_exists($service_name, service_config::service_config())) {
+                new Exception("403", "service_not_exist");
+            }
+            system_excu::abort_service($service_name);
+            return ["code"=>200,"message"=>"service_has_been_closed"];
+        }
+        else{
+            return ["code"=>403,"message"=>"without of permission"];
+        }
+    }
+    public function service_switch(request $request){
+        $request->verifacation([
+            "operate"=>"reqired:post|accept:start,close,restart",
+            "service"=>"reqired"
+        ]);
+        if(!array_key_exists(service_config::service_config(),$request->get("service"))){
+            new Exception("404","service_not_exist");
+        }
+        switch ($request->get("operate")){
+            case "start":
+                return $this->start_service();
+                break;
+            case "close":
+                return $this->abort_service();
+                break;
+            case "restart":
+                return $this->restart_service();
+                break;
+            default:
+                break;
+        }
+    }
+    public function theme(request $request){
+        $rule=[
+            "type"=>"requred|accept:create,upload"
+        ];
+        admin_user_controller::check_csrf_token();
+        admin_user_controller::permission();
+        switch ($request->get("type")){
+            case "create":
+                $titang_theme=model_auto::model("titang_theme");
+                $data=$request->get("theme_list");
+                $data["creator"]=admin_user_controller::permission()["name"];
+                $data["title"]=$request->get("title");
+                $titang_theme->create($data,true);
+                return ["code"=>200,"message"=>"ok"];
+                break;
+            case "update":
+                $titang_theme=model_auto::model("titang_theme");
+                $data=$request->get("theme_list");
+                $titang_theme->where("id",$data["id"])->get()->update($data);
+                return ["code"=>200,"message"=>"ok"];
+                break;
+            default:
+                break;
+        }
+    }
+    public function set_current_theme(request $request){
+        self::check_csrf_token();
+        if(self::permission()["permission"]=="super_admin"){
+            $titang_theme=model_auto::model("titang_theme");
+            $theme_info=$titang_theme->where("id",$request->get("id"))->get();
+            $data=common::get_array_value(["morning","noon","afternoon","night"],$theme_info->all());
+            $data["id"]=$request->get("id");
+            $this->cache()->set_cache("theme_back_list",$data,"forever");
+            $this->cache()->set_cache("theme_version",$theme_info->updated_at,"forever");
+            return ["code"=>200,"message"=>"ok"];
+        }
+        else{
+            return ["code"=>403,"message"=>"without_of_permission"];
+        }
+    }
+    public function get_theme_list(request $request){
+        //self::check_csrf_token();
+        self::permission();
+        $titang_theme=model_auto::model("titang_theme")->page($request->get("page"),$request->get("limit"));
+        return $titang_theme->get()->all();
+    }
+    public function delete_theme(request $request){
+        self::permission();
+        if(self::permission()["permission"]=="super_admin"){
+            model_auto::model("titang_theme")->where("id",$request->get("id"))->delete();
+            return ["code"=>200,"message"=>"ok"];
+        }
+        else{
+            return ["code"=>403,"message"=>"without_of_permission"];
+        }
+    }
+    public function get_current_theme(request $request){
+        switch ($request->get("type")){
+            case "get_version":
+                $version=$this->cache()->get_cache("theme_version");
+                return $this->jsonp(["version"=>$version]);
+                break;
+            case "get_theme_back":
+                $list=$this->cache()->get_cache("theme_back_list");
+                $version=$this->cache()->get_cache("theme_version");
+                if(!$request->try_get("key")){
+                    $list=array_values($list);
+                }
+                if(!$request->try_get("withid")){
+                    if(array_key_exists("id",$list)) {
+                        unset($list["id"]);
+                    }
+                }
+                $arr=array(
+                    "list"=>$list,
+                    "version"=>$version
+                );
+                if($request->try_get("callback")) {
+                    return $this->jsonp($arr);
+                }
+                return $arr;
+                break;
+            default:
+                break;
+
+        }
     }
 }

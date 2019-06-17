@@ -1,0 +1,125 @@
+.user_info{
+    width:200px;
+    height: 100px;
+    /*background-color: rgba(12, 202, 98, 0.63);*/
+}
+.user_info_title{
+    right: 200px;
+}
+.title{
+    border-bottom: 1px solid rgba(159, 159, 159, 0.68);
+    font-size: 40px;
+    line-height: 40px;
+    height: 60px;
+    background-color: white;
+    padding-left: 15px;
+}
+.body-container{
+    position: relative;
+    background-color: rgba(211, 211, 211, 0.65);
+    height: 100%;
+    width: 100%;
+}
+.content{
+    position: relative;
+    top:15px;
+    left: 0;
+    right:0;
+    width: 96%;
+    height: 85%;
+    margin: 0 auto;
+    background-color: white;
+}
+.monitor_info .title{
+    height: 40px;
+    border-bottom: 0.1px solid rgba(159, 159, 159, 0.68);
+}
+.monitor_info .title h1{
+    font-size: 20px;
+    color: black;
+}
+.status{
+    position: relative;
+    height: 150px;
+    padding: 5px 15px;
+    box-sizing: border-box;
+}
+.status_content{
+    width: 100%;
+    height: 100%;
+    background-color: #f8f8f8;
+}
+.status_content .icon_container{
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.56);
+    overflow: hidden;
+    text-align: center;
+}
+.content_detailed{
+    position: relative;
+}
+.status_content .layui-icon{
+    /*color:lightskyblue;*/
+    font-size: 40px;
+}
+.layui-layout-admin{
+    position: relative;
+    left: 200px;
+}
+.notify_user_pannel{
+    position: relative;
+    height: 350px;
+    padding: 5px 15px;
+    box-sizing: border-box;
+}
+.notify_user_pannel_container{
+    padding: 5px 5px;
+    width: 100%;
+    height: 100%;
+    background-color: #f8f8f8;
+}
+.body-container{
+    height: 92vh;
+}
+.query{
+    position: relative;
+    width: 100%;
+    background-color: white;
+    height: auto;
+}
+.query_btn{
+    left: 60px;
+}
+.add_notify_bar_pannel{
+    width: 600px;
+    height:400px;
+    background-color: rgba(211, 211, 211, 0.73);
+    padding: 15px 15px;
+}
+.add_notify_bar_pannel_container{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+.alter-notify{
+    width: 600px;!important;
+    overflow:hidden;
+}
+.layui-form-select{
+    color: rgba(0, 0, 0, 0.8);
+}
+@media screen and (max-width:767px) {
+    .body-container{
+        height: 155vh;
+    }
+    .alter-notify{
+        width: 100%;!important;
+    }
+    .add_notify_bar_pannel{
+        width: 100%;
+        padding: 15px 0px;
+    }
+}

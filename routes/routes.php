@@ -16,9 +16,16 @@ use system;
 class routes
 {
     protected static $route = [
+        "GET"=>[],
+        "POST"=>[],
+        "DELETE"=>[],
+        "ANY"=>[],
+        "PUT"=>[],
     ];
     protected $routes = [];
     private $request = null;
+    protected $now_request_url_list;
+    protected $value;//已匹配的路由信息
     public function __construct()
     {
         $this->routes=self::$route;
@@ -27,8 +34,9 @@ class routes
     }
     private function request_check()
     {
-        foreach ($this->routes as $values) {
-            if ($values["request_method"] == $this->request->request_mothod() && $values["url"] == $this->request->get_url()) {
+
+            if ($this->pathinfo()) {
+                $values=$this->value;
                 $provider = new provider_register();
                 if(count($values["middleware"])>0) {
                     if (gettype($values["middleware"][0]) == 'string') {
@@ -70,7 +78,8 @@ class routes
                     $response = call_user_func($values["controller_method"]);//if is a object which is a anonymous return value so it is echo value
                 } else {
                     $controller_method = explode("@", $values["controller_method"]);
-                    $response = $this->load_method($provider->controller($controller_method[0], $this->request), $controller_method[1]);
+                    //$response = $this->load_method($provider->controller($controller_method[0], $this->request), $controller_method[1]);
+                    $response = $provider->make_method($controller_method[1],$provider->controller($controller_method[0]));
                 }
                 if (gettype($response) == 'array') {
                     echo json_encode($response);
@@ -80,24 +89,60 @@ class routes
                     return;
                 }
             }
-        }
         echo json_encode(['code'=>'404','message'=>'page_not_exist']);
     }
         // when no url match routes then app echo 404 page
-    function LoadMethod($object, $fun)
-    {
-        $object=new \ReflectionClass($object);
-        if ($object->hasMethod($fun)) {
-            $tmp=$object->getMethod($fun);
-            if ($tmp->ispublic()) {
-                return $tmp->invoke($object->newInstance());
-            } else {
-                throw new \Exception("call_fun_error");
+    protected function pathinfo(){
+        foreach (array_merge($this->routes[$this->request->request_mothod()],$this->routes["ANY"]) as $route){
+            if (strrpos($route["url"], "{") !== false) {
+                if($this->vertify_pathinfo($route)){
+                    return true;
+                }
+                else{
+                    continue;
+                }
             }
-        } else {
-            throw new \Exception("is_not_exist_fun");
+            else{
+                if($route["url"]==$this->request->get_url()){
+                    $this->value=$route;
+                    return true;
+                }
+            }
         }
-    }//
+        return false;
+    }
+    protected function vertify_pathinfo($route){
+        $route_rule_list = explode('/', $route["url"]);
+        $route_params = [];
+        $now_request_url = $this->get_now_request_url();
+        if(count($now_request_url)!=count($route_rule_list))
+        {
+            return false;
+        }
+        for ($i = 0; $i < count($route_rule_list); $i++) {
+            if (strrpos($route_rule_list[$i], "{") !== false) {
+                $key=str_replace('}', "", str_replace('{', "", $route_rule_list[$i]));
+                if($now_request_url[$i]==""){
+                    new system\Exception("400","request_key_not_exist_expect_$key");
+                }
+                $route_params[$key] = $now_request_url[$i];
+                continue;
+            } else {
+                if ($route_rule_list[$i] != $now_request_url[$i]) {
+                    return false;
+                }
+            }
+        }
+        $this->request->user_input = array_merge($this->request->user_input, $route_params);
+        $this->value=$route;
+        return true;
+    }
+    protected function get_now_request_url(){
+        if($this->now_request_url_list==null){
+            $this->now_request_url_list=explode('/',$this->request->get_url());
+        }
+        return $this->now_request_url_list;
+    }
     function load_method($object, $fun)
     {
         if(method_exists($object,$fun)){
@@ -108,18 +153,18 @@ class routes
         }
     }
     public static function get($url,$controller_method,array $middleware=[]){
-        self::$route[]=["request_method"=>"GET","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
+        self::$route["GET"][]=["request_method"=>"GET","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
     }
     public static function post($url,$controller_method,array $middleware=[]){
-        self::$route[]=["request_method"=>"POST","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
+        self::$route["POST"][]=["request_method"=>"POST","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
     }
     public static function delete($url,$controller_method,array $middleware=[]){
-        self::$route[]=["request_method"=>"DELETE","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
+        self::$route["DELETE"][]=["request_method"=>"DELETE","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
     }
     public static function put($url,$controller_method,array $middleware=[]){
-        self::$route[]=["request_method"=>"PUT","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
+        self::$route["PUT"][]=["request_method"=>"PUT","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
     }
     public static function any($url,$controller_method,array $middleware=[]){
-        self::$route[]=["request_method"=>"ANY","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
+        self::$route["ANY"][]=["request_method"=>"ANY","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
     }
 }

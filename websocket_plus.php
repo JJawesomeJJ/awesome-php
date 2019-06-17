@@ -21,7 +21,7 @@ class server
         $this->lock = new \swoole_lock(SWOOLE_MUTEX);
         $this->server = new \swoole_websocket_server($this->addr, $this->port);
         $this->server->set(array(
-            'daemonize' => 0,
+            'daemonize' => 1,
             'worker_num' => 4,
             'task_worker_num' => 10,
             'max_request' => 1000,
@@ -36,10 +36,9 @@ class server
         $this->server->on('task', array($this, 'onTask'));
         $this->server->on('finish', array($this, 'onfinish'));
         $this->server->on('close', array($this, 'onclose'));
-        \system\system_excu::record_my_pid(__FILE__);
+        \system\system_excu::record_my_pid(__FILE__,true);
         $this->server->start();
     }
-
     public function onopen($server, $request)
     {
         $this->time = $this->time + 1;
@@ -49,7 +48,6 @@ class server
         );
         echo "add";
     }
-
     public function onmessage($server, $frame)
     {
         $data = json_decode($frame->data);
@@ -124,7 +122,6 @@ class server
                 return false;
         }
     }
-
     public function onTask($server, $task_id, $form_id, $message)
     {
         $server->finish('Task' . $task_id . 'Finished' . PHP_EOL);
@@ -133,7 +130,6 @@ class server
             $this->server->push($value, json_encode($message));
         }
     }
-
     public function onclose($server, $fd)
     {
         $this->lock->lock();
@@ -153,11 +149,9 @@ class server
         }
         $this->lock->unlock();
     }
-
     public function onfinish()
     {
     }
-
     public function vertify_user($server, $frame, $data)
     {
         if (!$this->redis->hExists("users", $data->username)) {
@@ -175,7 +169,6 @@ class server
         $this->store_user($server, $frame, $data->username);
         return true;
     }
-
     public function store_user($server, $frame, $user_name)
     {
         $this->name = $user_name;
@@ -192,18 +185,15 @@ class server
         }//判断有没有相同用户名的用户登录，如果有即判断为异地登录
         $this->redis->hSet("user_list", $user_name, $frame->fd);
     }
-
     public function delete_user($user_name)
     {
         $this->redis->hDel("user_list", $user_name);
     }
-
     public function get_user()
     {
         $user_list = $this->redis->hGetAll("user_list");
         return $user_list;
     }
-
     public function check_user($user_name, $frame, $server)
     {
         if ($this->redis->hGet("user_list", $user_name) == $frame->fd) {
@@ -214,7 +204,6 @@ class server
             return false;
         }
     }
-
     public function handle_notify()
     {
         while ($this->redis->lLen("notify_list") > 0) {
@@ -245,14 +234,12 @@ class server
             }//the wait_hanle_list not_exists_key create
         }
     }
-
     public function write_error($error_message)
     {
         $fd = fopen($this->error_file_path, "a");
         fwrite($fd, $error_message . date('Y-m-d H:i:s', time()) . "\n");
         fclose($fd);
     }//write_error;
-
     public function query_wait_handle_task($user_name)
     {
         if($this->redis->hExists("wait_notify_list",$user_name))

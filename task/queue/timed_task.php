@@ -10,6 +10,7 @@ namespace task\queue;
 
 
 use SuperClosure\Serializer;
+use system\cache\cache;
 use system\cache\cache_;
 use system\config\config;
 use system\config\timed_task_config;
@@ -21,6 +22,7 @@ class timed_task
     protected static $redis_;
     protected $redis;
     protected $task_arr=[];
+    protected $task_handle_num="timed_task_handle_num";
     public function __construct()
     {
         echo "load";
@@ -35,6 +37,10 @@ class timed_task
         if($this->redis->exists("timed_task")){
             $this->task_arr=json_decode($this->redis->get("timed_task"),true);
         }//恢复数据当守护进程被关掉重启时从redis里面获取备份数据
+        $cache=new cache();
+        if($cache->get_cache($this->task_handle_num)==null){
+            $cache->set_cache($this->task_handle_num,0,"forever");
+        }
         $this->sort_by_time();
         system_excu::record_my_pid(__FILE__);
         $this->scan_task();
@@ -102,7 +108,7 @@ class timed_task
     protected function scan_task(){
         while(true){
             $this->redis->hSet(config::task_record_list()["name"]."time","timed_task",date('Y-m-d H:i:s'));
-            $cache=new cache_();
+            $cache=new cache();
             foreach (timed_task_config::timed_task_schedule() as $command){
                 if($cache->get_cache($command)==null||$cache->get_cache($command)!=md5_file($command)){
                     echo "$command";
@@ -122,6 +128,9 @@ class timed_task
             if(count($this->task_arr)>0) {
                 $task_data = $this->task_arr[0];
                 if ($task_data["time"] <= microtime(true)) {
+                    $now_handle_num=$cache->get_cache($this->task_handle_num);
+                    $now_handle_num=$now_handle_num+1;
+                    $cache->set_cache($this->task_handle_num,$now_handle_num,"forever");
                     if ($task_data["type"] == "command") {
                         $command = timed_task_config::timed_task_command()[$task_data["task_name"]];
                         exec("php $command" . ' > /dev/null &');

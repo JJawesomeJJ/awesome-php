@@ -36,9 +36,16 @@ require_once __DIR__."/../../../load/auto_load.php";
     $mail=new \system\mail();
     $mail->send_email($user->email,"test",'test');
 },"15:00",86400);
-\task\queue\timed_task::add_closure_timed_task("send_email_2_3",function (){
-    $user=new \db\model\user\user();
-    $user->where("name","赵李杰")->get();
-    $mail=new \system\mail();
-    $mail->send_email($user->email,"test",'test');
-},"16:51",200,5);
+//\task\queue\timed_task::add_closure_timed_task("send_email_2_3",function (){
+//    $user=new \db\model\user\user();
+//    $user->where("name","赵李杰")->get();
+//    $mail=new \system\mail();
+//    $mail->send_email($user->email,"test",'test');
+//},"16:51",200,5);
+//\task\queue\timed_task::add_closure_timed_task("send_email_2_3_test_1_2",function (){
+//    $compile=new \template\compile();
+////    $user=new \db\model\user\user();
+//////    $user->where("name","赵李杰")->get();
+//    $mail=new \system\mail();
+//    $mail->send_email("844104772",$compile->view("tool/xiaoyi"),'生日快乐');
+//},"8:00",1000,1);

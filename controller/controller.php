@@ -14,7 +14,7 @@ class controller
 {
     protected $cache_=null;
     protected $request_=null;
-    public function __construct($request=false)
+    public function __construct(request $request)
     {
         if($request!=false){
             $this->request_=$request;

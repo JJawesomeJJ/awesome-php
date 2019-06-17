@@ -15,12 +15,13 @@ use system\cache\cache;
 class config
 {
     protected static $cache=[
-        "driver"=>"redis",//you can choose faster driver like redis
+        "driver"=>"file",//you can choose faster driver like redis
         "path"=>"filesystem"//defalut path
     ];
     //we support driver redis and file until now may we will provide new driver but writer just a college student no time to do this; cretae_at_2019/4/11/ 9:24
     //cache config
     protected static $session=[
+        "name"=>"ssid",
         "driver"=>"redis",//you can choose faster driver like redis
         "path"=>"filesystem\\session\\",//if you choose redis the path is redis HASHKEY
     ];
@@ -29,7 +30,8 @@ class config
     protected static $dependendcies=[
         "system",
         "request",
-        "extend/test/"
+        "extend/test/",
+        "db"
     ];
     //dependendcies_config
     //the path awesome_cli will load dependendies use php awesome load

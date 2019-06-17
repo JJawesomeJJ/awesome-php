@@ -23,7 +23,6 @@ use task\add_task;
 use task\queue\queue;
 use task\task;
 use template\compile;
-use view\view;
 
 class auth_controller extends controller
 {
@@ -220,7 +219,7 @@ class auth_controller extends controller
         return $csrf_token;
     }
     protected function check_csrf_token($name){
-        $request=new request([]);
+        $request=make("request");
         $cache=new cache();
         if($request->try_get("csrf_token")==false||$request->try_get("csrf_token")!=$cache->get_cache($name."csrf_token"))
         {

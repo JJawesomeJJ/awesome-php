@@ -24,6 +24,7 @@ use system\config\service_config;
 use system\config\timed_task_config;
 use system\file;
 use system\mail;
+use system\session;
 use system\system_excu;
 use task\queue\queue;
 use template\compile;
@@ -138,7 +139,19 @@ class index_controller extends controller
 //        $user_list=array_keys(class_define::redis()->hGetAll("user_list"));
 //        $user=new user();
 //        return $user->where_in("name",$user_list)->get()->all(["name","head_img"]);
-        view("test");
-        return microtime(true)-$GLOBALS["time"];
+//        view("test",["name"=>"赵李杰"]);
+//        return microtime(true)-$GLOBALS["time"];
+        //session::set("test","test");
+//        return session::get("test");
+//        $user=new user();
+//        return $user->where("name","赵李杰")->get()->comment_list->comment_content;
+        $time=microtime(true);
+//        view("admin/controller_index");
+//        return microtime(true)-$GLOBALS["time"];
+        //return var_export(file_get_contents(@"/var/www/html/php/template/test123.php"),true);
+//        echo timed_task_config::timed_task_schedule()[0];
+//        return $this->cache()->get_cache(timed_task_config::timed_task_schedule()[0]);
+        $this->cache()->set_cache("test","test",500);
+        return $this->cache()->get_cache("test");
     }
 }

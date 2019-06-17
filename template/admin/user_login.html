@@ -132,7 +132,7 @@
                     if (response["data"]["code"] == 200) {
                         self.error='success';
                         localStorage.setItem("admin_user_data",JSON.stringify(response["data"]));
-                        window.location.href="http://39.108.236.127/php/public/index.php/admin/control";
+                        window.location.href="http://39.108.236.127/php/public/index.php/admin/control/websocket";
                     }
                     else {
                         self.error=response["data"]["message"];

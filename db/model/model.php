@@ -138,6 +138,10 @@ abstract class model
             }
         }
     }
+    public function limit($start_row,$num){
+        $this->db->limit($start_row,$num);
+        return $this;
+    }
     private function is_1_array(array $arr){
         if (count($arr) == count($arr, 1)) {
             return true;
@@ -145,7 +149,16 @@ abstract class model
             return false;
         }
     }
-    public function update(){
+    public function update(array $new_array=[]){
+        foreach ($new_array as $key=>$value){
+            if(!in_array($key,$this->table_column_list)){
+                continue;
+            }
+            if(in_array($key,$this->guard)) {
+                continue;
+            }
+            $this->$key=$value;
+        }
         $this->db->update();
     }
     protected function has($model_name,$this_model_key,$foreign_model_key){
@@ -207,10 +220,24 @@ abstract class model
         $this->db->delete();
         $this->model_list = [];
     }
-    public function create(array $filed_arr){
+    public function create(array $filed_arr,$is_auto_id=false){
         if(in_array("created_at",$this->table_column_list)){
             $filed_arr["created_at"]=date("Y-m-d H:i:s");
         }
+        if($is_auto_id){
+            $filed_arr["id"]=md5(microtime(true));
+        }
         $this->db->insert($filed_arr);
+    }
+    public function where_like($column_value,$condition_value){
+        $this->db->where_like($column_value,"%$condition_value%");
+        return $this;
+    }
+    public function page($page,$limit){
+        if(!is_numeric($page)||!is_numeric($limit)){
+            new Exception(400,"page_required_params_is_number");
+        }
+        $this->limit(($page-1)*$limit,$limit);
+        return $this;
     }
 }

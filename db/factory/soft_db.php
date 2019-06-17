@@ -86,6 +86,10 @@ class soft_db
         }
         return $this;
     }
+    public function where_like($column_value,$condition_value){
+        $this->where($column_value,"%$condition_value%","like");
+        return $this;
+    }
     public function or_where($column_value,$condition_value,$condition="="){//defalut condition "=" you can use ">=,<=,like,in"
         if($this->where_==""){
             $this->where_="where $column_value $condition '$condition_value'";
@@ -211,10 +215,10 @@ class soft_db
             $is_not="NOT";
         }
         if($this->where_==""){
-            $this->where_="where $column_name $is_not between $min and $max";
+            $this->where_="where $column_name $is_not between '$min' and '$max'";
         }
         else{
-            $this->where_.=" and $column_name $is_not between $min and $max";
+            $this->where_.=" and $column_name $is_not between '$min' and '$max'";
         }
         return $this;
     }
@@ -278,6 +282,7 @@ class soft_db
             }
             while ($row = mysqli_fetch_array($result)) {
                 foreach ($this->query_list as $value){
+                    $value=str_replace($this->table_name.'.',"",$value);
                     $result_list[$value]=$row[$value];
                 }
             }
@@ -354,7 +359,7 @@ class soft_db
         return $this;
     }
     public function integer($create_column_name,$length,$default_null=false,$primary_key=false,$auto_increment=false){
-        if($default_null==false){
+        if($default_null===false){
             $default_null="default null";
         }
         else{

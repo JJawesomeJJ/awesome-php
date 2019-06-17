@@ -1,6 +1,6 @@
 'use strict'
-var ws=require("ws");
-var websocekt=new ws("ws://127.0.0.1:9502");
+let ws=require("ws");
+let websocekt=new ws("ws://127.0.0.1:9502");
 websocekt.on("open",function () {
     websocekt.send(JSON.stringify({
             'message':"handle_task",
@@ -18,9 +18,12 @@ websocekt.on("error",function (err) {
     console.log(err);
 });
 websocekt.on("close",function () {
+    // websocekt.close();
+    // process.exit();
     console.log("admin_user_has_been_closed");
 });
 websocekt.on("message",function (data) {
-
+    // websocekt.close();
+    // process.exit();
 });
 

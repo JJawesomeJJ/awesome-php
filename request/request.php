@@ -8,6 +8,8 @@
 namespace request;
 use db\db;
 use system\Exception;
+use system\upload_file;
+use task\job\email_queue;
 
 class request
 {
@@ -43,7 +45,7 @@ class request
                         $this->equal($this->get($key), $rule_list_var);
                         break;
                     case "accept":
-                        $this->accepet($this->get($key), explode(",", $rule_list_var));
+                        $this->accept($this->get($key), explode(",", $rule_list_var));
                         break;
                     case "email":
                         $this->email($this->get($key));
@@ -56,6 +58,9 @@ class request
                         break;
                     case "regex":
                         $this->regex($this->get($key),$rule_list_var);
+                        break;
+                    case "is_number":
+                        $this->is_number($this->get($key));
                         break;
                     default:
                         break;
@@ -79,7 +84,7 @@ class request
     }
     // get user ip address but this not only
     public function try_get($key){
-        if(isset($this->user_input[$key])){
+        if(isset($this->user_input[$key])&&$this->user_input[$key]!=""){
             return $this->user_input[$key];
         }
         else{
@@ -93,6 +98,20 @@ class request
         }
         else{
            new Exception("400","number_less_than_min_expect_$min");
+        }
+    }
+    public function get_many(array $key_list){
+        $return_arr=[];
+        foreach ($key_list as $key){
+            $return_arr[$key]=$this->get($key);
+        }
+        return $return_arr;
+    }
+    public function is_number($var){
+        if(is_numeric($var)){
+            return $var;
+        }else{
+            new  Exception("400","variable_is_not_a_number");
         }
     }
     //vertify user input set min value
@@ -139,7 +158,7 @@ class request
            new Exception("400","variable_length_not_equal_standard_expect_$standard");
         }
     }//vertify the number is equal another number
-    public function accepet($variable,array $arr){
+    public function accept($variable,array $arr){
         if(in_array($variable,$arr)){
             return $variable;
         }
@@ -185,6 +204,9 @@ class request
 
     }
     public function all(){
+        if($this->user_input!=null){
+            return $this->user_input;
+        }
         if($_SERVER["CONTENT_TYPE"]=="application/json;charset=UTF-8"){
             return json_decode(file_get_contents('php://input'),true);
         }
@@ -194,6 +216,9 @@ class request
         if($_SERVER['REQUEST_METHOD']=="POST"){
             return $_POST;
         }
+    }
+    public function get_file($name){
+        return upload_file::upload_file($name);
     }
     public function request_mothod(){
         if($this->try_get("_method")){

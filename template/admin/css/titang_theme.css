@@ -1,0 +1,10 @@
+.title_{
+    top:-30px;
+}
+.img_container{
+    overflow: hidden;
+}
+.img_container:hover .title_{
+    transition: 0.3s ease-in-out;
+    top:0;
+}

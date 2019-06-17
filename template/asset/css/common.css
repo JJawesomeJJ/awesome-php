@@ -1,0 +1,238 @@
+.j-center{
+    position: relative;
+    float: none;
+    left:0 ;
+    right: 0;
+    margin: 0 auto;
+}
+.j-center-vertical{
+    position: relative;
+    top: 50%;
+    transform: translate(0%,-50%);
+}
+.overflow-y-sroll{
+    overflow-y:scroll;
+}
+.overflow-x-sroll{
+    overflow-x:scroll;
+}
+.fluid-parents{
+    width: 100%;
+    height: 100%;
+}
+.flex-nowarp{
+    display: flex;
+    flex-wrap: nowrap;
+}
+.hidden{
+    display: none;!important;
+}
+.radius-50{
+    border-radius: 50%;
+    overflow: hidden;
+}
+.radius-50 img{
+    width: 100%;
+    height: 100%;
+}
+.text-center1{
+    width: 100%;
+    text-align: center;
+}
+.text-no-wrap{
+    white-space: nowrap;!important;
+}
+.text-white{
+    color: white;!important;
+}
+.bg-white-op{
+    background-color: rgba(255, 255, 255, 0.72);
+}
+.flex{
+    display: flex;
+    flex-wrap: nowrap;
+}
+.j-left{
+    position: absolute;
+    left: 10px;!important;
+}
+.j-left-0{
+    position: absolute;
+    left: 0;!important;
+}
+.j-switch {
+
+}
+.text-black-h1{
+     color: black;
+     font-size: 20px;
+     height: fit-content;
+ }
+.text-white-h1{
+    color: white;
+    font-weight: lighter;
+    font-size: 20px;
+    height: fit-content;
+}
+/*}为了代码提示*/
+.text-center{
+    text-align: center;
+}
+.j-center-min{
+
+}
+.col-sm-left-0{
+
+}
+.col-sm-top-0{
+
+}
+.show_left{
+    animation:show_left 0.3s ease-in-out;
+}
+.show_width{
+    animation:show_width 0.3s ease-in-out;
+}
+.redius-5{
+    border-radius: 5px;
+}
+.magin-left-0{
+    margin-left: 0!important;
+}
+.j-top{
+    position: absolute;
+    top:0;
+}
+.magin-padding-0{
+    margin: 0;!important;
+    padding: 0;!important;
+}
+.j-right{
+    position: absolute;
+    right: 0;
+}
+.j-icon{
+    display: block;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    line-height: 30px;
+    text-align: center;
+}
+.height_match_parent{
+    height: 100%;
+}
+.width_match_parent{
+    width:100%;
+}
+.bg-black-opacity{
+    background-color: rgba(0, 0, 0, 0.51);
+}
+.bg-op-8{
+    opacity: 0.8;
+}
+.j-bottom{
+    position: absolute;
+    bottom: 0;
+}
+.bg-gradient-blue{
+    background-image: linear-gradient(90deg,#0af,#0085ff);
+}
+.bg-orange{
+    background-color: #fbad4c;
+}
+.bg-green{
+    background-color: #59d05d;
+}
+.bg-pink{
+    background-color: #ff646d;
+}
+.bg-blue{
+    background-color: #1D62F0;
+}
+.j-min-hiden{
+    display: block;
+}
+.magin-top-0{
+    margin-top: 0;
+}
+.j-min-show{
+    display: none;
+}
+@keyframes show_left {
+    0%{left: -200px;}
+    100%{left:0px;}
+}
+@keyframes show_width {
+    0%{width: 0px;}
+    100%{width: 100%}
+}
+@media screen and (min-width:1200px) {
+    .container{ width:1170px;}
+    .magin-padding-0{
+        margin: 0;!important;
+        padding: 0;!important;
+    }
+    .flex{
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+/*中等PC屏幕下的专用样式*/
+@media screen and (min-width:992px) and (max-width: 1199px) {
+    .container{width:970px;}
+    .flex{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .magin-padding-0{
+        margin: 0;!important;
+        padding: 0;!important;
+    }
+}
+/*PAD屏幕下的专用样式*/
+@media screen and (min-width: 768px) and (max-width:991px ){
+    .container{width:750px;}
+    .magin-padding-0{
+        margin: 0;!important;
+        padding: 0;!important;
+    }
+    .col-md-12{
+        width: 100%;!important;
+    }
+}
+/*PHONE屏幕下的专用样式*/
+@media screen and (max-width:767px) {
+    .flex{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .j-min-hiden{
+        display: none;
+    }
+    .j-min-show{
+        display: block;
+    }
+    .magin-padding-0{
+        margin: 0;!important;
+        padding: 0;!important;
+    }
+    .j-center-min{
+        position: relative;
+        left:0 ;
+        right: 0;
+        margin: 0 auto;
+    }
+    .col-sm-left-0{
+        left: 0;!important;
+    }
+    .col-sm-top-0{
+        top:0;!important;
+    }
+    .col-sm-right-0{
+        right: 0;!important;
+    }
+    .col-xs-12{
+        width: 100%;!important;
+    }
+}

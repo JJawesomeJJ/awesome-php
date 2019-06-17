@@ -11,6 +11,7 @@
 //use system\file;
 
 require_once ("../load/auto_load.php");
+require_once ("../load/common.php");
 class test
 {
     private $redis;
@@ -71,9 +72,12 @@ class test1{
     }
 }
 class test2{
-    public function __construct(test1 $test,test $test1)
+    public function __construct(\test1 $test,\test $test1)
     {
         echo "i am test2";
+    }
+    public function aaa(test1 $test,test $test1){
+        echo "load";
     }
     public function xx(){
 //        echo "i am ok";
@@ -159,4 +163,6 @@ class st_{
 //print_r($da);
 //echo basename(__FILE__,".php");
 //echo getmypid();
-\system\system_excu::record_my_pid();
+make_method(function (\db\model\user\user $user){
+    print_r($user->get()->all());
+});

@@ -44,6 +44,20 @@ class compile
         $this->template= $this->file->read_file($this->path . "/" . $template_name . ".html");
         $this->compile_path($template_name);
         $this->compile_link();
+        foreach ($data as $key => $value) {
+            if(is_string($value)||is_numeric($value)) {
+                $this->template= str_replace("{{{$key}}}", htmlentities($value), $this->template);
+            }
+            if(is_bool($value)){
+                if($value==false) {
+                    $this->template = str_replace("{{{$key}}}", "false", $this->template);
+                }
+                else{
+                    $this->template = str_replace("{{{$key}}}", "true", $this->template);
+                }
+            }//debug
+        }
+        $this->bofore_compile_component();
         $this->compile_component();
         if ($this->template==false) {
             return new Exception("400", "template_not_exist");
@@ -57,7 +71,7 @@ class compile
                     $this->template = str_replace("{{{$key}}}", "false", $this->template);
                 }
                 else{
-                    $this->template = str_replace("{{{$key}}}", $value, $this->template);
+                    $this->template = str_replace("{{{$key}}}", "true", $this->template);
                 }
             }//debug
         }
@@ -167,7 +181,7 @@ class compile
         }
     }
     protected function compile_path($path){
-        preg_match_all("/(src|href)=\"(?!http)(?!{{)(.*?)\"/",$this->template,$url_matchs,PREG_SET_ORDER);
+        preg_match_all("/( src| href)=\"(?!http)(?!{{)(.*?)\"/",$this->template,$url_matchs,PREG_SET_ORDER);
         $path=$this->file_path.dirname($path)."/";
         foreach ($url_matchs as $value){
             $this->template=str_replace($value[2],$path.$value[2],$this->template);
@@ -222,6 +236,42 @@ class compile
 //                $this->template=preg_replace("/<link(.*[\s\S])$key(.*?)>/","",$this->template,$value-1);
 //            }
 //        }
+    }
+    public function bofore_compile_component(){
+        preg_match_all("/@compile_if\(([\s\S]*?)\)\\r([\s\S]*?)@end_compile_if/", $this->template, $matchs, PREG_SET_ORDER);
+        foreach ($matchs as $value){
+            if(eval("return $value[1];")){
+                $value[2]=preg_split("/@(compile_if|compile_elseif|compile_else)([\s\S]*?)\\r/",$value[2])[0];
+                $this->template=preg_replace("/@compile_if([\s\S]*?)@end_compile_if/",$value[2],$this->template,1);
+            }
+            else{
+                $is_null=true;
+                preg_match_all("/@compile_elseif\(([\s\S]*?)\)\\r([\s\S]*?)@end_compile_if/", $value[0], $matchs1);
+                for($i=0;$i<count($matchs1[1]);$i++){
+                    $code=$matchs1[1][$i];
+                    if(eval("return $code;"))
+                    {
+                        $this->template=preg_replace("/@compile_if([\s\S]*?)@end_compile_if/",$matchs1[2][$i],$this->template,1);
+                        $is_null=false;
+                        break;
+                    }
+                }
+                if($is_null){
+                    preg_match_all("/@compile_else\r([\s\S]*?)@end_compile_if/", $value[0], $matchs2);
+                    if(!empty($matchs2[0])) {
+                        $is_null=false;
+                        $this->template = preg_replace("/@compile_if([\s\S]*?)@end_compile_if/", $matchs2[1][0], $this->template, 1);
+                    }
+                }
+                if($is_null) {
+                    $this->template = preg_replace("/@compile_if\(([\s\S]*?)\)([\s\S]*?)@end_compile_if/", "", $this->template, 1);
+                }
+            }
+        }
+    }
+    public static function get_tag_content($start_tag,$end_tag,$content){
+        preg_match("/$start_tag(.*[\s\S])$end_tag/is",$content,$template_component_mathchs);
+        return $template_component_mathchs[1];
     }
     public function is_cli()
     {
