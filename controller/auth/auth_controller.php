@@ -11,9 +11,10 @@ use request\request;
 use controller\controller;
 use db\db;
 use system\cache\cache;
-use system\cache\cache_;
+use system\common;
 use system\config\config;
 use system\file;
+use system\session;
 use system\template;
 use system\token;
 use system\Exception;
@@ -26,9 +27,8 @@ use template\compile;
 
 class auth_controller extends controller
 {
-    public function user_login()
+    public function user_login(request $request)
     {
-        session_start();
         $rules=[
             "name"=>"required:post",
             "password"=>"required:post|min:1|max:100",
@@ -38,20 +38,24 @@ class auth_controller extends controller
         $db=new db();
         $name=$request->get("name");
         $result=$db->query("user",["password","email","head_img"],"name='$name'");
-        if(strtolower($_SESSION['code'])<>strtolower($request->get("code")))
+        if(strtolower(session::get('code'))<>strtolower($request->get("code")))
         {
+//            $user=new user();
+//            $user->where("name",$request->get("name"))->get()->all();
             return ["code"=>"403","msg"=>"fail","data"=>"code_error"];
         }
-        if($result==""){
+        $user=new user();
+        $result=$user->where("name",$name)->get()->all();
+        if(empty($result)){
             $arr = array("code" => "404", "msg" => "fail", "data" =>"unsign");
+            return $arr;
         }
         if($result["password"]==$request->get("password"))
         {
-            $_SESSION['email']=$result["email"];
-            $_SESSION['user']=$name;
-            $token=new token();
-            $token->set_token($name,$result["email"]);
-            return["code" => "200", "msg" => "suceess", "data" => "ok","email"=>$result["email"],"head_img"=>$result["head_img"],"csrf_token"=>$this->sign_csrf_token($request->get("name"))];
+            session::set("name",$request->get("name"));
+            session::set("email",$result["email"]);
+            common::remember_me($result["id"]);
+            return["code" => "200", "msg" => "suceess", "data" => "ok","email"=>$result["email"],"head_img"=>$result["head_img"],"csrf_token"=>$this->middlware("csrf_middleware")->sign_csrf_token()];
             //csrf_token client should store this value by localstorage when request client request server we will check this token if fail the server refuse this request
         }
         else{
@@ -59,10 +63,8 @@ class auth_controller extends controller
         }
     }
     public function logout(){
-        session_start();
-        setcookie("PHPSESSID",session_id(),time()-3600,'/',$_SERVER['HTTP_HOST'],false,false);
-        $token=new token();
-        $token->delete_token($_COOKIE["user_token"]);
+        common::forget();
+        setcookie(config::session()["name"],session_id(),time()-3600,'/',$_SERVER['HTTP_HOST'],false,false);
     }
     public function user_register(){
         $rules=[
@@ -73,8 +75,7 @@ class auth_controller extends controller
             "email"=>"required:post|email:ture|unique:user"
         ];
         $request=$this->request()->verifacation($rules);
-        session_start();
-        if($_SESSION['code']==$request->get("code"))
+        if(session::get('code')==$request->get("code"))
         {
             $url="";
             if($request->get("sex")=="man"){
@@ -95,13 +96,15 @@ class auth_controller extends controller
                 $head_list=json_decode(fread($file,filesize($file_name)));
                 $url=$head_list[array_rand($head_list)];
             }
-            $arr=["name"=>$request->get("name"),"password"=>$request->get("password"),"email"=>$request->get("email"),"sex"=>$request->get("sex"),"head_img"=>$url];
+            $id=md5(microtime(true).common::rand(4));
+            $arr=["name"=>$request->get("name"),"password"=>$request->get("password"),"email"=>$request->get("email"),"sex"=>$request->get("sex"),"head_img"=>$url,"id"=>$id];
             $user=new user();
             $user->create($arr);
-            $_SESSION['user']=$request->get("name");
-            $_SESSION['email']=$request->get("email");
-            $token=new token();
-            $token->set_token("user",$request->get("email"));
+            session::set("name",$request->get("name"));
+            session::set("email",$request->get("email"));
+            common::remember_me($id);
+//            $token=new token();
+//            $token->set_token("user",$request->get("email"));
             return ["code" => "200", "msg" => "suceess", "head_img" => $url,"email"=>$request->get("email"),"csrf_token"=>$this->sign_csrf_token($request->get("name"))];
         }
         else{
@@ -115,7 +118,7 @@ class auth_controller extends controller
             "code"=>"required:get"
         ];
         $request=$this->request()->verifacation($rules);
-        if(strtolower($request->get("code"))!=strtolower($_SESSION['code']))
+        if(strtolower($request->get("code"))!=strtolower(session::get('code')))
         {
             return ['code'=>'400','message'=>'code_error'];
         }
@@ -124,43 +127,45 @@ class auth_controller extends controller
         $result=$db->query("admin_user",['password','permission'],"name='$name'");
         return $result;
     }
-    public function auth($name,$store_name=false,$parms_list=false){
-        if(!isset($_SESSION))
-        {
-            session_start();
-        }
-        if(isset($_SESSION[$name]))
-        {
-            self::check_csrf_token($_SESSION[$name]);
-            return $_SESSION[$name];
-        }
-        else{
-            $token=new token();
-            if(func_num_args()==2)
-            {
-                if($token->check_token($store_name)==true)
-                {
-                    self::check_csrf_token($_SESSION[$name]);
-                    return $_SESSION[$name];
-                }
-            }
-            if(func_num_args()==3)
-            {
-                if($token->check_token($store_name,$parms_list)==true)
-                {
-                    self::check_csrf_token($_SESSION[$name]);
-                    return $_SESSION[$name];
-                }
-            }
-            if($token->check_token()==true)
-            {
-                self::check_csrf_token($_SESSION[$name]);
-                return $_SESSION[$name];
-            }
-            else{
-                new Exception("405","relogin");
-            }
-        }
+    public static function auth($name=false,$store_name=false,$parms_list=false){
+        common::is_remember();
+        return session::get("name");
+//        if(!isset($_SESSION))
+//        {
+//            session_start();
+//        }
+//        if(isset($_SESSION[$name]))
+//        {
+//            self::check_csrf_token($_SESSION[$name]);
+//            return $_SESSION[$name];
+//        }
+//        else{
+//            $token=new token();
+//            if(func_num_args()==2)
+//            {
+//                if($token->check_token($store_name)==true)
+//                {
+//                    self::check_csrf_token($_SESSION[$name]);
+//                    return $_SESSION[$name];
+//                }
+//            }
+//            if(func_num_args()==3)
+//            {
+//                if($token->check_token($store_name,$parms_list)==true)
+//                {
+//                    self::check_csrf_token($_SESSION[$name]);
+//                    return $_SESSION[$name];
+//                }
+//            }
+//            if($token->check_token()==true)
+//            {
+//                self::check_csrf_token($_SESSION[$name]);
+//                return $_SESSION[$name];
+//            }
+//            else{
+//                new Exception("405","relogin");
+//            }
+//        }
     }
     public function admin_login(){//管理员登录
         session_start();
@@ -227,14 +232,11 @@ class auth_controller extends controller
         }
     }
     public function reset_password(){
-        if(!isset($_SESSION)){
-            session_start();
-        }
-        if(strtolower($_SESSION['code'])<>strtolower($this->request()->get("code"))||$_SESSION['code']==null){
-            unset($_SESSION['code']);
+        if(session::get('code')<>strtolower($this->request()->get("code"))||session::get('code')==null){
+            session::forget("code");
             return ["code"=>"403","message"=>"code_error"];
         }
-        unset($_SESSION['code']);
+        session::forget("code");
         $user=new user();
         $user->where("name",$this->request()->get("user_id"));
         $user->or_where("email",$this->request()->get("user_id"))->get();

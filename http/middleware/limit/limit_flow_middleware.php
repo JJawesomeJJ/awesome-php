@@ -5,7 +5,7 @@
  */
 namespace http\middleware\limit;
 use http\middleware\middleware;
-use system\cache\cache_;
+use system\cache\cache;
 use system\Exception;
 //description it is a middleware which can limit ip request frequency and limit request app to max_reuqest_number
 class limit_flow_middleware extends middleware

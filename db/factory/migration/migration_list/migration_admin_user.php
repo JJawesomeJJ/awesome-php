@@ -24,5 +24,6 @@ class migration_admin_user extends migration
         $this->db->string("sex","6","man");
         $this->db->string("password","225","not null");
         $this->db->string("email","30","not null")->unique();
+        $this->db->integer("tele",11);
     }
 }

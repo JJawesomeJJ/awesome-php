@@ -13,6 +13,7 @@ use Grafika\Gd\Editor;
 use Grafika\Grafika;
 use system\Exception;
 use system\file;
+use system\session;
 use system\template;
 use system\vertify_code;
 use task\add_task;
@@ -25,7 +26,6 @@ class code_controller extends controller
         $add_task->add('task_list','send_email',['user_email'=>$user_email,'data'=>$content,'subject'=>$subject]);
     }
     public function map_admin_email(){
-        session_start();
         $rules=[
             "name"=>"required:get",
         ];
@@ -38,8 +38,8 @@ class code_controller extends controller
             return ['code'=>'404','admin_user_unsign'];
         }
         $code=vertify_code::random_code(4);
-        $_SESSION['admin_email_code']=$code;
-        $content=template::template('login',['title'=>'欢迎登陆停车帮后端','code'=>$code]);
+        session::set('admin_email_code',$code);
+        $content=view('login',['title'=>'欢迎登陆停车帮后端','code'=>$code]);
         $this->email_code($result['email'],$content,'停车帮欢迎你');
     }
     public static function code($num,$session_filed=false){
@@ -52,10 +52,7 @@ class code_controller extends controller
             $code.=substr($code_list,mt_rand(0,strlen($code_list)-1),1);
         }
         if($session_filed){
-            if(!isset($_SESSION)){
-                session_start();
-            }
-            $_SESSION[$session_filed]=$code;
+            session::set($session_filed,$code);
         }
         return $code;
     }
@@ -84,10 +81,7 @@ class code_controller extends controller
             $editor->crop($image1, $width, $height - 20, 'top-left');
             $editor->blend($image1, $image, 'normal', 0.9, 'top-left', $start_x, $start_y);
             $editor->resizeFit($image1, 300, 300);
-            if(!isset($_SESSION)){
-                session_start();
-            }
-            $_SESSION["image_x"]=$start_x;
+            session::set("image_x",$start_x);
             header('Content-type: image/png'); // Tell the browser we're sending a png image
             $image1->blob('PNG');
         }
@@ -104,12 +98,9 @@ class code_controller extends controller
             "x"=>"requred|min:0|max:440"
         ];
         $this->request()->verifacation($rules);
-        if(!isset($_SESSION)){
-            session_start();
-        }
-        if(abs($this->request()->get("x")-$_SESSION["image_x"])<8){
-            $_SESSION["pass"]="ok";
-            unset($_SESSION["image_x"]);
+        if(abs($this->request()->get("x")-session::get("image_x"))<8){
+            session::set("pass","ok");
+            session::forget("image_x");
             return ["code"=>200,"message"=>"ok"];
         }
         else{

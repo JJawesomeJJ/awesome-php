@@ -11,10 +11,17 @@ namespace system;
 
 class http
 {
-    public function get($url){
+    public function get($url,array $params=[]){
         $headers = array(
         );
         // 初始化
+        if(!empty($params)){
+            $url=$url."?";
+            foreach ($params as $key=>$value){
+                $url.="$key=$value&";
+            }
+            $url=substr($url,0,(strlen($url)-1));
+        }
         $curl = curl_init();
         // 设置url路径
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -37,5 +44,17 @@ class http
         curl_close($curl);
         // 返回数据
         return $data;
+    }
+    public function post($url, array $params=[], $headers=[],$timeout = 5){//curl
+        $ch = curl_init ();
+        curl_setopt ( $ch, CURLOPT_URL, $url );
+        curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, 1 );
+        curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'POST' );
+        curl_setopt ( $ch, CURLOPT_POSTFIELDS, $params);
+        curl_setopt ( $ch, CURLOPT_HTTPHEADER, $headers );
+        curl_setopt ( $ch, CURLOPT_TIMEOUT, 60 );
+        $result = curl_exec ( $ch );
+        curl_close ( $ch );
+        return $result;
     }
 }

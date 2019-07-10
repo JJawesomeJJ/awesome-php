@@ -10,6 +10,7 @@ namespace db\model;
 
 
 use db\factory\soft_db;
+use system\common;
 use system\Exception;
 abstract class model
 {
@@ -27,6 +28,14 @@ abstract class model
     //设置被保护的字段readonly
     protected $foreign_model_list=[];
     //与该模型关联的模型对象默认使用懒加载模式
+    protected $relationship=[];
+    //保存的关联模型的数据
+    //["表名"=>["this_model_key"=>"","foreign_model_key"=>]]
+    protected $is_load_data=false;
+    //是否使用get加载模型的数据
+    protected $permitted_set_table_name_list=[];
+    //由于在使用set_table_name时可能有外部输入,所有可能被恶意输入导致数据的信息全部暴露
+    //所以在有可能使用set_table_name 的方法的模型中重载$set_table_list防止被恶意输入
     public function __construct()
     {
         $this->db=soft_db::table($this->table_name);
@@ -94,6 +103,9 @@ abstract class model
     } //设置实例化模型的条件
     public function __get($name)
     {
+        if($this->is_load_data==false){
+            $this->get();
+        }
         if(method_exists($this,$name)){
             return call_user_func([$this,$name]);
             //判断该属性是否与其他模型的名字
@@ -128,6 +140,10 @@ abstract class model
         if(in_array($name,$this->guard)){
             new Exception("300","this_column_has_been_protect_$name");
         }
+        if($this->is_load_data==false){
+            $this->get();
+            $this->is_load_data=true;
+        }
         $this->db->set($name,$value);
         if($this->is_1_array($this->model_list)){
             $this->model_list[$name]=$value;
@@ -157,15 +173,67 @@ abstract class model
             if(in_array($key,$this->guard)) {
                 continue;
             }
-            $this->$key=$value;
+            if(!empty($this->model_list)) {
+                $this->$key = $value;
+            }
+            else{
+                $this->db->set($key,$value);
+            }
         }
-        $this->db->update();
+        return $this->db->update();
     }
-    protected function has($model_name,$this_model_key,$foreign_model_key){
+    public function all_with_foreign($foreign_model_name,$this_table_filed=[],$foreign_table_filed=[],$foreign_table_name=false){
+        if(!method_exists($this,$foreign_model_name)){
+            new Exception("400","$foreign_model_name undefine");
+        }
+        $foreign_model_obejct=null;
+        $this_model_list=$this->all($this_table_filed);
+        if($foreign_table_name!=false){
+            $foreign_model_obejct=$this->$foreign_table_name($foreign_table_name);
+        }
+        else{
+            $foreign_model_obejct=$this->$foreign_model_name();
+        }
+        $relationship=$this->relationship[$foreign_model_obejct->get_table_name];
+        if(!in_array($relationship["this_model_key"],$this_table_filed)&&!empty($this_table_filed)){
+            $this_table_filed[]=$relationship["this_model_key"];
+        }
+        if(!in_array($relationship["foreign_model_key"],$foreign_table_filed)&&!empty($foreign_table_filed)){
+            $foreign_table_filed[]=$relationship["foreign_model_key"];
+        }
+        $foreign_model_list=common::array_group_by_key($foreign_model_obejct->all($foreign_table_filed),$relationship["foreign_model_key"]);
+        $len=count($this_model_list);
+        if(!$this->is_1_array($this_model_list)) {
+            for ($i = 0; $i < $len; $i++) {
+                $key = $this_model_list[$i][$relationship["this_model_key"]];
+                if (array_key_exists($relationship["this_model_key"], $this_model_list[$i])&&array_key_exists($key,$foreign_model_list)) {
+                    $this_model_list[$i][$foreign_model_name] = $foreign_model_list[$key];
+                }
+            }
+        }
+        else{
+            $key = $this_model_list[$relationship["this_model_key"]];
+            if (array_key_exists($relationship["this_model_key"], $this_model_list)&&array_key_exists($key,$foreign_model_list)) {
+                $this_model_list[$foreign_model_name] = $foreign_model_list[$key];
+            }
+        }
+        return $this_model_list;
+    }
+    public function get_table_name(){
+        return $this->table_name;
+    }
+    protected function has($model_name,$this_model_key,$foreign_model_key,$set_table_name=false){
         if(!array_key_exists($model_name,$this->foreign_model_list)){
+            $model_object=make($model_name);
+            if($set_table_name!=false){
+                $model_object->set_table_name($set_table_name);
+            }
+            $this->relationship[$model_object->get_table_name()]=[
+                "this_model_key"=>$this_model_key,
+                "foreign_model_key"=>$foreign_model_key
+            ];
             if($this->is_1_array($this->model_list)){
-                $model_object=new $model_name();
-                $model_object->where($foreign_model_key,$this->model_list[$this_model_key])->get();
+                $model_object->where($foreign_model_key,$this->model_list[$this_model_key]);
                 $this->foreign_model_list[$model_name]=$model_object;
             }
             else{
@@ -173,8 +241,7 @@ abstract class model
                 foreach ($this->model_list as $value){
                     $condition_list[]=$value[$this_model_key];
                 }
-                $model_object=new $model_name();
-                $model_object->where_in($foreign_model_key,$condition_list)->get();
+                $model_object->where_in($foreign_model_key,$condition_list);
                 $this->foreign_model_list[$model_name]=$model_object;
             }
         }
@@ -182,7 +249,24 @@ abstract class model
         //实例化模型的具体方法
         //根据设置的外键设置条件
     }
+    public function set_table_name($table_name){
+        if(!empty($this->permitted_set_table_name_list)){
+            if(!in_array($table_name,$this->permitted_set_table_name_list)){
+                new Exception("403","danger input");
+            }
+        }//防止恶意输入
+        $this->table_name=$table_name;
+        $this->db=soft_db::table($table_name);
+        return $this;
+    }
+    public function find($index){
+        return $this->limit($index,1)->get();
+    }
     public function all(array $filed=[]){
+        if($this->is_load_data==false){
+            $this->get();
+            $this->is_load_data=true;
+        }
         if(empty($this->model_list)){
             return [];
         }
@@ -220,14 +304,23 @@ abstract class model
         $this->db->delete();
         $this->model_list = [];
     }
-    public function create(array $filed_arr,$is_auto_id=false){
+    public function create(array $filed_arr,$is_auto_id=false,$return_id=true){
         if(in_array("created_at",$this->table_column_list)){
             $filed_arr["created_at"]=date("Y-m-d H:i:s");
         }
         if($is_auto_id){
-            $filed_arr["id"]=md5(microtime(true));
+            $filed_arr["id"]=md5(microtime(true).common::rand(4));
         }
-        $this->db->insert($filed_arr);
+        $result=$this->db->insert($filed_arr);
+        if($return_id&&$is_auto_id){
+            if($result){
+                return $filed_arr["id"];
+            }
+            else{
+                return false;
+            }
+        }
+        return $result;
     }
     public function where_like($column_value,$condition_value){
         $this->db->where_like($column_value,"%$condition_value%");
@@ -239,5 +332,17 @@ abstract class model
         }
         $this->limit(($page-1)*$limit,$limit);
         return $this;
+    }
+    public function exist($is_refresh=false){
+        if(empty($this->db->all()->get())){
+            if($is_refresh){
+                $this->db->refresh();
+            }
+            return false;
+        }
+        if($is_refresh){
+            $this->db->refresh();
+        }
+        return true;
     }
 }

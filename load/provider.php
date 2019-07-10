@@ -10,6 +10,7 @@ namespace load;
 use http;
 use controller;
 use request\request;
+use function Sodium\crypto_box_keypair_from_secretkey_and_publickey;
 use system\Exception;
 
 class provider
@@ -18,6 +19,7 @@ class provider
     protected $controller=[];
     protected $dependencies=[];
     protected $container=[];
+    protected static $provider=null;
     public function controller($controller_name,$params=false){
 //        if($params==false) {
 //            return new $this->controller[$controller_name]();
@@ -27,8 +29,20 @@ class provider
 //        }
         return $this->controller[$controller_name];
     }
+    public function __construct()
+    {
+        self::$provider=$this;
+    }
+    public static function provider(){
+        return self::$provider;
+    }
     public function middleware($middleware,$request){
-        return new $this->middleware[$middleware]($request);
+        if(isset($this->controller[$middleware])){
+            return $this->controller[$middleware];
+        }
+        $middleware_obejct=new $this->middleware[$middleware]($request);
+        $this->controller[$middleware]=$middleware_obejct;
+        return $middleware_obejct;
     }
     public function make($class_name)
     {
@@ -52,8 +66,13 @@ class provider
                     $class_name_fact = $this->dependencies[$class_name];
                 }
             } else {
-                $object = new \ReflectionClass("\\$class_name");
-                $class_name_fact = "\\$class_name";
+                if(!class_exists($class_name)) {
+                    $object = new \ReflectionClass("\\$class_name");
+                    $class_name_fact = "\\$class_name";
+                }else{
+                    $object = new \ReflectionClass("$class_name");
+                    $class_name_fact = "$class_name";
+                }
             }
         }
         catch (\Throwable $throwable){

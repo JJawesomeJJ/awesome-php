@@ -36,8 +36,11 @@ class server
         $this->server->on('task', array($this, 'onTask'));
         $this->server->on('finish', array($this, 'onfinish'));
         $this->server->on('close', array($this, 'onclose'));
-        \system\system_excu::record_my_pid(__FILE__,true);
+        $this->server->on('start',array($this,'onstart'));
         $this->server->start();
+    }
+    public function onstart(){
+        \system\system_excu::record_my_pid(__FILE__);
     }
     public function onopen($server, $request)
     {

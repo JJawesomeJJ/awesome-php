@@ -12,9 +12,12 @@ use db\factory\migration\migration_list\migration_comment_list;
 use db\factory\soft_db;
 use db\model\comment_list\comment_list;
 use db\model\model;
+use db\model\park\map;
 use db\model\user\user;
+use load\provider;
 use load\provider_register;
 use request\request;
+use function Sodium\crypto_pwhash_scryptsalsa208sha256;
 use SuperClosure\Serializer;
 use system\cache\cache;
 use system\class_define;
@@ -22,13 +25,15 @@ use system\common;
 use system\config\config;
 use system\config\service_config;
 use system\config\timed_task_config;
+use system\cookie;
+use system\encrypt;
 use system\file;
+use system\http;
 use system\mail;
 use system\session;
 use system\system_excu;
 use task\queue\queue;
 use template\compile;
-use view\view;
 
 class index_controller extends controller
 {
@@ -145,13 +150,67 @@ class index_controller extends controller
 //        return session::get("test");
 //        $user=new user();
 //        return $user->where("name","赵李杰")->get()->comment_list->comment_content;
-        $time=microtime(true);
+//        $time = microtime(true);
 //        view("admin/controller_index");
 //        return microtime(true)-$GLOBALS["time"];
         //return var_export(file_get_contents(@"/var/www/html/php/template/test123.php"),true);
 //        echo timed_task_config::timed_task_schedule()[0];
 //        return $this->cache()->get_cache(timed_task_config::timed_task_schedule()[0]);
-        $this->cache()->set_cache("test","test",500);
-        return $this->cache()->get_cache("test");
+//        $this->cache()->set_cache("test","test",500);
+//        return $this->cache()->get_cache("test");
+//
+//        session::set("test","jjawesome");
+//
+//        return $this->cache()->get_cache("sql");
+//        print_r(soft_db::table("user")->get_table_struct());
+//        $this->test();
+//        $this->cache()->delete_key("de1fbbeb3f7bd001c15cd510ea808cb3");
+//        return $this->cache()->get_cache("sql");
+//        $user=new user();
+//        print_r($user->where("name","赵李杰")->get()->all_with_foreign("comment_list"));
+//        $map=new map();
+//        $map->set_table_name("四川省")->where("city","乐山市")->get();
+//        print_r($map->all_with_foreign("oder"));
+//        echo microtime(true);
+//        $file=new file();
+//        print_r($file->file_walk("/var/www/html/php/extend/"));
+//        $this->cache()->set_cache("test",5,16400);
+//        $this->cache()->decrease("test",5);
+//        return $this->cache()->get_cache("test");
+//        $this->cache()->set_cache("test","123",6400);
+//        return $this->cache()->pop("test");
+//        var_dump(true==="dasd");
+//        return config::swoole_dev();
+//        return $this->request()->get_url();
+//        print_r(get_included_files());
+//        return $this->get_local_ip();
+//        echo "load";
+//        echo "ok";
+//        echo "ok";
+//        echo "reload";
+//        $user=soft_db::table("user");
+//        return $user->update_many("name",[
+//            ["name"=>"赵李杰","password"=>hash("sha256","19971999"),"sex"=>"women"],
+//            ["name"=>"潘泓达","password"=>hash("sha256","19971999"),"sex"=>"man"]
+//        ]);
+//        $user=new user();
+////        $user->create([
+////            "name"=>"小王",
+////            "password"=>hash("sha256","19971998"),
+////            "sex"=>"man",
+////            "head_img"=>"test",
+////            "email"=>"15255@qq.com"
+////        ]);
+//        $user->update(["password"=>"c7643438e12c101c2b4bf7a638a333e84a7b0125ea9ce28cd87a1f2542760e7e"]);
+        $user=new user();
+//        $comment_list=$user->where("name","赵李杰")->get()->comment_list();
+//        $comment_list->where("comment_content","test")->get()->comment_content="tttttttttt";
+//        $comment_list->update();
+        print_r($user->all_with_foreign("comment_list"));
+
+    }
+    public function __destruct()
+    {
+//        echo "实发";
     }
 }

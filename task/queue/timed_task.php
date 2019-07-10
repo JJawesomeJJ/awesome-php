@@ -11,7 +11,6 @@ namespace task\queue;
 
 use SuperClosure\Serializer;
 use system\cache\cache;
-use system\cache\cache_;
 use system\config\config;
 use system\config\timed_task_config;
 use system\Exception;

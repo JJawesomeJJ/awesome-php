@@ -22,78 +22,84 @@ class routes
         "ANY"=>[],
         "PUT"=>[],
     ];
-    protected $routes = [];
+    protected static $object;
+    protected static $now_request;
     private $request = null;
     protected $now_request_url_list;
     protected $value;//已匹配的路由信息
     public function __construct()
     {
-        $this->routes=self::$route;
         $this->request =make("request");
-        $this->request_check();
+        self::$object=$this;
     }
-    private function request_check()
+    protected function start()
     {
-
-            if ($this->pathinfo()) {
-                $values=$this->value;
-                $provider = new provider_register();
-                if(count($values["middleware"])>0) {
-                    if (gettype($values["middleware"][0]) == 'string') {
-                        $values["middleware"] = [$values["middleware"]];
-                    }
-                }
-                foreach ($values["middleware"] as $middleware) {
-                    if(gettype($middleware)=="array"){
-                        switch (count($middleware)){
-                            case 2:
-                                $object = $provider->middleware($middleware[0],$this->request);
-                                call_user_func([$object,$middleware[1]]);
-                                $this->request = $object->next();
-                                //无参数调用中间件的函数
-                                break;
-                            case 3:
-                                $object=$provider->middleware($middleware[0],$this->request);
-                                if(gettype($middleware[2])=='string')
-                                {
-                                    $middleware[2]=["$middleware[2]"];
-                                }
-                                //有参数的调用中间的函数
-                                call_user_func_array([$object,$middleware[1]],$middleware[2]);
-                                $this->request = $object->next();
-                                //edit request obejct which has been handle with middleware
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    else{
-                        $object = $provider->middleware($middleware[0],$this->request);
-                        $this->request=$object->next();
-                        //加载中间件中间件在check完成自我调用
-                    }
-                }
-                $response = null;
-                if (gettype($values["controller_method"]) == "object") {
-                    $response = call_user_func($values["controller_method"]);//if is a object which is a anonymous return value so it is echo value
-                } else {
-                    $controller_method = explode("@", $values["controller_method"]);
-                    //$response = $this->load_method($provider->controller($controller_method[0], $this->request), $controller_method[1]);
-                    $response = $provider->make_method($controller_method[1],$provider->controller($controller_method[0]));
-                }
-                if (gettype($response) == 'array') {
-                    echo json_encode($response);
-                    return;
-                } else {
-                    echo $response;
-                    return;
+        if ($this->pathinfo()) {
+            $values=$this->value;
+            $provider = new provider_register();
+            if(count($values["middleware"])>0) {
+                if (gettype($values["middleware"][0]) == 'string') {
+                    $values["middleware"] = [$values["middleware"]];
                 }
             }
+            foreach ($values["middleware"] as $middleware) {
+                if(gettype($middleware)=="array"){
+                    switch (count($middleware)){
+                        case 2:
+                            $object = $provider->middleware($middleware[0],$this->request);
+                            call_user_func([$object,$middleware[1]]);
+                            $this->request = $object->next();
+                            //无参数调用中间件的函数
+                            break;
+                        case 3:
+                            $object=$provider->middleware($middleware[0],$this->request);
+                            if(gettype($middleware[2])=='string')
+                            {
+                                $middleware[2]=["$middleware[2]"];
+                            }
+                            //有参数的调用中间的函数
+                            call_user_func_array([$object,$middleware[1]],$middleware[2]);
+                            $this->request = $object->next();
+                            //edit request obejct which has been handle with middleware
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else{
+                    $object = $provider->middleware($middleware[0],$this->request);
+                    $this->request=$object->next();
+                    //加载中间件中间件在check完成自我调用
+                }
+            }
+            $response = null;
+            if (gettype($values["controller_method"]) == "object") {
+                $response = call_user_func($values["controller_method"]);//if is a object which is a anonymous return value so it is echo value
+            } else {
+                $controller_method = explode("@", $values["controller_method"]);
+                //$response = $this->load_method($provider->controller($controller_method[0], $this->request), $controller_method[1]);
+                $response = $provider->make_method($controller_method[1],$provider->controller($controller_method[0]));
+            }
+            if (gettype($response) == 'array') {
+                echo json_encode($response);
+                return;
+            } else {
+                echo $response;
+                return;
+            }
+        }
         echo json_encode(['code'=>'404','message'=>'page_not_exist']);
     }
-        // when no url match routes then app echo 404 page
+    public function __call($name, $arguments)
+    {
+        if($name=="start"){
+            $this->start();
+        }
+    }
+
+    // when no url match routes then app echo 404 page
     protected function pathinfo(){
-        foreach (array_merge($this->routes[$this->request->request_mothod()],$this->routes["ANY"]) as $route){
+        foreach (array_merge(self::$route[$this->request->request_mothod()],self::$route["ANY"]) as $route){
             if (strrpos($route["url"], "{") !== false) {
                 if($this->vertify_pathinfo($route)){
                     return true;
@@ -154,17 +160,40 @@ class routes
     }
     public static function get($url,$controller_method,array $middleware=[]){
         self::$route["GET"][]=["request_method"=>"GET","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
+        self::$now_request="GET";
+        return self::$object;
     }
     public static function post($url,$controller_method,array $middleware=[]){
         self::$route["POST"][]=["request_method"=>"POST","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
+        self::$now_request="POST";
+        return self::$object;
     }
     public static function delete($url,$controller_method,array $middleware=[]){
         self::$route["DELETE"][]=["request_method"=>"DELETE","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
+        self::$now_request="DELETE";
+        return self::$object;
     }
     public static function put($url,$controller_method,array $middleware=[]){
         self::$route["PUT"][]=["request_method"=>"PUT","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
+        self::$now_request="PUT";
+        return self::$object;
     }
     public static function any($url,$controller_method,array $middleware=[]){
         self::$route["ANY"][]=["request_method"=>"ANY","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
+        self::$now_request="ANY";
+        return self::$object;
+    }
+    public function middleware($middleware_name,$method=false,$params=false){
+        $index=count(self::$route[self::$now_request])-1;
+        if($method&&$params){
+            self::$route[self::$now_request][$index]["middleware"][]=[$middleware_name,$method,[$params]];
+        }
+        if($method&&!$params){
+            self::$route[self::$now_request][$index]["middleware"][]=[$middleware_name,$method];
+        }
+        if(!$method&&!$params){
+            self::$route[self::$now_request][$index]["middleware"][]=[$middleware_name];
+        }
+        return $this;
     }
 }

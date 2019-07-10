@@ -61,11 +61,11 @@ class system_excu
         $redis=class_define::redis();
         $redis->hgetall(config::task_record_list()["name"]);
     }
-    public static function record_my_pid($path,$is_add=false){
+    public static function record_my_pid($path,$pid=false){
         $script_name=basename($path,".php");
         $script_pid=getmypid();
-        if($is_add==true){
-            $script_pid=$script_pid+1;
+        if($pid!=false){
+            $script_pid=$pid;
         }
         class_define::redis()->hSet(config::task_record_list()["name"],$script_name,json_encode(["pid"=>$script_pid,"created_at"=>time()]));
     }

@@ -32,7 +32,17 @@ class session
     }
     public static function get($name){
         self::init();
+        if(!isset($_SESSION[$name])){
+            return false;
+        }
         return $_SESSION[$name];
+    }
+    public static function exist($name){
+        self::init();
+        if(!isset($_SESSION[$name])){
+            return false;
+        }
+        return true;
     }
     public static function forget($name){
         self::init();

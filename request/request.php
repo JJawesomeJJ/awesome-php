@@ -14,9 +14,11 @@ use task\job\email_queue;
 class request
 {
     public $user_input;
+    protected $server;
     public function __construct()
     {
         $this->user_input=$this->all();
+        $this->server=$_SERVER;
     }
     public function verifacation(array $rules){
         $arr=[];
@@ -99,6 +101,12 @@ class request
         else{
            new Exception("400","number_less_than_min_expect_$min");
         }
+    }
+    public function get_server($key){
+        if(isset($this->server[$key])){
+            return $this->server[$key];
+        }
+        return false;
     }
     public function get_many(array $key_list){
         $return_arr=[];
@@ -207,8 +215,10 @@ class request
         if($this->user_input!=null){
             return $this->user_input;
         }
-        if($_SERVER["CONTENT_TYPE"]=="application/json;charset=UTF-8"){
-            return json_decode(file_get_contents('php://input'),true);
+        if(isset($_SERVER["CONTENT_TYPE"])) {
+            if ($_SERVER["CONTENT_TYPE"] == "application/json;charset=UTF-8") {
+                return json_decode(file_get_contents('php://input'), true);
+            }
         }
         if($_SERVER['REQUEST_METHOD']=="GET"){
             return $_GET;

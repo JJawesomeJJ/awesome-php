@@ -45,6 +45,9 @@ class compile
         $this->compile_path($template_name);
         $this->compile_link();
         foreach ($data as $key => $value) {
+            if(is_null($value)){
+                $value="NULL";
+            }
             if(is_string($value)||is_numeric($value)) {
                 $this->template= str_replace("{{{$key}}}", htmlentities($value), $this->template);
             }
@@ -63,6 +66,9 @@ class compile
             return new Exception("400", "template_not_exist");
         }
         foreach ($data as $key => $value) {
+            if(is_null($value)){
+                $value="NULL";
+            }
             if(is_string($value)||is_numeric($value)) {
                 $this->template= str_replace("{{{$key}}}", htmlentities($value), $this->template);
             }

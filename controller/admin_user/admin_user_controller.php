@@ -68,20 +68,27 @@ class admin_user_controller extends controller
         return ["code" => 200, "message" => "ok", "head_img" => $head_img, "name" => $this->request()->get("name"), "permission" => $this->request()->get("permission"), "email" => $this->request()->get("email")];
     }
 
-    public static function permission()
+    public static function permission($is_redirect=true)
     {
         $cache = make("cache");
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-        if (!isset($_SESSION["admin_permission"])) {
+        if (!session::get("admin_permission")) {
             if (!isset($_COOKIE['admin_token'])) {
+                if($is_redirect){
                 redirect("http://39.108.236.127/php/public/index.php/admin/user");
+                }
+                else{
+                    return false;
+                }
 //                new Exception("403", "admin_token_has_been_expired");
             }
             $admin_user_info = $cache->get_cache($_COOKIE['admin_token']);
             if($admin_user_info==null){
-                redirect("http://39.108.236.127/php/public/index.php/admin/user");
+                if($is_redirect) {
+                    redirect("http://39.108.236.127/php/public/index.php/admin/user");
+                }
+                else{
+                    return false;
+                }
                 //return ["code"=>200,"message"=>"admin_token_has_been_expired"];
             }
             $admin_user_info=$cache->get_cache($admin_user_info["name"]);
@@ -89,10 +96,10 @@ class admin_user_controller extends controller
                 $cache->delete_key($_COOKIE["admin_token"]);
                 redirect("http://39.108.236.127/php/public/index.php/admin/user");
             } else {
-                $_SESSION["admin_permission"] = $admin_user_info;
+               session::set("admin_permission",$admin_user_info);
             }
         }
-        return $_SESSION["admin_permission"];
+        return session::get("admin_permission");
     }
     public function set_token($name, $permission)
     {
@@ -108,10 +115,7 @@ class admin_user_controller extends controller
             "password" => "required",
             "code"=>"reqiured"
         ];
-        if(!isset($_SESSION)){
-            session_start();
-        }
-        if(strtolower($_SESSION["admin_user"])!=strtolower($this->request()->get("code"))){
+        if(strtolower(session::get("admin_user"))!=strtolower($this->request()->get("code"))){
             $compile=new compile();
             return ["code"=>403,"message"=>"邮箱验证码错误"];
         }
@@ -148,10 +152,7 @@ class admin_user_controller extends controller
         }
     }
     public function email_code_login(){
-        if(!isset($_SESSION)){
-            session_start();
-        }
-        if(!isset($_SESSION["pass"])||$_SESSION["pass"]!="ok"){
+        if(!session::get("pass")||session::get("pass")!="ok"){
             return ["code"=>"403","message"=>"forbidden"];
         }
         $admin_user=new admin_user_new();
@@ -168,6 +169,9 @@ class admin_user_controller extends controller
         return ["code"=>200,"message"=>"ok"];
     }
     public function user_login(){
+        if(self::permission(false)){
+            redirect("http://39.108.236.127/php/public/index.php/admin/control/websocket");
+        }
         $compile=new compile();
         return $compile->view("admin/user_login");
     }
@@ -408,7 +412,14 @@ class admin_user_controller extends controller
                 return $this->jsonp(["version"=>$version]);
                 break;
             case "get_theme_back":
-                $list=$this->cache()->get_cache("theme_back_list");
+                $list=$this->cache()->get_non_exist_set("theme_back_list",function (){
+                    $model=model_auto::model("titang_theme");
+                    $model->find(1);
+                    echo "load";
+                    $data=common::get_array_value(["morning","noon","afternoon","night"],$model->all());
+                    $this->cache()->set_cache("theme_version",$model->updated_at,"forever");
+                    return $data;
+                },"forever");
                 $version=$this->cache()->get_cache("theme_version");
                 if(!$request->try_get("key")){
                     $list=array_values($list);

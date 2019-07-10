@@ -39,7 +39,6 @@ class db
             if ($this->con->query($sql) == true) {
                 return true;
             } else {
-                //echo $sql;
                 return false;
             }
         } catch (Exception $E) {

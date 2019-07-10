@@ -6,9 +6,9 @@
  * Time: 下午 2:35
  */
 namespace controller;
+use load\provider;
 use request\request;
 use system\cache\cache;
-use system\cache\cache_;
 
 class controller
 {
@@ -16,10 +16,11 @@ class controller
     protected $request_=null;
     public function __construct(request $request)
     {
-        if($request!=false){
-            $this->request_=$request;
-        }
+        $this->request_=$request;
         $this->construct();
+    }
+    public function middlware($middlware){
+        return provider::provider()->middleware($middlware,$this->request());
     }
     public function construct(){
 
@@ -53,12 +54,6 @@ class controller
         return $this->cache_;
     }//magic method try to instance a cache object
     protected function request(){
-        if($this->request_==null){
-            $this->request_=new request();
-            return $this->request_;
-        }
-        else{
-            return $this->request_;
-        }
+        return $this->request_;
     }//magic method try to instance a request
 }

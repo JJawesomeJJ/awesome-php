@@ -16,13 +16,20 @@ class file
     protected $array_string="";
     private $fd=null;
     private $path;
-    private function get_file_list($dir){
-        if($this->path!=$dir)
+    private function get_file_list($dir,$except){
+        $dir=str_replace("//","/",$dir);
+        if(in_array($dir,$except))
+        {
+            return [];
+        }
+        if(is_file($dir)){
+            return [$dir];
+        }
         if(@$handle = opendir($dir)) { //注意这里要加一个@，不然会有warning错误提示：）
             while(($file = readdir($handle)) !== false) {
                 if($file != ".." && $file != ".") {
                     if(is_dir($dir."/".$file)) {
-                        $files[] =$this->get_file_list($dir."/".$file);
+                        $files[] =$this->get_file_list($dir."/".$file,$except);
                     } else {
                         $files[] = $file;
                         $this->arr[]=str_replace("//","/",$dir."/".$file);
@@ -34,8 +41,8 @@ class file
             return $file_list;
         }
     }//please don't direct call method,use file_walk!
-    public function file_walk($path){
-        $file_list=$this->get_file_list($path);
+    public function file_walk($path,$except=[]){
+        $file_list=call_user_func_array([$this,"get_file_list"],[$path,$except]);
         $this->arr=[];
         return $file_list;
     }
@@ -65,8 +72,7 @@ class file
             return false;
         }
         $myfile = fopen($path, "r") or die("Unable to open file!");
-        $data=fread($myfile,filesize($path));
-        fclose($myfile);
+        $data=file_get_contents($path);
         return $data;
     }
     public function img_base64($img_path){

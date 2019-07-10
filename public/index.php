@@ -6,7 +6,6 @@
  * Time: 下午 3:01
  */
 header('Access-Control-Allow-Origin:*');
-define("home_path",dirname(__DIR__));
 use routes\routes;
 class index
 {
@@ -14,10 +13,11 @@ class index
     {
         $GLOBALS["time"]=microtime(true);
         require_once __DIR__."/../load/auto_load.php";
-        require_once __DIR__."/../routes/route_entrance.php";
         require_once __DIR__."/../load/common.php";
         try {
-            new routes();
+            $route=new routes();
+            require_once __DIR__."/../routes/route_entrance.php";
+            $route->start();
         }
         catch (Throwable $throwable){
             echo $throwable;

@@ -295,7 +295,6 @@ class survey_controller extends controller
         $writer=auth_controller::auth('user');
         $request=new request([]);
         $name=$request->get("name");
-        session_start();
         $sql = "DROP TABLE $name";
         $this->con->query($sql);
         $sql = "delete from survey where survey_name='$name' and writer='$writer'";
@@ -333,7 +332,6 @@ class survey_controller extends controller
         $time=date("Y-m-d H:i:s");
         $arr_data=json_encode($arr);
         $sql="insert into survey(writer,survey_name,data,created_at,flag)values('$name','$writer1','$arr_data','$time','on_survey')";
-        echo $sql;
         $this->con->query($sql);
         $index = 1;
         $html = "";

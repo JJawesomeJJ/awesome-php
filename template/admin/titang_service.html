@@ -26,7 +26,7 @@
         <!--<h1 class="text-white-h1 text-center j-center-vertical">皮肤设置</h1>-->
     <!--</div>-->
     <div class="layui-col-sm12 layui-col-xs-12 j-center" style="float: none;!important;">
-    <div class="j-min-hiden">
+    <div class="j-min-hiden" style="min-height:50px;">
         <div class="flex">
             <div class="layui-col-md3 img_container" style="position: relative;">
                 <div class="bg-black-opacity j-top width_match_parent title_">
@@ -91,7 +91,7 @@
                 <button class="layui-btn layui-btn-primary layui-btn-sm" v-on:click="edit_cancel"><i class="layui-icon layui-icon-return">取消</i></button>
                 <button class="layui-btn bg-green layui-btn-sm" v-on:click="upload_theme('create')"><i class="layui-icon layui-icon-upload">确认</i></button>
             </div>
-            <div class="j-right" v-if="is_update">
+            <div class="j-right" v-if="is_update&&!is_create">
                 <button class="layui-btn layui-btn-primary layui-btn-sm" v-on:click="edit_cancel"><i class="layui-icon layui-icon-return">取消</i></button>
                 <button class="layui-btn bg-green layui-btn-sm" v-on:click="upload_theme('update')"><i class="layui-icon layui-icon-upload">确认修改</i></button>
             </div>
@@ -260,7 +260,7 @@
                     }).then(function (res) {
                     if(res["data"]["message"]=="ok"){
                         for(var i of self.theme_list){
-                            if(i.id=id){
+                            if(i.id==id){
                                 self.now_theme_list=i;
                                 return;
                             }

@@ -5,7 +5,6 @@
  * Date: 2019/3/30 0030
  * Time: 下午 9:39
  */
-
 namespace system;
 
 
@@ -14,7 +13,8 @@ use load\provider;
 use load\provider_register;
 use system\cache\cache;
 use system\config\config;
-
+require_once __DIR__."/../load/auto_load.php";
+require_once __DIR__."/../load/common.php";
 class awesome
 {
     private $home_path;
@@ -38,15 +38,50 @@ class awesome
     public function load_method()
     {
         $argv = $_SERVER['argv'];
-        if (count($argv) == 2) {
-            $method_name = $argv[1];
-            $this->$method_name();
+        $method_name=$argv[1];
+        $params=[];
+        if(strpos($method_name,":")!==false){
+            $method_name_parmas=explode(":",$method_name);
+            $method_name=$method_name_parmas[0];
+            $index=0;
+            foreach ($method_name_parmas as $value){
+                if($index==0){
+                    $index++;
+                    continue;
+                }
+                $params[]=$value;
+            }
         }
-        if (count($argv) == 3) {
-            $method_params = explode(":", $argv[1]);
-            $method_name = $method_params[0];
-            $this->$method_name($method_params[1], $argv[2]);
+        $index=0;
+        foreach ($argv as $value){
+            if($index<2){
+                $index++;
+                continue;
+            }
+            $params[]=$value;
         }
+        $method_obejct=new \ReflectionMethod($this,$method_name);
+        $num=count($method_obejct->getParameters());
+        if($num==0){
+            call_user_func([$this,$method_name]);
+        }
+        else{
+            call_user_func_array([$this,$method_name],$params);
+        }
+//        if (count($argv) == 2) {
+//            $method_name = $argv[1];
+//            $this->$method_name();
+//        }
+//        if (count($argv) == 3) {
+//            $method_params = explode(":", $argv[1]);
+//            $method_name = $method_params[0];
+//            if(!isset($method_params[1])) {
+//                $this->$method_name($argv[2]);
+//            }
+//            else {
+//                $this->$method_name($method_params[1], $argv[2]);
+//            }
+//        }
     }
 
     public function controller($controller_name)
@@ -73,10 +108,10 @@ use controller;
 class provider_register extends provider
 {
     protected \$middleware=[
-    {{middleware}}
+{{middleware}}
     ];
     protected \$controller=[
-     {{controller}}
+{{controller}}
     ];
     protected \$dependencies=[];
 }";
@@ -94,7 +129,7 @@ class provider_register extends provider
             $register_value = str_replace("/", "\\", str_replace(".php", "", str_replace($home_path . "/", "", $value) . "::class"));
             if (strpos($name, "_middleware") !== false) {
                 $middlerware_list[$name] = $register_value;
-                $middlerware_string .= "\"$name\"=>$register_value," . "\n";
+                $middlerware_string .= "        "."\"$name\"=>$register_value," . "\n";
             }
         }
         foreach ($file->file_walk($controller_path) as $value) {
@@ -103,7 +138,7 @@ class provider_register extends provider
             $register_value = str_replace("/", "\\", str_replace(".php", "", str_replace($home_path . "/", "", $value) . "::class"));
             if (strpos($name, "_controller") !== false) {
                 $controller_list[$name] = $register_value;
-                $controller_string .= "\"$name\"=>$register_value," . "\n";
+                $controller_string .="        ". "\"$name\"=>$register_value," . "\n";
             }
         }
         $template_register = str_replace("{{middleware}}", $middlerware_string, str_replace("{{controller}}", $controller_string, $template_register));
@@ -168,13 +203,14 @@ class $controller_name extends controller
         for ($i = 0; $i < count($arr) - 1; $i++) {
             $namespace .= "/" . $arr[$i];
         }
+        $namespace=str_replace("/","\\",$namespace);
         $middleware_template = "<?php
 /**
  * Created by awesome.
  * Date: $time
  */
 namespace $namespace;
-use http\middleware;
+use http\middleware\middleware;
 class $middleware_name extends middleware
 {
      public function check()
@@ -265,7 +301,7 @@ namespace system\cache;
 use system\\file;
 use system\config\config;
 
-class cache extends cache_
+class cache extends cache
 {
     protected \$diver={{driver}};
     protected \$path={{path}};
@@ -336,17 +372,92 @@ class cache extends cache_
     public function migrate(...$arr){
         $file=new file();
         $file_name_list=$file->file_walk($this->home_path."db/");
-        foreach ($file_name_list as $value){
-            if(strpos($value,"migration_")!==false){
-                if(count($arr)==0){
-                    $class_name=str_replace(".php","",str_replace("/","\\",str_replace($this->home_path,"\\",$value)));
-                    $object=new $class_name();
-                    $object->create();
-                    $object->create_();
-                    $migration_name=explode("\\",$class_name);
-                    $this->cli_echo_color_green($migration_name[count($migration_name)-1]." has been created");
-                }
+        $class_name_list=[];
+        foreach ($file_name_list as $value) {
+            if (strpos($value, "migration_") !== false) {
+                $class_name_list[] = str_replace(".php", "", str_replace("/", "\\", str_replace($this->home_path, "\\", $value)));
             }
         }
+        print_r($class_name_list);
+        if(isset($arr[1])){
+            print_r("load__arr");
+            $class_name_list=[$arr[1]];
+        }
+        if(isset($arr[0])){
+            $type=$arr[0];
+        }
+        else{
+            $type="create";
+        }
+        switch ($type){
+            case "create":
+                foreach ($class_name_list as $class_name){
+                    $object=make($class_name);
+                    $result=$object->create_();
+                    foreach ($result as $key=>$value){
+                        if($value){
+                            $this->cli_echo_color_green($key. " has been suceess create!");
+                        }
+                    }
+                }
+                break;
+            case "update":
+                foreach ($class_name_list as $class_name){
+                    $object=make($class_name);
+                    $result=$object->update();
+                    foreach ($result as $key=>$value){
+                        if($value){
+                            $this->cli_echo_color_green($key. " has been update!");
+                        }
+                    }
+                }
+                break;
+            case "drop":
+                foreach ($class_name_list as $class_name){
+                    $object=make($class_name);
+                    $result=$object->drop();
+                    print_r($result);
+                    foreach ($result as $key=>$value){
+                        if($value){
+                            $this->cli_echo_color_red($key. " has been delete!");
+                        }
+                    }
+                }
+                break;
+            case "refresh":
+                foreach ($class_name_list as $class_name){
+                    $object=make($class_name);
+                    $object->create();
+                    $result=$object->drop();
+                    foreach ($result as $key=>$value){
+                        if($value){
+                            $this->cli_echo_color_blue($key. "data has been refreshed!");
+                        }
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+//        foreach ($file_name_list as $value){
+//            if(strpos($value,"migration_")!==false){
+//                if(count($arr)==0){
+//                    $class_name=str_replace(".php","",str_replace("/","\\",str_replace($this->home_path,"\\",$value)));
+//                    $object=new $class_name();
+//
+//                    }
+//                else{
+//                    if($arr[0]=="update"){
+//                        $class_name=str_replace(".php","",str_replace("/","\\",str_replace($this->home_path,"\\",$value)));
+//                        $object=new $class_name();
+//                        $object->create();
+//                        if($object->update()) {
+//                            $migration_name = explode("\\", $class_name);
+//                            $this->cli_echo_color_green($migration_name[count($migration_name) - 1] . " has been update");
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
 }

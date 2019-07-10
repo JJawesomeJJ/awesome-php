@@ -9,7 +9,6 @@
 namespace swoole;
 
 use system\cache\cache;
-use system\cache\cache_;
 
 require_once "../load/auto_load.php";
 class swoole_task
@@ -30,6 +29,6 @@ class swoole_task
         }
     }
         public function run(){
-        new cache_();
+        new cache();
     }
 }

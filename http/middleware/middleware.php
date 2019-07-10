@@ -10,7 +10,7 @@ namespace http\middleware;
 
 
 use request\request;
-use system\cache\cache_;
+use system\cache\cache;
 use system\Exception;
 
 abstract class middleware
@@ -77,7 +77,7 @@ abstract class middleware
     }
     public function cache(){
         if($this->cache_==null){
-            $this->cache_=new cache_();
+            $this->cache_=new cache();
             return $this->cache_;
         }
         else{

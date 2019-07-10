@@ -12,6 +12,7 @@ namespace load;
 class app
 {
     protected $call_back=[];
+    static $call_back_closure=[];
     public function call_back(){
         foreach ($this->call_back as $value){
             if($value["params"]==null){
@@ -25,6 +26,14 @@ class app
     }
     public function add_call_back($object,$method,array $params=null){
         $this->call_back[]=["object"=>$object,"method"=>$method,"params"=>$params];
+    }
+    public static function add_call_back_closure(\Closure $closure){
+        self::$call_back_closure[]=$closure;
+    }
+    protected function call_back_(){
+        foreach (self::$call_back_closure as $closure){
+            call_user_func($closure);
+        }
     }
     public function __destruct()
     {
