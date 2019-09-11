@@ -57,9 +57,9 @@ class config
             "type"=>"mysql",
             "hostname"=>"127.0.0.1",
             "hostport"=>"3306",
-            "database"=>"register",
-            "username"=>"root",
-            "password"=>".zlj19971998",
+            "database"=>"",
+            "username"=>"",
+            "password"=>"",
         ];
     }
     public static function debug(){
@@ -71,7 +71,7 @@ class config
     }
     public static function user(){
         return [
-            "email"=>"1293777844@qq.com"
+            "email"=>""
         ];
     }
     public static function home_path(){
@@ -172,9 +172,9 @@ class config
             "mysql"=>[
                 "hostname"=>"127.0.0.1",
                 "hostport"=>"3306",
-                "database"=>"register",
-                "username"=>"root",
-                "password"=>".zlj19971998",
+                "database"=>"",
+                "username"=>"",
+                "password"=>"",
             ],
         ];
     }
