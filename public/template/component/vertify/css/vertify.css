@@ -1,0 +1,153 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+html{
+    touch-action:none;
+    touch-action:pan-y;
+}
+/*去除浏览器的默认左友拉页面前进后退事件*/
+body{
+    width: 100vw;
+    height: 100vh;
+}
+.vertify{
+    position: absolute;
+    display: none;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 320px;
+    height:300px;
+    border-radius: 5px;
+    background-color: rgba(211, 211, 211, 0.87);
+    animation: show 0.5s ease-in-out;
+    z-index: 999;
+}
+.vertify .vertify_container{
+    position: relative;
+    top:10px;
+    width: 300px;
+    height: 200px;
+    margin: 0 auto;
+    border-radius: 5px;
+    background-image: url("http://www.titang.shop/public/index.php/vertify");
+    background-size:100% 100%;
+}
+.vertify .slide_img{
+    position: relative;
+    width: 60px;
+    height: 63px;
+    background-color: rgba(255, 255, 255, 0.59);
+    background-size: 100% 100%;
+    display: none;
+}
+.vertify .slide_bar{
+    position:relative;
+    width: 300px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.69);
+    outline: 2px solid lightskyblue;
+    margin: 0 auto;
+    bottom: -20px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+.vertify .slide_bar h1{
+    color: black;
+    font-size: 15px;
+    text-align: center;
+    float:contour;
+    font-weight: lighter;
+    line-height: 40px;
+}
+.vertify .slide_bar_container{
+    position: absolute;
+    top:0px;
+    width: 300px;
+    left: -260px;
+    height: 100%;
+    background-color: rgb(0, 170, 255);
+}
+.vertify .slide_bar_btn{
+    position:absolute;
+    right: 0px;
+    height: 100%;
+    width: 40px;
+    background-color: white;
+    box-shadow: 1px 1px 1px lightgray;
+}
+.vertify .slide_bar_btn .iconfont{
+    position: relative;
+    display: block;
+    text-align: center;
+    font-size: 30px;
+    line-height: 40px;
+    color:black;
+}
+.vertify .result_logo{
+    position:absolute;
+    display: none;
+    bottom: 1px;
+    right: 10px;
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+}
+ #show_result{
+    color: red;
+    width: 100%;
+    height: 100%;
+    display: block;
+    font-size: 24px;
+    text-align: center;
+}
+.vertify .iconfont.icon-cuowutishitianchong{
+    line-height: 24px;
+    animation:roate 1s ease-in-out;
+}
+ .vertify .control{
+    position: absolute;
+    bottom: 5px;
+    left: 10px;
+    display: flex;
+    width: 100px;
+    height: 40px;
+}
+.vertify .control .iconfont{
+    color: white;
+    font-weight: bolder;
+}
+.vertify .control .icon-shuaxin{
+    position: relative;
+    display: block;
+    width: 30px;
+    height: 30px;
+    background-color: lightskyblue;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    top:5px;
+}
+.vertify .control .icon-guanbi{
+    position: relative;
+    display: block;
+    width: 30px;
+    height: 30px;
+    background-color: lightskyblue;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    top:5px;
+}
+.vertify .control .iconfont:hover{
+    font-size:20px;
+}
+@keyframes roate{
+    0%{transform: rotate(0deg)}
+    100%{transform: rotate(360deg)}
+}
+@keyframes show {
+    0%{transform: scale(0.7);opacity: 0.6;}
+    100%{transform: scale(1);opacity: 1;}
+}

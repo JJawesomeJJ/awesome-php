@@ -42,17 +42,18 @@ class soft_db
     //数据库名
     public function __construct()
     {
-        $user=config::database()["username"];
-        $password=config::database()["password"];
-        $this->databse_name=config::database()["database"];
-        $this->con=mysqli_connect(config::database()["hostname"],$user,$password,$this->databse_name);
-        mysqli_set_charset($this->con,"utf8");
+        $database=config::pdo();
+        $driver=$database["driver"];
+        $user=$database[$driver]["username"];
+        $password=$database[$driver]["password"];
+        $this->databse_name=$database[$driver]["database"];
+        $host=$database[$driver]['hostname'];
+        $dsn="$driver:host=$host;dbname=$this->databse_name;charset=utf8";
+        $this->con = new \PDO($dsn, $user,$password);
+//        $this->con=mysqli_connect(config::database()["hostname"],$user,$password,$this->databse_name);
+//        mysqli_set_charset($this->con,"utf8");
         //加载config数据库的配置
         $this->table_name=self::$table_name_;
-        if(mysqli_connect_errno())
-        {
-            return "error";
-        }
     }
     public function refresh(){
         $this->where_="";
@@ -140,7 +141,7 @@ class soft_db
         $sql=str_replace("  "," ",$sql);
         $sql=str_replace(", "," ",$sql);
         $this->refresh();
-        return $this->con->query($sql);
+        return $this->con->exec($sql);
     }//删除数据
     private function is_1_array(array $arr){
         if (count($arr) == count($arr, 1)) {
@@ -184,7 +185,7 @@ class soft_db
         $sql=str_replace(",)",")",$sql);
         $cache=new cache();
         $cache->set_cache("sql",$sql,6400);
-        return $this->con->query($sql);
+        return $this->con->exec($sql);
     }
     public function limit($start_row,$num){
         $this->limit_="limit $start_row,$num";
@@ -259,49 +260,62 @@ class soft_db
         return $this;
     }
     public function count($column_name){
-        $this->query_list[]="count($column_name)";
+        $this->query_list[]="count($column_name) as count";
         return $this;
     }
     public function min($column_name){
-        $this->query_list[]="min($column_name)";
+        $this->query_list[]="min($column_name) as min";
         return $this;
     }
     public function max($column_name){
-        $this->query_list[]="max($column_name)";
+        $this->query_list[]="max($column_name) as max";
         return $this;
     }
     public function sum($column_name){
-        $this->query_list[]="sum($column_name)";
+        $this->query_list[]="sum($column_name) as sum";
         return $this;
     }
     public function avg($column_name){
-        $this->query_list[]="avg($column_name)";
+        $this->query_list[]="avg($column_name) as avg";
         return $this;
     }
     public function group_by($column_name){
         $this->group_by_="group by $column_name";
         return $this;
     }
-    public function get(){
+    public function get($is_refresh=true){
         $query_string="";
         $result_list=[];
-        foreach ($this->query_list as $value){
+        foreach ($this->query_list as $key=>$value){
             $query_string.="$value,";
+            if(strpos($value,'as ')!==false){
+                $rename_list=explode('as ',$value);
+                $this->query_list[$key]=$rename_list[count($rename_list)-1];
+            }
         }
         $sql="select $query_string from $this->table_name $this->join_ $this->where_ $this->group_by_ $this->limit_ $this->order_by_";
         $sql=str_replace("  "," ",$sql);
         $sql=str_replace(", "," ",$sql);
         $result=$this->con->query($sql);
-        if($result==false)
-        {
+        if($result==false){
+            if($is_refresh){
+                $this->refresh();
+            }
             return [];
         }
-        if(mysqli_num_rows($result)==1) {
+        if($result->rowCount()==0)
+        {
+            if($is_refresh){
+                $this->refresh();
+            }
+            return [];
+        }
+        if($result->rowCount()==1) {
             foreach ($this->query_list as $value)
             {
                 $result_list[$value]=[];
             }
-            while ($row = mysqli_fetch_array($result)) {
+            foreach ($result as $row) {
                 foreach ($this->query_list as $value){
                     $value=str_replace($this->table_name.'.',"",$value);
                     $result_list[$value]=$row[$value];
@@ -309,7 +323,7 @@ class soft_db
             }
         }
         else {
-            while ($row = mysqli_fetch_array($result)) {
+            foreach ($result as $row) {
                 $re = [];
                 foreach ($this->query_list as $value) {
                     $value=str_replace($this->table_name.'.',"",$value);
@@ -318,16 +332,27 @@ class soft_db
                 $result_list[] = $re;
             }
         }
+        if($is_refresh){
+            $this->refresh();
+        }
+        $this->query_list=[];
         return $result_list;
     }
     public function get_table_column(){
         $result_arr=[];
         $sql="SHOW FULL COLUMNS FROM $this->table_name";
         $result=$this->con->query($sql);
-        while($row=mysqli_fetch_array($result)){
+        foreach ($result as $row) {
             $result_arr[]=$row[0];
         }
         return $result_arr;
+    }
+    protected function pdo_count($pdo){
+        $num=0;
+        foreach ($pdo as $row){
+            $num=$num+1;
+        }
+        return $num;
     }
     public function get_table_column_cache($is_refresh=false){
         $table_column=$this->cache()->get_cache($this->table_name."column");
@@ -432,8 +457,8 @@ class soft_db
         return $this;
     }
     public function create(){
-        print_r($this->create_table_column_list);
-        $sql="create table if not exists $this->table_name(";
+//        $sql="create table if not exists $this->table_name(";
+        $sql="create table $this->table_name(";
         foreach ($this->create_table_column_list as $value){
             $sql.=$value ;
         }
@@ -443,8 +468,11 @@ class soft_db
         $sql=str_replace("default not null","not null",$sql);
         $sql=str_replace(",comment"," comment",$sql);
         $sql=str_replace("default 'not null'","not null",$sql);
-        echo $sql.PHP_EOL;
-        return $this->con->query($sql);
+        $result=$this->con->exec($sql);
+        if(is_numeric($result)){
+            return true;
+        }
+        return false;
     }
     public function set($set_column_name,$set_value){
         $this->set_list[$set_column_name]=$set_value;
@@ -455,7 +483,7 @@ class soft_db
         $databese_name=$this->databse_name;
         $sql="SELECT `COLUMN_NAME` FROM `information_schema`.`COLUMNS` WHERE (`TABLE_SCHEMA` = '$databese_name')AND (`TABLE_NAME` = '$table_name')AND (`COLUMN_KEY` = 'PRI')";
         $result=$this->con->query($sql);
-        while ($row=mysqli_fetch_array($result)){
+        foreach ($result as $row) {
             return $row["COLUMN_NAME"];
         }
         return null;
@@ -469,7 +497,7 @@ class soft_db
         $sql.="$set_string $this->where_";
         $sql=str_replace("  "," ",$sql);
         $sql=str_replace(", "," ",$sql);
-        return $this->con->query($sql);
+        return $this->con->exec($sql);
     }
     public function update_table_filed(){
         $add_column=[];
@@ -490,20 +518,25 @@ class soft_db
             $sql = str_replace(" ,", ";", $sql);
             $sql = str_replace(",", ";", $sql);
             echo $sql.PHP_EOL;
-            if(!$this->con->query($sql)){
+            if(!$this->con->exec($sql)){
                 return false;
             }
         }
         return true;
     }
     protected function drop(){
-        return $this->con->query("drop table $this->table_name");
+        $sql="drop table $this->table_name";
+        $result=$this->con->exec($sql);
+        if(is_numeric($result)){
+            return true;
+        }
+        return false;
     }
     public function get_table_struct(){
         $return_result=[];
         $query_filed=["Type","Null","Key","Default"];
         $result=$this->con->query("desc $this->table_name");
-        while (($row=mysqli_fetch_array($result))){
+        foreach ($result as $row) {
             foreach ($query_filed as $key){
                 $return_result[$row["Field"]][]=[strtolower($key)=>$row[$key]];
             }
@@ -514,7 +547,7 @@ class soft_db
     {
         switch ($name){
             case "drop":
-                $this->drop();
+                return $this->drop();
                 break;
             default:
                 new Exception("404","call fun error drop");

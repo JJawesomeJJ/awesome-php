@@ -67,7 +67,7 @@ class map_controller extends controller
         $reules=[
             "adress"=>"required:get"
         ];
-        $request=new request($reules);
+        $request=new request();
         $adress=$request->get("adress");
         $url="http://api.map.baidu.com/geocoder/v2/?address=$adress&output=json&ak=4nthVhrx2bl2m8bciabolGutzg44OI3Q&callback=";
         $respone=json_decode(http::get("$url"),true);

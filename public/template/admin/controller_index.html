@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Titang_controller_pannel</title>
+    <script src="../asset/vue/vue2.2.2_min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../asset/layui-v2.5.3/layui/css/layui.css">
+    <script src="../asset/layui-v2.5.3/layui/layui.js"></script>
+    <link href="css/controller_pannel_layui.css" rel="stylesheet">
+    <link href="../asset/css/common.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="js/controller_index.js"></script>
+    <script src="../asset/js/common.js"></script>
+    <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
+</head>
+<body class="layui-layout-body" id="app" style="left: 0px;">
+<div id="app2">
+<div class="user_list hidden" id="user_list">
+    <table id="demo" lay-filter="test" class="hidden" style="width: 100%;"></table>
+</div>
+<div class="layui-layout layui-layout-admin col-sm-left-0 layui-bg-green">
+    <div class="layui-header layui-bg-green">
+        <ul class="layui-nav layui-layout-left j-left layui-hide-sm" style="z-index: 999">
+            <li class="layui-nav-item">
+                <i class="layui-icon j-switch layui-icon-spread-left" data-target="#left_bar" id="left_bar_switch" style="font-size: 20px;"></i>
+            </li>
+        </ul>
+        <div class="layui-logo layui-hide-xs" style="color: white">Titang 控制台</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <!--<li class="layui-nav-item"><a href="">控制台</a></li>-->
+            <!--<li class="layui-nav-item"><a href="">服务管理</a></li>-->
+            <!--<li class="layui-nav-item">-->
+                <!--<a href="javascript:;">其它系统</a>-->
+                <!--<dl class="layui-nav-child">-->
+                    <!--<dd><a href="">邮件管理</a></dd>-->
+                    <!--<dd><a href="">消息管理</a></dd>-->
+                    <!--<dd><a href="">授权管理</a></dd>-->
+                <!--</dl>-->
+            <!--</li>-->
+        </ul>
+        <ul class="layui-nav j-right">
+            <li class="layui-nav-item user_info_title col-sm-right-0" style="width: 200px;">
+                <a href="javascript:void(0);" onclick="return false">
+                    <img :src=user_info.head_img class="layui-nav-img">
+                    @{{name}}
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="" class="text-center1" style="padding: 0">基本资料</a></dd>
+                    <!--<dd><a href="">安全设置</a></dd>-->
+                    <div class="user_info">
+                        <dd class="flex-nowarp">
+                            <i class="layui-icon layui-icon-username" style="font-size: 20px; color:black;"></i>
+                            <h1 class="text-center1" style="color:black">{{$name}}</h1>
+                        </dd>
+                        <dd class="flex-nowarp">
+                            <i class="layui-icon layui-icon-auz" style="font-size: 20px; color:black;"></i>
+                            <h1 class="text-center1" style="color:black">{{$permission}}</h1>
+                        </dd>
+                        <dd class="flex-nowarp">
+                            <button type="button" class="layui-btn layui-btn-danger layui-btn-fluid">logout</button>
+                        </dd>
+                    </div>
+                </dl>
+            </li>
+        </ul>
+    </div>
+    <div class="layui-side layui-bg-black layui-hide-xs col-sm-top-0" data-show="left" id="left_bar" style="top:0px;">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">all service</a>
+                    <dl class="layui-nav-child">
+                        <dd v-bind:class="is_active_('websocket')? 'layui-this' : ''"><a href="{{index_path()}}/admin/control/websocket">websocket_service</a></dd>
+                        <dd v-bind:class="is_active_('timed')? 'layui-this' : '' "><a href="{{index_path()}}/admin/control/timed">timed_task</a></dd>
+                        <dd v-bind:class="is_active_('titang')? 'layui-this' : '' "><a href="{{index_path()}}/admin/control/titang">titang_spa_theme</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">解决方案</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">列表一</a></dd>
+                        <dd><a href="javascript:;">列表二</a></dd>
+                        <dd><a href="">超链接</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">云市场</a></li>
+                <li class="layui-nav-item"><a href="">发布商品</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body col-sm-left-0 overflow-y-sroll" style="bottom: 0px;height: 100vh;margin-bottom: 20px;">
+        <!-- 内容主体区域 -->
+        @content
+    </div>
+    <!--<div class="layui-footer layui-bg-gray">-->
+        <!--&lt;!&ndash; 底部固定区域 &ndash;&gt;-->
+        <!--<h1 class="text-center">  © Titang 2017-2019</h1>-->
+    <!--</div>-->
+</div>
+</div>
+<script type="text/html" id="head_img">
+    <div class="head_img radius-50" style="width: 30px;height: 30px;z-index:5000;">
+        <img src="@{{d.head_img}}" alt="">
+    </div>
+</script>
+<script type="text/html" id="is_pass_tpi">
+    @{{#  if(d.is_pass=='0'){ }}
+    <button v-if="@{{d.is_pass}}=='true'" type="button" class="layui-btn layui-btn-sm layui-btn-danger" v-on:click="test">待审计</button>
+    @{{#  } else { }}
+    <button v-if="@{{d.is_pass}}=='true'" type="button" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-ok"></i></button>
+    @{{#  } }}
+</script>
+</body>
+</html>

@@ -81,7 +81,9 @@ class survey_controller extends controller
                 $result_arr = explode(";", $re_list[0]);
                 $all=0;
                 foreach ($result_arr as $key=>$value){
-                    $all=$all+$value;
+                    if(is_numeric($value)) {
+                        $all = $all + $value;
+                    }
                 }
                 $row_list = array(
                     "name" => $row['survey_name'],

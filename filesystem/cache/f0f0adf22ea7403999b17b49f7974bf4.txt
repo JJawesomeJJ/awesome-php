@@ -1,0 +1,1 @@
+{"value":["id","register_number","brand_name","img","numbers","len","sign","goods","groups","getprice","setprice","holder","tel","starttime","endtime","is_certificate","remarks","state","hot","operator","reason","new","is_tejia","browsing_num"],"expire":"forever","key":"brand_brandcolumn"}

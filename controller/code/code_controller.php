@@ -11,6 +11,9 @@ use controller\controller;
 use db\db;
 use Grafika\Gd\Editor;
 use Grafika\Grafika;
+use load\auto_load;
+use request\request;
+use system\config\config;
 use system\Exception;
 use system\file;
 use system\session;
@@ -57,14 +60,14 @@ class code_controller extends controller
         return $code;
     }
     public function img_cut_square(){
-        require_once @"/var/www/html/php/extend/vendor/kosinix/grafika/src/autoloader.php";
+        require_once @config::env_path()."/extend/vendor/kosinix/grafika/src/autoloader.php";
         try {
             $editor = new Editor();
             $crop_width = 100;
             $crop_height = 100;
             $editor = Grafika::createEditor();
             $file = new file();
-            $file_list = $file->file_walk("/var/www/html/image/code_img/");
+            $file_list = $file->file_walk(config::www_path()."image/code_img/");
             $image_src = $file_list[array_rand($file_list)];
             $editor->open($image, $image_src);
             $width = $image->getWidth();
@@ -73,8 +76,9 @@ class code_controller extends controller
             $start_y = mt_rand(0, $height - $crop_height - 20);
             $editor->crop($image, $crop_width, $crop_height, 'top-left', $start_x, $start_y);
             $filter = Grafika::createFilter('Blur', 80);
-            $path = "/var/www/html/image/code_drop/" . time()."_".self::code(6)."_". ".jpg";
-            setcookie("vertify_code_drop", json_encode(["src" => str_replace("/var/www/html/", "http://" . $_SERVER['HTTP_HOST'] . "/", $path), "height" => $start_y]), time()+3600,"/",$_SERVER['HTTP_HOST'],false,false);
+            $name=time()."_".self::code(6)."_". ".jpg";
+            $path = config::env_path().'/public/'."image/code_drop/" .$name;
+            setcookie("vertify_code_drop", json_encode(["src" => config::project_path().'/image/code_drop/'.$name, "height" => $start_y]), time()+3600,"/",$_SERVER['HTTP_HOST'],false,false);
             $editor->save($image, $path);
             $editor->apply($image, $filter);
             $editor->open($image1, $image_src);
@@ -107,5 +111,38 @@ class code_controller extends controller
             return ["code"=>403,"message"=>"fail_pass_vertify"];
         }
 
+    }
+    public function code_(){
+        header ('Content-Type: image/png');
+        $image=imagecreatetruecolor(100, 30);
+//背景颜色为白色
+        $color=imagecolorallocate($image, 255, 255, 255);
+        imagefill($image, 20, 20, $color);
+        $code='';
+        for($i=0;$i<4;$i++){
+            $fontSize=8;
+            $x=rand(5,10)+$i*100/4;
+            $y=rand(5, 15);
+            $data='abcdefghijklmnopqrstuvwxyz123456789';
+            $string=substr($data,rand(0, strlen($data)),1);
+            $code.=$string;
+            $color=imagecolorallocate($image,rand(0,120), rand(0,120), rand(0,120));
+            imagestring($image, $fontSize, $x, $y, $string, $color);
+        }
+        session::set('code',$code);//存储在session里
+        for($i=0;$i<200;$i++){
+            $pointColor=imagecolorallocate($image, rand(100, 255), rand(100, 255), rand(100, 255));
+            imagesetpixel($image, rand(0, 100), rand(0, 30), $pointColor);
+        }
+        for($i=0;$i<2;$i++){
+            $linePoint=imagecolorallocate($image, rand(150, 255), rand(150, 255), rand(150, 255));
+            imageline($image, rand(10, 50), rand(10, 20), rand(80,90), rand(15, 25), $linePoint);
+        }
+        imagepng($image);
+        imagedestroy($image);
+    }
+    public function qrcode(request $request){
+        auto_load::load('qrcode/phpqrcode');
+        \QRcode::png($request->get('url',$_SERVER['HTTP_HOST']));
     }
 }

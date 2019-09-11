@@ -14,14 +14,19 @@ class index
         $GLOBALS["time"]=microtime(true);
         require_once __DIR__."/../load/auto_load.php";
         require_once __DIR__."/../load/common.php";
+        \system\config\config::env_path();
         try {
             $route=new routes();
             require_once __DIR__."/../routes/route_entrance.php";
             $route->start();
         }
         catch (Throwable $throwable){
-            echo $throwable;
-            app()->call_back();
+            if(\system\config\config::debug()) {
+                echo $throwable;
+                app()->call_back();
+            }
+            $log=new \system\log();
+            $log->write_log($throwable);
         }
     }
 }

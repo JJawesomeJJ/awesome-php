@@ -161,9 +161,39 @@ class provider_register extends provider
             case "middleware":
                 $this->create_middleware($params);
                 break;
+            case "model":
+                $this->create_model($params);
+                break;
+            default:
+                break;
         }
     }
-
+    public function create_model($name){
+        $name=str_replace("\\","/",$name);
+        $controller_path = $this->home_path."db/model/".$name . ".php";
+        $time = date('Y-m-d h:i:s', time());
+        $arr = explode("/", $name);
+        $controller_name = $arr[count($arr) - 1];
+        $namespace = "db\model";
+        for ($i = 0; $i < count($arr) - 1; $i++) {
+            $namespace .= "\\" . $arr[$i];
+        }
+        $controller_template = "<?php
+/**
+ * Created by awesome.
+ * Date: $time
+ */
+namespace $namespace;
+use db\model\model;
+class $controller_name extends model
+{
+    protected \$table_name=\"$controller_name\";
+}";
+        $file = new file();
+        $file->write_file($controller_path, $controller_template);
+        $this->update();
+        $this->cli_echo_blue("model_has_been_created");
+    }
     private function create_controller($name)
     {
         $name=str_replace("\\","/",$name);
@@ -380,7 +410,6 @@ class cache extends cache
         }
         print_r($class_name_list);
         if(isset($arr[1])){
-            print_r("load__arr");
             $class_name_list=[$arr[1]];
         }
         if(isset($arr[0])){
@@ -416,7 +445,6 @@ class cache extends cache
                 foreach ($class_name_list as $class_name){
                     $object=make($class_name);
                     $result=$object->drop();
-                    print_r($result);
                     foreach ($result as $key=>$value){
                         if($value){
                             $this->cli_echo_color_red($key. " has been delete!");
@@ -428,7 +456,7 @@ class cache extends cache
                 foreach ($class_name_list as $class_name){
                     $object=make($class_name);
                     $object->create();
-                    $result=$object->drop();
+                    $result=$object->refresh();
                     foreach ($result as $key=>$value){
                         if($value){
                             $this->cli_echo_color_blue($key. "data has been refreshed!");

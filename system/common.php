@@ -11,6 +11,7 @@ namespace system;
 
 use db\model\model_auto\model_auto;
 use db\model\user\user;
+use request\request;
 use system\cache\cache;
 use system\config\config;
 
@@ -68,6 +69,7 @@ class common
                 $user=new user();
                 $user->where("id",$user_info["id"])->get()->all();
                 session::set("name",$user->name);
+                session::set("user",$user->name);
                 session::set("email",$user->email);
                 session::set("id",$user_info["id"]);
             }
@@ -138,5 +140,31 @@ class common
             $return_arr[$name][]=$arr;
         }
         return $return_arr;
+    }
+    public static function str_replace_limit($search, $replace, $subject, $limit=-1)
+    {
+        if (is_array($search)) {
+            foreach ($search as $k => $v) {
+                $search[$k] = '`' . preg_quote($search[$k], '`') . '`';
+            }
+        } else {
+            $search = '`' . preg_quote($search, '`') . '`';
+        }
+        return preg_replace($search, $replace, $subject, $limit);
+    }
+    public static function http_url_build(array $set_params){
+        $request=make('request');
+        $params=$request->all();
+        foreach ($set_params as $key=>$value){
+            $params[$key]=$value;
+        }
+        $url=$request->get_full_url(false)."?".http_build_query($params);
+        if(config::url_html_suffix()){
+            $url=$url."&.".config::url_html_suffix();
+        }
+        return $url;
+    }
+    public static function get_pager_list(){
+
     }
 }

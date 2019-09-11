@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>news</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+@foreach($page['data'] as $items)
+<div>
+    {{$items['brand_name']}}
+</div>
+@endforeach
+@component(component/page/page)
+</body>
+</html>

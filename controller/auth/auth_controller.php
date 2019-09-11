@@ -24,6 +24,7 @@ use task\add_task;
 use task\queue\queue;
 use task\task;
 use template\compile;
+use template\compile_parse;
 
 class auth_controller extends controller
 {
@@ -38,7 +39,10 @@ class auth_controller extends controller
         $db=new db();
         $name=$request->get("name");
         $result=$db->query("user",["password","email","head_img"],"name='$name'");
-        if(strtolower(session::get('code'))<>strtolower($request->get("code")))
+        if(!session::get('code')){
+            return ["code"=>"403","msg"=>"fail","data"=>"code_error"];
+        }
+        if(strtolower(session::get('code'))!=strtolower($request->get("code")))
         {
 //            $user=new user();
 //            $user->where("name",$request->get("name"))->get()->all();
@@ -53,6 +57,7 @@ class auth_controller extends controller
         if($result["password"]==$request->get("password"))
         {
             session::set("name",$request->get("name"));
+            session::set("user",$request->get("name"));
             session::set("email",$result["email"]);
             common::remember_me($result["id"]);
             return["code" => "200", "msg" => "suceess", "data" => "ok","email"=>$result["email"],"head_img"=>$result["head_img"],"csrf_token"=>$this->middlware("csrf_middleware")->sign_csrf_token()];
@@ -129,7 +134,7 @@ class auth_controller extends controller
     }
     public static function auth($name=false,$store_name=false,$parms_list=false){
         common::is_remember();
-        return session::get("name");
+        return session::get("user");
 //        if(!isset($_SESSION))
 //        {
 //            session_start();
@@ -244,23 +249,31 @@ class auth_controller extends controller
         $token=md5($user->name.$this->time());
         $this->cache()->set_cache($user->name."reset_token",$token,108000);
         $queue=new queue();
-        $queue->push("email",["title"=>"忘记密码","url"=>"http://39.108.236.127/php/public/index.php/user/reset?token=$token&name=$name","template"=>"user/reset_link","user"=>$user->email],"email");
+        $mail=new mail();
+        $email=$user->email;
+//        $queue->push("email",["title"=>"忘记密码","url"=>index_path()."/user/reset?token=$token&name=$name","template"=>"user/reset_link","user"=>$user->email],"email");
+        queue::asyn(function ()use ($mail,$email,$token,$name){
+            $mail->send_email($email,view('user/reset_link',
+                ["title"=>"忘记密码","url"=>index_path()."/user/reset?token=$token&name=$name","template"=>"user/reset_link","user"=>$name]),'reset');
+        });
         return ["code"=>"200","message"=>"ok"];
     }
     public function update_password(){
         $name=$this->request()->get("name");
+        $this->cache()->set_cache('xiajie','test',1200);
+        echo $this->cache()->get_cache($name.'reset_token').PHP_EOL;
+        print_r($this->cache()->get_all());
         if($this->cache()->get_cache($name."reset_token")==$this->request()->get("token")){
             $user=new user();
             $user->where("name",$name)->get();
             $user->password=$this->request()->get("password");
             $user->update();
             $this->cache()->delete_key($name."reset_token");
-            header("Location: http://39.108.236.127/#/home");
+            header(config::index_path());
         }
         return ["code"=>"403","message"=>"token_error"];
     }
     public function reset_password_page(){
-        $complie=new compile();
-        return $complie->view("user/reset_password",["token"=>$this->request()->get("token"),"name"=>$this->request()->get("name"),"list"=>[["name"=>"赵李杰","age"=>"2"],["name"=>"php","age"=>"16"]]]);
+        return view("user/reset_password",["token"=>$this->request()->get("token"),"name"=>$this->request()->get("name"),"list"=>[["name"=>"赵李杰","age"=>"2"],["name"=>"php","age"=>"16"]]]);
     }
 }

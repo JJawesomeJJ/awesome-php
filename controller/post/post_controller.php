@@ -8,6 +8,7 @@ use controller\auth\auth_controller;
 use controller\controller;
 use db\factory\soft_db;
 use db\model\comment_list\comment_list;
+use db\model\news\news;
 use request\request;
 use db\db;
 use system\http;
@@ -79,21 +80,29 @@ class post_controller extends controller
             "url"=>"required:get|regex:news.sina.cn.*?\*cid="
         ];
         $request=$this->request()->verifacation($rules);
-        $http=new http();
-        $db=new db();
-        $url=$request->get("url");
-        $result=$db->query("new_content",["url_content"],"url_id='$url'");
-        if(count($result)>0){
-            return $this->jsonp($result["url_content"]);
+        $news=new news();
+        if($news->where("id",$request->get("url"))->exist()) {
+            return $this->jsonp($news->content);
         }
         else {
+            $http=new http();
             $news_content = $http->get($request->get("url"));
             preg_match_all("/art_p\">([\s\S]*?)wx_pic/", $news_content, $matchs, PREG_SET_ORDER);//匹配该表所用的正则
             $content = str_replace(['\n', '\t', 'art_p">', '<p class="', '</p>', '</a>', '<div id=\'wx_pic', '<a href="JavaScript:void(0)">
 ', '\r'], '', $matchs[0][0]);
             $content = str_replace('none', 'block', $content);
             $content = preg_replace("/<a href=([\s\S])*?>/", "", $content);//$con= preg_replace("/<figure([\s\S])*?<\/figure>/","",$con);
-            $db->insert_databse("new_content",["url_content"=>$content,"url_id"=>$url,"time"=>$this->time()]);
+            $create_arr=[
+                "id"=>$request->get("url"),
+                "content"=>$content
+            ];
+            if($request->try_get("title")){
+                $create_arr["title"]=$request->get("title");
+            }
+            $news->create([
+                "id"=>$request->get("url"),
+                "content"=>$content
+            ]);
             return $this->jsonp($content);
         }
     }

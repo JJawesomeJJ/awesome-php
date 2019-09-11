@@ -1,0 +1,1180 @@
+[2019-05-20 08:43:23 *31012.3]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 08:43:23 *31011.2]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 08:43:23 *31010.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 08:43:24 ^31008.13]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 08:43:24 ^31007.12]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 08:43:24 ^31006.11]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 08:43:24 ^31005.10]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 08:43:24 ^31004.9]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 08:43:24 ^31003.8]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 08:43:24 ^31002.7]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 08:43:24 ^31001.6]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 08:43:24 ^31000.5]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 08:43:24 ^30999.4]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 08:43:24 $30997.0]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 08:43:24 *31009.0]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:53 $30997.0]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:53 ^30999.4]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:53 ^31000.5]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:53 ^31001.6]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:53 ^31002.7]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:53 ^31003.8]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:53 ^31004.9]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:53 ^31005.10]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 ^31006.11]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 ^31007.12]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 ^31008.13]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 *31009.0]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 *31010.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 *31011.2]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 *31012.3]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 $31021.0]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 ^31023.4]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 ^31024.5]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 ^31025.6]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 ^31026.7]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 ^31027.8]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 ^31028.9]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 ^31029.10]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 ^31030.11]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 ^31031.12]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 ^31032.13]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 *31033.0]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 *31034.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 *31035.2]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 *31036.3]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 #31020.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-20 20:03:54 #31020.1]	INFO	Server is shutdown now
+[2019-05-29 23:02:24 $830.0]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-29 23:02:24 ^832.4]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-29 23:02:24 ^833.5]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-29 23:02:24 ^834.6]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-29 23:02:24 ^835.7]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-29 23:02:24 ^836.8]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-29 23:02:24 ^837.9]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-29 23:02:24 ^838.10]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-29 23:02:24 ^839.11]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-29 23:02:24 ^840.12]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-29 23:02:24 ^841.13]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-29 23:02:24 *842.0]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-29 23:02:24 *843.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-29 23:02:24 *844.2]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-29 23:02:24 *845.3]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-29 23:02:24 #829.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-29 23:02:24 #829.1]	INFO	Server is shutdown now
+[2019-05-31 09:12:46 *2349.3]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:12:46 *2348.2]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:12:46 *2347.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:12:46 *2346.0]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:12:46 ^2345.13]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:12:46 ^2344.12]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:12:46 ^2343.11]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:12:46 ^2342.10]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:12:46 ^2341.9]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:12:46 ^2340.8]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:12:46 ^2339.7]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:12:46 ^2338.6]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:12:46 ^2337.5]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:12:46 ^2336.4]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:12:46 $2334.0]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 *2416.2]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 *2415.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 $2334.0]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 ^2336.4]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 ^2337.5]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 ^2338.6]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 ^2339.7]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 ^2340.8]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 ^2341.9]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 ^2342.10]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 ^2343.11]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 ^2344.12]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 ^2345.13]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 *2346.0]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 *2347.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 *2348.2]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 *2349.3]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 *2414.0]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 ^2413.13]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 ^2412.12]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 ^2410.10]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 ^2408.8]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 ^2407.7]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 ^2406.6]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 ^2405.5]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 ^2404.4]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 $2401.0]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 #2400.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 #2400.1]	INFO	Server is shutdown now
+[2019-05-31 09:30:59 ^2411.11]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 ^2409.9]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-05-31 09:30:59 *2417.3]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:39 ^29345.6]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:40 ^29352.13]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:40 ^29351.12]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:40 ^29344.5]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:40 ^29343.4]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:40 *29353.0]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:42 ^29347.8]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:42 $29341.0]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:43 ^29346.7]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:43 *29354.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:43 ^29350.11]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:43 ^29349.10]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:43 *29355.2]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:43 ^29348.9]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:43 *29356.3]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:48 *7125.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:50 ^7122.12]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:50 ^7120.10]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:50 ^7114.4]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:50 ^7121.11]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:50 *7127.3]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:50 ^7117.7]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:50 *7126.2]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:52:51 ^7123.13]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:53:00 $7112.0]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:53:13 *7124.0]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:53:19 ^7115.5]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:53:27 ^7118.8]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:53:36 ^7119.9]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-06 20:53:36 ^7116.6]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-11 17:29:33 *22198.3]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-11 17:29:33 *22197.2]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-11 17:29:33 *22196.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-11 17:29:33 *22195.0]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-11 17:29:33 ^22194.13]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-11 17:29:33 ^22193.12]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-11 17:29:33 ^22192.11]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-11 17:29:33 ^22191.10]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-11 17:29:33 ^22190.9]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-11 17:29:33 ^22189.8]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-11 17:29:33 ^22188.7]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-11 17:29:33 ^22186.5]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-11 17:29:33 ^22185.4]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-11 17:29:33 $22183.0]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-11 17:29:33 ^22187.6]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 14:37:54 *26968.2]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 55 byte failed, because connection[fd=11] is closed
+[2019-06-12 14:38:01 *26966.0]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 55 byte failed, because connection[fd=12] is closed
+[2019-06-12 14:38:01 ^26959.7]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 70 byte failed, because connection[fd=12] is closed
+[2019-06-12 14:38:01 $26954.0]	WARNING	swManager_check_exit_status: worker#2[pid=26968] abnormal exit, status=255, signal=0
+RedisException: read error on connection to 127.0.0.1:6379 in /var/www/html/php/websocket_plus.php:185
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(185): Redis->hGet('user_list', '\xE8\xB5\xB5\xE6\x9D\x8E\xE6\x9D\xB0')
+#1 /var/www/html/php/websocket_plus.php(175): server->store_user(Object(Swoole\WebSocket\Server), Object(Swoole\WebSocket\Frame), '\xE8\xB5\xB5\xE6\x9D\x8E\xE6\x9D\xB0')
+#2 /var/www/html/php/websocket_plus.php(59): server->vertify_user(Object(Swoole\WebSocket\Server), Object(Swoole\WebSocket\Frame), Object(stdClass))
+#3 {main}2019-06-12 14:39:01
+[2019-06-12 14:39:01 ^26961.9]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 92 byte failed, because connection[fd=13] is closed
+[2019-06-12 17:41:07 $32761.0]	WARNING	swManager_check_exit_status: worker#0[pid=305] abnormal exit, status=255, signal=0
+[2019-06-12 17:41:32 $32761.0]	WARNING	swManager_check_exit_status: worker#0[pid=669] abnormal exit, status=255, signal=0
+[2019-06-12 17:41:54 *307.2]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 55 byte failed, because connection[fd=54] is closed
+[2019-06-12 17:41:55 *307.2]	WARNING	swWorker_discard_data (ERRNO 1007): [1]received the wrong data[4 bytes] from socket#54
+[2019-06-12 17:42:39 $32761.0]	WARNING	swManager_check_exit_status: worker#2[pid=307] abnormal exit, status=255, signal=0
+[2019-06-12 17:42:39 *308.3]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 189 byte failed, because connection[fd=57] is closed
+[2019-06-12 17:42:44 *777.0]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 55 byte failed, because connection[fd=56] is closed
+[2019-06-12 17:42:44 *777.0]	WARNING	swWorker_discard_data (ERRNO 1007): [1]received the wrong data[4 bytes] from socket#56
+[2019-06-12 22:42:32 ^22192.11]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:33 ^26965.13]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:34 ^22185.4]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:34 ^26958.6]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:34 ^22189.8]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:34 ^26964.12]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:34 *22196.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:34 ^26961.9]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:35 *22197.2]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:35 ^26956.4]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:35 ^26962.10]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:35 *22198.3]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:35 ^26960.8]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:35 ^22188.7]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:35 ^26957.5]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:35 ^22191.10]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:35 ^26959.7]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:35 ^22190.9]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:35 ^26963.11]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:35 ^22187.6]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:35 $26954.0]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:35 *27345.2]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:35 ^22194.13]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:35 ^22186.5]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:35 *26967.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:35 $22183.0]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:35 *26969.3]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:35 *22195.0]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 22:42:35 ^22193.12]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-12 23:19:13 $1621.0]	WARNING	swManager_check_exit_status: worker#3[pid=1636] abnormal exit, status=255, signal=0
+[2019-06-12 23:20:14 ^1625.6]	ERROR	zm_deactivate_swoole (ERRNO 503): Fatal error: Uncaught RedisException: read error on connection to 127.0.0.1:6379 in /var/www/html/php/websocket_plus.php:211
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(211): Redis->hGetAll('user_list')
+#1 /var/www/html/php/websocket_plus.php(132): server->get_user()
+#2 [internal function]: server->onTask(Object(Swoole\WebSocket\Server), 2, 2, Array)
+#3 /var/www/html/php/websocket_plus.php(40): Swoole\Server->start()
+#4 /var/www/html/php/websocket_plus.php(3): server->__construct()
+#5 {main}
+  thrown in /var/www/html/php/websocket_plus.php on line 211
+RedisException: read error on connection to 127.0.0.1:6379 in /var/www/html/php/websocket_plus.php:229
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(229): Redis->lPop('notify_list')
+#1 /var/www/html/php/websocket_plus.php(85): server->handle_notify()
+#2 {main}2019-06-12 23:20:14
+[2019-06-12 23:20:14 $1621.0]	WARNING	swManager_check_exit_status: worker#6[pid=1625] abnormal exit, status=255, signal=0
+RedisException: read error on connection to 127.0.0.1:6379 in /var/www/html/php/websocket_plus.php:228
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(228): Redis->lLen('notify_list')
+#1 /var/www/html/php/websocket_plus.php(85): server->handle_notify()
+#2 {main}2019-06-12 23:26:00
+[2019-06-13 01:48:44 *941.3]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 01:48:44 *940.2]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 01:48:44 *939.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 01:48:44 *938.0]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 01:48:44 ^937.13]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 01:48:44 ^936.12]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 01:48:44 ^935.11]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 01:48:44 ^934.10]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 01:48:44 ^933.9]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 01:48:44 ^931.7]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 01:48:44 ^930.6]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 01:48:44 ^929.5]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 01:48:44 ^928.4]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 01:48:44 $926.0]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 01:48:44 ^932.8]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 01:48:44 #925.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 08:26:03 $926.0]	WARNING	swManager_check_exit_status: worker#3[pid=941] abnormal exit, status=255, signal=0
+[2019-06-13 08:26:03 $926.0]	WARNING	swManager_check_exit_status: worker#3[pid=2558] abnormal exit, status=255, signal=0
+[2019-06-13 08:26:09 $926.0]	WARNING	swManager_check_exit_status: worker#3[pid=2559] abnormal exit, status=255, signal=0
+[2019-06-13 08:26:09 $926.0]	WARNING	swManager_check_exit_status: worker#0[pid=938] abnormal exit, status=255, signal=0
+[2019-06-13 08:26:09 *2562.0]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 55 byte failed, because connection[fd=41] is closed
+[2019-06-13 08:26:09 *2562.0]	NOTICE	swFactoryProcess_end (ERRNO 1003): The connection[41] is closing
+[2019-06-13 08:26:09 $926.0]	WARNING	swManager_check_exit_status: worker#0[pid=2562] abnormal exit, status=255, signal=0
+[2019-06-13 08:26:13 $926.0]	WARNING	swManager_check_exit_status: worker#0[pid=2563] abnormal exit, status=255, signal=0
+[2019-06-13 08:26:13 $926.0]	WARNING	swManager_check_exit_status: worker#1[pid=939] abnormal exit, status=255, signal=0
+[2019-06-13 08:26:13 *2565.1]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 55 byte failed, because connection[fd=41] is closed
+[2019-06-13 08:26:13 *2565.1]	NOTICE	swFactoryProcess_end (ERRNO 1003): The connection[41] is closing
+[2019-06-13 08:26:13 $926.0]	WARNING	swManager_check_exit_status: worker#1[pid=2565] abnormal exit, status=255, signal=0
+[2019-06-13 08:26:22 $926.0]	WARNING	swManager_check_exit_status: worker#1[pid=2566] abnormal exit, status=255, signal=0
+[2019-06-13 08:26:22 $926.0]	WARNING	swManager_check_exit_status: worker#2[pid=940] abnormal exit, status=255, signal=0
+[2019-06-13 08:26:22 *2572.2]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 55 byte failed, because connection[fd=41] is closed
+[2019-06-13 08:26:22 *2572.2]	NOTICE	swFactoryProcess_end (ERRNO 1003): The connection[41] is closing
+[2019-06-13 08:26:22 $926.0]	WARNING	swManager_check_exit_status: worker#2[pid=2572] abnormal exit, status=255, signal=0
+[2019-06-13 08:26:24 $926.0]	WARNING	swManager_check_exit_status: worker#2[pid=2573] abnormal exit, status=255, signal=0
+[2019-06-13 08:26:25 $926.0]	WARNING	swManager_check_exit_status: worker#3[pid=2561] abnormal exit, status=255, signal=0
+[2019-06-13 08:26:25 *2575.3]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 55 byte failed, because connection[fd=41] is closed
+[2019-06-13 08:26:25 *2575.3]	NOTICE	swFactoryProcess_end (ERRNO 1003): The connection[41] is closing
+[2019-06-13 08:26:25 $926.0]	WARNING	swManager_check_exit_status: worker#3[pid=2575] abnormal exit, status=255, signal=0
+[2019-06-13 08:27:12 $926.0]	WARNING	swManager_check_exit_status: worker#3[pid=2576] abnormal exit, status=255, signal=0
+[2019-06-13 09:30:07 *2571.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 09:30:07 *2574.2]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 09:30:07 *2592.3]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 09:30:07 ^930.6]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 09:30:07 ^932.8]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 09:30:07 ^933.9]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 09:30:07 ^934.10]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 09:30:07 ^935.11]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 09:30:07 ^936.12]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 09:30:07 ^937.13]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 09:30:07 ^929.5]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 09:30:07 ^931.7]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 09:30:07 ^928.4]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 09:53:20 *1175.0]	WARNING	swWorker_discard_data (ERRNO 1007): [1]received the wrong data[2 bytes] from socket#42
+RedisException: read error on connection to 127.0.0.1:6379 in /var/www/html/php/websocket_plus.php:245
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(245): Redis->hSet('wait_notify_lis...', 'yuejunsong', '["{\\"title\\":\\"...')
+#1 /var/www/html/php/websocket_plus.php(227): server->notify_user(Array)
+#2 /var/www/html/php/websocket_plus.php(83): server->handle_notify(Object(Swoole\WebSocket\Server), Object(Swoole\WebSocket\Frame))
+#3 {main}2019-06-13 09:55:27
+[2019-06-13 10:30:55 *2848.2]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 *2847.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 *2846.0]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 ^2845.13]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 ^2844.12]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 ^2843.11]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 ^2841.9]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 ^2840.8]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 ^2839.7]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 ^2838.6]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 ^2837.5]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 ^2836.4]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 $2834.0]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 *2849.3]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 ^2842.10]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 *2846.0]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 *2849.3]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 *2847.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 ^2836.4]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 ^2838.6]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 ^2843.11]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 ^2840.8]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 ^2837.5]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 ^2841.9]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 ^2839.7]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 ^2844.12]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 ^2842.10]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 $2834.0]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 *2848.2]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 ^2845.13]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 10:30:55 #2833.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-13 12:50:04 $2834.0]	WARNING	swManager_check_exit_status: worker#3[pid=2849] abnormal exit, status=255, signal=0
+[2019-06-13 12:50:04 $2834.0]	WARNING	swManager_check_exit_status: worker#3[pid=3526] abnormal exit, status=255, signal=0
+[2019-06-13 12:50:11 $2834.0]	WARNING	swManager_check_exit_status: worker#3[pid=3527] abnormal exit, status=255, signal=0
+[2019-06-13 12:50:11 $2834.0]	WARNING	swManager_check_exit_status: worker#0[pid=2846] abnormal exit, status=255, signal=0
+[2019-06-13 12:50:11 *3530.0]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 55 byte failed, because connection[fd=22] is closed
+[2019-06-13 12:50:11 *3530.0]	NOTICE	swFactoryProcess_end (ERRNO 1003): The connection[22] is closing
+[2019-06-13 12:50:11 $2834.0]	WARNING	swManager_check_exit_status: worker#0[pid=3530] abnormal exit, status=255, signal=0
+[2019-06-27 15:18:08 *3083.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:08 *2848.2]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 *3529.3]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:08 *3084.2]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 *3085.3]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 ^3072.4]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 ^3073.5]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 ^2836.4]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 ^3074.6]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 ^2837.5]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 ^3075.7]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 ^2838.6]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 ^3076.8]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 ^2839.7]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 ^3077.9]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 ^3080.12]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 ^2840.8]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 ^2841.9]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 ^2842.10]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 ^3081.13]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 ^3079.11]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 ^3078.10]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 ^2843.11]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 ^2844.12]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 ^2845.13]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-06-27 15:18:09 *3531.0]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+addclose
+鉴权失败赵李杰
+addclose
+鉴权失败赵李杰
+addclose
+鉴权失败赵李杰
+addclose
+鉴权失败赵李杰
+addclose
+鉴权失败赵李杰
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"6"},"count":1,"online_count":1,"time":6}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"7"},"count":1,"online_count":1,"time":7}
+赵李杰close
+赵李杰close
+赵李杰close
+赵李杰close
+赵李杰close
+赵李杰close
+赵李杰close
+赵李杰close
+赵李杰close
+赵李杰close
+赵李杰close
+赵李杰close
+赵李杰close
+赵李杰close
+赵李杰close
+赵李杰close
+赵李杰close
+赵李杰close
+赵李杰close
+赵李杰close
+[2019-06-28 15:30:37 #786.1]	INFO	Server is shutdown now
+[2019-06-28 16:12:36 #763.1]	INFO	Server is shutdown now
+[2019-06-28 16:14:46 @780.0]	WARNING	swPort_listen(:102): listen(0.0.0.0:9502, 512) failed, Error: Address already in use[98]
+PHP Fatal error:  Swoole\Server::start(): failed to start server. Error: swPort_listen(:102): listen(0.0.0.0:9502, 512) failed, Error: Address already in use[98] in /var/www/html/php/websocket_plus.php on line 40
+[2019-06-28 16:14:46 @780.0]	ERROR	zm_deactivate_swoole (ERRNO 503): Fatal error: Swoole\Server::start(): failed to start server. Error: swPort_listen(:102): listen(0.0.0.0:9502, 512) failed, Error: Address already in use[98] in /var/www/html/php/websocket_plus.php on line 40
+addclose
+鉴权失败赵李杰
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"2"},"count":1,"online_count":1,"time":2}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"3"},"count":1,"online_count":1,"time":3}
+赵李杰close
+赵李杰close
+add赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"6"},"count":1,"online_count":1,"time":5}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"7"},"count":1,"online_count":1,"time":6}
+addclose
+addclose
+add潘泓达add_con
+2
+{"type":"system","online":{"\u8d75\u674e\u6770":"7","\u6f58\u6cd3\u8fbe":"10"},"count":2,"online_count":2,"time":3}
+addclose
+addclose
+赵李杰close
+潘泓达close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"13"},"count":1,"online_count":1,"time":7}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"14"},"count":1,"online_count":1,"time":8}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"15"},"count":1,"online_count":1,"time":9}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"16"},"count":1,"online_count":1,"time":10}
+赵李杰close
+add赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"18"},"count":1,"online_count":1,"time":12}
+赵李杰close
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"20"},"count":1,"online_count":1,"time":13}
+赵李杰close
+add潘泓达add_con
+1
+{"type":"system","online":{"\u6f58\u6cd3\u8fbe":"21"},"count":1,"online_count":1,"time":14}
+潘泓达close
+add潘泓达add_con
+1
+{"type":"system","online":{"\u6f58\u6cd3\u8fbe":"22"},"count":1,"online_count":1,"time":15}
+潘泓达close
+add潘泓达add_con
+1
+{"type":"system","online":{"\u6f58\u6cd3\u8fbe":"23"},"count":1,"online_count":1,"time":16}
+潘泓达close
+潘泓达close
+add潘泓达close
+add潘泓达add_con
+1
+{"type":"system","online":{"\u6f58\u6cd3\u8fbe":"27"},"count":1,"online_count":1,"time":5}
+潘泓达close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"1"},"count":1,"online_count":1,"time":1}
+close
+add赵李杰close
+赵李杰异地登录
+赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"3"},"count":1,"online_count":1,"time":1}
+add赵李杰close
+赵李杰异地登录
+PHP Warning:  Invalid argument supplied for foreach() in /var/www/html/php/websocket_plus.php on line 132
+PHP Fatal error:  Uncaught RedisException: read error on connection to 127.0.0.1:6379 in /var/www/html/php/websocket_plus.php:189
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(189): Redis->hSet('user_list', '\xE8\xB5\xB5\xE6\x9D\x8E\xE6\x9D\xB0', 4)
+#1 /var/www/html/php/websocket_plus.php(172): server->store_user(Object(Swoole\WebSocket\Server), Object(Swoole\WebSocket\Frame), '\xE8\xB5\xB5\xE6\x9D\x8E\xE6\x9D\xB0')
+#2 /var/www/html/php/websocket_plus.php(60): server->vertify_user(Object(Swoole\WebSocket\Server), Object(Swoole\WebSocket\Frame), Object(stdClass))
+#3 {main}
+  thrown in /var/www/html/php/websocket_plus.php on line 189
+[2019-07-03 21:34:01 $25819.0]	WARNING	swManager_check_exit_status: worker#2[pid=25833] abnormal exit, status=255, signal=0
+close
+addPHP Warning:  Swoole\WebSocket\Server::push(): the connected client of connection[4] is not a websocket client or closed in /var/www/html/php/websocket_plus.php on line 179
+赵李杰异地登录
+赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"5"},"count":1,"online_count":1,"time":1}
+add赵李杰close
+赵李杰异地登录
+PHP Warning:  Invalid argument supplied for foreach() in /var/www/html/php/websocket_plus.php on line 132
+PHP Fatal error:  Uncaught RedisException: read error on connection to 127.0.0.1:6379 in /var/www/html/php/websocket_plus.php:189
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(189): Redis->hSet('user_list', '\xE8\xB5\xB5\xE6\x9D\x8E\xE6\x9D\xB0', 6)
+#1 /var/www/html/php/websocket_plus.php(172): server->store_user(Object(Swoole\WebSocket\Server), Object(Swoole\WebSocket\Frame), '\xE8\xB5\xB5\xE6\x9D\x8E\xE6\x9D\xB0')
+#2 /var/www/html/php/websocket_plus.php(60): server->vertify_user(Object(Swoole\WebSocket\Server), Object(Swoole\WebSocket\Frame), Object(stdClass))
+#3 {main}
+  thrown in /var/www/html/php/websocket_plus.php on line 189
+[2019-07-04 09:25:05 $25819.0]	WARNING	swManager_check_exit_status: worker#3[pid=25834] abnormal exit, status=255, signal=0
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"8"},"count":1,"online_count":1,"time":2}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"9"},"count":1,"online_count":1,"time":3}
+add潘泓达add_con
+2
+{"type":"system","online":{"\u8d75\u674e\u6770":"9","\u6f58\u6cd3\u8fbe":"10"},"count":2,"online_count":2,"time":1}
+add潘泓达close
+潘泓达异地登录
+潘泓达add_con
+2
+{"type":"system","online":{"\u8d75\u674e\u6770":"9","\u6f58\u6cd3\u8fbe":"11"},"count":2,"online_count":2,"time":1}
+add赵李杰close
+赵李杰异地登录
+PHP Warning:  Swoole\WebSocket\Server::push(): the connected client of connection[4] is not a websocket client or closed in /var/www/html/php/websocket_plus.php on line 133
+赵李杰add_con
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 66
+1
+{"type":"system","online":false,"count":1,"online_count":1,"time":2}
+PHP Warning:  Invalid argument supplied for foreach() in /var/www/html/php/websocket_plus.php on line 132
+潘泓达close
+PHP Fatal error:  Uncaught RedisException: protocol error, got '�' as reply type byte
+ in /var/www/html/php/websocket_plus.php:193
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(193): Redis->hDel('user_list', '\xE8\xB5\xB5\xE6\x9D\x8E\xE6\x9D\xB0')
+#1 /var/www/html/php/websocket_plus.php(139): server->delete_user('\xE8\xB5\xB5\xE6\x9D\x8E\xE6\x9D\xB0')
+#2 {main}
+  thrown in /var/www/html/php/websocket_plus.php on line 193
+[2019-07-04 22:37:18 $25819.0]	WARNING	swManager_check_exit_status: worker#0[pid=25831] abnormal exit, status=255, signal=0
+addaddaddclose
+鉴权失败赵李杰
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"2"},"count":1,"online_count":1,"time":2}
+addclose
+addclose
+addclose
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"6"},"count":1,"online_count":1,"time":3}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"7"},"count":1,"online_count":1,"time":4}
+addclose
+赵李杰close
+add赵李add_con
+1
+{"type":"system","online":{"\u8d75\u674e":"9"},"count":1,"online_count":1,"time":5}
+赵李close
+add赵李close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"11"},"count":1,"online_count":1,"time":7}
+addclose
+addclose
+addclose
+addclose
+鉴权失败赵李杰
+addclose
+鉴权失败赵李杰
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"3"},"count":1,"online_count":1,"time":3}
+add潘泓达add_con
+2
+{"type":"system","online":{"\u8d75\u674e\u6770":"3","\u6f58\u6cd3\u8fbe":"4"},"count":2,"online_count":2,"time":1}
+close
+赵李杰close
+潘泓达close
+赵李杰close
+[2019-07-10 13:34:34 #1940.1]	INFO	Server is shutdown now
+[2019-07-10 13:34:34 $2282.0]	WARNING	swProcessPool_shutdown(:371): swKill(2285) failed, Error: No such process[3]
+[2019-07-10 13:34:34 $2354.0]	WARNING	swProcessPool_shutdown(:371): swKill(2357) failed, Error: No such process[3]
+[2019-07-10 13:34:35 $2282.0]	WARNING	swProcessPool_shutdown(:380): waitpid(2285) failed, Error: No child processes[10]
+[2019-07-10 13:34:35 $2354.0]	WARNING	swProcessPool_shutdown(:380): waitpid(2357) failed, Error: No child processes[10]
+[2019-07-10 14:09:58 $25668.0]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:58 ^25674.8]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:58 *25680.0]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:58 *25681.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:58 *25683.3]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:58 *25682.2]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:58 ^25677.11]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:58 ^25676.10]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:58 ^25675.9]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:58 ^25673.7]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25679.13]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25670.4]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25678.12]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25672.6]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25671.5]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:58 $25760.0]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25765.7]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25766.8]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25771.13]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25764.6]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25767.9]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 *25772.0]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 *25773.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 *25774.2]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 *25775.3]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25770.12]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25762.4]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25763.5]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25769.11]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25768.10]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:58 $25788.0]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25797.11]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25796.10]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25793.7]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25794.8]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25792.6]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25795.9]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25798.12]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 *25800.0]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 *25801.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 *25802.2]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 *25803.3]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25791.5]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25790.4]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25799.13]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:58 $25819.0]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25826.9]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25824.7]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25829.12]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25828.11]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25827.10]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25825.8]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25830.13]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25821.4]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25822.5]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+[2019-07-10 14:09:59 ^25823.6]	WARNING	swSignal_callback (ERRNO 707): Unable to find callback function for signal Hangup: 1
+addclose
+鉴权失败赵李杰
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"2"},"count":1,"online_count":1,"time":2}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"3"},"count":1,"online_count":1,"time":3}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"4"},"count":1,"online_count":1,"time":4}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"5"},"count":1,"online_count":1,"time":5}
+赵李杰close
+add子曰add_con
+1
+{"type":"system","online":{"\u5b50\u66f0":"6"},"count":1,"online_count":1,"time":6}
+子曰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"7"},"count":1,"online_count":1,"time":7}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"8"},"count":1,"online_count":1,"time":8}
+addclose
+赵李杰close
+add赵李杰close
+add赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"12"},"count":1,"online_count":1,"time":11}
+add潘泓达add_con
+2
+{"type":"system","online":{"\u8d75\u674e\u6770":"12","\u6f58\u6cd3\u8fbe":"13"},"count":2,"online_count":2,"time":2}
+赵李杰close
+潘泓达close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"14"},"count":1,"online_count":1,"time":12}
+赵李杰close
+add潘泓达add_con
+1
+{"type":"system","online":{"\u6f58\u6cd3\u8fbe":"15"},"count":1,"online_count":1,"time":13}
+add赵李杰add_con
+2
+{"type":"system","online":{"\u6f58\u6cd3\u8fbe":"15","\u8d75\u674e\u6770":"16"},"count":2,"online_count":2,"time":3}
+赵李杰close
+add潘泓达close
+潘泓达异地登录
+PHP Warning:  Invalid argument supplied for foreach() in /var/www/html/php/websocket_plus.php on line 132
+add[2019-07-13 14:23:55 *7310.3]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 55 byte failed, because connection[fd=17] is closed
+潘泓达add_con
+PHP Warning:  Swoole\Server::close() expects parameter 1 to be integer, string given in /var/www/html/php/websocket_plus.php on line 181
+潘泓达异地登录
+1
+{"type":"system","online":{"\u6f58\u6cd3\u8fbe":"18"},"count":1,"online_count":1,"time":4}
+PHP Warning:  Invalid argument supplied for foreach() in /var/www/html/php/websocket_plus.php on line 132
+add潘泓达close
+潘泓达add_con
+0
+{"type":"system","online":[],"count":0,"online_count":0,"time":14}
+addPHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+PHP Fatal error:  Uncaught RedisException: read error on connection to 127.0.0.1:6379 in /var/www/html/php/websocket_plus.php:160
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(160): Redis->hExists('users', '\xE8\xB5\xB5\xE6\x9D\x8E\xE6\x9D\xB0')
+#1 /var/www/html/php/websocket_plus.php(60): server->vertify_user(Object(Swoole\WebSocket\Server), Object(Swoole\WebSocket\Frame), Object(stdClass))
+#2 {main}
+  thrown in /var/www/html/php/websocket_plus.php on line 160
+[2019-07-13 14:25:05 $7295.0]	WARNING	swManager_check_exit_status: worker#1[pid=7308] abnormal exit, status=255, signal=0
+PHP Fatal error:  Uncaught RedisException: read error on connection to 127.0.0.1:6379 in /var/www/html/php/websocket_plus.php:193
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(193): Redis->hDel('user_list', NULL)
+#1 /var/www/html/php/websocket_plus.php(139): server->delete_user(NULL)
+#2 {main}
+  thrown in /var/www/html/php/websocket_plus.php on line 193
+[2019-07-13 14:26:05 $7295.0]	WARNING	swManager_check_exit_status: worker#1[pid=2671] abnormal exit, status=255, signal=0
+addclose
+鉴权失败赵李杰
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"2"},"count":1,"online_count":1,"time":2}
+[2019-07-13 22:56:41 #3606.1]	INFO	Server is shutdown now
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"1"},"count":1,"online_count":1,"time":1}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"2"},"count":1,"online_count":1,"time":2}
+赵李杰close
+[2019-07-15 08:16:13 *1031.1]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 189 byte failed, because connection[fd=3] is closed
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"4"},"count":1,"online_count":1,"time":3}
+[2019-07-15 08:16:18 ^1025.9]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 91 byte failed, because connection[fd=4] is closed
+add赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"6"},"count":1,"online_count":1,"time":4}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"7"},"count":1,"online_count":1,"time":5}
+PHP Fatal error:  Uncaught RedisException: read error on connection to 127.0.0.1:6379 in /var/www/html/php/websocket_plus.php:160
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(160): Redis->hExists('users', '\xE8\xB5\xB5\xE6\x9D\x8E\xE6\x9D\xB0')
+#1 /var/www/html/php/websocket_plus.php(60): server->vertify_user(Object(Swoole\WebSocket\Server), Object(Swoole\WebSocket\Frame), Object(stdClass))
+#2 {main}
+  thrown in /var/www/html/php/websocket_plus.php on line 160
+[2019-07-15 08:17:19 $1018.0]	WARNING	swManager_check_exit_status: worker#2[pid=1032] abnormal exit, status=255, signal=0
+close
+add赵李杰close
+赵李杰异地登录
+赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"8"},"count":1,"online_count":1,"time":1}
+add潘泓达add_con
+2
+{"type":"system","online":{"\u8d75\u674e\u6770":"8","\u6f58\u6cd3\u8fbe":"9"},"count":2,"online_count":2,"time":6}
+潘泓达close
+add潘泓达add_con
+2
+{"type":"system","online":{"\u8d75\u674e\u6770":"8","\u6f58\u6cd3\u8fbe":"10"},"count":2,"online_count":2,"time":7}
+赵李杰close
+PHP Warning:  Invalid argument supplied for foreach() in /var/www/html/php/websocket_plus.php on line 132
+add赵李杰close
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败赵李杰
+PHP Warning:  Invalid argument supplied for foreach() in /var/www/html/php/websocket_plus.php on line 132
+addPHP Fatal error:  Uncaught RedisException: protocol error, got '1' as reply type byte
+ in /var/www/html/php/websocket_plus.php:160
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(160): Redis->hExists('users', '\xE8\xB5\xB5\xE6\x9D\x8E\xE6\x9D\xB0')
+#1 /var/www/html/php/websocket_plus.php(60): server->vertify_user(Object(Swoole\WebSocket\Server), Object(Swoole\WebSocket\Frame), Object(stdClass))
+#2 {main}
+  thrown in /var/www/html/php/websocket_plus.php on line 160
+[2019-07-15 09:53:38 $1018.0]	WARNING	swManager_check_exit_status: worker#2[pid=10152] abnormal exit, status=255, signal=0
+close
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败赵李杰
+addPHP Fatal error:  Uncaught RedisException: protocol error, got '1' as reply type byte
+ in /var/www/html/php/websocket_plus.php:160
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(160): Redis->hExists('users', '\xE8\xB5\xB5\xE6\x9D\x8E\xE6\x9D\xB0')
+#1 /var/www/html/php/websocket_plus.php(60): server->vertify_user(Object(Swoole\WebSocket\Server), Object(Swoole\WebSocket\Frame), Object(stdClass))
+#2 {main}
+  thrown in /var/www/html/php/websocket_plus.php on line 160
+[2019-07-15 09:54:45 $1018.0]	WARNING	swManager_check_exit_status: worker#2[pid=10599] abnormal exit, status=255, signal=0
+潘泓达close
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+PHP Warning:  Invalid argument supplied for foreach() in /var/www/html/php/websocket_plus.php on line 132
+add潘泓达close
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败潘泓达
+PHP Warning:  Invalid argument supplied for foreach() in /var/www/html/php/websocket_plus.php on line 132
+addPHP Fatal error:  Uncaught RedisException: protocol error, got '1' as reply type byte
+ in /var/www/html/php/websocket_plus.php:160
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(160): Redis->hExists('users', '\xE6\xBD\x98\xE6\xB3\x93\xE8\xBE\xBE')
+#1 /var/www/html/php/websocket_plus.php(60): server->vertify_user(Object(Swoole\WebSocket\Server), Object(Swoole\WebSocket\Frame), Object(stdClass))
+#2 {main}
+  thrown in /var/www/html/php/websocket_plus.php on line 160
+[2019-07-15 09:58:26 $1018.0]	WARNING	swManager_check_exit_status: worker#1[pid=1031] abnormal exit, status=255, signal=0
+close
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败潘泓达
+close
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"18"},"count":1,"online_count":1,"time":2}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"19"},"count":1,"online_count":1,"time":3}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"20"},"count":1,"online_count":1,"time":4}
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"22"},"count":1,"online_count":1,"time":5}
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+addRedisException: protocol error, got '2' as reply type byte
+ in /var/www/html/php/websocket_plus.php:212
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(212): Redis->lLen('notify_list')
+#1 /var/www/html/php/websocket_plus.php(85): server->handle_notify()
+#2 {main}2019-07-15 10:06:04
+close
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+addRedisException: protocol error, got '2' as reply type byte
+ in /var/www/html/php/websocket_plus.php:212
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(212): Redis->lLen('notify_list')
+#1 /var/www/html/php/websocket_plus.php(85): server->handle_notify()
+#2 {main}2019-07-15 10:06:09
+close
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+addRedisException: protocol error, got '2' as reply type byte
+ in /var/www/html/php/websocket_plus.php:212
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(212): Redis->lLen('notify_list')
+#1 /var/www/html/php/websocket_plus.php(85): server->handle_notify()
+#2 {main}2019-07-15 10:06:11
+close
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+赵李杰close
+PHP Warning:  Invalid argument supplied for foreach() in /var/www/html/php/websocket_plus.php on line 132
+add赵李杰close
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+addPHP Fatal error:  Uncaught RedisException: protocol error, got '�' as reply type byte
+ in /var/www/html/php/websocket_plus.php:160
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(160): Redis->hExists('users', '\xE8\xB5\xB5\xE6\x9D\x8E\xE6\x9D\xB0')
+#1 /var/www/html/php/websocket_plus.php(60): server->vertify_user(Object(Swoole\WebSocket\Server), Object(Swoole\WebSocket\Frame), Object(stdClass))
+#2 {main}
+  thrown in /var/www/html/php/websocket_plus.php on line 160
+[2019-07-15 10:06:27 $1018.0]	WARNING	swManager_check_exit_status: worker#1[pid=10617] abnormal exit, status=255, signal=0
+close
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败赵李杰
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"1"},"count":1,"online_count":1,"time":1}
+addclose
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"3"},"count":1,"online_count":1,"time":2}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"4"},"count":1,"online_count":1,"time":3}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"5"},"count":1,"online_count":1,"time":4}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"6"},"count":1,"online_count":1,"time":5}
+add赵李杰close
+赵李杰异地登录
+PHP Warning:  Invalid argument supplied for foreach() in /var/www/html/php/websocket_plus.php on line 132
+add[2019-07-16 08:31:40 *10851.3]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 55 byte failed, because connection[fd=7] is closed
+赵李杰close
+赵李杰异地登录
+PHP Warning:  Invalid argument supplied for foreach() in /var/www/html/php/websocket_plus.php on line 132
+add赵李杰add_con
+赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"8"},"count":1,"online_count":1,"time":2}
+[2019-07-16 08:31:45 *10848.0]	WARNING	swWorker_discard_data (ERRNO 1007): [1]received the wrong data[4 bytes] from socket#7
+[2019-07-16 08:31:45 *10848.0]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 189 byte failed, because connection[fd=9] is closed
+PHP Warning:  Invalid argument supplied for foreach() in /var/www/html/php/websocket_plus.php on line 132
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 66
+1
+{"type":"system","online":false,"count":1,"online_count":1,"time":6}
+add赵李杰close
+PHP Fatal error:  Uncaught RedisException: protocol error, got '�' as reply type byte
+ in /var/www/html/php/websocket_plus.php:193
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(193): Redis->hDel('user_list', '\xE8\xB5\xB5\xE6\x9D\x8E\xE6\x9D\xB0')
+#1 /var/www/html/php/websocket_plus.php(139): server->delete_user('\xE8\xB5\xB5\xE6\x9D\x8E\xE6\x9D\xB0')
+#2 {main}
+  thrown in /var/www/html/php/websocket_plus.php on line 193
+[2019-07-16 08:31:47 $10836.0]	WARNING	swManager_check_exit_status: worker#3[pid=10851] abnormal exit, status=255, signal=0
+add赵李杰add_con
+[2019-07-16 08:31:58 *10850.2]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 55 byte failed, because connection[fd=11] is closed
+add[2019-07-16 08:31:59 *10849.1]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 55 byte failed, because connection[fd=10] is closed
+PHP Fatal error:  Uncaught RedisException: read error on connection to 127.0.0.1:6379 in /var/www/html/php/websocket_plus.php:250
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(250): Redis->hGet('user_list', '\xE8\xB5\xB5\xE6\x9D\x8E\xE6\x9D\xB0')
+#1 /var/www/html/php/websocket_plus.php(64): server->query_wait_handle_task('\xE8\xB5\xB5\xE6\x9D\x8E\xE6\x9D\xB0')
+#2 {main}
+  thrown in /var/www/html/php/websocket_plus.php on line 250
+PHP Fatal error:  Uncaught RedisException: read error on connection to 127.0.0.1:6379 in /var/www/html/php/websocket_plus.php:160
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(160): Redis->hExists('users', '\xE8\xB5\xB5\xE6\x9D\x8E\xE6\x9D\xB0')
+#1 /var/www/html/php/websocket_plus.php(60): server->vertify_user(Object(Swoole\WebSocket\Server), Object(Swoole\WebSocket\Frame), Object(stdClass))
+#2 {main}
+  thrown in /var/www/html/php/websocket_plus.php on line 160
+[2019-07-16 08:33:00 $10836.0]	WARNING	swManager_check_exit_status: worker#3[pid=18307] abnormal exit, status=255, signal=0
+[2019-07-16 08:33:00 $10836.0]	WARNING	swManager_check_exit_status: worker#0[pid=10848] abnormal exit, status=255, signal=0
+addclose
+鉴权失败赵李杰
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"2"},"count":1,"online_count":1,"time":2}
+add潘泓达add_con
+2
+{"type":"system","online":{"\u8d75\u674e\u6770":"2","\u6f58\u6cd3\u8fbe":"3"},"count":2,"online_count":2,"time":1}
+潘泓达close
+add潘泓达add_con
+2
+{"type":"system","online":{"\u8d75\u674e\u6770":"2","\u6f58\u6cd3\u8fbe":"4"},"count":2,"online_count":2,"time":2}
+潘泓达close
+add潘泓达add_con
+2
+{"type":"system","online":{"\u8d75\u674e\u6770":"2","\u6f58\u6cd3\u8fbe":"5"},"count":2,"online_count":2,"time":3}
+潘泓达close
+add潘泓达add_con
+2
+{"type":"system","online":{"\u8d75\u674e\u6770":"2","\u6f58\u6cd3\u8fbe":"6"},"count":2,"online_count":2,"time":4}
+潘泓达close
+add潘泓达add_con
+2
+{"type":"system","online":{"\u8d75\u674e\u6770":"2","\u6f58\u6cd3\u8fbe":"7"},"count":2,"online_count":2,"time":5}
+赵李杰close
+add赵李杰add_con
+2
+{"type":"system","online":{"\u6f58\u6cd3\u8fbe":"7","\u8d75\u674e\u6770":"8"},"count":2,"online_count":2,"time":3}
+赵李杰close
+潘泓达close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"9"},"count":1,"online_count":1,"time":4}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"10"},"count":1,"online_count":1,"time":5}
+赵李杰close
+add潘泓达add_con
+1
+{"type":"system","online":{"\u6f58\u6cd3\u8fbe":"11"},"count":1,"online_count":1,"time":6}
+潘泓达close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"12"},"count":1,"online_count":1,"time":7}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"13"},"count":1,"online_count":1,"time":8}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"14"},"count":1,"online_count":1,"time":9}
+赵李杰close
+赵李杰close
+add潘泓达add_con
+1
+{"type":"system","online":{"\u6f58\u6cd3\u8fbe":"16"},"count":1,"online_count":1,"time":10}
+add潘泓达close
+潘泓达异地登录
+PHP Warning:  Invalid argument supplied for foreach() in /var/www/html/php/websocket_plus.php on line 132
+PHP Fatal error:  Uncaught RedisException: read error on connection to 127.0.0.1:6379 in /var/www/html/php/websocket_plus.php:189
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(189): Redis->hSet('user_list', '\xE6\xBD\x98\xE6\xB3\x93\xE8\xBE\xBE', 17)
+#1 /var/www/html/php/websocket_plus.php(172): server->store_user(Object(Swoole\WebSocket\Server), Object(Swoole\WebSocket\Frame), '\xE6\xBD\x98\xE6\xB3\x93\xE8\xBE\xBE')
+#2 /var/www/html/php/websocket_plus.php(60): server->vertify_user(Object(Swoole\WebSocket\Server), Object(Swoole\WebSocket\Frame), Object(stdClass))
+#3 {main}
+  thrown in /var/www/html/php/websocket_plus.php on line 189
+[2019-07-16 23:31:27 $18443.0]	WARNING	swManager_check_exit_status: worker#0[pid=18455] abnormal exit, status=255, signal=0
+close
+潘泓达close
+add潘泓达add_con
+1
+{"type":"system","online":{"\u6f58\u6cd3\u8fbe":"19"},"count":1,"online_count":1,"time":11}
+潘泓达close
+add潘泓达add_con
+1
+{"type":"system","online":{"\u6f58\u6cd3\u8fbe":"20"},"count":1,"online_count":1,"time":12}
+潘泓达close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"21"},"count":1,"online_count":1,"time":13}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"22"},"count":1,"online_count":1,"time":14}
+赵李杰close
+add赵李杰add_con
+1
+{"type":"system","online":{"\u8d75\u674e\u6770":"23"},"count":1,"online_count":1,"time":15}
+PHP Warning:  Swoole\WebSocket\Server::push(): the connected client of connection[17] is not a websocket client or closed in /var/www/html/php/websocket_plus.php on line 133
+赵李杰close
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+PHP Warning:  Invalid argument supplied for foreach() in /var/www/html/php/websocket_plus.php on line 132
+addPHP Fatal error:  Uncaught RedisException: protocol error, got '�' as reply type byte
+ in /var/www/html/php/websocket_plus.php:160
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(160): Redis->hExists('users', '\xE8\xB5\xB5\xE6\x9D\x8E\xE6\x9D\xB0')
+#1 /var/www/html/php/websocket_plus.php(60): server->vertify_user(Object(Swoole\WebSocket\Server), Object(Swoole\WebSocket\Frame), Object(stdClass))
+#2 {main}
+  thrown in /var/www/html/php/websocket_plus.php on line 160
+[2019-07-17 11:10:00 $18443.0]	WARNING	swManager_check_exit_status: worker#3[pid=18458] abnormal exit, status=255, signal=0
+close
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败赵李杰
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败赵李杰
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败赵李杰
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败赵李杰
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败赵李杰
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败赵李杰
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败赵李杰
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败赵李杰
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败赵李杰
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败赵李杰
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败赵李杰
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败赵李杰
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败赵李杰
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败赵李杰
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败赵李杰
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败赵李杰
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败赵李杰
+addclose
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 145
+PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /var/www/html/php/websocket_plus.php on line 146
+鉴权失败潘泓达
+[2019-07-20 13:13:58 $27538.0]	WARNING	swManager_check_exit_status: worker#0[pid=27550] abnormal exit, status=255, signal=0
+[2019-07-23 07:24:11 *17393.0]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 55 byte failed, because connection[fd=9] is closed
+[2019-07-23 07:25:11 $27538.0]	WARNING	swManager_check_exit_status: worker#3[pid=27553] abnormal exit, status=255, signal=0
+[2019-07-23 07:25:11 $27538.0]	WARNING	swManager_check_exit_status: worker#0[pid=17393] abnormal exit, status=255, signal=0
+[2019-07-23 07:25:11 *5405.3]	WARNING	swWorker_discard_data (ERRNO 1007): [1]received the wrong data[4 bytes] from socket#9
+[2019-07-23 13:06:02 $27538.0]	WARNING	swManager_check_exit_status: worker#3[pid=5405] abnormal exit, status=255, signal=0
+[2019-09-04 23:13:57 *13284.3]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 55 byte failed, because connection[fd=17] is closed
+[2019-09-04 23:13:57 *13281.0]	NOTICE	swFactoryProcess_end (ERRNO 1003): The connection[17] is closing
+[2019-09-04 23:14:02 *13281.0]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 55 byte failed, because connection[fd=20] is closed
+[2019-09-04 23:14:59 $13269.0]	WARNING	swManager_check_exit_status: worker#1[pid=13282] abnormal exit, status=255, signal=0
+[2019-09-04 23:15:02 $13269.0]	WARNING	swManager_check_exit_status: worker#2[pid=13283] abnormal exit, status=255, signal=0
+[2019-09-04 23:15:02 $13269.0]	WARNING	swManager_check_exit_status: worker#3[pid=13284] abnormal exit, status=255, signal=0
+[2019-09-04 23:15:02 *5076.3]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 189 byte failed, because connection[fd=22] is closed
+[2019-09-06 10:43:54 *19747.3]	WARNING	swWorker_discard_data (ERRNO 1007): [1]received the wrong data[2 bytes] from socket#15
+[2019-09-06 10:44:54 ^19741.11]	ERROR	zm_deactivate_swoole (ERRNO 503): Fatal error: Uncaught RedisException: read error on connection to 127.0.0.1:6379 in /var/www/html/php/websocket_plus.php:198
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(198): Redis->hGetAll('user_list')
+#1 /var/www/html/php/websocket_plus.php(131): server->get_user()
+#2 [internal function]: server->onTask(Object(Swoole\WebSocket\Server), 2, 0, Array)
+#3 /var/www/html/php/websocket_plus.php(40): Swoole\Server->start()
+#4 /var/www/html/php/websocket_plus.php(3): server->__construct()
+#5 {main}
+  thrown in /var/www/html/php/websocket_plus.php on line 198
+[2019-09-06 10:44:54 $19732.0]	WARNING	swManager_check_exit_status: worker#1[pid=19745] abnormal exit, status=255, signal=0
+[2019-09-06 10:44:54 $19732.0]	WARNING	swManager_check_exit_status: worker#11[pid=19741] abnormal exit, status=255, signal=0
+[2019-09-06 14:22:00 *20977.3]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 55 byte failed, because connection[fd=11] is closed
+[2019-09-06 14:22:20 *20974.0]	WARNING	swWorker_discard_data (ERRNO 1007): [1]received the wrong data[4 bytes] from socket#11
+[2019-09-06 14:22:20 *20974.0]	NOTICE	swFactoryProcess_finish (ERRNO 1004): send 189 byte failed, because connection[fd=13] is closed
+[2019-09-06 14:22:20 $20962.0]	WARNING	swManager_check_exit_status: worker#3[pid=20977] abnormal exit, status=255, signal=0
+[2019-09-06 14:23:20 ^20967.7]	ERROR	zm_deactivate_swoole (ERRNO 503): Fatal error: Uncaught RedisException: read error on connection to 127.0.0.1:6379 in /var/www/html/php/websocket_plus.php:198
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(198): Redis->hGetAll('user_list')
+#1 /var/www/html/php/websocket_plus.php(131): server->get_user()
+#2 [internal function]: server->onTask(Object(Swoole\WebSocket\Server), 2, 3, Array)
+#3 /var/www/html/php/websocket_plus.php(40): Swoole\Server->start()
+#4 /var/www/html/php/websocket_plus.php(3): server->__construct()
+#5 {main}
+  thrown in /var/www/html/php/websocket_plus.php on line 198
+[2019-09-06 14:23:20 $20962.0]	WARNING	swManager_check_exit_status: worker#7[pid=20967] abnormal exit, status=255, signal=0
+RedisException: read error on connection to 127.0.0.1:6379 in /var/www/html/php/websocket_plus.php:213
+Stack trace:
+#0 /var/www/html/php/websocket_plus.php(213): Redis->lLen('notify_list')
+#1 /var/www/html/php/websocket_plus.php(85): server->handle_notify()
+#2 {main}2019-09-06 14:23:29

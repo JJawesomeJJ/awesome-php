@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>timed_task</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/timed_task.css" rel="stylesheet">
+</head>
+<body>
+@extend('admin/controller_index')
+<div class="title">
+                <span class="layui-breadcrumb" lay-separator="-">
+                    <a href="">service</a>
+                    <a href="">timed_task</a>
+                    <a><cite>timed service monitor</cite></a>
+                </span>
+</div>
+<div class="content content-timed layui-row" style="bottom: 30px;position: relative;display: block;">
+    <div class="service_card">
+        <div class="switch flex-nowarp layui-row layui-bg-blue layui-col-xs12" style="height: 50px;margin-bottom: 10px;">
+            <div class="status flex-nowarp layui-col-xs-10 j-center-vertical" style="width: 200px;height: 35px;">
+                <h1 class="text-black-h1 text-white" style="color: white;font-size: 20px;font-weight:lighter;">当前状态:</h1>
+                <i class="layui-icon layui-icon-ok j-icon radius-50 bg-green" v-if="timed_task_status"></i>
+                <i class="layui-icon layui-icon-close j-icon radius-50 layui-btn-danger" v-else="timed_task_status"></i>
+            </div>
+            <div class="switch j-right j-center-vertical" style="margin-right: 20px;">
+                <button v-if="timed_task_status==false" class="layui-btn layui-btn-sm bg-orange" type="button"><i class="layui-icon layui-icon-refresh" v-on:click="start_service('timed_task')"></i>启动</button>
+                <button v-if="timed_task_status" class="layui-btn layui-btn-sm bg-pink" type="button"><i class="layui-icon layui-icon-close-fill" v-on:click="close_service('timed_task')"></i>关闭</button>
+                <button v-if="timed_task_status" class="layui-btn layui-btn-sm layui-btn-danger" type="button"><i class="layui-icon layui-icon-play"></i>重启</button>
+            </div>
+        </div>
+        <!--<div class="logo radius-50" style="width: 100px;height: 100px;">-->
+            <!--<img class="fluid-parents" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2141236444,1104619086&fm=26&gp=0.jpg"  alt="">-->
+        <!--</div>-->
+        <div class="card task_info layui-row layui-col-xs12 layui-bg-gray" style="margin-bottom: 200px;">
+            <div class="card bg-green layui-col-sm3 layui-col-xs-12">
+                <div class="j-center-vertical layui-col-xs12">
+                    <div class="layui-col-xs6">
+                        <i class="layui-icon layui-icon-chart j-center" style="width: 50px;height: 50px;display: block;font-size: 50px;color:white;line-height: 50px;"></i>
+                    </div>
+                    <div class="layui-col-xs6">
+                        <h1 class="text-black-h1 text-no-wrap text-center">任务总量</h1>
+                        <h1 class="text-black-h1 text-no-wrap text-center">{{$time_num}}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-orange layui-col-sm3 layui-col-xs12">
+                <div class="j-center-vertical layui-col-xs12">
+                    <div class="layui-col-xs6">
+                        <i class="layui-icon layui-icon-chart-screen j-center" style="width: 50px;height: 50px;display: block;font-size: 50px;color:white;line-height: 50px;"></i>
+                    </div>
+                    <div class="layui-col-xs6">
+                        <h1 class="text-black-h1 text-no-wrap text-center">处理任务总量</h1>
+                        <h1 class="text-black-h1 text-no-wrap text-center">{{$timed_task_handle_num}}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-pink layui-col-sm3 layui-col-xs12">
+                <div class="j-center-vertical layui-col-xs12">
+                    <div class="layui-col-xs6">
+                        <i class="layui-icon layui-icon-log j-center" style="width: 50px;height: 50px;display: block;font-size: 50px;color:white;line-height: 50px;"></i>
+                    </div>
+                    <div class="layui-col-xs6">
+                        <h1 class="text-black-h1 text-no-wrap text-center">累计运行时间</h1>
+                        <h1 class="text-black-h1 text-no-wrap text-center" style="color: white;font-size: 15px;">@{{run_time}}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-blue layui-col-sm3 layui-col-xs12">
+                <div class="j-center-vertical layui-col-xs12">
+                    <div class="layui-col-xs6">
+                        <i class="layui-icon layui-icon-date j-center" style="width: 50px;height: 50px;display: block;font-size: 50px;color:white;line-height: 50px;"></i>
+                    </div>
+                    <div class="layui-col-xs6">
+                        <h1 class="text-black-h1 text-no-wrap text-center">上次运行时间</h1>
+                        <h1 class="text-black-h1 text-no-wrap text-center" style="color: white;font-size: 15px;">{{$timed_task_time}}</h1>
+                    </div>
+                </div>
+            </div>
+            <table class="layui-table layui-col-xs12 col-md-12 overflow-x-sroll" style="margin-top: 20px;margin-bottom: 100px;">
+                <thead>
+                <tr>
+                    <th style="width: 220px;">任务名称</th>
+                    <th style="width: 220px;">任务执行时间</th>
+                    <th style="width: 220px;">执行次数</th>
+                    <th style="width: 220px;">间隔时间</th>
+                    <th style="width: 220px;">任务类型</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($timed_task_list as $key=>$value)
+                <tr>
+                    <td>{{$value['task_name']}}</td>
+                    <td>{{date("Y-m-d H:i",$value['time'])}}</td>
+                    <td>{{$value['times']}}</td>
+                    <td>{{$value['interval']}}</td>
+                    <td>{{$value['type']}}</td>
+                </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@endextend
+<script>
+    layui.use('element', function(){
+        var element = layui.element;
+    });
+    layui.use('form', function () {
+        var form = layui.form;
+    });
+    new Vue({
+        el: '#app2',
+        data: {
+            user_info: {
+                name: "",
+                permission: "",
+                email: "",
+                head_img: "",
+                admin_csrf_token: "",
+            },
+            active:"{{$is_active}}",
+            timed_task_status:'{{$timed_task_status}}',
+            timed_task_start_at:'{{$created}}',
+            run_time:"",
+        },
+        created() {
+            this.parse_status();
+            this.get_user_info();
+            this.get_run_time();
+        },
+
+        methods: {
+            get_run_time(){
+                var time=Date.parse(new Date());
+                time=String(time).substring(0,String(time).length-3);
+                this.run_time=get_diffTime(time,this.timed_task_start_at);
+            },
+            parse_status(){
+                if(this.timed_task_status=='true'){
+                    this.timed_task_status=true
+                }
+                if(this.timed_task_status=='false'){
+                    this.timed_task_status=false
+                }
+            },
+            is_active_(name){
+                if(name==this.active){
+                    return true
+                }
+                return false;
+            },
+            close_service(service_name) {
+                var self = this;
+                axios.post("{{index_path()}}/admin/service/close",
+                    {
+                        service: service_name,
+                        admin_csrf_token: self.user_info.admin_csrf_token
+                    }).then(function (res) {
+                    if (res.data["code"] == 200) {
+                        if (service_name == "timed_task") {
+                            self.timed_task_status = false;
+                            alert(service_name + "has been closed");
+                        }
+                        else {
+                            //window.location.reload();
+                        }
+                    }
+                    if (res.data["code"] == 403) {
+                        alert("登录失效");
+                        window.location.href = "{{index_path()}}/admin/user";
+                    }
+                }).catch(function () {
+                });
+            },
+            get_user_info() {
+                this.user_info = eval('(' + localStorage.getItem("admin_user_data") + ')');
+                this.is_load = true;
+            },
+            start_service(service_name) {
+                var self = this;
+                axios.post("{{index_path()}}/admin/service",
+                    {
+                        service: service_name,
+                        admin_csrf_token: self.user_info.admin_csrf_token
+                    }).then(function (res) {
+                    console.log(res);
+                    if (res.data["code"] == 200) {
+                        if (service_name == "timed_task") {
+                            self.timed_task_status = true;
+                            this.get_run_time();
+                        }
+                        else {
+                            window.location.reload();
+                        }
+                    }
+                    if (res.data["code"] == 403) {
+                        alert("登录失效");
+                        window.location.href = "{{index_path()}}/admin/user";
+                    }
+                }).catch(function () {
+
+                });
+            },
+        }
+    });
+</script>
+</body>
+</html>

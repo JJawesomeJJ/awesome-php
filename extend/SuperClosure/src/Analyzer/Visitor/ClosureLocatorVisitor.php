@@ -1,5 +1,6 @@
 <?php namespace SuperClosure\Analyzer\Visitor;
 
+use PhpParser\NodeVisitorAbstract;
 use SuperClosure\Exception\ClosureAnalysisException;
 use PhpParser\Node\Stmt\Namespace_ as NamespaceNode;
 use PhpParser\Node\Stmt\Trait_ as TraitNode;
@@ -14,7 +15,7 @@ use PhpParser\NodeVisitorAbstract as NodeVisitor;
  *
  * @internal
  */
-final class ClosureLocatorVisitor extends NodeVisitor
+final class ClosureLocatorVisitor extends NodeVisitorAbstract
 {
     /**
      * @var \ReflectionFunction

@@ -25,6 +25,7 @@ use task\queue\queue;
 use task\task;
 use template\compile;
 use system\Exception;
+use template\compile_parse;
 
 class admin_user_controller extends controller
 {
@@ -74,7 +75,7 @@ class admin_user_controller extends controller
         if (!session::get("admin_permission")) {
             if (!isset($_COOKIE['admin_token'])) {
                 if($is_redirect){
-                redirect("http://39.108.236.127/php/public/index.php/admin/user");
+                redirect(index_path()."/admin/user");
                 }
                 else{
                     return false;
@@ -84,7 +85,7 @@ class admin_user_controller extends controller
             $admin_user_info = $cache->get_cache($_COOKIE['admin_token']);
             if($admin_user_info==null){
                 if($is_redirect) {
-                    redirect("http://39.108.236.127/php/public/index.php/admin/user");
+                    redirect(index_path()."/admin/user");
                 }
                 else{
                     return false;
@@ -94,7 +95,7 @@ class admin_user_controller extends controller
             $admin_user_info=$cache->get_cache($admin_user_info["name"]);
             if ($admin_user_info == null || $admin_user_info['token'] != $_COOKIE['admin_token']) {
                 $cache->delete_key($_COOKIE["admin_token"]);
-                redirect("http://39.108.236.127/php/public/index.php/admin/user");
+                redirect(index_path()."/admin/user");
             } else {
                session::set("admin_permission",$admin_user_info);
             }
@@ -159,21 +160,20 @@ class admin_user_controller extends controller
         $admin_user->where("name",$this->request()->get("name"))->or_where("email",$this->request()->get("name"))->get();
         $email=$admin_user->email;
         $code=code_controller::code(4,"admin_user");
-        queue::asyn(function () use ($email,$code){
+//        queue::asyn(function () use ($email,$code){
             $mail=new mail();
             $compile=new compile();
             $title="欢迎登录Titang管理系统";
             $content="we learn you wanna login titang controller system it is vertify code if not yourself operate don't mind it!";
             $mail->send_email($email,$compile->view("tool/email",["code"=>$code,"title"=>$title,"content"=>$content]),$title);
-        });
+//        });
         return ["code"=>200,"message"=>"ok"];
     }
     public function user_login(){
         if(self::permission(false)){
-            redirect("http://39.108.236.127/php/public/index.php/admin/control/websocket");
+            redirect(index_path()."/admin/control/websocket");
         }
-        $compile=new compile();
-        return $compile->view("admin/user_login");
+        return compile_parse::compile("admin/user_login",[]);
     }
     public function get_timed_task_info(){
         $redis=new \Redis();
@@ -194,7 +194,7 @@ class admin_user_controller extends controller
                 $websocket_status=$this->get_service_status("websocket_chat");
                 $user=new user();
                 $user_list=$user->where_in("name",array_keys(class_define::redis()->hGetAll("user_list")))->get()->all(["name","head_img"]);
-                return view("admin/controller_index",
+                return view("admin/websocket_service",
                     [
                         "permission"=>self::permission()["permission"],
                         "name"=>self::permission()["name"],
@@ -203,7 +203,7 @@ class admin_user_controller extends controller
                         "time_num"=>strval(count($time_list["timed_task_list"])),
                         "timed_task_list"=>$time_list["timed_task_list"],
                         "websocket_status"=>$websocket_status,
-                        "service"=>$request->get("service"),
+                        "service"=>$request->get("service")."_service",
                         "user_list"=>$user_list,
                         "online_user"=>count($user_list),
                         "created"=>date('Y-m-s h:i:s',system_excu::service_info("websocket_chat")["created_at"]),
@@ -213,15 +213,15 @@ class admin_user_controller extends controller
                 $time_list=$this->get_timed_task_info();
                 $user=new user();
                 $user_list=$user->where_in("name",array_keys(class_define::redis()->hGetAll("user_list")))->get()->all(["name","head_img"]);
-                return view("admin/controller_index",
+                return view("admin/timed_service",
                     [
                         "permission"=>self::permission()["permission"],
                         "name"=>self::permission()["name"],
                         "timed_task_time"=>$time_list["time"],
                         "is_active"=>$request->get("service"),
                         "time_num"=>strval(count($time_list["timed_task_list"])),
-                        "timed_task_list"=>$time_list["timed_task_list"],
-                        "service"=>$request->get("service"),
+                        "timed_task_list"=>$time_list["timed_task_list"]??[],
+                        "service"=>$request->get("service")."_service",
                         "timed_task_status"=>$this->get_service_status("timed_task"),
                         "user_list"=>$user_list,
                         "created"=>system_excu::service_info("timed_task")["created_at"],
@@ -232,7 +232,7 @@ class admin_user_controller extends controller
                 $time_list=$this->get_timed_task_info();
                 $user=new user();
                 $user_list=$user->where_in("name",array_keys(class_define::redis()->hGetAll("user_list")))->get()->all(["name","head_img"]);
-                return view("admin/controller_index",
+                return view("admin/titang_service",
                     [
                         "permission"=>self::permission()["permission"],
                         "name"=>self::permission()["name"],
@@ -240,7 +240,7 @@ class admin_user_controller extends controller
                         "is_active"=>$request->get("service"),
                         "time_num"=>strval(count($time_list["timed_task_list"])),
                         "timed_task_list"=>$time_list["timed_task_list"],
-                        "service"=>$request->get("service"),
+                        "service"=>$request->get("service")."_service",
                         "timed_task_status"=>$this->get_service_status("timed_task"),
                         "user_list"=>$user_list,
                         "created"=>system_excu::service_info("timed_task")["created_at"],
@@ -392,8 +392,7 @@ class admin_user_controller extends controller
     public function get_theme_list(request $request){
         //self::check_csrf_token();
         self::permission();
-        $titang_theme=model_auto::model("titang_theme")->page($request->get("page"),$request->get("limit"));
-        return $titang_theme->get()->all();
+        return $titang_theme=model_auto::model("titang_theme")->page($request->get("page"),$request->get("limit"))['data'];
     }
     public function delete_theme(request $request){
         self::permission();
@@ -401,7 +400,7 @@ class admin_user_controller extends controller
             model_auto::model("titang_theme")->where("id",$request->get("id"))->delete();
             return ["code"=>200,"message"=>"ok"];
         }
-        else{
+        else {
             return ["code"=>403,"message"=>"without_of_permission"];
         }
     }

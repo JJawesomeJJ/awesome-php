@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+@extend('admin/controller_index')
+<div class="title">
+                <span class="layui-breadcrumb" lay-separator="-">
+                    <a href="">service</a>
+                    <a href="">titang</a>
+                    <a><cite>titang_theme</cite></a>
+                </span>
+</div>
+<div class="content content-timed layui-row" style=";position: relative;display: block;margin-bottom: 100px;">
+    <!--<div class="title layui-col-xs-12 bg-gradient-blue" style="height: 50px;">-->
+        <!--<h1 class="text-white-h1 text-center j-center-vertical">皮肤设置</h1>-->
+    <!--</div>-->
+    <div class="layui-col-sm12 layui-col-xs-12 j-center" style="float: none;!important;">
+    <div class="j-min-hiden" style="min-height:50px;">
+        <div class="flex">
+            <div class="layui-col-md3 img_container" style="position: relative;">
+                <div class="bg-black-opacity j-top width_match_parent title_">
+                    <h1 class="text-white-h1 text-center">早上</h1>
+                </div>
+                <img v-bind:src="now_theme_list.morning" style="width: 100%;height: 100%;background-repeat: no-repeat" alt="">
+                <input v-model="now_theme_list.morning" v-if="is_edit" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入图片地址" class="layui-input j-bottom">
+            </div>
+            <div class="layui-col-md3 img_container" style="position: relative;">
+                <div class="bg-black-opacity j-top width_match_parent title_"><h1 class="text-white-h1 text-center">正午</h1></div>
+                <img v-bind:src="now_theme_list.noon" style="width: 100%;height: 100%;background-repeat: no-repeat" alt="">
+                <input v-model="now_theme_list.noon" v-if="is_edit" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入图片地址" class="layui-input j-bottom">
+            </div>
+            <div class="layui-col-md3 img_container" style="position: relative;">
+                <div class="bg-black-opacity j-top width_match_parent title_"><h1 class="text-white-h1 text-center">下午</h1></div>
+                <img v-bind:src="now_theme_list.afternoon" style="width: 100%;height: 100%;background-repeat: no-repeat"alt="">
+                <input v-model="now_theme_list.afternoon" v-if="is_edit" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入图片地址" class="layui-input j-bottom">
+            </div>
+            <div class="layui-col-md3 img_container" style="position: relative;">
+                <div class="bg-black-opacity j-top width_match_parent title_"><h1 class="text-white-h1 text-center">夜间</h1></div>
+                <img v-bind:src="now_theme_list.night"style="width: 100%;height: 100%;background-repeat: no-repeat" alt="">
+                <input v-model="now_theme_list.night" v-if="is_edit" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入图片地址" class="layui-input j-bottom">
+            </div>
+        </div>
+    </div>
+        <div class="layui-carousel j-min-show" id="test1" style="height: 700px;!important;">
+            <div carousel-item>
+                <div class="layui-col-md3 img_container" style="position: relative;">
+                    <div class="bg-black-opacity j-top width_match_parent title_">
+                        <h1 class="text-white-h1 text-center">早上</h1>
+                    </div>
+                    <img v-bind:src="now_theme_list.morning" style="width: 100%;height: 100%;background-repeat: no-repeat" alt="">
+                    <input v-model="now_theme_list.morning" v-if="is_edit" type="text" name="title" lay-verify="title"v-model="title" autocomplete="off" placeholder="请输入图片地址" class="layui-input j-bottom">
+                </div>
+                <div class="layui-col-md3 img_container" style="position: relative;">
+                    <div class="bg-black-opacity j-top width_match_parent title_"><h1 class="text-white-h1 text-center">正午</h1></div>
+                    <img v-bind:src="now_theme_list.noon" style="width: 100%;height: 100%;background-repeat: no-repeat" alt="">
+                    <input v-model="now_theme_list.noon" v-if="is_edit" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入图片地址" class="layui-input j-bottom">
+                </div>
+                <div class="layui-col-md3 img_container" style="position: relative;">
+                    <div class="bg-black-opacity j-top width_match_parent title_"><h1 class="text-white-h1 text-center">下午</h1></div>
+                    <img v-bind:src="now_theme_list.afternoon" style="width: 100%;height: 100%;background-repeat: no-repeat"alt="">
+                    <input  v-model:src="now_theme_list.afternoon" v-if="is_edit" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入图片地址" class="layui-input j-bottom">
+                </div>
+                <div class="layui-col-md3 img_container" style="position: relative;">
+                    <div class="bg-black-opacity j-top width_match_parent title_"><h1 class="text-white-h1 text-center">夜间</h1></div>
+                    <img v-bind:src="now_theme_list.night" style="width: 100%;height: 100%;background-repeat: no-repeat" alt="">
+                    <input v-model:src="now_theme_list.night" v-if="is_edit" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入图片地址" class="layui-input j-bottom">
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs12  flex">
+            <div v-if="is_create" class="create_title j-left-0 flex">
+                <input type="text" v-model="title" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input magin-padding-0">
+            </div>
+            <div v-if="!is_update" class="j-right">
+            <button v-if="!is_create" class="layui-btn bg-green layui-btn-sm" v-on:click="create"><i class="layui-icon layui-icon-theme">创建</i></button>
+                <button v-if="is_create" class="layui-btn layui-btn-primary layui-btn-sm" v-on:click="edit_cancel"><i class="layui-icon layui-icon-return">取消</i></button>
+            <button v-if="!is_create" class="layui-btn bg-gradient-blue layui-btn-sm" v-on:click="edit"><i class="layui-icon layui-icon-edit">修改</i></button>
+            </div>
+            <div class="j-right" v-if="is_create">
+                <button class="layui-btn layui-btn-primary layui-btn-sm" v-on:click="edit_cancel"><i class="layui-icon layui-icon-return">取消</i></button>
+                <button class="layui-btn bg-green layui-btn-sm" v-on:click="upload_theme('create')"><i class="layui-icon layui-icon-upload">确认</i></button>
+            </div>
+            <div class="j-right" v-if="is_update&&!is_create">
+                <button class="layui-btn layui-btn-primary layui-btn-sm" v-on:click="edit_cancel"><i class="layui-icon layui-icon-return">取消</i></button>
+                <button class="layui-btn bg-green layui-btn-sm" v-on:click="upload_theme('update')"><i class="layui-icon layui-icon-upload">确认修改</i></button>
+            </div>
+        </div>
+    </div>
+    <div class="table" style="top:50px;position: relative;">
+        <table class="layui-table layui-col-xs12 col-md-12 overflow-x-sroll" style="margin-top: 20px;margin-bottom: 100px;">
+            <thead>
+            <tr>
+                <th style="width: 220px;">主题标题</th>
+                <th style="width: 220px;">清晨</th>
+                <th style="width: 220px;">正午</th>
+                <th style="width: 220px;">下午</th>
+                <th style="width: 220px;">夜间</th>
+                <th style="width: 220px;">创建者</th>
+                <th style="width: 220px;">创建日期</th>
+                <th style="width: 220px;">设置</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="i in theme_list">
+                <td>@{{i.title}}</td>
+                <td><img :src="i.morning" alt="" style="width: 50px;height: 50px;"></td>
+                <td><img :src="i.noon" alt="" style="width: 50px;height: 50px;"></td>
+                <td><img :src="i.afternoon" alt="" style="width: 50px;height: 50px;"></td>
+                <td><img :src="i.night" alt="" style="width: 50px;height: 50px;"></td>
+                <td>@{{i.creator}}</td>
+                <td>@{{i.created_at}}</td>
+                <td class="flex-nowarp">
+                    <button v-on:click="set_current_theme(i.id)" class="layui-btn layui-btn-sm bg-blue">设置</button>
+                    <button v-on:click="delete_theme(i.id)" class="layui-btn layui-btn-sm layui-btn-danger">删除</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+@endextend
+<script>
+    layui.use('element', function(){
+        var element = layui.element;
+    });
+    layui.use('carousel', function(){
+        var carousel = layui.carousel;
+        //建造实例
+        carousel.render({
+            elem: '#test1'
+            ,width: '100%' //设置容器宽度
+            ,arrow: 'always' //始终显示箭头
+            //,anim: 'updown' //切换动画方式
+        });
+    });
+    new Vue({
+        el: '#app2',
+        data: {
+            page:1,
+            is_edit:false,
+            is_load:true,
+            is_update:false,
+            is_create:false,
+            title:"",
+            user_info: {
+                name: "",
+                permission: "",
+                email: "",
+                head_img: "",
+                admin_csrf_token: "",
+            },
+            theme_list:[],
+            now_theme_list:{
+                morning:"https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2888842633,3373259898&fm=27&gp=0.jpg",
+                noon:"https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2027442211,20115500&fm=27&gp=0.jpg",
+                afternoon:"https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=22791364,1541469594&fm=27&gp=0.jpg",
+                night:"https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2176925293,4005894793&fm=27&gp=0.jpg"
+            },
+            active:"{{$is_active}}",
+            oringin:{
+                morning:"https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2888842633,3373259898&fm=27&gp=0.jpg",
+                noon:"https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2027442211,20115500&fm=27&gp=0.jpg",
+                afternoon:"https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=22791364,1541469594&fm=27&gp=0.jpg",
+                night:"https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2176925293,4005894793&fm=27&gp=0.jpg"
+            },
+        },
+        watch:{
+            now_theme_list:{//深度监听，可监听到对象、数组的变化
+                handler(val, oldVal){
+                    if(!object_content_equal(this.now_theme_list,this.oringin)){
+                        console.log(this.now_theme_list);
+                        console.log(this.oringin);
+                        this.is_update = true;
+                        console.log("budeng");
+                    }
+                    else {
+                        console.log("xiangd");
+                        this.is_update=false;
+                    }
+
+                },
+                deep:true
+            }
+        },
+        created() {
+            this.get_user_info();
+            this.get_now_list("get_theme_back");
+            this.get_theme_list(this.page);
+        },
+        methods: {
+            create(){
+                this.is_create=true;
+                this.is_edit=true;
+                this.now_theme_list["morning"]="http://img5.imgtn.bdimg.com/it/u=208969330,1979577751&fm=26&gp=0.jpg";
+                this.now_theme_list["noon"]="http://img5.imgtn.bdimg.com/it/u=208969330,1979577751&fm=26&gp=0.jpg";
+                this.now_theme_list["afternoon"]="http://img5.imgtn.bdimg.com/it/u=208969330,1979577751&fm=26&gp=0.jpg";
+                this.now_theme_list["night"]="http://img5.imgtn.bdimg.com/it/u=208969330,1979577751&fm=26&gp=0.jpg";
+            },
+            get_now_list(type){
+                var self=this;
+                axios.get("{{index_path()}}/admin/theme/get",
+                    {
+                        params:{
+                            type:type,
+                            key:"ok",
+                            withid:"ok"
+                        }
+                    }).then(function (res) {
+                        self.now_theme_list=res["data"]["list"];
+                        self.is_edit=false;
+                        self.oringin=object_content_copy(self.now_theme_list);
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            get_theme_list(page){
+                var self=this;
+                axios.get("{{index_path()}}/admin/theme/list",
+                    {
+                        params:{
+                            page:page,
+                            limit:10,
+                            admin_csrf_token:self.admin_csrf_token
+                        }
+                    }).then(function (res) {
+                        console.log(res["data"]);
+                        if(!Array.isArray(res["data"])){
+                            self.theme_list.push(res["data"]);
+                        }
+                        else {
+                            self.theme_list=res["data"];
+                        }
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            edit_cancel(){
+                this.is_create=false;
+                this.is_edit=false;
+                this.is_update=false;
+                this.now_theme_list=object_content_copy(this.oringin);
+                console.log(this.now_theme_list);
+            },
+            set_current_theme(id){
+                var self=this;
+                axios.post("{{index_path()}}/admin/theme/set",
+                    {
+                        id:id,
+                        admin_csrf_token: self.user_info.admin_csrf_token
+                    }).then(function (res) {
+                    if(res["data"]["message"]=="ok"){
+                        for(var i of self.theme_list){
+                            if(i.id==id){
+                                self.now_theme_list=i;
+                                return;
+                            }
+                        }
+                    }
+                }).catch(function (error) {
+                    console.log(error);
+                })
+            },
+            delete_theme(id){
+                var self=this;
+                axios.post(
+                    "{{index_path()}}/admin/theme/delete",
+                    {
+                        id:id,
+                        admin_csrf_token:self.user_info.admin_csrf_token,
+                    }
+                ).then(function (res) {
+                    if(res["data"]["code"]==200) {
+                        for (var i=0;i<self.theme_list.length;i++){
+                            if(self.theme_list[i]["id"]==id)
+                            {
+                                console.log(id);
+                                self.theme_list.splice(i,1);
+                                layui.use('layer', function () {
+                                    var layer = layui.layer;
+                                    layer.msg("删除成功");
+                                });
+                                return;
+                            }
+                        }
+                    }
+                   else {
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.msg('失败' + res["data"]["data"]["message"]);
+                        });
+                    }
+                }).catch(function (error) {
+                    layui.use('layer', function () {
+                        var layer = layui.layer;
+                        layer.msg('失败' + error);
+                    })
+                });
+            },
+            upload_theme(type){
+                var self=this;
+                axios.post(
+                    "{{index_path()}}/admin/theme",
+                    {
+                        type:type,
+                        theme_list:self.now_theme_list,
+                        admin_csrf_token:self.user_info.admin_csrf_token,
+                        title:self.title,
+                    }
+                ).then(function (res) {
+                    if(res["data"]["message"]=="ok") {
+                        layui.use('layer', function () {
+                            if(type=="create") {
+                                var layer = layui.layer;
+                                layer.msg('创建成功');
+                            }else {
+                                var layer = layui.layer;
+                                layer.msg('修改成功');
+                            }
+                        });
+                        self.get_theme_list(self.page);
+                    }
+                }).catch(function (error) {
+                    
+                })
+            },
+            edit(){
+                if(this.is_edit){
+                    this.is_edit=false;
+                }else {
+                    this.is_edit=true;
+                }
+            },
+            get_user_info() {
+                this.user_info = eval('(' + localStorage.getItem("admin_user_data") + ')');
+                this.is_load = true;
+            },
+            is_active_(name){
+                if(name==this.active){
+                    return true
+                }
+                return false;
+            },
+        }
+    });
+</script>
+</body>
+</html>

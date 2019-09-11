@@ -12,6 +12,7 @@ namespace task\job;
 use SuperClosure\Serializer;
 use task\queue\queue_handle;
 require_once dirname(dirname(__DIR__))."/load/auto_load.php";
+require_once dirname(dirname(__DIR__))."/load/common.php";
 class asyn_queue extends queue_handle
 {
     public $listen_queue="asyn";

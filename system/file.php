@@ -41,11 +41,13 @@ class file
             return $file_list;
         }
     }//please don't direct call method,use file_walk!
+    //when file too many may cause out of memory!!
     public function file_walk($path,$except=[]){
         $file_list=call_user_func_array([$this,"get_file_list"],[$path,$except]);
         $this->arr=[];
         return $file_list;
     }
+    //get path all file include son dir
     public function base64_jpeg($base64,$path,$name){
         $file1="/var/www/html/image/".date('Y-m-d h:i:s').".txt";
         $fp = fopen($file1, 'w');
@@ -67,6 +69,7 @@ class file
             return false;
         }
     }
+    //base64 to img file
     public function read_file($path){
         if(!file_exists($path)){
             return false;
@@ -74,7 +77,7 @@ class file
         $myfile = fopen($path, "r") or die("Unable to open file!");
         $data=file_get_contents($path);
         return $data;
-    }
+    }//读取文件
     public function img_base64($img_path){
         if(!file_exists($img_path)){
             return false;
@@ -88,7 +91,7 @@ class file
             return $encode;
         }
         return false;
-    }
+    }//文件转化为base64
     public function write_file($path,$data){
         $name_list=explode("/",$path);
         $path_=str_replace($name_list[count($name_list)-1],"",$path);
@@ -100,7 +103,7 @@ class file
         $fd = fopen($path,"w");
         $result = fwrite($fd,$data);
         fclose($fd);
-    }
+    }//写文件
     public function safy_read_file($path){
         if(!file_exists($path)){
             return false;

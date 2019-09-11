@@ -1,5 +1,5 @@
 <?php
-/*update_at 2019-06-27 20:05:30
+/*update_at 2019-07-13 22:37:42
 *create_by awesome-jj
 */
 namespace load;
@@ -36,6 +36,7 @@ class provider_register extends provider
     ];
     protected $dependencies=[
         "file"=>system\file::class,
+        "code"=>system\code::class,
         "cache_"=>system\cache\cache_::class,
         "cache"=>system\cache\cache::class,
         "queue"=>system\config\queue::class,
@@ -56,6 +57,7 @@ class provider_register extends provider
         "session"=>system\session::class,
         "upload_file"=>system\upload_file::class,
         "system_excu"=>system\system_excu::class,
+        "excel"=>system\excel::class,
         "Exception"=>system\Exception::class,
         "user_login_request"=>request\user\user_login_request::class,
         "user_register_request"=>request\user\user_register_request::class,
@@ -66,25 +68,16 @@ class provider_register extends provider
         "test1"=>extend\test\test1::class,
         "test2"=>extend\test\test2::class,
         "db"=>db\db::class,
-        "SerializableClosure"=>db\SuperClosure\src\SerializableClosure::class,
-        "Serializer"=>db\SuperClosure\src\Serializer::class,
-        "ClosureAnalysisException"=>db\SuperClosure\src\Exception\ClosureAnalysisException::class,
-        "ClosureSerializationException"=>db\SuperClosure\src\Exception\ClosureSerializationException::class,
-        "ClosureUnserializationException"=>db\SuperClosure\src\Exception\ClosureUnserializationException::class,
-        "SuperClosureException"=>db\SuperClosure\src\Exception\SuperClosureException::class,
-        "SerializerInterface"=>db\SuperClosure\src\SerializerInterface::class,
-        "ClosureAnalyzer"=>db\SuperClosure\src\Analyzer\ClosureAnalyzer::class,
-        "AstAnalyzer"=>db\SuperClosure\src\Analyzer\AstAnalyzer::class,
-        "TokenAnalyzer"=>db\SuperClosure\src\Analyzer\TokenAnalyzer::class,
-        "MagicConstantVisitor"=>db\SuperClosure\src\Analyzer\Visitor\MagicConstantVisitor::class,
-        "ClosureLocatorVisitor"=>db\SuperClosure\src\Analyzer\Visitor\ClosureLocatorVisitor::class,
-        "ThisDetectorVisitor"=>db\SuperClosure\src\Analyzer\Visitor\ThisDetectorVisitor::class,
-        "Token"=>db\SuperClosure\src\Analyzer\Token::class,
         "model"=>db\model\model::class,
         "model_auto"=>db\model\model_auto\model_auto::class,
+        "map"=>db\model\park\map::class,
+        "oder_park"=>db\model\park\oder_park::class,
         "user"=>db\model\user\user::class,
         "admin_user_new"=>db\model\admin_user_new\admin_user_new::class,
         "comment_list"=>db\model\comment_list\comment_list::class,
+        "news"=>db\factory\migration\migration_list\news::class,
+        "testdasda"=>db\model\test\testdasda::class,
+        "test"=>db\model\test\test::class,
         "soft_db"=>db\factory\soft_db::class,
         "migration"=>db\factory\migration\migration::class,
         "migration_user"=>db\factory\migration\migration_list\migration_user::class,

@@ -10,10 +10,16 @@ namespace db\model;
 
 
 use db\factory\soft_db;
+use db\model\model_auto\model_auto;
+use request\request;
+use SebastianBergmann\CodeCoverage\Report\PHP;
 use system\common;
 use system\Exception;
+use system\redis;
+
 abstract class model
 {
+    protected $total=null;
     protected $table_name=null;
     //定义对应的表
     protected $db=null;
@@ -129,7 +135,8 @@ abstract class model
         }
     }//获取当前模型对应属性的值，如果这是多个模型则返回数组集合
     public function get(){
-        $this->model_list=$this->db->all()->get();
+        $this->model_list = $this->db->all()->get();
+        $this->is_load_data=true;
         return $this;
     }//实例化模型返回数据集
     public function __set($name,$value)
@@ -222,7 +229,14 @@ abstract class model
     public function get_table_name(){
         return $this->table_name;
     }
+    protected function is_load_data(){
+        if($this->is_load_data==false){
+            $this->get();
+            $this->is_load_data=true;
+        }
+    }//数据是否加载
     protected function has($model_name,$this_model_key,$foreign_model_key,$set_table_name=false){
+        $this->is_load_data();
         if(!array_key_exists($model_name,$this->foreign_model_list)){
             $model_object=make($model_name);
             if($set_table_name!=false){
@@ -260,9 +274,9 @@ abstract class model
         return $this;
     }
     public function find($index){
-        return $this->limit($index,1)->get();
+        return $this->limit($index,1)->get()->all();
     }
-    public function all(array $filed=[]){
+    public function all(array $filed=[],$expect=false){
         if($this->is_load_data==false){
             $this->get();
             $this->is_load_data=true;
@@ -271,33 +285,33 @@ abstract class model
             return [];
         }
         if(empty($filed)) {
-            return $this->model_list;
-        }
-        else{
-            $filed_list=[];
-            foreach ($filed as $key){
-                if(!in_array($key,$this->table_column_list)){
-                    new Exception("400","this_key_not_exist");
-                }
-            }
             if(!$this->is_1_array($this->model_list)) {
-                foreach ($this->model_list as $model) {
-                    $data = [];
-                    foreach ($filed as $item) {
-                        $data[$item] = $model[$item];
-                    }
-                    $filed_list[] = $data;
-                }
+                return $this->model_list;
             }
             else{
+                return [$this->model_list];
+            }
+        }
+        if ($expect){
+            $filed=$expect=array_diff($this->table_column_list,$filed);
+        }
+        $filed_list=[];
+        if(!$this->is_1_array($this->model_list)) {
+            foreach ($this->model_list as $model) {
                 $data = [];
                 foreach ($filed as $item) {
-                    $data[$item] = $this->model_list[$item];
+                    if(!in_array($item,$this->table_column_list)){
+                        new Exception("400","this_key_not_exist");
+                    }
+                    $data[$item] = $model[$item];
                 }
                 $filed_list[] = $data;
             }
-            return $filed_list;
         }
+        else{
+            $filed_list[] = $filed;
+        }
+        return $filed_list;
     }
     //数据被删除之后对应的模型重置
     public function delete(){
@@ -326,11 +340,83 @@ abstract class model
         $this->db->where_like($column_value,"%$condition_value%");
         return $this;
     }
-    public function page($page,$limit){
+    public function page($page,$limit,$page_num=10,$filed=[],$expect=false){
         if(!is_numeric($page)||!is_numeric($limit)){
             new Exception(400,"page_required_params_is_number");
         }
+        $this->db->count('*');
+        $count=$this->db->get(false)['count'];
         $this->limit(($page-1)*$limit,$limit);
+        $data=[
+            'total'=>$count,
+            'current_page'=>$page,
+        ];
+        $data['page_total']=ceil($count/$limit);
+        if($page+1<=$data['page_total']){
+            $data['next_page']=$page+1;
+        }
+        if($page-1>0){
+            $data['pre_page']=$page-1;
+        }
+        $page_list=[];
+        $next_num=0;
+        $pre_num=0;
+        $request=make('request');
+        $params=$request->all();
+        for ($i=1;$i<=($page_num/2);$i++){
+            if(($page-$i)>0){
+                $pre_num++;
+                $page_list[]=$page-$i;
+            }
+            else{
+                break;
+            }
+        }
+        for ($i=1;$i<=$page_num/2;$i++){
+            if(($page+$i)<=$data['page_total']){
+                $next_num++;
+                $page_list[]=$page+$i;
+            }else{
+                break;
+            }
+        }
+        if(count($page_list)<$page_num&&count($page_list)>0){
+            $end=max($page_list);
+            for($i=1;$i<($page_num+2-count($page_list));$i++){
+                if(($end+$i)<$data['page_total']){
+                    $page_list[]=$end+$i;
+                }
+                else{
+                    break;
+                }
+            }
+        }
+        if(count($page_list)<$page_num&&count($page_list)>0){
+            $frist=min($page_list);
+            for($i=1;$i<($page_num+2-count($page_list));$i++){
+                if(($frist-$i)>0){
+                    $page_list[]=$frist-$i;
+                }
+                else{
+                    break;
+                }
+            }
+        }
+        $request=make('request');
+        if(count($page_list)>0) {
+            $page_list[] = $page;
+        }
+        //current_page
+        sort($page_list);
+        $data['page_list']=array_unique($page_list);
+        $data['data']=$this->get()->all($filed,$expect);
+        return $data;
+    }
+    public function pager($page,$limit){
+        $this->db->count('*');
+        $count=$this->db->get(false)['count'];
+        $this->limit(($page-1)*$limit,$limit);
+        $this->total=$count;
         return $this;
     }
     public function exist($is_refresh=false){
@@ -344,5 +430,18 @@ abstract class model
             $this->db->refresh();
         }
         return true;
+    }
+    public function __toString()
+    {
+        $this->is_load_data();
+        return json_encode($this->model_list);
+    }
+    public function __toArray(){
+        if($this->is_load_data=false){
+            return $this->get()->all();
+        }
+        else{
+            return $this->model_list;
+        }
     }
 }

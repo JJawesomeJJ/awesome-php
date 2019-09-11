@@ -57,7 +57,18 @@ abstract class migration
         return $return_value;
     }
     public function refresh(){
-        $this->db->delete();
+        $return_arr=[];
+        if(is_array($this->table_name)){
+            foreach ($this->table_name as $value){
+                $this->db=soft_db::table($value);
+                $return_arr[$value]=$this->db->delete();
+            }
+        }
+        else{
+            $this->db=soft_db::table($this->table_name);
+            $return_arr[$this->table_name]=$this->db->delete();
+        }
+        return $return_arr;
     }
     public function update(){
         $return_arr=[];

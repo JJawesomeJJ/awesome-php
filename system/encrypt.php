@@ -31,7 +31,7 @@ class encrypt
         $decrypted = openssl_decrypt(base64_decode($str), 'AES-128-ECB', config::encrypt()["aes_key"], OPENSSL_RAW_DATA);
         return $decrypted;
     }
-    static public function rsa_encrypt($str) {
+    public static function rsa_encrypt($str) {
         $encrypted = '';
         $pu_key = openssl_pkey_get_public(config::encrypt()["rsa_public"]);
         openssl_public_encrypt($str, $encrypted, $pu_key);//公钥加密

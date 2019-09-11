@@ -12,11 +12,14 @@ use db\factory\migration\migration_list\migration_comment_list;
 use db\factory\soft_db;
 use db\model\comment_list\comment_list;
 use db\model\model;
+use db\model\model_auto\model_auto;
 use db\model\park\map;
 use db\model\user\user;
+use load\auto_load;
 use load\provider;
 use load\provider_register;
 use request\request;
+use SebastianBergmann\CodeCoverage\Report\PHP;
 use function Sodium\crypto_pwhash_scryptsalsa208sha256;
 use SuperClosure\Serializer;
 use system\cache\cache;
@@ -27,18 +30,23 @@ use system\config\service_config;
 use system\config\timed_task_config;
 use system\cookie;
 use system\encrypt;
+use system\excel;
 use system\file;
 use system\http;
 use system\mail;
 use system\session;
 use system\system_excu;
+use system\upload_file;
+use task\job\asyn_queue;
 use task\queue\queue;
 use template\compile;
+use template\compile_parse;
 
 class index_controller extends controller
 {
-    public function index()
+    public function index(request $request)
     {
+//        return $this->get_user_ip();
 //        $db=new db();
 ////        return $db->show_columns("user");
 //          return soft_db::table("test11")
@@ -202,15 +210,50 @@ class index_controller extends controller
 ////            "email"=>"15255@qq.com"
 ////        ]);
 //        $user->update(["password"=>"c7643438e12c101c2b4bf7a638a333e84a7b0125ea9ce28cd87a1f2542760e7e"]);
-        $user=new user();
 //        $comment_list=$user->where("name","赵李杰")->get()->comment_list();
 //        $comment_list->where("comment_content","test")->get()->comment_content="tttttttttt";
 //        $comment_list->update();
-        print_r($user->all_with_foreign("comment_list"));
-
-    }
-    public function __destruct()
-    {
-//        echo "实发";
+//        $user=make(user::class);
+//        print_r($user->all_with_foreign("comment_list"));
+//        $user=(new user())->where("name","赵李杰");
+//        print_r($user->all_with_foreign("comment_list"));
+//        return $this->cache()->get_cache("sql");
+//        queue::asyn(function (){
+//            $mail=new mail();
+//            $mail->send_email("1293777844@qq.com","test",'tes');
+////            $excel=new excel();
+////            $cache=new cache();
+////            $cache->set_cache("excel",$excel->read_excel("/var/www/html/php/grade.xlsx"),'12400');
+//        });
+//        $cache=new cache();
+//        $cache->get_cache("excel");
+//        $excel=new excel();
+//        print_r($excel->read_excel("/var/www/html/php/grade.xlsx"));
+//        echo microtime(true)-$GLOBALS["time"];
+//        $cache=new cache();
+//        return $cache->get_non_exist_set("user_status","test",'3600');
+//        $redis=class_define::redis();
+//        queue::asyn(function (){
+//           $mail=new mail();
+//           $compile=new compile();
+//            $mail->send_email("1006954424@qq.com",$compile->view("tool/email",["code"=>code_controller::code(4),"title"=>"欢迎哥","content"=>'']),"测试");
+//        });
+//        class_define::redis();
+//        $this->ajaxFileUplodeAction();
+//        print_r($_SERVER);
+//        $news=model_auto::model('news');
+//        $news=$news->page($request->get('page'),$request->get('limit'),10,['content'],true);
+//        print_r($news);
+//        return view('news/news_list',['page'=>$news]);
+//          $http=new http();
+//        $response=$http->get('https://www.tmxiaoer.com/fd');
+//        if(strpos($response,'系统错误')!==false){
+//            $email=new \system\mail();
+//            $email->send_email('1293777844@qq.com',$response,'server_error');
+//        }
+          $brand=model_auto::model('brand_brand');
+          $data=$brand->where('getprice','<',100)->page($request->get('page',227),20);
+          $time=microtime(true);
+          return view('news/news_list',["page"=>$data]);
     }
 }

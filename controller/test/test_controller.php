@@ -22,7 +22,7 @@ class test_controller extends controller
             "limit"=>"requred|is_number"
         ];
         $request->verifacation($rules);
-        $notify_list=model_auto::model("notify_list")->page($request->get("page"),$request->get("limit"));
+        $notify_list=model_auto::model("notify_list")->pager($request->get("page"),$request->get("limit"));
         if($title=$request->try_get("title")){
             $notify_list->where_like("title",$request->get("title"));
         }

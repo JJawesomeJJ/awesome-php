@@ -31,30 +31,29 @@ routes::get("map/admin_login","auth_controller@admin_login");
 routes::get("map/user_get_park","map_controller@user_get_park");
 routes::get("map/instance","map_controller@get_instance");
 routes::get("code/email_code","code_controller@map_admin_email");
+routes::get('code/code',"code_controller@code_");
+routes::get('code/qrcode',"code_controller@qrcode");
 routes::post("system/notify_user","system_controller@notify_user_all");
 routes::get("post/comment","post_controller@comment");
 routes::post("post/reply","post_controller@reply");
 routes::get("post/get_comment","post_controller@get_comment");
-routes::get("index","index_controller@index");
+routes::get("xiaoer","index_controller@index");
 routes::get("post/news","post_controller@get_news_content");
-routes::post("user/reset","auth_controller@reset_password",[["limit_flow_middleware","ip_limit","50"]]);
+routes::post("user/reset","auth_controller@reset_password")->middleware('limit_flow_middleware','ip_limit',50);
 routes::put("user/reset","auth_controller@update_password");
 routes::get("user/reset","auth_controller@reset_password_page");
 routes::get("user/forget",function (){
-    $complie=new compile();
-    return $complie->view("user/forget");
+    return view("user/forget");
 });
 routes::get("user/bitch",function (){
-    $complie=new compile();
-    return $complie->view("vivo/main");
+    return view("vivo/main");
 });
 routes::get("user/bitch/buy",function (){
-    $complie=new compile();
-    return $complie->view("vivo/buy");
+    return view("vivo/buy");
 });
 routes::post("admin_user/register","admin_user_controller@register");
 routes::post("admin_user/login","admin_user_controller@login");
-routes::post("admin_user/login/email","admin_user_controller@email_code_login");
+routes::any("admin_user/login/email","admin_user_controller@email_code_login");
 routes::get("vertify","code_controller@img_cut_square",[["limit_flow_middleware","ip_limit","50"]]);
 routes::get("vertify/slide","code_controller@slide_code");
 routes::post("vertify/silde/x","code_controller@vertify_slide");

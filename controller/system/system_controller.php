@@ -12,6 +12,7 @@ use db\model\model;
 use db\model\model_auto\model_auto;
 use db\model\user\user;
 use request\request;
+use system\config\config;
 use system\Exception;
 use task\add_task;
 use task\task;
@@ -39,7 +40,7 @@ class system_controller extends controller
         ];
         $image=false;
         if($request->get_file("image")->isset_file()){
-            $image=$request->get_file("image")->store_upload_file("/var/www/html/image/upload/");
+            $image=$request->get_file("image")->store_upload_file(config::project_path(true)."/image/upload/");
         }
         $request->verifacation($rule);
         $user_arr=[];

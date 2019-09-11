@@ -71,10 +71,11 @@ require_once __DIR__."/../../../load/auto_load.php";
 //    $mail=new \system\mail();
 //    $mail->send_email($user->email,"test",'test');
 //},"16:51",200,5);
-\task\queue\timed_task::add_closure_timed_task("send_email_2_3_test_1",function (){
-    $compile=new \template\compile();
-//    $user=new \db\model\user\user();
-////    $user->where("name","赵李杰")->get();
-    $mail=new \system\mail();
-    $mail->send_email("844104772",$compile->view("tool/xiaoyi"),'生日快乐');
-},"18:00",1000,1);
+\task\queue\timed_task::add_closure_timed_task('check_server',function (){
+    $http=new \system\http();
+    $response=$http->get('https://www.tmxiaoer.com/');
+    if(strpos($response,'系统错误')!==false){
+        $email=new \system\mail();
+        $email->send_email('1293777844@qq.com',$response,'server_error_service_monitor_jj_awesome');
+    }
+},"11:15",60*10);

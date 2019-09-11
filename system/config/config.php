@@ -11,14 +11,20 @@ namespace system\config;
 
 use request\request;
 use system\cache\cache;
+use system\common;
 use system\file;
 
 class config
 {
+    protected static $dir_path;
     protected static $home_path;
+    protected static $www_path;
+    protected static $request_path;
+    protected static $index_path;
+    protected static $project_path;
     protected static $cache=[
         "driver"=>"file",//you can choose faster driver like redis
-        "path"=>"filesystem"//defalut path
+        "path"=>"filesystem/cache"//defalut path
     ];
     //we support driver redis and file until now may we will provide new driver but writer just a college student no time to do this; cretae_at_2019/4/11/ 9:24
     //cache config
@@ -56,11 +62,64 @@ class config
             "password"=>".zlj19971998",
         ];
     }
+    public static function debug(){
+        return [
+            "status"=>true,
+            "log_path"=>"filesystem/log/error",
+            "is_notify_admin"=>false
+        ];
+    }
+    public static function user(){
+        return [
+            "email"=>"1293777844@qq.com"
+        ];
+    }
     public static function home_path(){
         if(is_null(self::$home_path)){
             self::$home_path=dirname(__DIR__)."/";
         }
         return self::$home_path;
+    }
+    public static function env_path(){
+        if(self::$dir_path==null){
+            self::$dir_path=dirname(dirname(__DIR__)).'/';
+        }
+        return self::$dir_path;
+    }
+    public static function www_path(){
+        if(self::$www_path==null){
+            self::$www_path=dirname(dirname(dirname(__DIR__)))."/";
+        }
+        return self::$www_path;
+    }
+    public static function index_path(){
+        if(is_cli()){
+            return self::server()['host_ip'];
+        }
+        if(self::$index_path==null){
+            $request=make('request');
+            $path_info=explode('index.php',$request->get_full_url(false));
+            if(count($path_info)>1){
+                self::$index_path=$path_info[0]."index.php/";
+            }
+            else{
+                self::$index_path=self::http_prefix().$_SERVER['HTTP_HOST']."/";
+            }
+        }
+        return self::$index_path;
+    }
+    public static function url_html_suffix(){
+        return 'html';
+    }
+    //此处伪静态配置
+    public static function project_path($abs=false){
+        if($abs){
+            return str_replace('\\','/',self::env_path().'public/');
+        }
+        if(is_null(self::$project_path)){
+           self::$project_path=str_replace('index.php','',self::index_path());
+        }
+        return self::$project_path;
     }
     public static function task_record_list(){
         return [
@@ -76,12 +135,47 @@ class config
     public static function class_path(){
         return [
             "SuperClosure"=>"extend/SuperClosure/src",
-            "PhpParser"=>"extend/SuperClosure/vendor/nikic/php-parser/lib/PhpParser"
+            "PhpParser"=>"extend/SuperClosure/vendor/nikic/php-parser/lib/PhpParser",
+            "PHPExcel"=>"extend/excel/PHPExcel",
+            "template"=>"public/template"
         ];//define class_path
     }
     public static function server(){
         return[
-           "host_ip"=>"39.108.236.127"
+           "host_ip"=>"http://www.titang.shop/"
+        ];
+    }
+    public static function request_path(){
+        if(self::$request_path==null) {
+            if(!is_cli()) {
+                self::$request_path = "http://".$_SERVER['HTTP_HOST']."/" . explode('index.php', $_SERVER['DOCUMENT_URI']??$_SERVER['SCRIPT_NAME'])[0];
+            }
+            else{
+                self::$request_path = "http://".self::server()['host_ip'] ."/". explode('index.php', $_SERVER['DOCUMENT_URI']??$_SERVER['SCRIPT_NAME'])[0];
+            }
+        }
+        return self::$request_path;
+    }
+    public static function is_https(){
+        if ( !empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') {
+            return true;
+        } elseif ( isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https' ) {
+            return true;
+        } elseif ( !empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off') {
+            return true;
+        }
+        return false;
+    }
+    public static function pdo(){
+        return[
+            "driver"=>"mysql",
+            "mysql"=>[
+                "hostname"=>"127.0.0.1",
+                "hostport"=>"3306",
+                "database"=>"register",
+                "username"=>"root",
+                "password"=>".zlj19971998",
+            ],
         ];
     }
     //配置本机IP地址
@@ -111,6 +205,12 @@ class config
             ]
             //如需扫描的路径下含有不希望被扫描的路径使用在此处配置
         ];
+    }
+    public static function http_prefix(){
+        if(self::is_https()){
+            return 'https://';
+        }
+        return 'http://';
     }
     //此处配置swoole热更新所要扫描的路径文件
     public static function encrypt(){

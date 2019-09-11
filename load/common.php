@@ -28,10 +28,10 @@ function app(){
     }
 }
 function view($path,$data=[]){
-    if(!isset($GLOBALS["compile"])){
-        $GLOBALS["compile"]=new \template\compile();
-    }
-    return $GLOBALS["compile"]->view($path,$data);
+//    if(!isset($GLOBALS["compile"])){
+//        $GLOBALS["compile"]=new \template\compile();
+//    }
+    return \template\compile_parse::compile($path,$data);
 }
 function redirect($path){
     header("Location: $path");
@@ -42,7 +42,16 @@ function make_method($method,$class_name=false){
     }
     return $GLOBALS["provider"]->make_method($method,$class_name);
 }
+function make_method_static($class_name,$method,$params=[]){
+    if(!isset($GLOBALS["provider"])){
+        $GLOBALS["provider"]=new \load\provider_register();
+    }
+    return $GLOBALS["provider"]->make_mothod_static($class_name,$method,$params);
+}
 function is_cli()
 {
     return preg_match("/cli/i", php_sapi_name()) ? true : false;
+}
+function index_path(){
+    return \system\config\config::index_path();
 }

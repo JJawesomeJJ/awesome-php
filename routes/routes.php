@@ -11,6 +11,7 @@ use controller\controller;
 use http\middleware\middleware;
 use load\provider_register;
 use request\request;
+use SebastianBergmann\CodeCoverage\Report\PHP;
 use system;
 
 class routes
@@ -109,7 +110,7 @@ class routes
                 }
             }
             else{
-                if($route["url"]==$this->request->get_url()){
+                if('/'.$route["url"]==$this->request->get_url()){
                     $this->value=$route;
                     return true;
                 }
@@ -118,7 +119,7 @@ class routes
         return false;
     }
     protected function vertify_pathinfo($route){
-        $route_rule_list = explode('/', $route["url"]);
+        $route_rule_list = explode('/', '/'.$route["url"]);
         $route_params = [];
         $now_request_url = $this->get_now_request_url();
         if(count($now_request_url)!=count($route_rule_list))

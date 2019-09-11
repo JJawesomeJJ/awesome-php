@@ -7,6 +7,7 @@
  */
 namespace request;
 use db\db;
+use system\config\config;
 use system\Exception;
 use system\upload_file;
 use task\job\email_queue;
@@ -15,6 +16,10 @@ class request
 {
     public $user_input;
     protected $server;
+    protected static $current_url;
+    protected static $request_url;
+    protected static $current_url_no_params;
+    protected static $current_url_params;
     public function __construct()
     {
         $this->user_input=$this->all();
@@ -73,9 +78,13 @@ class request
     }
     //use rules_array to to vertify_user_input
     //bug log when input rules_var include char like '\',':' some trouble may happen
-    public function get($key){
+    //default params
+    public function get($key,$default=false){
         if(isset($this->user_input[$key])){
             return $this->user_input[$key];
+        }
+        if($default!=false){
+            return $default;
         }
         else{
            new Exception("400","request_key_not_exist_expect_$key");
@@ -172,7 +181,7 @@ class request
         }
         else{
             $message=json_encode($arr);
-           new Exception("400","variable_accept_$message");
+            new Exception("400","variable_accept_$message");
         }
     }//user input must be in we set
     public function email($str){
@@ -217,15 +226,16 @@ class request
         }
         if(isset($_SERVER["CONTENT_TYPE"])) {
             if ($_SERVER["CONTENT_TYPE"] == "application/json;charset=UTF-8") {
-                return json_decode(file_get_contents('php://input'), true);
+                $this->user_input=json_decode(file_get_contents('php://input'), true);
             }
         }
         if($_SERVER['REQUEST_METHOD']=="GET"){
-            return $_GET;
+            $this->user_input=array_filter($_GET);
         }
         if($_SERVER['REQUEST_METHOD']=="POST"){
-            return $_POST;
+            $this->user_input=$_POST;
         }
+        return $this->user_input;
     }
     public function get_file($name){
         return upload_file::upload_file($name);
@@ -240,17 +250,24 @@ class request
         return $_SERVER["HTTP_REFERER"];
     }//get_request_referer_url;
     public function get_url(){
-        $url=explode('.php/',$_SERVER['PHP_SELF']);
-        if(count($url)=='1') {
-            return substr($_SERVER["PHP_SELF"],1,strlen($_SERVER["PHP_SELF"]));
+        if(!is_null(self::$request_url)){
+            return self::$request_url;
         }
-        else{
-            return $url[1];
+        if(isset($_SERVER['PATH_INFO'])&&!empty($_SERVER['PATH_INFO'])){
+            self::$request_url=str_replace('//','/',$_SERVER['PATH_INFO']);
         }
+        $url=explode('index.php',$_SERVER['REQUEST_URI']);
+        if(isset($url[1])){
+            self::$request_url=str_replace('//','/',explode('?',$url[1])[0]);
+        }
+        else {
+            self::$request_url = str_replace('//', '/', explode('?', $url[0])[0]);
+        }
+        if(config::url_html_suffix()!=''){
+            self::$request_url=str_replace('.'.config::url_html_suffix(),'',self::$request_url);
+        }
+        return self::$request_url;
         //get_current_page_url if in index.php return false;
-    }
-    public function add_callback($object,$method){
-        $this->call_back[]=["object"=>$object,"method"=>$method];
     }
     public function only(array $params){
         $arr=[];
@@ -267,5 +284,26 @@ class request
             return null;
         }
         return $_COOKIE;
+    }
+    public function get_full_url($with_params=true){
+        if($with_params) {
+            if(self::$current_url_params==null) {
+                self::$current_url_params=config::http_prefix() . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+                if(config::url_html_suffix()){
+                    self::$current_url_params=str_replace('.'.config::url_html_suffix(),'',self::$current_url_params);
+                }
+            }
+            return self::$current_url_params;
+        }
+        if(self::$current_url_no_params==null) {
+            self::$current_url_no_params=config::http_prefix(). $_SERVER['HTTP_HOST'] . explode('?', $_SERVER['REQUEST_URI'])[0];
+            if(config::url_html_suffix()){
+                self::$current_url_no_params=str_replace('.'.config::url_html_suffix(),'',self::$current_url_no_params);
+            }
+        }
+        return self::$current_url_no_params;
+    }
+    public function get_http_host(){
+        return 'http://'.$_SERVER['HTTP_HOST'];
     }
 }

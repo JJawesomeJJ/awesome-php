@@ -147,5 +147,17 @@ class provider
         }
         return $params_list;
     }
+    public function make_mothod_static($class_name,$method,$params){
+        if(!class_exists($class_name)){
+            if(array_key_exists($class_name,$this->dependencies)){
+                $class_name=$this->dependencies[$class_name];
+            }
+            else{
+                new Exception('404',"class $class_name not find");
+            }
+        }
+        $params=[$params];
+        return call_user_func_array([$class_name,$method],$params);
+    }
     //debug when some class not define namespace php will throw a error try catch it!;
 }

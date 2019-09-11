@@ -1,0 +1,10 @@
+.pager{
+    justify-content:center;
+    align-items:center;
+    display:-webkit-flex;
+}
+.pager-go{
+    margin-top: -5px;
+    width: 20px;
+    height: 15px;
+}

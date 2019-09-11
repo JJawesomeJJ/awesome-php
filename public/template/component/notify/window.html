@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://39.108.236.127/static/layer-v3.1.1/layer/layer.js"></script>
+</head>
+<body>
+<div class="content" style="width: 300px;background-color: #fafad2;border-radius: 5%;overflow: hidden">
+    @if(isset($img))
+    <img src="{{$img}}" style="width: 100%" alt="">
+    @endif
+    <div class="content">
+        <p>
+            {{$content}}
+        </p>
+    </div>
+    @if($link!=false)
+    <div class="go" style="display: flex;width: 90%;margin: 0 auto;">
+        <div class="link_user" style="width: 45%;height: 30px;background-color: #0cca62;border-radius: 5px;">
+            <a href="" style="display: block;text-decoration:none;text-align: center;color: white;font-size: 15px;line-height: 30px;">前往围观</a>
+        </div>
+        <div class="cancel" style="text-align:center;width: 45%;margin-left: 5%;height: 30px;background-color: lightgray;border-radius: 5px;font-size: 15px;line-height: 30px;">
+            残忍拒绝
+        </div>
+    </div>
+    @endif
+</div>
+</body>
+</html>

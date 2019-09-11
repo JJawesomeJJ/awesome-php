@@ -7,9 +7,6 @@
  */
 
 namespace system;
-
-
-use controller\code\code_controller;
 use system\config\config;
 
 class upload_file
@@ -67,7 +64,7 @@ class upload_file
     }
     public function store_upload_file($path,$rename=false,$auto_rename=true){
         if(!is_dir($path)){
-            new Exception("500","store_upload_file_rquired_path");
+            mkdir($path);
         }
         $file_name=$this->get_file_name();
         if($rename!=false){
@@ -78,14 +75,26 @@ class upload_file
         }
         $file_name=md5_file($_FILES[self::$file_name]['tmp_name']).".".$this->get_file_extension();
         if(file_exists($path.$file_name)){
-            return str_replace("/var/www/html","http://".$_SERVER["HTTP_HOST"],$path . $file_name);
+            return str_replace(config::project_path(true),config::project_path(),$path."$file_name");
         }
         move_uploaded_file($this->get_tmp_name(), $path . $file_name);
         if(is_cli()) {
-            return str_replace("/var/www/html","http://".config::server()["host_ip"],$path . $file_name);
+            return str_replace(config::project_path(true),"http://".config::server()["host_ip"],$path . $file_name);
         }
         else{
-            return str_replace("/var/www/html","http://".$_SERVER["HTTP_HOST"],$path . $file_name);
+            return str_replace(config::project_path(true),config::project_path(),$path."$file_name");
         }
     }//相同文件只返回路径
+    public function accept(array $file_extension){
+        if(!in_array($this->get_file_extension(),$file_extension)){
+           new Exception('403','file_type_error');
+        }
+        return $this;
+    }
+    public function max_size($max){
+        if($this->get_file_size()>$max){
+            new Exception('403','file_more_than_max_input');
+        }
+        return $this;
+    }
 }

@@ -21,7 +21,7 @@ class server
         $this->lock = new \swoole_lock(SWOOLE_MUTEX);
         $this->server = new \swoole_websocket_server($this->addr, $this->port);
         $this->server->set(array(
-            'daemonize' => 1,
+            'daemonize' => 0,
             'worker_num' => 4,
             'task_worker_num' => 10,
             'max_request' => 1000,
@@ -164,6 +164,7 @@ class server
             return false;
         }
         $user_data = json_decode($this->redis->hGet("users", $data->username), true);
+        print_r($user_data);
         if ($user_data["token_value"] != $data->token_value) {
             $server->push($frame->fd,json_encode(["type"=>"close","message"=>"登录失效"]));
             $server->close($frame->fd);
@@ -180,9 +181,9 @@ class server
             try {
                 $server->close($this->redis->hGet("user_list", $user_name));
             }
-            catch (Exception $exception)
+            catch (Throwable $exception)
             {
-                $this->write_error($exception);
+                $this->write_error($exception->getMessage());
             }
             echo $user_name . "异地登录" . PHP_EOL;
         }//判断有没有相同用户名的用户登录，如果有即判断为异地登录
