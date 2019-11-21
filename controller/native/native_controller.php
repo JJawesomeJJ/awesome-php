@@ -83,7 +83,7 @@ class native_controller extends controller
         $domain="63817.livepush.myqcloud.com";
         $play_domain="play.titang.shop";
         $streamName=md5(common::rand(8).microtime(true));
-        $key="85283ce7151b0da9c07ed020996565cc";
+        $key="secret";
         $time=date('Y-m-d H:i:s',strtotime("+1 day"));
         if($key && $time){
             $txTime = strtoupper(base_convert(strtotime($time),10,16));
