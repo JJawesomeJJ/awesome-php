@@ -9,6 +9,8 @@
 namespace system;
 
 
+use Grafika\Gd\Editor;
+
 class file
 {
     private $arr=array();
@@ -32,17 +34,20 @@ class file
                         $files[] =$this->get_file_list($dir."/".$file,$except);
                     } else {
                         $files[] = $file;
-                        $this->arr[]=str_replace("//","/",$dir."/".$file);
+                        $this->arr[]=str_replace("//","/",$dir."/".iconv('GB2312', 'UTF-8',$file));
                     }
                 }
             }
             closedir($handle);
-            $file_list=json_decode(json_encode($this->arr),true);
+            $file_list=$this->arr;
             return $file_list;
         }
     }//please don't direct call method,use file_walk!
     //when file too many may cause out of memory!!
     public function file_walk($path,$except=[]){
+        if(!is_dir($path)){
+            new Exception(404,$path." not find");
+        }
         $file_list=call_user_func_array([$this,"get_file_list"],[$path,$except]);
         $this->arr=[];
         return $file_list;
@@ -71,6 +76,7 @@ class file
     }
     //base64 to img file
     public function read_file($path){
+        $path=iconv('utf-8', 'gbk', $path);
         if(!file_exists($path)){
             return false;
         }
@@ -104,6 +110,18 @@ class file
         $result = fwrite($fd,$data);
         fclose($fd);
     }//写文件
+    public function get_file_name($path,$extension=false){
+        $path=iconv('utf-8', 'gbk', $path);
+        if(!is_file($path)){
+            new Exception(404,$path." not find");
+        }
+        if($extension){
+            return iconv('GB2312', 'UTF-8',basename($path));
+        }
+        else{
+            return iconv('GB2312', 'UTF-8',explode('.',basename($path))[0]);
+        }
+    }
     public function safy_read_file($path){
         if(!file_exists($path)){
             return false;
@@ -148,6 +166,7 @@ class file
         fclose($fd);
     }
     public function delete_file($path){
+        $path=iconv('utf-8', 'gbk', $path);
         if(file_exists($path))
         {
             unlink($path);

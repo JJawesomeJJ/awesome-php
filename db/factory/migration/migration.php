@@ -21,7 +21,7 @@ abstract class migration
     {
         if(is_null($this->table_name))
         {
-            new Exception("400",$this->table_name);
+            new Exception("400","table_name_undefined");
         }
         if(!is_array($this->table_name)){
             $this->db=soft_db::table($this->table_name);

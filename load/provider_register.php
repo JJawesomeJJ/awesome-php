@@ -1,18 +1,28 @@
 <?php
-/*update_at 2019-07-13 22:37:42
+/*update_at 2019-10-17 09:10:15
 *create_by awesome-jj
 */
 namespace load;
 use http;
 use controller;
-
+require_once __DIR__."/"."provider.php";
 use system;
 use request;
-use extend\test;
 use db;
 class provider_register extends provider
 {
-    protected $middleware=[
+    protected static $object;
+    protected function __construct()
+    {
+
+    }
+    public static function provider(){
+        if(is_null(self::$object)){
+            self::$object=new self();
+        }
+        return self::$object;
+    }
+    protected  $middleware=[
         "sql_middleware"=>http\middleware\sql_middleware\sql_middleware::class,
         "user_token_middleware"=>http\middleware\user\user_token_middleware::class,
         "basic_middleware"=>http\middleware\basic_middleware::class,
@@ -20,11 +30,16 @@ class provider_register extends provider
         "csrf_middleware"=>http\middleware\csrf\csrf_middleware::class,
 
     ];
-    protected $controller=[
+    protected  $controller=[
         "post_controller"=>controller\post\post_controller::class,
         "park_controller"=>controller\park\park_controller::class,
         "admin_user_controller"=>controller\admin_user\admin_user_controller::class,
         "wechat_controller"=>controller\wechat\wechat_controller::class,
+        "native_controller"=>controller\native\native_controller::class,
+        "pay_controller"=>controller\pay\pay_controller::class,
+        "categories_controller"=>controller\shop\categories_controller::class,
+        "shop_controller"=>controller\shop\shop_controller::class,
+        "goods_controller"=>controller\shop\goods_controller::class,
         "map_controller"=>controller\map\map_controller::class,
         "survey_controller"=>controller\survey\survey_controller::class,
         "code_controller"=>controller\code\code_controller::class,
@@ -44,12 +59,16 @@ class provider_register extends provider
         "common"=>system\common::class,
         "encrypt"=>system\encrypt::class,
         "awesome"=>system\awesome::class,
+        "alipay"=>system\pay\alipay::class,
         "mail"=>system\mail::class,
+        "log"=>system\log::class,
         "service"=>system\config\service::class,
+        "pay"=>system\config\pay::class,
         "service_config"=>system\config\service_config::class,
         "timed_task_config"=>system\config\timed_task_config::class,
         "config"=>system\config\config::class,
         "cookie"=>system\cookie::class,
+        "redis"=>system\driver\cache\redis::class,
         "template"=>system\template::class,
         "class_define"=>system\class_define::class,
         "token"=>system\token::class,
@@ -63,10 +82,6 @@ class provider_register extends provider
         "user_register_request"=>request\user\user_register_request::class,
         "vode_survey_request"=>request\survey\vode_survey_request::class,
         "request"=>request\request::class,
-        "test4"=>extend\test\test4::class,
-        "test3"=>extend\test\test3::class,
-        "test1"=>extend\test\test1::class,
-        "test2"=>extend\test\test2::class,
         "db"=>db\db::class,
         "model"=>db\model\model::class,
         "model_auto"=>db\model\model_auto\model_auto::class,
@@ -74,20 +89,27 @@ class provider_register extends provider
         "oder_park"=>db\model\park\oder_park::class,
         "user"=>db\model\user\user::class,
         "admin_user_new"=>db\model\admin_user_new\admin_user_new::class,
+        "goods"=>db\model\shop\goods::class,
+        "categories"=>db\model\shop\categories::class,
         "comment_list"=>db\model\comment_list\comment_list::class,
         "news"=>db\factory\migration\migration_list\news::class,
         "testdasda"=>db\model\test\testdasda::class,
         "test"=>db\model\test\test::class,
         "soft_db"=>db\factory\soft_db::class,
         "migration"=>db\factory\migration\migration::class,
+        "migration_comment_likes"=>db\factory\migration\migration_list\migration_comment_likes::class,
         "migration_user"=>db\factory\migration\migration_list\migration_user::class,
         "migration_park_comment"=>db\factory\migration\migration_list\migration_park_comment::class,
         "migration_notify_list"=>db\factory\migration\migration_list\migration_notify_list::class,
         "migration_comment_list"=>db\factory\migration\migration_list\migration_comment_list::class,
         "migration_titang_theme"=>db\factory\migration\migration_list\migration_titang_theme::class,
         "migration_survey"=>db\factory\migration\migration_list\migration_survey::class,
+        "migrate_goods"=>db\factory\migration\migration_list\migrate_goods::class,
         "migration_admin_user"=>db\factory\migration\migration_list\migration_admin_user::class,
         "migration_order_park"=>db\factory\migration\migration_list\migration_order_park::class,
         "migration_park_list"=>db\factory\migration\migration_list\migration_park_list::class,
+        "migration_goods"=>db\factory\migration\migration_list\migration_goods::class,
+        "migration_request_user"=>db\factory\migration\migration_list\migration_request_user::class,
+        "migration_categories"=>db\factory\migration\migration_list\migration_categories::class,
 ];
 }

@@ -1,1 +1,0 @@
-{"value":{"E:\\PhpStorm 2018.1.3\\php\/\/public\/template\/news\/news_list.html":"2bbfef06dccafd48917870506a9d00c2","E:\\PhpStorm 2018.1.3\\php\/\/public\/template\/component\/page\/page.html":"14b7a616849092e831e73ca1407b34fc"},"expire":"forever","key":"news\/news_list"}

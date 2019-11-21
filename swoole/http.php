@@ -19,12 +19,11 @@ class http
     protected $local_ip_address;
     public function __construct()
     {
-
-        $this->local_ip_address=config::server()["host_ip"];
-        $this->http = new \swoole_http_server('0.0.0.0', 9555);
+        $this->local_ip_address="39.108.236.127";
+        $this->http = new \swoole_http_server('0.0.0.0', 8888);
         $this->http->set(['worker_num' => 8,
             'max_request' => 5000,
-//            'daemonize' => 1,
+            'daemonize' => 0,
 //    'document_root' => '/Users/apple/Code/Teacher_Project/swoole_live/resources/live/',
 //    'enable_static_handler' => true,
         ]);
@@ -53,7 +52,7 @@ class http
             //输出缓存区域的内容
             $response->header("Content-type"," text/html; charset=utf-8");
             $response->end($res);
-//            $this->http->reload();
+            $this->http->reload();
         });
     }
     protected function init_request($request){
@@ -98,8 +97,7 @@ class http
         $this->http->start();
     }
     protected function check_is_dev($request){
-        if($request->server['remote_addr']==$this->local_ip_address){
-            echo "dev";
+        if($request->header['x-real-ip']==$this->local_ip_address){
             if($request->post["password"]=="19971998"){
                 $this->http->reload();
                 return true;

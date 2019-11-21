@@ -21,7 +21,7 @@ class native_view{
         $this->lock=new \swoole_lock(SWOOLE_MUTEX);
         $this->server=new \swoole_websocket_server($this->addr,$this->port);
         $this->server->set(array(
-            'daemonize' => 0,
+            'daemonize' => 1,
             'worker_num' => 4,
             'task_worker_num' => 10,
             'max_request' => 1000,

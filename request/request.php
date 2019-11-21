@@ -10,11 +10,10 @@ use db\db;
 use system\config\config;
 use system\Exception;
 use system\upload_file;
-use task\job\email_queue;
 
 class request
 {
-    public $user_input;
+    public $user_input='*';
     protected $server;
     protected static $current_url;
     protected static $request_url;
@@ -23,6 +22,8 @@ class request
     public function __construct()
     {
         $this->user_input=$this->all();
+        unset($this->user_input['s']);
+        $this->filter();
         $this->server=$_SERVER;
     }
     public function verifacation(array $rules){
@@ -221,12 +222,13 @@ class request
 
     }
     public function all(){
-        if($this->user_input!=null){
+        if($this->user_input!='*'){
             return $this->user_input;
         }
         if(isset($_SERVER["CONTENT_TYPE"])) {
             if ($_SERVER["CONTENT_TYPE"] == "application/json;charset=UTF-8") {
                 $this->user_input=json_decode(file_get_contents('php://input'), true);
+                return $this->user_input;
             }
         }
         if($_SERVER['REQUEST_METHOD']=="GET"){
@@ -302,6 +304,20 @@ class request
             }
         }
         return self::$current_url_no_params;
+    }
+    protected function filter()
+    {
+        $black_list=[">","<","<SCRIPT>", "\\", "</SCRIPT>", "<script>",'script', "</script>", "select", "select", "join", "join", "union", "union", "where", "where", "insert", "insert", "delete", "delete", "update", "update", "like", "like", "drop", "drop", "create", "create", "modify", "modify", "rename", "rename", "alter", "alter", "cas", "cast", "&", "&", ">", ">", "<", "<", " ", " ", "    ", "&", "'", "<br />", "''", "'", "css", "'", "CSS", "'"];
+        foreach ($this->user_input as $input_value)
+        {
+            foreach($black_list as $black_list_value)
+            {
+                if(strpos(urldecode($input_value),$black_list_value)!==false)
+                {
+                    new Exception("403","danger_input_".$input_value.'_'.$black_list_value);
+                }
+            }
+        }
     }
     public function get_http_host(){
         return 'http://'.$_SERVER['HTTP_HOST'];

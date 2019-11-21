@@ -14,6 +14,9 @@
     <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
 </head>
 <style>
+    body{
+        display: none;
+    }
     .get_email_code{
         position: relative;
         right: 0px;
@@ -82,13 +85,14 @@
             code:null,
         },
         created(){
+            $("body").css("display","block");
         },
         methods:{
             slide_vertify(){
                 var self=this;
                 if(self.verify==null) {
                     self.verify= new Slidevertify(function () {
-                        axios.post('{{index_path()}}/admin_user/login/email', {
+                        axios.post('/admin_user/login/email', {
                             name:self.name,
                         }).then(function (response) {
                             console.log(response);
@@ -124,7 +128,7 @@
                     self.error="管理员邮箱验证码不可为空";
                     return;
                 }
-                axios.post('{{index_path()}}/admin_user/login', {
+                axios.post('/admin_user/login', {
                     name: self.name,
                     password:sha256(self.password),
                     code:self.code
@@ -132,7 +136,7 @@
                     if (response["data"]["code"] == 200) {
                         self.error='success';
                         localStorage.setItem("admin_user_data",JSON.stringify(response["data"]));
-                        window.location.href="{{index_path()}}/admin/control/websocket";
+                        window.location.href="/admin/control/websocket";
                     }
                     else {
                         self.error=response["data"]["message"];

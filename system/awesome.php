@@ -104,13 +104,24 @@ class awesome
 namespace load;
 use http;
 use controller;
-
+require_once __DIR__.\"/\".\"provider.php\";
 class provider_register extends provider
 {
-    protected \$middleware=[
+    protected static \$object;
+    protected function __construct()
+    {
+
+    }
+    public static function provider(){
+        if(is_null(self::\$object)){
+            self::\$object=new self();
+        }
+        return self::\$object;
+    }
+    protected  \$middleware=[
 {{middleware}}
     ];
-    protected \$controller=[
+    protected  \$controller=[
 {{controller}}
     ];
     protected \$dependencies=[];
@@ -313,38 +324,38 @@ class $middleware_name extends middleware
             $this->update_cache_config();
         }
     }
-    public function update_cache_config()
-    {
-        $data = config::cache();
-        $cache = new cache();
-        if ($cache->get_cache("cache_config") == null || $cache->get_cache("cache_config") != $data) {
-            $time = date("Y-m-d H:i:s");
-            $cache_template = "<?php
-/**
- * Created by aweomse
- * Date: $time
- */
-
-namespace system\cache;
-
-
-use system\\file;
-use system\config\config;
-
-class cache extends cache
-{
-    protected \$diver={{driver}};
-    protected \$path={{path}};
-    //delete all cache
-}";
-            $cache_template = $this->replace(["driver" => $data["driver"], "path" => $data["path"]], $cache_template);
-            $file = new file();
-            $file->write_file($this->home_path . "system/cache/cache.php", $cache_template);
-            //cache_config_has_been_change_so_update_it!
-            $cache->set_cache("cache_config",$data,"2073600");
-            $this->cli_echo_color_green("cache_config_has_been_updated");
-        }
-    }
+//    public function update_cache_config()
+//    {
+//        $data = config::cache();
+//        $cache = new cache();
+//        if ($cache->get_cache("cache_config") == null || $cache->get_cache("cache_config") != $data) {
+//            $time = date("Y-m-d H:i:s");
+//            $cache_template = "<?php
+///**
+// * Created by aweomse
+// * Date: $time
+// */
+//
+//namespace system\cache;
+//
+//
+//use system\\file;
+//use system\config\config;
+//
+//class cache extends cache
+//{
+//    protected \$diver={{driver}};
+//    protected \$path={{path}};
+//    //delete all cache
+//}";
+//            $cache_template = $this->replace(["driver" => $data["driver"], "path" => $data["path"]], $cache_template);
+//            $file = new file();
+//            $file->write_file($this->home_path . "system/cache/cache.php", $cache_template);
+//            //cache_config_has_been_change_so_update_it!
+//            $cache->set_cache("cache_config",$data,"2073600");
+//            $this->cli_echo_color_green("cache_config_has_been_updated");
+//        }
+//    }
     public function load(){
         $file=new file();
         $dependencies_string=$this->load_dependencies(config::depenendcies());
@@ -353,7 +364,7 @@ class cache extends cache
         preg_match_all("/namespace load([\s\S]*?)class/",$dependencies_string, $matchs, PREG_SET_ORDER);
         $name_space_=substr($matchs[0][0],0,strlen($matchs[0][0])-5);
         $name_space=$name_space_;
-        foreach (config::depenendcies() as $value){
+        foreach (config::depenendcies()['must'] as $value){
             if(strpos($name_space,$value)==false){
                 $value=str_replace("/","\\",$value);
                 if($value[strlen($value)-1]=="\\"){
@@ -369,7 +380,7 @@ class cache extends cache
     public function load_dependencies(array $dependencies_path){
         $list=[];
         $file=new file();
-        foreach($dependencies_path as $value) {
+        foreach($dependencies_path['must'] as $value) {
             foreach ($file->file_walk($this->home_path ."$value/") as $value) {
                 if (substr($value, -3) == "php") {
                     $dependency_class_name = str_replace(".php","",substr($value, strrpos($value, "/") + 1, strlen($value) - strrpos($value, "/")));
@@ -379,6 +390,24 @@ class cache extends cache
                     $list[$dependency_class_name] = $class_path;
                 }
             }
+        }
+        $file=new file();
+        $class_path_dir=$this->home_path."/filesystem/class_path";
+        if(!is_dir($class_path_dir)){
+            mkdir($class_path_dir);
+        }
+        foreach ($dependencies_path['extend'] as $key=>$value){
+            $extend_list=[];
+            foreach ($file->file_walk($this->home_path ."$value/") as $value) {
+                if (substr($value, -3) == "php") {
+                    $dependency_class_name = str_replace(".php","",substr($value, strrpos($value, "/") + 1, strlen($value) - strrpos($value, "/")));
+                    $class_path = str_replace($this->home_path, "", $value);
+                    $class_path=str_replace("/","\\",$class_path);
+                    $class_path=str_replace(".php","",$class_path);
+                    $extend_list[$dependency_class_name] = $class_path;
+                }
+            }
+            $file->write_file($class_path_dir."/".$key.".txt",json_encode($extend_list));
         }
       return $this->array_to_string("dependencies",$list);
     }

@@ -7,7 +7,9 @@
  */
 namespace db\factory;
 use extend\PHPMailer\PHPMailer;
+use request\request;
 use system\cache\cache;
+use system\common;
 use system\config\config;
 use system\Exception;
 
@@ -24,7 +26,7 @@ class soft_db
     //设置排序规则
     protected $limit_="";
     //设置分页
-    protected $query_list=[];
+    public $query_list=[];
     //设置查询列表
     protected $join_="";
     //联合查询
@@ -40,8 +42,14 @@ class soft_db
     //更新字段
     protected $databse_name=null;
     //数据库名
+    protected $having='';
+    //聚合条件函数字段
+    protected $bind=[];
     public function __construct()
     {
+        $this->init();
+    }
+    protected function init(){
         $database=config::pdo();
         $driver=$database["driver"];
         $user=$database[$driver]["username"];
@@ -50,6 +58,7 @@ class soft_db
         $host=$database[$driver]['hostname'];
         $dsn="$driver:host=$host;dbname=$this->databse_name;charset=utf8";
         $this->con = new \PDO($dsn, $user,$password);
+        $this->con->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 //        $this->con=mysqli_connect(config::database()["hostname"],$user,$password,$this->databse_name);
 //        mysqli_set_charset($this->con,"utf8");
         //加载config数据库的配置
@@ -68,7 +77,7 @@ class soft_db
     //操作后刷新条件
     private function cache(){
         if ($this->cache==null){
-            $this->cache=new cache();
+            $this->cache=make('cache');
             return $this->cache;
         }
         return $this->cache;
@@ -97,11 +106,12 @@ class soft_db
         }
     }//入口程序
     public function where($column_value,$condition_value,$condition="="){//defalut condition "=" you can use ">=,<=,like,in"
+        $condition_key=$this->unique_key($condition_value);
         if($this->where_==""){
-            $this->where_="where $column_value $condition '$condition_value'";
+            $this->where_="where $column_value $condition $condition_key";
         }
         else{
-            $this->where_=$this->where_." and $column_value $condition '$condition_value'";
+            $this->where_=$this->where_." and $column_value $condition $condition_key";
         }
         return $this;
     }//设置条件
@@ -110,12 +120,14 @@ class soft_db
         return $this;
     }
     //模糊查询
-    public function or_where($column_value,$condition_value,$condition="="){//defalut condition "=" you can use ">=,<=,like,in"
+    //defalut condition "=" you can use ">=,<=,like,in"
+    public function or_where($column_value,$condition_value,$condition="="){
+        $key=$this->unique_key($condition_value);
         if($this->where_==""){
-            $this->where_="where $column_value $condition '$condition_value'";
+            $this->where_="where $column_value $condition $key";
         }
         else{
-            $this->where_=$this->where_." or $column_value $condition '$condition_value'";
+            $this->where_=$this->where_." or $column_value $condition $key";
         }
         return $this;
     }
@@ -123,14 +135,14 @@ class soft_db
         $this->join_.="inner join $join_table_name on $join_table_name.$join_table_column=$this->table_name.$table_name_link";
         return $this;
     }//连接查询
-    public function order_by($order_by_column,$order_by_rule=true){
-        if($order_by_rule==true){
-            $order_by_rule="asc";
+    public function order_by($order_by_column,$sort_asc=true){
+        if($sort_asc==true){
+            $sort_asc="asc";
         }
         else{
-            $order_by_rule="desc";
+            $sort_asc="desc";
         }
-        $this->order_by_="order by $order_by_column $order_by_rule";
+        $this->order_by_="order by $order_by_column $sort_asc";
         return $this;
     }//set order by rule desc or asc
     public function sava(){
@@ -140,8 +152,9 @@ class soft_db
         $sql="delete from $this->table_name $this->where_";
         $sql=str_replace("  "," ",$sql);
         $sql=str_replace(", "," ",$sql);
+        $stm=$this->con->prepare($sql);
         $this->refresh();
-        return $this->con->exec($sql);
+        return $stm->execute($this->bind_params($sql));
     }//删除数据
     private function is_1_array(array $arr){
         if (count($arr) == count($arr, 1)) {
@@ -158,7 +171,8 @@ class soft_db
             $insert_list=array_keys($insert_data);
             $insert_string_column="(";
             foreach ($insert_data as $value){
-                $insert_string_column.="'$value',";
+                $value_key=$this->unique_key($value);
+                $insert_string_column.="$value_key,";
             }
             $insert_string_column.=")";
             $insert_string.=$insert_string_column;
@@ -168,7 +182,8 @@ class soft_db
             foreach ($insert_data as $insert_value){
                 $insert_string_column="(";
                 foreach ($insert_value as $value){
-                    $insert_string_column.="'$value',";
+                    $value_key=$this->unique_key($value);
+                    $insert_string_column.="$value_key,";
                 }
                 $insert_string_column.="),";
                 $insert_string.=$insert_string_column;
@@ -183,39 +198,57 @@ class soft_db
         $sql=str_replace("  "," ",$sql);
         $sql=str_replace(", "," ",$sql);
         $sql=str_replace(",)",")",$sql);
-        $cache=new cache();
-        $cache->set_cache("sql",$sql,6400);
-        return $this->con->exec($sql);
+        $stm=$this->con->prepare($sql);
+        $result=$stm->execute($this->bind_params($sql));
+        return $result;
     }
     public function limit($start_row,$num){
+        if(!is_numeric($start_row)){
+            new Exception("403","start_row_reqired_number_but".$start_row."_given");
+        }
+        if(!is_numeric($num)){
+            new Exception("403","num_reqired_number_but_$start_row"."_given");
+        }
         $this->limit_="limit $start_row,$num";
         return $this;
     }
     public function or_where_in($column_name,array $arr_condition){
         $arr_condition_string="(";
-        foreach ($arr_condition as $value){
-            $arr_condition_string.="'$value',";
-        }
-        $arr_condition_string.=" )";
-        if($this->where_==""){
-            $this->where_="where $column_name in $arr_condition_string";
+        if(!empty($arr_condition)) {
+            foreach ($arr_condition as $value) {
+                $arr_condition_string .= $this->unique_key($value) . ',';
+            }
+            $arr_condition_string = substr($arr_condition_string, 0, strlen($arr_condition_string) - 1);
+            $arr_condition_string .= ")";
         }
         else{
-            $this->where_.=" or $column_name in $arr_condition_string";
+            $arr_condition_string="('')";
+        }
+        if($this->where_==""){
+            $this->where_="where $column_name in ".$arr_condition_string;
+        }
+        else{
+            $this->where_.=" or $column_name in ".$arr_condition_string;
         }
         return $this;
     }
     public function where_in($column_name,array $arr_condition){
         $arr_condition_string="(";
-        foreach ($arr_condition as $value){
-            $arr_condition_string.="'$value',";
-        }
-        $arr_condition_string.=" )";
-        if($this->where_==""){
-            $this->where_="where $column_name in $arr_condition_string";
+        if(!empty($arr_condition)) {
+            foreach ($arr_condition as $value) {
+                $arr_condition_string .= $this->unique_key($value) . ',';
+            }
+            $arr_condition_string = substr($arr_condition_string, 0, strlen($arr_condition_string) - 1);
+            $arr_condition_string .= ")";
         }
         else{
-            $this->where_.=" and $column_name in $arr_condition_string";
+            $arr_condition_string="('')";
+        }
+        if($this->where_==""){
+            $this->where_="where $column_name in ".$arr_condition_string;
+        }
+        else{
+            $this->where_.=" and $column_name in ".$arr_condition_string;
         }
         return $this;
     }
@@ -229,6 +262,9 @@ class soft_db
         $this->query_list=$query_list;
         return $this;
     }
+    public function get_select_column(){
+        return $this->query_list;
+    }
     public function where_between($column_name,$min,$max,$is_not=false){
         if($is_not==false){
             $is_not="";
@@ -237,10 +273,10 @@ class soft_db
             $is_not="NOT";
         }
         if($this->where_==""){
-            $this->where_="where $column_name $is_not between '$min' and '$max'";
+            $this->where_="where $column_name $is_not between ".$this->unique_key($min)." and ".$this->unique_key($max);
         }
         else{
-            $this->where_.=" and $column_name $is_not between '$min' and '$max'";
+            $this->where_="and $column_name $is_not between ".$this->unique_key($min)." and ".$this->unique_key($max);
         }
         return $this;
     }
@@ -252,10 +288,10 @@ class soft_db
             $is_not="NOT";
         }
         if($this->where_==""){
-            $this->where_="where $column_name $is_not between $min and $max";
+            $this->where_="where $column_name $is_not between ".$this->unique_key($min)." and ".$this->unique_key($max);
         }
         else{
-            $this->where_.=" or $column_name $is_not between $min and $max";
+            $this->where_.=" or $column_name $is_not between ".$this->unique_key($min)." and ".$this->unique_key($max);
         }
         return $this;
     }
@@ -280,68 +316,47 @@ class soft_db
         return $this;
     }
     public function group_by($column_name){
-        $this->group_by_="group by $column_name";
+        $this->group_by_="group by ".$column_name;
         return $this;
     }
-    public function get($is_refresh=true){
+    public function having($having_condition){
+        $this->having="having ".$this->unique_key($having_condition);
+        return $this;
+    }
+    public function get($is_refresh=false){
         $query_string="";
-        $result_list=[];
         foreach ($this->query_list as $key=>$value){
             $query_string.="$value,";
-            if(strpos($value,'as ')!==false){
-                $rename_list=explode('as ',$value);
-                $this->query_list[$key]=$rename_list[count($rename_list)-1];
-            }
         }
-        $sql="select $query_string from $this->table_name $this->join_ $this->where_ $this->group_by_ $this->limit_ $this->order_by_";
+        $sql="select $query_string from $this->table_name $this->join_ $this->where_ $this->group_by_ $this->having $this->limit_ $this->order_by_";
         $sql=str_replace("  "," ",$sql);
         $sql=str_replace(", "," ",$sql);
-        $result=$this->con->query($sql);
-        if($result==false){
-            if($is_refresh){
-                $this->refresh();
-            }
-            return [];
-        }
-        if($result->rowCount()==0)
-        {
-            if($is_refresh){
-                $this->refresh();
-            }
-            return [];
-        }
-        if($result->rowCount()==1) {
-            foreach ($this->query_list as $value)
-            {
-                $result_list[$value]=[];
-            }
-            foreach ($result as $row) {
-                foreach ($this->query_list as $value){
-                    $value=str_replace($this->table_name.'.',"",$value);
-                    $result_list[$value]=$row[$value];
-                }
-            }
-        }
-        else {
-            foreach ($result as $row) {
-                $re = [];
-                foreach ($this->query_list as $value) {
-                    $value=str_replace($this->table_name.'.',"",$value);
-                    $re[$value] = $row[$value];
-                }
-                $result_list[] = $re;
-            }
-        }
+        $stm=$this->con->prepare($sql);//预处理 防止sql注入
+        $this->bind_params($sql);
+        $stm->setFetchMode(\PDO::FETCH_NAMED);
+        $result = $stm->execute($this->bind_params($sql));
         if($is_refresh){
             $this->refresh();
         }
+        if($result==false){
+            return [];
+        }
+        if($result){
+            $result=$stm->fetchAll();
+            if(count($result)==1){
+                return $result[0];
+            }
+        }
         $this->query_list=[];
-        return $result_list;
+        return $result;
     }
     public function get_table_column(){
         $result_arr=[];
         $sql="SHOW FULL COLUMNS FROM $this->table_name";
         $result=$this->con->query($sql);
+        if(empty($result)){
+            throw new \Exception('table '.$this->table_name." may not exist or columns not find");
+        }
         foreach ($result as $row) {
             $result_arr[]=$row[0];
         }
@@ -382,10 +397,12 @@ class soft_db
     public function unique(){
         $length=count($this->create_table_column_list);
         $this->create_table_column_list[$length-1]=str_replace(",,","",$this->create_table_column_list[$length-1].",unique,");
+        return $this;
     }
     public function commemt($comment){
         $length=count($this->create_table_column_list);
         $this->create_table_column_list[$length-1]=str_replace(' ,',' ',str_replace(",,","",$this->create_table_column_list[$length-1]."comment '$comment',"));
+        return $this;
     }
     public function char($create_column_name,$length,$default_null=true,$primary_key=false){
         if($default_null===true){
@@ -428,6 +445,46 @@ class soft_db
         $this->create_table_column_list[]="$create_column_name int($length) $default_null $primary_key $auto_increment,";
         return $this;
     }
+    public function tinyint($create_column_name,$length,$default_null=false,$primary_key=false,$auto_increment=false){
+        if($default_null===false){
+            $default_null="default null";
+        }
+        else{
+            $default_null="default '$default_null'";
+        }
+        if($primary_key==false){
+            $primary_key="";
+        }
+        else{
+            $primary_key="primary key";
+            $default_null="default not null";
+        }
+        if($auto_increment!=false){
+            $auto_increment="auto_increment";
+        }
+        $this->create_table_column_list[]="$create_column_name tinyint($length) $default_null $primary_key $auto_increment,";
+        return $this;
+    }
+    public function unsignedinteger($create_column_name,$length,$default_null=false,$primary_key=false,$auto_increment=false){
+        if($default_null===false){
+            $default_null="default null";
+        }
+        else{
+            $default_null="default '$default_null'";
+        }
+        if($primary_key==false){
+            $primary_key="";
+        }
+        else{
+            $primary_key="primary key";
+            $default_null="default not null";
+        }
+        if($auto_increment!=false){
+            $auto_increment="auto_increment";
+        }
+        $this->create_table_column_list[]="$create_column_name int($length) unsigned $default_null $primary_key $auto_increment,";
+        return $this;
+    }
     public function timestamp($create_column_name){
         $this->create_table_column_list[]="$create_column_name TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,";
         return $this;
@@ -467,9 +524,10 @@ class soft_db
         $sql=str_replace(",)",")",$sql);
         $sql=str_replace("default not null","not null",$sql);
         $sql=str_replace(",comment"," comment",$sql);
-        $sql=str_replace("default 'not null'","not null",$sql);
+        echo $sql.PHP_EOL;
         $result=$this->con->exec($sql);
         if(is_numeric($result)){
+            echo $sql.PHP_EOL;
             return true;
         }
         return false;
@@ -492,12 +550,15 @@ class soft_db
         $sql="update $this->table_name set ";
         $set_string="";
         foreach ($this->set_list as $key=>$value){
-            $set_string.="$key='$value',";
+            $set_string.="$key=".$this->unique_key($value).',';
         }
         $sql.="$set_string $this->where_";
         $sql=str_replace("  "," ",$sql);
         $sql=str_replace(", "," ",$sql);
-        return $this->con->exec($sql);
+        $stm=$this->con->prepare($sql);
+        $result=$stm->execute($this->bind_params($sql));
+        $this->refresh();
+        return $result;
     }
     public function update_table_filed(){
         $add_column=[];
@@ -607,4 +668,27 @@ class soft_db
     }
     //更新多行多字段
     //useage update_many("id",["id"=>2,"name"=>"赵李杰"，"sex"=>"woman"])
+    public function get_insert_id(){
+        return $this->con->lastInsertId();
+    }
+    protected function unique_key($value){
+        $key=":a".strval(count($this->bind));
+        $this->bind[$key]=$value;
+        return $key;
+    }
+    protected function bind_params($sql){
+        $bind_params=[];
+        preg_match_all("/:a(\d)+/",$sql,$matchs);
+        foreach ($matchs[0] as $item){
+            $bind_params[$item]=$this->bind[$item];
+        }
+        return $bind_params;
+    }
+    public function __sleep(){
+        $this->con=null;
+        return array_keys(get_object_vars($this));
+    }
+    public function __wakeup(){
+        $this->init();
+    }
 }

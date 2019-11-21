@@ -16,6 +16,7 @@ use system\file;
 
 class config
 {
+    protected static $cli;
     protected static $dir_path;
     protected static $home_path;
     protected static $www_path;
@@ -35,12 +36,6 @@ class config
     ];
     //session config
     //when test redis and file as cache driver but i find when data not enough much file faster than redis write 2019/4/12
-    protected static $dependendcies=[
-        "system",
-        "request",
-        "extend/test/",
-        "db"
-    ];
     //dependendcies_config
     //the path awesome_cli will load dependendies use php awesome load
     public static function cache(){
@@ -49,8 +44,27 @@ class config
     public static function session(){
         return self::$session;
     }
+    //the project depenendcies path
     public static function depenendcies(){
-        return self::$dependendcies;
+        return [
+            "must"=>[
+                "system",
+                "request",
+                "db",
+                "controller"
+            ],
+            "extend"=>[
+                "alipay"=>"extend/alipay/",
+                "alipay_test"=>"extend/alipay_test/",
+                "tencent_sdk"=>"extend/tencentcloud-sdk-php/"
+            ]
+        ];
+    }
+    public static function is_cli(){
+        if(is_null(self::$cli)) {
+            self::$cli = preg_match("/cli/i", php_sapi_name()) ? true : false;
+        }
+        return self::$cli;
     }
     public static function database(){
         return [
@@ -81,29 +95,38 @@ class config
         return self::$home_path;
     }
     public static function env_path(){
-        if(self::$dir_path==null){
-            self::$dir_path=dirname(dirname(__DIR__)).'/';
+        if(is_null(self::$dir_path)){
+            self::$dir_path=dirname(dirname(dirname(__FILE__))).'/';
         }
         return self::$dir_path;
     }
     public static function www_path(){
-        if(self::$www_path==null){
+        if(is_null(self::$www_path)){
             self::$www_path=dirname(dirname(dirname(__DIR__)))."/";
         }
         return self::$www_path;
     }
     public static function index_path(){
-        if(is_cli()){
-            return self::server()['host_ip'];
+        if(!is_null(self::$index_path)){
+            return self::$index_path;
         }
-        if(self::$index_path==null){
-            $request=make('request');
-            $path_info=explode('index.php',$request->get_full_url(false));
-            if(count($path_info)>1){
-                self::$index_path=$path_info[0]."index.php/";
+        if(is_cli()){
+            self::$index_path=self::server()['host_ip'];
+            if(isset($_SERVER['X-REAL-PORT'])) {
+                self::$index_path=self::$index_path.":".$_SERVER['X-REAL-PORT'];
             }
-            else{
-                self::$index_path=self::http_prefix().$_SERVER['HTTP_HOST']."/";
+        }else {
+            if (self::$index_path == null) {
+                $request = make('request');
+                $path_info = explode('index.php', $request->get_full_url(false));
+                if (count($path_info) > 1) {
+                    self::$index_path = $path_info[0] . "index.php/";
+                } else {
+                    self::$index_path = self::http_prefix() . $_SERVER['HTTP_HOST'] . "/";
+                }
+                if(isset($_SERVER['X-REAL-PORT'])) {
+                    self::$index_path=str_replace($_SERVER['HTTP_HOST'],$_SERVER['HTTP_HOST'].":".$_SERVER['X-REAL-PORT'],self::$index_path);
+                }
             }
         }
         return self::$index_path;
@@ -137,16 +160,17 @@ class config
             "SuperClosure"=>"extend/SuperClosure/src",
             "PhpParser"=>"extend/SuperClosure/vendor/nikic/php-parser/lib/PhpParser",
             "PHPExcel"=>"extend/excel/PHPExcel",
-            "template"=>"public/template"
+            "template"=>"public/template",
+            "TencentCloud"=>"extend/tencentcloud-sdk-php/src/TencentCloud"
         ];//define class_path
     }
     public static function server(){
         return[
-           "host_ip"=>"http://www.titang.shop/"
+           "host_ip"=>"http://www.titang.shop"
         ];
     }
     public static function request_path(){
-        if(self::$request_path==null) {
+        if(is_null(self::$request_path)) {
             if(!is_cli()) {
                 self::$request_path = "http://".$_SERVER['HTTP_HOST']."/" . explode('index.php', $_SERVER['DOCUMENT_URI']??$_SERVER['SCRIPT_NAME'])[0];
             }
@@ -197,7 +221,6 @@ class config
                 $home_path."routes",
                 $home_path."system",
                 $home_path."task",
-                $home_path."template/compile.php"
             ],
             //此处配置需要扫描的路径
             "except"=>[

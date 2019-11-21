@@ -20,7 +20,8 @@ class log
             mkdir($this->error_path);
         }
         $fd = fopen($this->error_path.date("Y-m-d").".log", "a");
-        fwrite($fd, $error_message . date('Y-m-d H:i:s', time()) . "\n");
+        fwrite($fd,date('Y-m-d H:i:s',time()) . "\n");
+        fwrite($fd, $error_message."\n");
         if(config::debug()['is_notify_admin']){
             $mail=new mail();
             $mail->send_email(config::user()['email'],$error_message,'error_notify'.config::index_path());

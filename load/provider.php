@@ -10,7 +10,6 @@ namespace load;
 use http;
 use controller;
 use request\request;
-use function Sodium\crypto_box_keypair_from_secretkey_and_publickey;
 use system\Exception;
 
 class provider
@@ -19,7 +18,6 @@ class provider
     protected $controller=[];
     protected $dependencies=[];
     protected $container=[];
-    protected static $provider=null;
     public function controller($controller_name,$params=false){
 //        if($params==false) {
 //            return new $this->controller[$controller_name]();
@@ -29,12 +27,8 @@ class provider
 //        }
         return $this->controller[$controller_name];
     }
-    public function __construct()
-    {
-        self::$provider=$this;
-    }
-    public static function provider(){
-        return self::$provider;
+    public function get_dependencies(){
+        return $this->dependencies;
     }
     public function middleware($middleware,$request){
         if(isset($this->controller[$middleware])){
@@ -51,10 +45,6 @@ class provider
         }
         $object=null;
         $class_name_fact=null;
-//        try{
-//            $object=new \ReflectionClass($this->dependencies[$class_name]);
-//            $class_name_fact=$this->dependencies[$class_name];
-//        }
         try {
             if (array_key_exists($class_name, $this->dependencies)) {
                 try {
@@ -81,6 +71,7 @@ class provider
             $object=new \ReflectionClass("\\$class_name_");
         }
         catch (\Throwable $throwable){
+
         }
         $contruct_params_list=$this->get_class_contruct_params($object);
         if ($contruct_params_list==null||count($contruct_params_list) == 0) {
@@ -128,7 +119,13 @@ class provider
     public function get_class_contruct_params(\ReflectionClass $object)
     {
         $params_list = [];
-        $params = $object->getConstructor()->getParameters();
+        $params = $object->getConstructor();
+        if($params==null){
+            return [];
+        }
+        if(($params=$params->getParameters())==null){
+            return [];
+        }
         if($params==null){
             return $params_list;
         }
@@ -158,6 +155,9 @@ class provider
         }
         $params=[$params];
         return call_user_func_array([$class_name,$method],$params);
+    }
+    public function add_dependencies(array $dependencies){
+        $this->dependencies=array_merge($this->dependencies,$dependencies);
     }
     //debug when some class not define namespace php will throw a error try catch it!;
 }

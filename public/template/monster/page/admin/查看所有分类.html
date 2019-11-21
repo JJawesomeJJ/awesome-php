@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<!--移动设备有限-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+		<!--引入Jquery-->
+		<script src="bootstrap/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<script src="bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<style type="text/css">
+			td {
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<table class="table table-condensed table-bordered table-striped table-hover">
+				<caption class="h1 text-center bg-info">查看所有分类</caption>
+				<tr class="info text-center">
+					<td>编号</td>
+					<td>分类名称</td>
+					<td>删除</td>
+					<td>修改</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>计算机</td>
+					<td><button class="btn btn-info">删除</button></td>
+					<td><button class="btn btn-info">修改</button></td>					
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>哲学</td>
+					<td><button class="btn btn-info">删除</button></td>
+					<td><button class="btn btn-info">修改</button></td>					
+				</tr>
+				<tr>
+					<td>3</td>
+					<td>管理</td>
+					<td><button class="btn btn-info">删除</button></td>
+					<td><button class="btn btn-info">修改</button></td>					
+				</tr>
+				<tr>
+					<td>4</td>
+					<td>经济</td>
+					<td><button class="btn btn-info">删除</button></td>
+					<td><button class="btn btn-info">修改</button></td>					
+				</tr>
+				<tr>
+					<td>5</td>
+					<td>教辅</td>
+					<td><button class="btn btn-info">删除</button></td>
+					<td><button class="btn btn-info">修改</button></td>					
+				</tr>
+			</table>
+			<p>没有你想要的分类?你可以点击这里添加分类&nbsp;<button class="btn btn-info"><a style="color: white;" href="添加分类.html">添加分类</a></button></p>
+		</div>
+		<script>
+			$(".btn-info").click(function () {
+				if($(this).text()=="修改"){
+					window.location.href="修改分类.html"
+				}
+			})
+		</script>
+	</body>
+</html>

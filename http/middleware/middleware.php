@@ -17,25 +17,12 @@ abstract class middleware
 {
     public $user_input;
     protected $request_=null;
-    protected $cache_=null;
     protected $params=null;
     abstract function check();//入口
     public function __construct(request $request)
     {
         $this->request_=$request;
-        $this->user_input=$this->request()->all();
-        $this->xxs_filter();
-        //$this->sql_filter();
-        $this->check();
-    }
-    public function request(){
-        if($this->request_==null){
-            $this->request_=new request();
-            return $this->request_;
-        }
-        else{
-            return $this->request_;
-        }
+        $this->user_input=$request->all();
     }
     public function xxs_filter(){
         $black_list=array(
@@ -74,14 +61,5 @@ abstract class middleware
     public function next(){
         $this->request()->user_input=$this->user_input;//return userinput which has been handled by this middleware
         return $this->request();
-    }
-    public function cache(){
-        if($this->cache_==null){
-            $this->cache_=new cache();
-            return $this->cache_;
-        }
-        else{
-            return $this->cache_;
-        }
     }
 }

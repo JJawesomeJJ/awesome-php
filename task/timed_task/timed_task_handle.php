@@ -11,6 +11,7 @@ namespace task\timed_task;
 
 use extend\PHPMailer\Exception;
 use system\config\config;
+use system\log;
 
 abstract class timed_task_handle
 {
@@ -26,6 +27,8 @@ abstract class timed_task_handle
             $this->start();
         }
         catch (\Throwable $throwable){
+            $log=new log();
+            $log->write_log($throwable);
             if(!$this->redis->hExists("timed_task_error",$this->task_name)){
                 $this->redis->hSet("timed_task_error",$this->task_name,json_encode([["error"=>$throwable->getMessage(),"time"=>time()]]));
             }

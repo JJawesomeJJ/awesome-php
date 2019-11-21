@@ -10,6 +10,8 @@ use function Couchbase\fastlzDecompress;
 use system\Exception;
 use system\file;
 use system\config\config;
+use system\kernel\facede;
+
 class cache
 {
     protected $driver="file";//cache driver

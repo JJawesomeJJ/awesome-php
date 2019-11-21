@@ -36,9 +36,9 @@ class auth_controller extends controller
             "code"=>"required:post"
         ];
         $request=$this->request()->verifacation($rules);
-        $db=new db();
+//        $db=new db();
         $name=$request->get("name");
-        $result=$db->query("user",["password","email","head_img"],"name='$name'");
+//        $result=$db->query("user",["password","email","head_img"],"name='$name'");
         if(!session::get('code')){
             return ["code"=>"403","msg"=>"fail","data"=>"code_error"];
         }
@@ -49,7 +49,7 @@ class auth_controller extends controller
             return ["code"=>"403","msg"=>"fail","data"=>"code_error"];
         }
         $user=new user();
-        $result=$user->where("name",$name)->get()->all();
+        $result=$user->where("name",$name)->get()->find(1);
         if(empty($result)){
             $arr = array("code" => "404", "msg" => "fail", "data" =>"unsign");
             return $arr;
@@ -132,9 +132,11 @@ class auth_controller extends controller
         $result=$db->query("admin_user",['password','permission'],"name='$name'");
         return $result;
     }
-    public static function auth($name=false,$store_name=false,$parms_list=false){
-        common::is_remember();
-        return session::get("user");
+    public static function auth($is_die=true){
+        if(!common::is_remember($is_die)){
+            return false;
+        }
+        return session::get('name');
 //        if(!isset($_SESSION))
 //        {
 //            session_start();
@@ -275,5 +277,12 @@ class auth_controller extends controller
     }
     public function reset_password_page(){
         return view("user/reset_password",["token"=>$this->request()->get("token"),"name"=>$this->request()->get("name"),"list"=>[["name"=>"赵李杰","age"=>"2"],["name"=>"php","age"=>"16"]]]);
+    }
+    public function user_info(){
+        if(!self::auth(false)){
+            return ['code'=>600,'message'=>"unlogin"];
+        }else{
+            return ["code"=>200,"name"=>session::get("name"),"head_img"=>session::get("head_img")];
+        }
     }
 }

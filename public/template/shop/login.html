@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+    <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <!-- Fontastic Custom icon font-->
+    <!-- Google fonts - Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="css/custom.css">
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper.js/umd/popper.min.js"> </script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="js/front.js"></script>
+    <script src="../asset/layer-v3.1.1/layer/layer.js"></script>
+    <!-- Favicon-->
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+  </head>
+  <style>
+    .email_group{
+      position: relative;
+      display: flex;
+    }
+    .loading_gif{
+      position: relative;
+      width: 20px;
+      height: 20px;
+    }
+    .loading_gif img{
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+  </style>
+  <body>
+    <div class="page login-page" id="app">
+      <div class="container d-flex align-items-center">
+        <div class="form-holder has-shadow">
+          <div class="row">
+            <!-- Logo & Information Panel-->
+            <div class="col-lg-6">
+              <div class="info d-flex align-items-center">
+                <div class="content">
+                  <div class="logo">
+                    <h1>Titang-shop</h1>
+                  </div>
+                  <p>Tiang-shop 管理系统</p>
+                </div>
+              </div>
+            </div>
+            <!-- Form Panel    -->
+            <div class="col-lg-6 bg-white">
+              <div class="form d-flex align-items-center">
+                @component(component/vertify/slide_vertify)
+                <div class="content">
+                  <form method="post" class="form-validate">
+                    <div class="alert alert-success" v-if="success&&error==null">
+                      <strong>@{{success}}</strong>
+                    </div>
+                    <div class="alert alert-danger" v-if="error!=null">
+                      <strong>@{{error}}</strong>
+                    </div>
+                    <div class="form-group">
+                      <input id="login-username" v-model="name" type="text" name="loginUsername" required data-msg="Please enter your username" class="input-material">
+                      <label for="login-username" class="label-material">User Name</label>
+                    </div>
+                    <div class="form-group">
+                      <input id="login-password" v-model="password" type="password" name="loginPassword" required data-msg="Please enter your password" class="input-material">
+                      <label for="login-password" class="label-material">Password</label>
+                    </div>
+                    <div class="form-group email_group">
+                      <input id="email" v-model="code" type="text" name="emial_code" required data-msg="Please enter your email_code" class="input-material">
+                      <button type="button" @click="slide_vertify" id="ask_email" class="btn" v-bind:class="{'btn-success':count_down==0,'alert-primary':count_down!=0}">
+                        <i v-if="count_down==0&&is_loadding==false" class="fa fa-envelope-o" aria-hidden="true"></i>
+                        <div class="loading_gif" v-if="is_loadding"><img src="../asset/image/loadding_per.jpg" alt=""></div>
+                        <div v-if="count_down!=0">@{{count_down}}</div>
+                      </button>
+                      <label for="email" class="label-material">Email code</label>
+                    </div>
+                    <a id="login" href="javascript:void(0)" @click="login" class="btn btn-primary">Login</a>
+                    <!-- This should be submit button but I replaced it with <a> for demo purposes-->
+                  </form><a href="#" class="forgot-pass">Forgot Password?</a><br>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="copyrights text-center">
+        <p>Design by <a href="#" class="external">JJaweomse</a>
+          <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+        </p>
+      </div>
+    </div>
+  <script>
+    new Vue({
+        el:"#app",
+        data:{
+            vertify:null,
+            success:null,
+            error:null,
+            name:null,
+            count_down:0,
+            count_down_object:null,
+            is_loadding:false,
+            password:null,
+            code:null,
+        },
+        created(){
+
+        },
+        methods:{
+            slide_vertify(){
+                if(this.name==null){
+                    layer.msg('please input admin name or email');
+                    return;
+                }
+                var self=this;
+                if(self.verify==null){
+                    self.verify=new Slidevertify(function () {
+                        self.is_loadding=true;
+                        axios.post('{{index_path()}}/admin_user/login/email', {
+                            name:self.name
+                        }).then(function (response) {
+                            self.is_loadding=false;
+                            if (response["data"]["code"] == 200) {
+                                self.count_down=60;
+                                self.error=false;
+                                self.count_down_object=setInterval(function () {
+                                    self.count_down=self.count_down-1;
+                                    if(self.count_down==0){
+                                        clearInterval(self.count_down_object);
+                                        self.count_down_object=null;
+                                    }
+                                },1000);
+                                self.error=null;
+                                self.success='验证码已经发送到邮箱';
+                            }
+                            else {
+                                self.error=response["data"]["message"];
+                            }
+                        }).catch(function (error) {
+                            self.is_loadding=false;
+                            console.log(error);
+                        });
+
+                    },function () {
+
+                    });
+                }
+                else {
+                    self.verify.show();
+                }
+            },
+            login(){
+                var self=this;
+                if(self.name==null||self.name==""){
+                    self.error="管理员账号不可为空";
+                    return;
+                }
+                if(self.password==null||self.password==""){
+                    self.error="管理员密码不可为空";
+                    return;
+                }
+                if(self.code==null||self.code==""){
+                    self.error="管理员邮箱验证码不可为空";
+                    return;
+                }
+                axios.post('{{index_path()}}/admin_user/login', {
+                    name: self.name,
+                    password:sha256(self.password),
+                    code:self.code
+                }).then(function (response) {
+                    if (response["data"]["code"] == 200) {
+                        self.error='null';
+                        self.success="welcome"
+                        localStorage.setItem("admin_user_data",JSON.stringify(response["data"]));
+                        window.location.href="{{index_path()}}/shop/index";
+                    }
+                    else {
+                        self.error=response["data"]["message"];
+                    }
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+    }
+    })
+  </script>
+  </body>
+</html>

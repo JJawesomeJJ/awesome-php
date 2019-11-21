@@ -11,6 +11,7 @@ use db\factory\migration\migration_list\migration_survey;
 use db\model\admin_user_new\admin_user_new;
 use db\model\model_auto\model_auto;
 use db\model\user\user;
+use load\provider;
 use request\request;
 use system\cache\cache;
 use system\class_define;
@@ -69,13 +70,13 @@ class admin_user_controller extends controller
         return ["code" => 200, "message" => "ok", "head_img" => $head_img, "name" => $this->request()->get("name"), "permission" => $this->request()->get("permission"), "email" => $this->request()->get("email")];
     }
 
-    public static function permission($is_redirect=true)
+    public static function permission($is_redirect="/admin/user")
     {
         $cache = make("cache");
         if (!session::get("admin_permission")) {
             if (!isset($_COOKIE['admin_token'])) {
                 if($is_redirect){
-                redirect(index_path()."/admin/user");
+                redirect(index_path().$is_redirect);
                 }
                 else{
                     return false;
@@ -85,7 +86,7 @@ class admin_user_controller extends controller
             $admin_user_info = $cache->get_cache($_COOKIE['admin_token']);
             if($admin_user_info==null){
                 if($is_redirect) {
-                    redirect(index_path()."/admin/user");
+                    redirect(index_path().$is_redirect);
                 }
                 else{
                     return false;
@@ -95,7 +96,9 @@ class admin_user_controller extends controller
             $admin_user_info=$cache->get_cache($admin_user_info["name"]);
             if ($admin_user_info == null || $admin_user_info['token'] != $_COOKIE['admin_token']) {
                 $cache->delete_key($_COOKIE["admin_token"]);
-                redirect(index_path()."/admin/user");
+                if($is_redirect) {
+                    redirect(index_path() . $is_redirect);
+                }
             } else {
                session::set("admin_permission",$admin_user_info);
             }
@@ -176,8 +179,7 @@ class admin_user_controller extends controller
         return compile_parse::compile("admin/user_login",[]);
     }
     public function get_timed_task_info(){
-        $redis=new \Redis();
-        $redis->connect(config::redis()["host"],config::redis()["port"]);
+        $redis=class_define::redis();
         $time=$redis->hGet(config::task_record_list()["name"]."time","timed_task");
         $task_list=json_decode($redis->get("timed_task"),true);
         $task_handle_num=$this->cache()->get_cache("timed_task_handle_num");
@@ -379,7 +381,7 @@ class admin_user_controller extends controller
         if(self::permission()["permission"]=="super_admin"){
             $titang_theme=model_auto::model("titang_theme");
             $theme_info=$titang_theme->where("id",$request->get("id"))->get();
-            $data=common::get_array_value(["morning","noon","afternoon","night"],$theme_info->all());
+            $data=common::get_array_value(["morning","noon","afternoon","night"],$theme_info->find(1));
             $data["id"]=$request->get("id");
             $this->cache()->set_cache("theme_back_list",$data,"forever");
             $this->cache()->set_cache("theme_version",$theme_info->updated_at,"forever");
@@ -414,7 +416,6 @@ class admin_user_controller extends controller
                 $list=$this->cache()->get_non_exist_set("theme_back_list",function (){
                     $model=model_auto::model("titang_theme");
                     $model->find(1);
-                    echo "load";
                     $data=common::get_array_value(["morning","noon","afternoon","night"],$model->all());
                     $this->cache()->set_cache("theme_version",$model->updated_at,"forever");
                     return $data;

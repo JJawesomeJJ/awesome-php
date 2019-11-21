@@ -38,8 +38,18 @@ class common
         }
         return $return_arr;
     }
-    public static function rand($num){
-        $code_list="abcdefghijklmnopqrstuvwxyz123456789";
+    public static function rand($num,$type="mix"){
+        if($type=='mix') {
+            $code_list = "abcdefghijklmnopqrstuvwxyz0123456789";
+        }
+        elseif($type=="number"){
+            $code_list = "123456789";
+        }
+        else{
+            if($type=="char"){
+                $code_list = "abcdefghijklmnopqrstuvwxyz";
+            }
+        }
         if(!is_numeric($num)){
             new Exception("500","call_fun_error_num_should_be_a_number");
         }
@@ -55,15 +65,24 @@ class common
         $cache->set_cache($id,$token,604800);
         cookie::set("remember_me",json_encode(["token"=>$token,"id"=>$id]),604800);
     }
-    public static function is_remember(){
+    public static function is_remember($is_die=true){
         $cache=make("cache");
         if(!($user_info=cookie::get("remember_me"))){
-            new Exception("600","user_certificate_timeout");
+            if($is_die) {
+                new Exception("600", "user_certificate_timeout");
+            }
+            else{
+                return false;
+            }
         }
         else{
             $user_info=json_decode($user_info,true);
             if($cache->get_cache($user_info["id"])!=$user_info["token"]){
-                new Exception("600","user_certificate_timeout");
+                if($is_die) {
+                    new Exception("600", "user_certificate_timeout");
+                }else{
+                    return false;
+                }
             }
             else{
                 $user=new user();
@@ -72,6 +91,7 @@ class common
                 session::set("user",$user->name);
                 session::set("email",$user->email);
                 session::set("id",$user_info["id"]);
+                session::set("head_img",$user->head_img);
             }
         }
         return true;
@@ -164,7 +184,67 @@ class common
         }
         return $url;
     }
-    public static function get_pager_list(){
-
+    public static function log_request(){
+        $redis=class_define::redis();
+        $request=make('request');
+        $rqid=cookie::get('rqid');
+        $request_info=[
+            'ip'=>$request->get_ip_address(),
+            'rqid'=>md5($rqid),
+            'request_time'=>date("Y-m-d H:i:s"),
+            'request_url'=>$request->get_url()
+        ];
+        if(empty($rqid)){
+            cookie::set('rqid',microtime(true).self::rand(6),3600*24*30);
+        }
+        $redis->rPush('request_log',json_encode($request_info));
+    }
+    public static function array_group_by_key_time(array $arrs,$key,$time_format='H',$unset_key=true,$return_count=false){
+        if(self::is_1_array($arrs)){
+            return $arrs;
+        }
+        $return_arr=[];
+        foreach ($arrs as $arr){
+            if(!isset($arr[$key])){
+                continue;
+            }
+            $name=number_format(date($time_format,strtotime($arr[$key])));
+            if(!isset($return_arr[$name])){
+                if($return_count==false) {
+                    $return_arr[$name] = [];
+                }
+                else{
+                    $return_arr[$name] = 0;
+                }
+            }
+            if($unset_key){
+                unset($arr[$key]);
+            }
+            if($return_count==false) {
+                $return_arr[$name][] = $arr;
+            }
+            else{
+                $return_arr[$name]=$return_arr[$name]+1;
+            }
+        }
+        return $return_arr;
+    }
+    public static function array_sort_by_key(array $arr,$key){
+        return array_multisort(array_column($arr,$key),SORT_ASC,$arr);
+    }
+    public static function array_value_key_value(array $arr,$key,$value_key){
+        $data=[];
+        if(empty($arr)){
+            return [];
+        }
+        if(self::is_1_array($arr)){
+            return [$arr[$key]=>$arr[$value_key]];
+        }
+        else{
+            foreach ($arr as $item){
+                $data[$item[$key]]=$item[$value_key];
+            }
+        }
+        return $data;
     }
 }

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<!--移动设备有限-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+		<!--引入Jquery-->
+		<script src="bootstrap/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<script src="bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<style type="text/css">
+			td {
+				text-align: center;
+			}
+			body{
+				width: 100vw;
+				height: 100vh;
+				background: url("../../assets/images/bg2.jpg");
+				background-size: 100% 100%;
+				background-repeat: no-repeat;
+			}
+			.container{
+				position: relative;
+				top: 100px;
+				background-color: rgba(255, 255, 255, 0.85);
+				border-radius: 10px;
+			}
+			.footer{
+				position: fixed;
+				bottom: 0px;
+				background-color: white;
+				width: 100%;
+				height: 50px;
+				line-height: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<table class="table table-condensed table-bordered table-striped table-hover">
+				<caption class="h1 text-center bg-info">Oracle图书管理系统前台页面</caption>
+				
+				<tr class="info text-center">
+					<td>
+						<input type="text" class="form-control"/>
+					</td>
+					<td><button class="btn btn-info">搜索</button></td>
+					<td> </td>
+					<td> </td>
+					<td> </td>
+					<td>zhangsan,欢迎你</td>
+					<td><button class="btn btn-info">退出</button></td>
+				</tr>
+				
+				
+				<tr class="info text-center">
+					<td>编号</td>
+					<td>分类名称</td>
+					<td>图书名称</td>
+					<td>图书价格</td>
+					<td>图书出版社</td>
+					<td>状态</td>
+					<td>借/还</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>计算机</td>
+					<td>JAVA</td>
+					<td>56</td>
+					<td>清华出版社</td>
+					<td>借出</td>
+					<td><button class="btn btn-info">还书</button></td>		
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>管理学</td>
+					<td>国富论</td>
+					<td>78</td>
+					<td>北大出版社</td>
+					<td>未借出</td>
+					<td><button class="btn btn-info">借书</button></td>			
+				</tr>
+			</table>
+			
+		</div>
+		<footer class="footer text-center">
+			© 2019  Design by handsome  <a href="javascript:void(0)" target="_blank"></a> ---版权所有--- <a href="" title="" target="_blank">学生管理系统</a>
+		</footer>
+	</body>
+</html>

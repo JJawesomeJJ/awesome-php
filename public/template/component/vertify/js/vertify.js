@@ -51,7 +51,6 @@ function Slidevertify(success_call_back,fail_call_back) {
                 }
             },
             error: function (error) {
-                console.log(error);
             }
         });
     }

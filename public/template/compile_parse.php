@@ -46,6 +46,7 @@ class compile_parse
         if(self::$object->is_restart_compile($template_path)||!is_file($cache_file_path)){
             $cache_file_path=self::$object->compile_template($template_path);
         }
+        $data['request']=make('request');
         foreach ($data as $key=>$value){
             $$key=$value;
         }
@@ -167,19 +168,19 @@ class compile_parse
         }
     }
     protected function compile_path($path,$template_data){
-        preg_match_all("/( src| href)=\"(?!http)(?!{{)(.*?)\"/",$template_data,$url_matchs,PREG_SET_ORDER);
+        preg_match_all("/( src| href)=\"(?!http)(?!#)(?!javascript)(?!{{)(.*?)\"/",$template_data,$url_matchs,PREG_SET_ORDER);
         $path=str_replace("\\","/",$this->file_path.dirname($path));
         $path=str_replace(config::project_path(true),config::project_path(false)."/",$path)."/";
         $index_path=config::index_path();
         foreach ($url_matchs as $value){
-            if(trim($value[2])==''){
+            if(trim($value[2])==''||trim($value[2])=="#"){
                 continue;
             }
             if(strpos($value[2],'.') !== false){
-                $template_data=common::str_replace_limit($value[2],$path.$value[2],$template_data,1);
+                $template_data=common::str_replace_limit('"'.$value[2],'"'.$path.$value[2],$template_data,1);
             }
             else{
-                $template_data=common::str_replace_limit($value[2],$index_path.$value[2],$template_data,1);
+                $template_data=common::str_replace_limit('"'.$value[2],'"'.$index_path.$value[2],$template_data,1);
             }
         }
         return $template_data;

@@ -10,6 +10,7 @@ use controller\auth\auth_controller;
 use controller\controller;
 use http\middleware\middleware;
 use load\provider_register;
+use PhpParser\Node\Expr\Closure;
 use request\request;
 use SebastianBergmann\CodeCoverage\Report\PHP;
 use system;
@@ -37,7 +38,7 @@ class routes
     {
         if ($this->pathinfo()) {
             $values=$this->value;
-            $provider = new provider_register();
+            $provider = provider_register::provider();
             if(count($values["middleware"])>0) {
                 if (gettype($values["middleware"][0]) == 'string') {
                     $values["middleware"] = [$values["middleware"]];
@@ -195,6 +196,11 @@ class routes
         if(!$method&&!$params){
             self::$route[self::$now_request][$index]["middleware"][]=[$middleware_name];
         }
+        return $this;
+    }
+    public function name($name){
+        $index=count(self::$route[self::$now_request])-1;
+        self::$route[self::$now_request][$index]['name']=$name;
         return $this;
     }
 }

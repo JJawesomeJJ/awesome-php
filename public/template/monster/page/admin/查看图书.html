@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看图书</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <!--引入Jquery-->
+    <script src="bootstrap/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div class="container">
+    <table class="table table-condensed table-bordered table-striped table-hover">
+        <caption class="h1 text-center bg-info">查看图书</caption>
+    </table>
+    <div class="row" style="margin-left: 120px;">
+        <form class="form-inline" role="form" style="margin: 0 auto;">
+            <div class="form-group" style="margin-top: -10px;">
+                <h1 style="font-size: 20px;">高级搜索</h1>
+            </div>
+            <div class="btn-group">
+                <label class="sr-only" for="book_name">请选择分类</label>
+                <button type="button" id="list" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">计算机
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" >
+                    <li>
+                        <a href="#" class="list">计算机</a>
+                    </li>
+                    <li>
+                        <a href="#" class="list">文学</a>
+                    </li>
+                    <li>
+                        <a href="#" class="list">其他</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#" class="list">爱情</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="book_name">书名</label>
+                <input type="text" class="form-control" id="book_name" placeholder="书名">
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="writer">作者名</label>
+                <input type="text" class="form-control" id="writer" placeholder="作者名">
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="who">借书人</label>
+                <input type="text" style="width: 100px" class="form-control" id="who" placeholder="借书人">
+            </div>
+            <select class="form-control">
+                <option>借出</option>
+                <option>未借出</option>
+            </select>
+            <label class="sr-only" for="who"></label>
+            <div class="form-group">
+                <label class="sr-only" for="who">图书名</label>
+                <input type="text" style="width: 100px" class="form-control" id="" placeholder="图书名">
+                <button type="button" class="btn btn-success">查询</button>
+            </div>
+        </form>
+    </div>
+    <table class="table table-condensed table-bordered table-striped table-hover">
+        <tr class="text-center">
+            <td>图书编号</td>
+            <td>分类名称</td>
+            <td>图书名称</td>
+            <td>图书价格</td>
+            <td>图书出版社</td>
+            <td>状态</td>
+            <td>借书人</td>
+            <td>删除</td>
+            <td>修改</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>计算机</td>
+            <td>java</td>
+            <td>55.0</td>
+            <td>北大青鸟出版社</td>
+            <td>借出</td>
+            <td>王麻子</td>
+            <td><button class="btn btn-info">删除</button></td>
+            <td><button class="btn btn-info">修改</button></td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>计算机</td>
+            <td>java</td>
+            <td>55.0</td>
+            <td>北大青鸟出版社</td>
+            <td>借出</td>
+            <td>王麻子</td>
+            <td><button class="btn btn-info">删除</button></td>
+            <td><button class="btn btn-info">修改</button></td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>计算机</td>
+            <td>java</td>
+            <td>55.0</td>
+            <td>北大青鸟出版社</td>
+            <td>借出</td>
+            <td>王麻子</td>
+            <td><button class="btn btn-info">删除</button></td>
+            <td><button class="btn btn-info">修改</button></td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>计算机</td>
+            <td>java</td>
+            <td>55.0</td>
+            <td>北大青鸟出版社</td>
+            <td>借出</td>
+            <td>王麻子</td>
+            <td><button class="btn btn-info">删除</button></td>
+            <td><button class="btn btn-info">修改</button></td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>计算机</td>
+            <td>java</td>
+            <td>55.0</td>
+            <td>北大青鸟出版社</td>
+            <td>借出</td>
+            <td>王麻子</td>
+            <td><button class="btn btn-info">删除</button></td>
+            <td><button class="btn btn-info">修改</button></td>
+        </tr>
+    </table>
+    <p>没有你想要的名字?你可以点击这里添加分类&nbsp;<button class="btn btn-info"><a style="color: white" href="添加图书.html">添加图书</a></button></p>
+</div>
+<script>
+    $(".list").click(function () {
+        console.log("load");
+        $("#list").text($(this).text());
+    })
+    $(".btn-info").click(function () {
+        if($(this).text()=="修改"){
+            window.location.href="修改图书.html"
+        }
+    })
+</script>
+</body>
+</html>

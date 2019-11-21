@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<!--移动设备有限-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+		<!--引入Jquery-->
+		<script src="bootstrap/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<script src="bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<style type="text/css">
+			td {
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<table class="table table-condensed table-bordered table-striped table-hover">
+				<caption class="h1 text-center bg-info">查看所有用户</caption>
+				<tr class="info text-center">
+					<td>编号</td>
+					<td>姓名</td>
+					<td>用户名</td>
+					<td>密码</td>
+					<td>手机号码</td>
+					<td>注册时间</td>
+					<td>删除</td>
+					<td>修改</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>张三</td>
+					<td>zhang</td>
+					<td>123</td>
+					<td>123456789</td>
+					<td>2015-7-1</td>					
+					<td><button class="btn btn-info">删除</button></td>
+					<td><button class="btn btn-info">修改</button></td>					
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>李四</td>
+					<td>lisi</td>
+					<td>123</td>
+					<td>123456789</td>
+					<td>2015-7-1</td>					
+					<td><button class="btn btn-info">删除</button></td>
+					<td><button class="btn btn-info">修改</button></td>					
+				</tr>
+				<tr>
+					<td>3</td>
+					<td>王五</td>
+					<td>wang</td>
+					<td>123</td>
+					<td>123456789</td>
+					<td>2015-7-1</td>					
+					<td><button class="btn btn-info">删除</button></td>
+					<td><button class="btn btn-info">修改</button></td>					
+				</tr>
+				
+			</table>
+			<p>没有找到指定用户?点击这里&nbsp;<button class="btn btn-info"><a style="color: white" href="添加用户.html">添加用户</a></button></p>
+		</div>
+		<script>
+			$(".btn-info").click(function () {
+				if($(this).text()=="修改"){
+					window.location.href="修改用户信息.html"
+				}
+			})
+		</script>
+	</body>
+</html>

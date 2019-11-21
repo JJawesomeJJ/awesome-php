@@ -1,1 +1,0 @@
-{"value":{"E:\\PhpStorm 2018.1.3\\php\/\/public\/template\/vivo\/buy.html":"59115b3f808ad9e8dba91700dba1c845"},"expire":"forever","key":"vivo\/buy"}

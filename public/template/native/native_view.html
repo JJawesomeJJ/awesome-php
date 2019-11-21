@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>native</title>
+    <meta name=viewport content="width=device-width,initial-scale=1">
+    <meta http-equiv=X-UA-Compatible content="ie=edge">
+    <link href="assets/css/common.css" rel="stylesheet">
+    <script src=https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js></script>
+    <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <link href="https://cdn.bootcss.com/Swiper/4.5.1/css/swiper.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/Swiper/4.5.1/js/swiper.min.js"></script>
+    <script src="assets/js/common.js"></script>
+</head>
+<body>
+<style>
+    .swiper-container{
+        width: 98%;
+        height:200px;
+        border-radius: 5px;
+    }
+    .swiper-slide{
+        border-radius: 5px;
+    }
+    .swiper-slide img{
+        width: 100%;
+        height: 200px;
+        border-radius: 5px;
+    }
+    .native-type{
+        position: relative;
+        width: 100%;
+        height: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .native-type ul{
+        width: 100%;
+        display: flex;
+    }
+    .native-type ul li{
+        border-radius: 30%;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+    }
+    .native-type ul li img{
+        display: block;
+        width: 50px;
+        height: 50px;
+        border-radius: 15px;
+        margin: 0 auto;
+    }
+    .type-name{
+        color: black;
+        font-weight: lighter;
+        white-space: nowrap;
+        font-size: 15px;
+        text-align: center;
+    }
+</style>
+<div id="app">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" v-for="i in banner"><img :src="i.img" :alt="i.title"></div>
+        </div>
+        <!-- 如果需要分页器 -->
+        <div class="swiper-pagination"></div>
+    </div>
+    <div class="native-type">
+        <div style="width: 100%">
+            <ul>
+                <li v-for="i in type.slice(0,5)">
+                    <img :src="i.url" alt="">
+                    <p class="type-name">@{{i.name}}</p>
+                </li>
+            </ul>
+            <ul>
+                <li v-for="i in type.slice(5,11)">
+                    <img :src="i.url" alt="">
+                    <p class="type-name">@{{i.name}}</p>
+                </li>
+                <li>
+                    <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2669601758,506659101&fm=26&gp=0.jpg" alt="">
+                    <p class="type-name">更多</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            banner:[],
+            type:[],
+            message: 'Hello Vue.js!',
+            is_load_banner:false
+        },
+        watch:{
+            banner(oldval,newval){
+                this.is_load_banner=true;
+            }
+        },
+        updated(){
+            if(this.is_load_banner){
+                this.init_swiper();
+                this.is_load_banner=false;
+            }
+        },
+        created(){
+            this.init_banner();
+            this.init_type();
+        },
+        methods:{
+            init_banner(){
+                var self=this;
+                axios.get(server+"native/banner")
+                    .then(function (res) {
+                        self.banner=res.data;
+                    })
+                    .catch(function (error) { // 请求失败处理
+                        console.log(error);
+                    });
+            },
+            init_type(){
+                var self=this;
+                axios.get(server+"native/type")
+                    .then(function (res) {
+                        self.type=res.data.data
+                    }).catch(function (err) {
+
+                })
+            },
+            init_swiper(){
+                var mySwiper = new Swiper ('.swiper-container', {
+                    direction: 'horizontal', // 垂直切换选项
+                    loop: true, // 循环模式选项
+
+                    // 如果需要分页器
+                    pagination: {
+                        el: '.swiper-pagination',
+                    },
+                })
+            }
+        }
+    })
+</script>
+</html>

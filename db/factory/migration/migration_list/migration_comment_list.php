@@ -22,6 +22,7 @@ class migration_comment_list extends migration
         $this->db->string("user_id","30","not null");
         $this->db->string("comment_content",225,"not null");
         $this->db->string("reply_id","50","not null");
+        $this->db->text("likes");
         $this->timestamp();
     }
 }

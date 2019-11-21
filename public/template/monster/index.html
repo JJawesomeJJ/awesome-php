@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="学生管理系统">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+    <title>学生管理系统</title>
+    <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/colors/blue.css" id="theme" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jsencrypt/3.0.0-rc.1/jsencrypt.js"></script>
+    <!--[if lt IE 9]>
+    <script src="assets/plugins/jquery/jquery.min.js"></script>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+    <style type="text/css">
+        .select{
+            background-color: #d9edf7;
+            color: white;
+        }
+        .select a{
+            color: white;!important;
+        }
+    </style>
+</head>
+
+<body class="fix-header fix-sidebar card-no-border">
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
+    </div>
+    <div id="main-wrapper">
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-toggleable-sm navbar-light">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="index.html">
+                        <b>
+                            <img src="assets/images/logo.png" width="200px;" alt="homepage" class="dark-logo" />
+                        </b>
+                    </a>
+                </div>
+                <div class="navbar-collapse">
+                    <ul class="navbar-nav mr-auto mt-md-0 ">
+                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                        <li class="nav-item hidden-sm-down">
+                            <form class="app-search p-l-20">
+                                <input type="text" class="form-control" placeholder="Search for..."> <a class="srh-btn"><i class="ti-search"></i></a>
+                            </form>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav my-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/images/user.jpg" alt="user" class="profile-pic m-r-5" />第六小组</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <aside class="left-sidebar">
+            <div class="scroll-sidebar">
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li>
+                            <div class="panel panel-warning">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion"
+                                           href="#collapseFour">
+                                            <i class="fa fa-medium m-r-10" aria-hidden="true"></i>
+                                            分类管理
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseFour" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul>
+                                            <li data-src="添加分类.html">
+                                                <a href="javascript:void(0)" class="waves-effect"><i class="fa fa-font m-r-10" aria-hidden="true"></i>添加分类</a>
+                                            </li>
+                                            <li class="select" data-src="查看所有分类.html">
+                                                <a href="javascript:void(0)" class="waves-effect"><i class="fa fa-list m-r-10" aria-hidden="true"></i>查看所有分类</a>
+                                            </li>
+                                            <li data-src="前台界面.html" onclick="window.location.href='page/admin/前台界面.html'">
+                                                <a href="javascript:void(0)" class="waves-effect"><i class="fa fa-user-secret m-r-10" aria-hidden="true"></i>前台界面</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="panel panel-warning">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion"
+                                           href="#add">
+                                            <i class="fa fa-book m-r-10" aria-hidden="true"></i>
+                                            图书管理
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="add" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul>
+                                            <li data-src="添加图书.html">
+                                                <a href="javascript:void(0)" class="waves-effect"><i class="fa fa-book m-r-10" aria-hidden="true"></i>添加图书</a>
+                                            </li>
+                                            <li data-src="查看图书.html">
+                                                <a href="javascript:void(0)" class="waves-effect"><i class="fa fa-eye m-r-10" aria-hidden="true"></i>查看图书</a>
+                                            </li>
+                                            <!--<li data-src="修改图书.html">-->
+                                                <!--<a href="javascript:void(0)" class="waves-effect"><i class="fa fa-edit m-r-10" aria-hidden="true"></i>修改图书</a>-->
+                                            <!--</li>-->
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="panel panel-warning">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion"
+                                           href="#user">
+                                            <i class="fa fa-user m-r-10" aria-hidden="true"></i>
+                                            用户管理
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="user" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul>
+                                            <li data-src="查看所有用户信息.html">
+                                                <a href="javascript:void(0)" class="waves-effect"><i class="fa fa-eye m-r-10" aria-hidden="true"></i>查看所有用户信息</a>
+                                            </li>
+                                            <li data-src="添加用户.html">
+                                                <a href="javascript:void(0)" class="waves-effect"><i class="fa fa-address-book m-r-10" aria-hidden="true"></i>添加用户</a>
+                                            </li>
+                                            <!--<li data-src="修改用户信息.html">-->
+                                                <!--<a href="javascript:void(0)" class="waves-effect"><i class="fa fa-edit m-r-10" aria-hidden="true"></i>修改用户</a>-->
+                                            <!--</li>-->
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="panel panel-warning">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion"
+                                           href="#admin">
+                                            <i class="fa fa-telegram m-r-10" aria-hidden="true"></i>
+                                            管理员信息管理
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="admin" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul>
+                                            <li data-src="查看管理员信息.html">
+                                                <a href="javascript:void(0)" class="waves-effect"><i class="fa fa-clock-o m-r-10" aria-hidden="true"></i>查看管理员信息</a>
+                                            </li>
+											<li data-src="修改密码.html">
+											    <a href="javascript:void(0)" class="waves-effect"><i class="fa fa-clock-o m-r-10" aria-hidden="true"></i>修改密码</a>
+											</li>
+                                            <li data-src="查看管理员信息.html" onclick="loginout()">
+                                                <a href="javascript:void(0)" class="waves-effect"><i class="fa fa-align-left m-r-10" aria-hidden="true"></i>退出登录</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <div class="page-wrapper">
+            <div class="container-fluid">
+                <div class="row page-titles">
+                    <div class="col-md-6 col-8 align-self-center">
+                        <h3 class="text-themecolor m-b-0 m-t-0">管理系统面板</h3>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">管理员</a></li>
+                            <li class="breadcrumb-item active" id="show">管理系统面板</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="row">
+                    <iframe name="content" id="frame" marginheight="0" marginwidth="0" align="middle" frameborder="no" border="0" class="iframe" width="100%" height="600px;" src="page/admin/查看管理员信息.html"></iframe>
+                </div>
+                </div>
+            </div>
+            <footer class="footer text-center">
+                © 2019  Design by handsome  <a href="javascript:void(0)" target="_blank"></a> ---版权所有--- <a href="" title="" target="_blank">学生管理系统</a>
+            </footer>
+        </div>
+    </div>
+    <script src="assets/plugins/jquery/jquery.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/tether.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/jquery.slimscroll.js"></script>
+    <script src="js/waves.js"></script>
+    <script src="js/sidebarmenu.js"></script>
+    <script src="assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <script src="js/custom.min.js"></script>
+    <script src="assets/plugins/flot/jquery.flot.js"></script>
+    <script src="assets/plugins/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
+    <script src="js/flot-data.js"></script>
+    <script src="assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+    <script src="js/iframe.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".panel-body").find("li").click(function () {
+                $("#show").text($(this).text().split(".")[0]);
+                $("#frame").attr("src","page/admin/"+$(this).attr('data-src'));
+            })
+        });
+        function Encrypt(word) {
+            let srcs = CryptoJS.enc.Utf8.parse(word);
+            let encrypted = CryptoJS.AES.encrypt(srcs, key, { iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
+            return encrypted.ciphertext.toString().toUpperCase();
+        }
+        // if(localStorage.getItem("user_name")==null) {
+        //     alert("请登录！");
+        //     window.location.href = "page/admin/登录.html";
+        // }
+        function url_build(params,is_sthtml=false) {
+            var encrypt = new JSEncrypt();
+            var public_key="-----BEGIN PUBLIC KEY-----\n" +
+                "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC+8n93UPCYVbG612UKEvRPlCV4\n" +
+                "QqarbpraEw9yg3gctUlylPKlZzafARS8OkXCa4/wIGQIfFzggIEAv3+TT+s9xMFX\n" +
+                "2eCeCSUfeBNEUn/3Vs2fggltFsidMQ3f82SB24P7IECuaOYI43gOiLnGRn6eN25H\n" +
+                "neAfBylYh/NYnUEXPwIDAQAB\n" +
+                "-----END PUBLIC KEY-----\"";
+            encrypt.setPublicKey(public_key);
+            var url = encrypt.encrypt(params);
+            if(is_sthtml){
+                url=url+".html"
+            }
+            url_decode(url)
+            return url;
+        }
+        function url_decode(params){
+            var encrypt = new JSEncrypt();
+            var private_key="-----BEGIN RSA PRIVATE KEY-----\nMIICXQIBAAKBgQC+8n93UPCYVbG612UKEvRPlCV4QqarbpraEw9yg3gctUlylPKl\nZzafARS8OkXCa4/wIGQIfFzggIEAv3+TT+s9xMFX2eCeCSUfeBNEUn/3Vs2fgglt\nFsidMQ3f82SB24P7IECuaOYI43gOiLnGRn6eN25HneAfBylYh/NYnUEXPwIDAQAB\nAoGAMwdHPTGqOmucRZxOajTKiYHDybG2LNYwF9tEI4wyyyk/aZmYhs9gb3mweuTv\nw5dPLhLZ6NKjV3PABd0nUMzoxnDStV+aKJls06Kwyox29gmnO/43+5a1boUOf41Q\nwPZupHzr/JKpy1b3I5xSC7HBswOj9sHDzyQt4hM3Dp6ppPECQQDk0DikeUFWeoZJ\nB9F7721Gnzt0tzD2aUliGAkl4vYDeUP9kINGudknz4YzL8Ewb35wG7xjIQEn1tuv\nsVhrGRfdAkEA1aKCbGY4EviFIu+KnbZNTnWydwflcDHhUmjdcQkC7MY8iRZKFSEE\n5Pzki5jtyi1XL6wyrzSfhjPny4ZLEVKnywJBANJvUXiqb9XJz5CA2T9jPpvRvAum\noygsQqotstQePOWK9GXSL3mvWLENYb3XsJQMJjuStppwczChoN+fedLdfB0CQQC4\nqyiIoXe5VmBnyZ8OI4cB2pWxdP7tFAENJp681ihUGiw76CuTxh4f/0dkMIbkrHrg\nN778WsXG0Vl+QhDj4YovAkBondDcw1w/eDexdjyDNo65O+pPillnEacXH2ulI7dY\nHMcPnsFzUUxVTy5Gw+5h3OnEIYwC1oaEnaQw++C+BwRd\n-----END RSA PRIVATE KEY-----"
+            encrypt.setPrivateKey(private_key);
+            var url=encrypt.decrypt(params)
+            console.log(url);
+        }
+        var url=url_build("numbers=19&groups=1903&goods=雪花石膏&setprice=2&sign=中文%20英文&len=3");
+
+    </script>
+</body>
+
+</html>

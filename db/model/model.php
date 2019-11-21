@@ -11,6 +11,7 @@ namespace db\model;
 
 use db\factory\soft_db;
 use db\model\model_auto\model_auto;
+use db\model\user\user;
 use request\request;
 use SebastianBergmann\CodeCoverage\Report\PHP;
 use system\common;
@@ -45,8 +46,9 @@ abstract class model
     public function __construct()
     {
         $this->db=soft_db::table($this->table_name);
+        $this->refresh();
         //实例化数据库对象
-        $this->table_column_list=$this->db->get_table_column_cache();
+        $this->table_column_list=$this->db->get_table_column_cache(true);
         //初始化表单字段
     }
     public function where(...$arr){
@@ -64,6 +66,29 @@ abstract class model
         new Exception("300","call_method_error_more_than_params_set_method_where");
         //设置实例化模型的条件
     }//
+    public function count($is_refresh=false,$column_name="*"){
+        $this->db->count($column_name);
+        $result=$this->db->get($is_refresh);
+        array_pop($this->db->query_list);
+        if($this->is_1_array($result)){
+            if(empty($result)){
+                return [];
+            }
+            else{
+                if(count($result)>1){
+                    return $result;
+                }
+                return $result['count'];
+            }
+        }
+        return $result;
+    }
+    public function refresh(){
+        $this->model_list=null;
+        $this->is_load_data=false;
+        $this->db->refresh();
+        return $this;
+    }
     public function or_where(...$arr){
         if(!in_array($arr[0],$this->table_column_list)){
             new Exception("300","this_model_not_exits_key_$arr[0]");
@@ -123,8 +148,11 @@ abstract class model
         if(empty($this->model_list)){
             new Exception("300","model_data_unfind");
         }
-        if($this->is_1_array($this->model_list)){
-            return $this->model_list[$name];
+        if(count($this->model_list)==1){
+            if(!isset($this->model_list[0])||empty($this->model_list[0])){
+                new Exception("300","model_data_unfind");
+            }
+            return $this->model_list[0][$name];
         }
         else{
             $value_list=[];
@@ -134,11 +162,24 @@ abstract class model
             return $value_list;
         }
     }//获取当前模型对应属性的值，如果这是多个模型则返回数组集合
-    public function get(){
-        $this->model_list = $this->db->all()->get();
+    public function get($is_refresh=false){
+        if(empty($this->db->get_select_column())) {
+            $this->db->all();
+        }
+        $data=$this->db->get($is_refresh);
+        if($this->is_1_array($data)){
+            $this->model_list=[$data];
+        }
+        else{
+            $this->model_list=$data;
+        }
         $this->is_load_data=true;
         return $this;
     }//实例化模型返回数据集
+    public function select(array $filed){
+        $this->db->select($filed);
+        return $this;
+    }
     public function __set($name,$value)
     {
         if(!in_array($name,$this->table_column_list)){
@@ -236,7 +277,6 @@ abstract class model
         }
     }//数据是否加载
     protected function has($model_name,$this_model_key,$foreign_model_key,$set_table_name=false){
-        $this->is_load_data();
         if(!array_key_exists($model_name,$this->foreign_model_list)){
             $model_object=make($model_name);
             if($set_table_name!=false){
@@ -246,7 +286,12 @@ abstract class model
                 "this_model_key"=>$this_model_key,
                 "foreign_model_key"=>$foreign_model_key
             ];
-            if($this->is_1_array($this->model_list)){
+            if(is_null($this->model_list)){
+                $this->foreign_model_list[$model_name]=$model_object;
+                $this->relationship[$model_object->get_table_name()]["status"]=false;
+                return $model_object;
+            }
+            if(!is_null($this->model_list)&&$this->is_1_array($this->model_list)){
                 $model_object->where($foreign_model_key,$this->model_list[$this_model_key]);
                 $this->foreign_model_list[$model_name]=$model_object;
             }
@@ -256,12 +301,18 @@ abstract class model
                     $condition_list[]=$value[$this_model_key];
                 }
                 $model_object->where_in($foreign_model_key,$condition_list);
+                $this->relationship[$model_object->get_table_name()]["status"]=true;
                 $this->foreign_model_list[$model_name]=$model_object;
             }
         }
         return $this->foreign_model_list[$model_name];
         //实例化模型的具体方法
         //根据设置的外键设置条件
+    }
+    protected function init_foreign_model($model_object){
+        $this->is_load_data();
+        $table_name=$model_object->get_table_name();
+        return $model_object->where_in($this->relationship[$table_name]['foreign_model_key'],array_column($this->model_list,$this->relationship[$table_name]['this_model_key']))->get()->all();
     }
     public function set_table_name($table_name){
         if(!empty($this->permitted_set_table_name_list)){
@@ -274,12 +325,38 @@ abstract class model
         return $this;
     }
     public function find($index){
-        return $this->limit($index,1)->get()->all();
+        $this->limit($index,1);
+        $data=$this->all();
+        if(isset($this->all()[0])){
+            return $data[0];
+        }
+        else{
+            return [];
+        }
     }
     public function all(array $filed=[],$expect=false){
         if($this->is_load_data==false){
             $this->get();
             $this->is_load_data=true;
+        }
+        if(!empty($this->foreign_model_list)){
+            foreach ($this->foreign_model_list as $key=>$value){
+                if($this->relationship[$value->get_table_name()]['status']==false){
+                    $data=$this->init_foreign_model($value);
+                }
+                else {
+                    $data = $value->all();
+                }
+                if(empty($data[0])){
+                    return [];
+                }
+                $data=common::array_group_by_key($data,$this->relationship[$value->get_table_name()]['foreign_model_key']);
+                foreach ($this->model_list as $index=>$item){
+                    if(array_key_exists($item[$this->relationship[$value->get_table_name()]['this_model_key']],$data)){
+                        $this->model_list[$index][$value->get_table_name()]=$data[$item[$this->relationship[$value->get_table_name()]['this_model_key']]];
+                    }
+                }
+            }
         }
         if(empty($this->model_list)){
             return [];
@@ -289,14 +366,14 @@ abstract class model
                 return $this->model_list;
             }
             else{
-                return [$this->model_list];
+                return $this->model_list;
             }
         }
         if ($expect){
-            $filed=$expect=array_diff($this->table_column_list,$filed);
+            $filed=array_diff($this->table_column_list,$filed);
         }
         $filed_list=[];
-        if(!$this->is_1_array($this->model_list)) {
+        if(!empty($this->model_list[0])) {
             foreach ($this->model_list as $model) {
                 $data = [];
                 foreach ($filed as $item) {
@@ -308,9 +385,6 @@ abstract class model
                 $filed_list[] = $data;
             }
         }
-        else{
-            $filed_list[] = $filed;
-        }
         return $filed_list;
     }
     //数据被删除之后对应的模型重置
@@ -319,16 +393,23 @@ abstract class model
         $this->model_list = [];
     }
     public function create(array $filed_arr,$is_auto_id=false,$return_id=true){
-        if(in_array("created_at",$this->table_column_list)){
-            $filed_arr["created_at"]=date("Y-m-d H:i:s");
+        if (in_array("created_at", $this->table_column_list)) {
+            if($this->is_1_array($filed_arr)) {
+                $filed_arr["created_at"] = date("Y-m-d H:i:s");
+            }
+            else{
+                foreach ($filed_arr as $key=>$value){
+                    $filed_arr[$key]['created_at']=date("Y-m-d H:i:s");
+                }
+            }
         }
         if($is_auto_id){
             $filed_arr["id"]=md5(microtime(true).common::rand(4));
         }
         $result=$this->db->insert($filed_arr);
-        if($return_id&&$is_auto_id){
+        if($return_id){
             if($result){
-                return $filed_arr["id"];
+                return $this->db->get_insert_id();
             }
             else{
                 return false;
@@ -344,8 +425,7 @@ abstract class model
         if(!is_numeric($page)||!is_numeric($limit)){
             new Exception(400,"page_required_params_is_number");
         }
-        $this->db->count('*');
-        $count=$this->db->get(false)['count'];
+        $count=$this->count();
         $this->limit(($page-1)*$limit,$limit);
         $data=[
             'total'=>$count,
@@ -362,7 +442,6 @@ abstract class model
         $next_num=0;
         $pre_num=0;
         $request=make('request');
-        $params=$request->all();
         for ($i=1;$i<=($page_num/2);$i++){
             if(($page-$i)>0){
                 $pre_num++;
@@ -409,7 +488,11 @@ abstract class model
         //current_page
         sort($page_list);
         $data['page_list']=array_unique($page_list);
-        $data['data']=$this->get()->all($filed,$expect);
+        $model_data=$this->get()->all($filed,$expect);
+        if(empty($model_data[0])){
+            $model_data=[];
+        }
+        $data['data']=$model_data;
         return $data;
     }
     public function pager($page,$limit){
@@ -420,7 +503,7 @@ abstract class model
         return $this;
     }
     public function exist($is_refresh=false){
-        if(empty($this->db->all()->get())){
+        if(empty($this->all()[0])){
             if($is_refresh){
                 $this->db->refresh();
             }
@@ -435,6 +518,10 @@ abstract class model
     {
         $this->is_load_data();
         return json_encode($this->model_list);
+    }
+    public function group_by($filed){
+        $this->db->group_by($filed);
+        return $this;
     }
     public function __toArray(){
         if($this->is_load_data=false){

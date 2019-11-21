@@ -18,7 +18,7 @@ require_once __DIR__."/../../../load/auto_load.php";
 },"24:00",86400);
 \task\queue\timed_task::add_closure_timed_task("clear_expired_picture",function (){
     $file=new \system\file();
-    $picture_list=$file->file_walk("/var/www/html/image/code_drop/");
+    $picture_list=$file->file_walk(\system\config\config::env_path()."public/image/code_drop");
     foreach ($picture_list as $name){
         $time=basename($name);
         $time=str_replace(".jpg","",$time);
@@ -47,7 +47,8 @@ require_once __DIR__."/../../../load/auto_load.php";
         foreach ($file_list as $file_name){
             if(($md=$cache->get_non_exist_set($file_name,function () use ($file_name){
                     echo "文件未加载跳过".PHP_EOL;
-                    return md5_file($file_name);},'forever',false,false))===true){
+                    return md5_file($file_name);
+                    },'forever',false,false))===true){
                 continue;
             }
             if($md!=($md5=md5_file($file_name))){
@@ -59,11 +60,11 @@ require_once __DIR__."/../../../load/auto_load.php";
     }
     if($is_dev){
         $http=new \system\http();
-        $http->post("http://".\system\config\config::server()["host_ip"].":9555",["password"=>19971998]);
+        $http->post(\system\config\config::server()["host_ip"].":9555/123",["password"=>19971998]);
         echo "load";
         $is_dev=false;
     }
-},"11:06",60);
+},"11:27",60);
 //\task\queue\timed_task::add_closure_timed_task("dev",,"15:00",86400);
 //\task\queue\timed_task::add_closure_timed_task("send_email_2_3",function (){
 //    $user=new \db\model\user\user();
@@ -79,3 +80,20 @@ require_once __DIR__."/../../../load/auto_load.php";
         $email->send_email('1293777844@qq.com',$response,'server_error_service_monitor_jj_awesome');
     }
 },"11:15",60*10);
+\task\queue\timed_task::add_closure_timed_task('refresh_news_likes',function (){
+    $redis=\system\class_define::redis();
+    $data=$redis->hGetAll("news_cache_record");
+    foreach ($data as $key=>$value){
+        if($value+60*60*24<time()){
+            $commnet_list=$redis->hGetAll($key);
+            foreach ($commnet_list as $comment){
+                if(!isset($comment['form'])){//数据从未更新入库
+                    $comment_object=new \db\model\comment_list\comment_list();
+                    $comment_object->create($comment);
+                }
+            }
+            $redis->hDel("news_cache_record",$key);
+            $redis->del($key);
+        }
+    }
+},"23:00",60*60*24);//24小时更新一次释放缓存

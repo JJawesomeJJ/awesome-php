@@ -92,7 +92,7 @@ class upload_file
         return $this;
     }
     public function max_size($max){
-        if($this->get_file_size()>$max){
+        if(($this->get_file_size())/1024>$max){
             new Exception('403','file_more_than_max_input');
         }
         return $this;

@@ -48,4 +48,8 @@ class session
         self::init();
         unset($_SESSION[$name]);
     }
+    public static function all(){
+        self::init();
+        return $_SESSION;
+    }
 }

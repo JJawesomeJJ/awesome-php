@@ -8,10 +8,7 @@
 
 namespace routes;
 //the route entrance should design as resetful api style url=>resource the http request mothod as ["get","post","put","delete"]
-use controller\park\park_controller;
 use request\request;
-use template\compile;
-
 routes::post("user/login","auth_controller@user_login")->middleware("limit_flow_middleware","ip_limit",50);
 routes::post("user/server","auth_controller@request_connect_websocket");
 routes::get("user/head_img","auth_controller@get_head_img");
@@ -39,6 +36,7 @@ routes::post("post/reply","post_controller@reply");
 routes::get("post/get_comment","post_controller@get_comment");
 routes::get("xiaoer","index_controller@index");
 routes::get("post/news","post_controller@get_news_content");
+routes::get("post/likes","post_controller@likes");
 routes::post("user/reset","auth_controller@reset_password")->middleware('limit_flow_middleware','ip_limit',50);
 routes::put("user/reset","auth_controller@update_password");
 routes::get("user/reset","auth_controller@reset_password_page");
@@ -63,9 +61,6 @@ routes::get("admin/control/{service}","admin_user_controller@system_controller_p
 routes::post("admin/service","admin_user_controller@start_service");
 routes::post("admin/service/restart","admin_user_controller@restart_service");
 routes::post("admin/service/close","admin_user_controller@abort_service");
-//routes::post("admin/{service}/{operate}",function (){
-//
-//});
 routes::get("admin/service/status","admin_user_controller@get_all_service_info");
 routes::get("system/notify/list","test_controller@test");
 routes::get("test/{name}/{password}",function (request $request){
@@ -89,3 +84,33 @@ routes::post("park/start","park_controller@start_park");
 routes::post("park/stop","park_controller@stop_park");
 routes::get("park/oder","park_controller@get_oder");
 routes::get("park/status","park_controller@get_current_money");
+routes::get('jquery/{user_id}/{sex}',function (request $request){
+   $request=make('request');
+   print_r($request->all());
+   return microtime(true)-$GLOBALS['time'];
+});
+routes::get("pay/alipay","pay_controller@alipay");
+routes::get('shop/index','shop_controller@index');
+routes::get('shop/login','shop_controller@login');
+routes::post('shop/request','shop_controller@get_request_info');
+routes::get('shop/table','shop_controller@table');
+routes::post('shop/categories','categories_controller@categories');
+routes::get('shop/goods','goods_controller@import_goods');
+routes::get('shop/categories/list','categories_controller@parents');
+routes::any('shop/categories/children','categories_controller@get_children_catalog');
+routes::post('shop/goods/num','goods_controller@goods_num');
+routes::get('shop/goods/list','goods_controller@goods');
+routes::get('shop/loginout','shop_controller@loginout');
+routes::get('shop/goods/update','goods_controller@update');
+routes::get('view',function (){
+    return view("video");
+});
+routes::get('user/user_info','auth_controller@user_info');
+routes::get('native/type','native_controller@get_native_type');
+routes::post('native/start','native_controller@start')->middleware("limit_flow_middleware","ip_limit",200);
+routes::get('native/online','native_controller@get_online_list');
+routes::get('native/online_type','native_controller@type');
+routes::get('native/banner','native_controller@banner');
+routes::get('native/index',function (){
+    return view("native/native_view");
+});

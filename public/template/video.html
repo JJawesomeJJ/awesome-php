@@ -93,10 +93,10 @@
     function get_canvas_to_base64() {
         task_flag=setInterval(function () {
             context1.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-            ws.send(JSON.stringify({"type":"base64","base64":canvas1.toDataURL('image/jpeg',0.4)}));
-        },200);
+            ws.send(JSON.stringify({"type":"base64","base64":canvas1.toDataURL('image/jpeg',0.6)}));
+        },100);
     }
-    var ws = new WebSocket("ws://39.108.236.127:9501");
+    var ws = new WebSocket("ws:47.240.79.244:9501");
 
     ws.onopen = function()
     {

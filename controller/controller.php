@@ -7,6 +7,7 @@
  */
 namespace controller;
 use load\provider;
+use load\provider_register;
 use request\request;
 use system\cache\cache;
 
@@ -20,7 +21,7 @@ class controller
         $this->construct();
     }
     public function middlware($middlware){
-        return provider::provider()->middleware($middlware,$this->request());
+        return provider_register::provider()->middleware($middlware,$this->request());
     }
     public function construct(){
 

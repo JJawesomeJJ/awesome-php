@@ -14,6 +14,8 @@ use db\model\comment_list\comment_list;
 use db\model\model;
 use db\model\model_auto\model_auto;
 use db\model\park\map;
+use db\model\shop\categories;
+use db\model\shop\goods;
 use db\model\user\user;
 use load\auto_load;
 use load\provider;
@@ -23,6 +25,7 @@ use SebastianBergmann\CodeCoverage\Report\PHP;
 use function Sodium\crypto_pwhash_scryptsalsa208sha256;
 use SuperClosure\Serializer;
 use system\cache\cache;
+use system\cache\cache_;
 use system\class_define;
 use system\common;
 use system\config\config;
@@ -34,17 +37,20 @@ use system\excel;
 use system\file;
 use system\http;
 use system\mail;
+use system\pay\alipay;
+use system\redis;
 use system\session;
 use system\system_excu;
 use system\upload_file;
 use task\job\asyn_queue;
 use task\queue\queue;
+use task\rabbitmq;
 use template\compile;
 use template\compile_parse;
 
 class index_controller extends controller
 {
-    public function index(request $request)
+    public function index(request $request,user $user)
     {
 //        return $this->get_user_ip();
 //        $db=new db();
@@ -251,9 +257,179 @@ class index_controller extends controller
 //            $email=new \system\mail();
 //            $email->send_email('1293777844@qq.com',$response,'server_error');
 //        }
-          $brand=model_auto::model('brand_brand');
-          $data=$brand->where('getprice','<',100)->page($request->get('page',227),20);
-          $time=microtime(true);
-          return view('news/news_list',["page"=>$data]);
+//          $brand=model_auto::model('brand_brand');
+//          $data=$brand->where('getprice','<',100)->page($request->get('page',227),20);
+//          $time=microtime(true);
+//          return view('news/news_list',["page"=>$data]);
+//        $categories = [
+//            [
+//                'name'     => '手机配件',
+//                'children' => [
+//                    ['name' => '手机壳'],
+//                    ['name' => '贴膜'],
+//                    ['name' => '存储卡'],
+//                    ['name' => '数据线'],
+//                    ['name' => '充电器'],
+//                    [
+//                        'name'     => '耳机',
+//                        'children' => [
+//                            ['name' => '有线耳机'],
+//                            ['name' => '蓝牙耳机'],
+//                        ],
+//                    ],
+//                ],
+//            ],
+//            [
+//                'name'     => '电脑配件',
+//                'children' => [
+//                    ['name' => '显示器'],
+//                    ['name' => '显卡'],
+//                    ['name' => '内存'],
+//                    ['name' => 'CPU'],
+//                    ['name' => '主板'],
+//                    ['name' => '硬盘'],
+//                ],
+//            ],
+//            [
+//                'name'     => '电脑整机',
+//                'children' => [
+//                    ['name' => '笔记本'],
+//                    ['name' => '台式机'],
+//                    ['name' => '平板电脑'],
+//                    ['name' => '一体机'],
+//                    ['name' => '服务器'],
+//                    ['name' => '工作站'],
+//                ],
+//            ],
+//            [
+//                'name'     => '手机通讯',
+//                'children' => [
+//                    ['name' => '智能机',
+//                        'children' => [
+//                            ['name' => 'oppo'],
+//                            ['name' => 'vivo'],
+//                            ['name' => 'Apple'],
+//                            ['name' => 'HUAWEI'],
+//                            ['name' => 'MI',
+//                                'children' => [
+//                                    ['name' => 'redmi'],
+//                                    ['name' => 'xiaomi'],
+//                                ],
+//                            ],
+//                    ],
+//                    ['name' => '老人机'],
+//                    ['name' => '对讲机'],
+//                ],
+//            ],
+//        ]];
+//        $categories=json_decode($categories,true);
+//        print_r($categories);
+//        $categories_model=new categories();
+//        $categories_model->delete();
+//        $categories_model->add_categories($categories);
+//        print_r($categories_model->all());
+//        print_r($categories_model->get_categories());
+//        print_r($categories_model->get_categories());
+//        return microtime(true)-start_at;
+//        $pay=new alipay();
+//        $pay->pay();
+//        $user->where('name','赵李杰');
+//        $user->comment_list()->update();
+//        print_r($user->all());
+//        $goods=new goods();
+//        $data=$goods->where_in('name',['分期','定金','','全款'])->delete();
+//        print_r($data->all());
+//        $goods->refresh();
+//        foreach ($data as $item){
+//            $goods->where('id',$item['id'])->update(['name'=>$item['title'],'description'=>$item['title']]);
+//            $goods->refresh();
+//        }
+//        print_r($goods->where_like('name','¥')->get()->all());
+//        ini_set('memory_limit','3072M');
+//        $goods=new goods();
+//        return $goods->count();
+//        echo 'hello word';
+//        return microtime(true)-start_at;
+//        soft_db::table('admin')
+//            ->integer('id',10,'not null',true,true)
+//            ->string('name','50','not null')
+//            ->string('tel',11)->unique()
+//            ->string('login_number',50)
+//            ->string('password',50)
+//            ->create();
+//        soft_db::table('student')
+//            ->integer('id',4,'not null',true,true)
+//            ->string('s_no',20)->unique()
+//            ->string('name',30)
+//            ->integer('age',4)
+//            ->string('tel',11)->unique()
+//            ->datetime('into_school')
+//            ->string('college',30)
+//            ->string('major',30)
+//            ->string('class',30)
+//            ->create();
+//        queue::asyn(function (){
+//            $mail=new mail();
+//            $mail->send_email("1293777844@qq.com","test","jjawesome");
+//        });
+//        echo \system\config\config::server()["host_ip"].PHP_EOL;
+//        $http=new http();
+//        $http->post(\system\config\config::server()["host_ip"].":9555/123",["password"=>19971998]);
+//        print_r(class_define::redis()->get("timed_task"));
+//        $mail=new mail();
+//        $mail->send_email("1293777844@qq.com","fsadf","j");
+//        $rabbitmqp=new rabbitmq();
+//        $rabbitmqp->push('test','asd',"heoolo");
+//        $rabbitmqp->block_handle("test",'test','',function (){
+//            echo "load";
+//        });
+//        while (($message=$rabbitmqp->get('test','asd'))){
+//            echo $message.PHP_EOL;
+//        }
+//        print_r($user->where_bettween("created_at","2019-06-25 22:26:23","2019-07-09 15:14:38")->all());
+//        $user->create([
+//            "name"=>"jjawesome1",
+//            "password"=>12255224,
+//            "email"=>"2763553967@qq.com",
+//            "sex"=>"man",
+//        ],true);
+//        print_r($user->where("created_at",">","2019-06-29 09:02:40")->count());
+//        print_r($user->all());
+//        return microtime(true)-start_at;
+//        $catalog=new goods();
+//        print_r($catalog->where('level',1)->or_where('level',2)->count(true));
+//        print_r($catalog->where('level',1)->all());
+//        return $catalog->where("najjme",123)->page($request->get("page",1),1000);
+//        print_r(class_define::redis()->hGetAll("news_info_https://news.sina.cn/gn/2019-10-09/detail-iicezuev0947649.d.html?&cid=56261"));
+//        foreach (class_define::redis()->hGetAll("news_cache_record") as $key=>$value){
+//            class_define::redis()->del($key);
+//        }
+//        $file=new \system\file();
+//        $picture_list=$file->file_walk(\system\config\config::env_path()."public/image/code_drop");
+//        foreach ($picture_list as $name){
+//            $time=basename($name);
+//            $time=str_replace(".jpg","",$time);
+//            $time=preg_replace("/_(.*?)_/","",$time);
+//            if(is_numeric($time)&&strlen($time)==10){
+//                if(time()-$time>3600) {
+//                    $file->delete_file($name);
+//                }
+//            }
+//        }
+//        return session::all();
+//        return encrypt::rsa_encrypt("test");
+//        return view("monster/index");
+//        return "错误了哦";
+////        return microtime(true)-start_at;
+//        $super=new Serializer();
+//        $close=$super->serialize(function ()use ($user){
+//            print_r($user->all());
+//        });
+//
+//        call_user_func($super->unserialize($close));
+        cache_::set_cache("test","123",60);
+        echo cache_::get_cache("test").PHP_EOL;
+        echo microtime(true)-start_at;
     }
+
 }
