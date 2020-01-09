@@ -247,4 +247,7 @@ class common
         }
         return $data;
     }
+    public static function unique_key(){
+        return md5(microtime(true).self::rand(15));
+    }
 }

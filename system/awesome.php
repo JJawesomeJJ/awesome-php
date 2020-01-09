@@ -8,6 +8,7 @@
 namespace system;
 
 
+use app\ServiceProvider;
 use load\auto_load;
 use load\provider;
 use load\provider_register;
@@ -103,14 +104,13 @@ class awesome
 */
 namespace load;
 use http;
-use controller;
 require_once __DIR__.\"/\".\"provider.php\";
 class provider_register extends provider
 {
     protected static \$object;
     protected function __construct()
     {
-
+        parent::__construct();
     }
     public static function provider(){
         if(is_null(self::\$object)){
@@ -127,7 +127,7 @@ class provider_register extends provider
     protected \$dependencies=[];
 }";
         $home_path = dirname(dirname(__FILE__));
-        $controller_path = "$home_path/controller/";
+        $controller_path = "$home_path/".config::depenendcies()['controller'];
         $middlerware_path = "$home_path/http/middleware/";
         $file = new file();
         $middlerware_list = [];
@@ -163,7 +163,7 @@ class provider_register extends provider
         $this->cli_echo_color_yello("provider_has_been_updated");
     }
 
-    private function make($operate_type, $params)
+    private function make($operate_type, $params='')
     {
         switch ($operate_type) {
             case "controller":
@@ -175,8 +175,95 @@ class provider_register extends provider
             case "model":
                 $this->create_model($params);
                 break;
+            case "event":
+                $this->create_event($params);
+                break;
             default:
                 break;
+        }
+    }
+    public function create_service($params){
+
+    }
+    public function create_event($params){
+        $listener_tpl='<?php
+/**
+ * Created by awesome-cli.
+ * User: Administrator
+ * Date: {{time}}
+ */
+namespace {{namespace}}
+use {{event_path}}
+use system\kernel\event\EventListener;
+
+class {{Listener}} extends EventListener
+{
+    public function handle({{event}} $event)
+    {
+        
+    }
+}';
+        $event_tpl='<?php
+/**
+ * Created by awesome-cli.
+ * User: Administrator
+ * Date: {{time}}
+ */
+namespace {{namespace}}
+use system\kernel\Chanel\Channel;
+use system\kernel\event\Event;
+
+class {{event}} extends Event
+{
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    /*
+    @Description the event should be broadcast 
+    @params Channel($channel_name,$params)
+    */
+     public function ShouldBroadcast()
+    {
+        return new Channel(false);
+    }
+}';
+        $event_list=ServiceProvider::event();
+        $env_path=config::env_path();
+        foreach ($event_list as $key=>$value){
+            $file_path=$env_path.'/'.$key.".php";
+            if(!is_file($file_path)){
+                if(!is_dir(dirname($file_path))){
+                    mkdir(dirname($file_path));
+                }
+                $name_list=explode('\\',$key);
+                $event_tpl_rel=$this->replace([
+                    'time'=>date('Y-m-d H:m:s'),
+                    'namespace'=>substr($key,0,strripos($key,'\\')?strripos($key,'\\'):strlen($key)).';',
+                    'event'=>$name_list[count($name_list)-1]
+                ],$event_tpl);
+                file_put_contents($file_path,$event_tpl_rel);
+                $this->cli_echo_color_blue("event $key has been created");
+            }
+            foreach ($value as $listener){
+                $file_path=$env_path.'/'.$listener.".php";
+                $name_list=explode('\\',$listener);
+                if(!is_file($file_path)) {
+                    if (!is_dir(dirname($file_path))) {
+                        mkdir(dirname($file_path));
+                    }
+                    $event_name_list=explode('\\',$key);
+                    $listener_tpl_rel=$this->replace([
+                        'time'=>date('Y-m-d H:m:s'),
+                        'namespace'=>substr($listener,0,strripos($listener,'\\')?strripos($listener,'\\'):strlen($listener)).';',
+                        'event'=>$event_name_list[count($event_name_list)-1],
+                        'Listener'=> $name_list[count($name_list)-1],
+                        'event_path'=>$key.';'
+                    ],$listener_tpl);
+                    file_put_contents($file_path,$listener_tpl_rel);
+                    $this->cli_echo_color_green("Listener $listener has been created");
+                }
+            }
         }
     }
     public function create_model($name){
@@ -208,11 +295,11 @@ class $controller_name extends model
     private function create_controller($name)
     {
         $name=str_replace("\\","/",$name);
-        $controller_path = $this->home_path . "controller/" . $name . ".php";
+        $controller_path = $this->home_path .config::depenendcies()['controller'] . $name . ".php";
         $time = date('Y-m-d h:i:s', time());
         $arr = explode("/", $name);
         $controller_name = $arr[count($arr) - 1];
-        $namespace = "controller";
+        $namespace = "app\controller";
         for ($i = 0; $i < count($arr) - 1; $i++) {
             $namespace .= "\\" . $arr[$i];
         }
@@ -222,8 +309,7 @@ class $controller_name extends model
  * Date: $time
  */
 namespace $namespace;
-use controller\controller;
-use request\\request;
+use app\controller\controller;
 class $controller_name extends controller
 {
 
@@ -360,7 +446,7 @@ class $middleware_name extends middleware
         $file=new file();
         $dependencies_string=$this->load_dependencies(config::depenendcies());
         $provider_register=$file->read_file($this->home_path."/load/provider_register.php");
-        $dependencies_string=preg_replace("/protected \\\$dependencies([\s\S])*?];/",$dependencies_string,$provider_register);
+        $dependencies_string=preg_replace("/protected \\\$dependencies([\s\S]*?)];/",$dependencies_string,$provider_register);
         preg_match_all("/namespace load([\s\S]*?)class/",$dependencies_string, $matchs, PREG_SET_ORDER);
         $name_space_=substr($matchs[0][0],0,strlen($matchs[0][0])-5);
         $name_space=$name_space_;
@@ -413,7 +499,7 @@ class $middleware_name extends middleware
     }
     protected function replace(array $params,$template){
         foreach ($params as $key=>$value){
-            $template=str_replace("{{{$key}}}","\"$value\"",$template);
+            $template=str_replace("{{{$key}}}",$value,$template);
         }
         return $template;
     }
@@ -516,5 +602,50 @@ class $middleware_name extends middleware
 //                }
 //            }
 //        }
+    }
+    public function task(...$arr){
+        switch ($arr[0]){
+            case "show":
+                foreach (\system\config\queue::queue_handle() as $key=>$value){
+                    if(system_excu::get_process_status($key)){
+                        $this->cli_echo_color_green("process $key is already running!");
+                    }
+                    else{
+                        $this->cli_echo_color_red("process $key is not start!!");
+                    }
+                }
+                break;
+            case "start":
+                $task_list=array_keys(\system\config\queue::queue_handle());
+                if(isset($arr[1])){
+                    $task_list=[$arr[1]];
+                }
+                foreach ($task_list as $item) {
+                    if (system_excu::get_process_status($item)) {
+                        $this->cli_echo_color_yello("$item is alreay running!");
+                    } else {
+                        if (!is_file(\system\config\queue::queue_handle()[$item])) {
+                            new Exception('403', "$item is not a file");
+                        }
+//                        echo \system\config\queue::queue_handle()[$item];
+                        echo $item.PHP_EOL;
+                        system_excu::excu_asyn(\system\config\queue::queue_handle()[$item]);
+                    }
+                }
+                break;
+            case "stop":
+                $task_list=array_keys(\system\config\queue::queue_handle());
+                if(isset($arr[1])){
+                    $task_list=[$arr[1]];
+                }
+                foreach ($task_list as $item) {
+                    if(system_excu::kill_task($item)) {
+                        $this->cli_echo_color_blue("process $item has been killed");
+                    }
+                }
+                break;
+            default:
+                break;
+        }
     }
 }

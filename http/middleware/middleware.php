@@ -23,6 +23,7 @@ abstract class middleware
     {
         $this->request_=$request;
         $this->user_input=$request->all();
+        $this->check();
     }
     public function xxs_filter(){
         $black_list=array(
@@ -59,7 +60,6 @@ abstract class middleware
         }
     }
     public function next(){
-        $this->request()->user_input=$this->user_input;//return userinput which has been handled by this middleware
-        return $this->request();
+
     }
 }

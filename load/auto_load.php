@@ -12,7 +12,7 @@ use system\cache\cache;
 use system\config\config;
 use system\Exception;
 use system\file;
-
+//require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__."/"."provider_register.php";
 require_once dirname(__DIR__)."/"."system/config/config.php";
 class auto_load
@@ -24,7 +24,6 @@ class auto_load
         $this->provider=\load\provider_register::provider();
         $this->file_path = str_replace("\\","/",dirname(__DIR__))."/";
         spl_autoload_register(function ($class){
-//            echo $class."<br>";
             $file = str_replace('\\','/',$this->file_path.$class . '.php');
             if (is_file($file)) {
                 require_once(@$file);

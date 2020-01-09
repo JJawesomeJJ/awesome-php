@@ -8,21 +8,10 @@
     </style>
 </head>
 <body>
-@component(component/header/header)
+@foreach($data as $item)
+@component(component/test/test,$item)
+@endforeach
 </body>
 <script>
-    function Car(color,door){
-        var ocar = new Object;
-        ocar.color = color;
-        ocar.doors = door;
-        ocar.showColor = function(){
-            document.write(this.color)
-        };
-        return ocar;
-    }
-    var car1 = Car("red",4);
-    var car2 = Car("blue",4);
-    car1.showColor() //output:”red”
-    car2.showColor() //output:”blue”
 </script>
 </html>

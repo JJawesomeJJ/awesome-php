@@ -12,16 +12,16 @@ function make($class_name)
 {
     return \load\provider_register::provider()->make($class_name);
 }
-function app(){
-    if(!isset($GLOBALS["app"])){
-        $app=new \load\app();
-        $GLOBALS["app"]=$app;
-        return $app;
-    }
-    else{
-        return $GLOBALS["app"];
-    }
-}
+//function app(){
+//    if(!isset($GLOBALS["app"])){
+//        $app=new \load\app();
+//        $GLOBALS["app"]=$app;
+//        return $app;
+//    }
+//    else{
+//        return $GLOBALS["app"];
+//    }
+//}
 function view($path,$data=[]){
 //    if(!isset($GLOBALS["compile"])){
 //        $GLOBALS["compile"]=new \template\compile();
@@ -43,4 +43,10 @@ function is_cli()
 }
 function index_path(){
     return \system\config\config::index_path();
+}
+function event($event_name){
+    \system\kernel\event\event_system::SingleTon()->trigger($event_name);
+}
+function app(){
+    return \load\provider_register::provider();
 }

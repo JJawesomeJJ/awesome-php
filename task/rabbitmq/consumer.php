@@ -7,12 +7,12 @@
  */
 
 namespace task\rabbitmq;
-
-use system\Exception;
-use task\rabbitmq;
-
 require_once __DIR__."/../../load/auto_load.php";
 require_once __DIR__."/../../load/common.php";
+use system\Exception;
+use system\system_excu;
+use task\rabbitmq;
+
 abstract class consumer
 {
     protected $rabbitmq;
@@ -27,7 +27,13 @@ abstract class consumer
         if(is_null($this->queue_name)){
             new Exception("500",'queue_name should be rewrite!');
         }
+        system_excu::record_my_pid(__FILE__);
         $this->rabbitmq=new rabbitmq();
+        $this->rabbitmq->exchange($this->exchage_name,$this->queue_name);
+        $this->rabbitmq->block_handle($this->exchage_name,$this->queue_name,$this->route_key,function ($envelope,$queue){
+            $this->handle($envelope->getBody());
+            $queue->ack($envelope->getDeliveryTag());
+        });
     }
     public function get($queue_name,$exchage_name,$route_key){
         if(!is_cli()){
@@ -40,5 +46,6 @@ abstract class consumer
         $msg = $envelope->getBody();
         $queue->ack($envelope->getDeliveryTag());
     }
-    abstract function handle();
+    abstract function handle($msg);
+
 }

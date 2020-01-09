@@ -3,12 +3,13 @@
  * Created by PhpStorm.
  * User: Administrator
  * Date: 2019/9/24 0024
- * Time: 上午 8:38
+ * Time: 涓婂崍 8:38
  */
 
 namespace task;
 
 
+use SuperClosure\Serializer;
 use system\Exception;
 use task\queue\queue;
 
@@ -25,6 +26,8 @@ class rabbitmq
     protected static $queue_object=[];
     protected static $exchage_object=[];
     protected $channel;
+    protected $delay_exchange_name="delay_exchange_name_";
+    protected $delay_queue_name="delay_queue_name_";
     protected $exchange;
     public function __construct()
     {
@@ -48,8 +51,20 @@ class rabbitmq
         self::$exchage_object[$key]=$exchange;
         return $exchange;
     }
-    public function push($exchange_name,$queue_name,$message,$router_key=''){
-        $this->exchange($exchange_name,$queue_name,$router_key)->publish($message,$router_key);
+    public function push($exchange_name,$queue_name,$message,$router_key='',$delay_time=false){
+        if(is_numeric($delay_time)){
+            $data=[
+                "exchange_name"=>$exchange_name,
+                "queue_name"=>$queue_name,
+                "msg"=>$message,
+                "created_at"=>time(),
+                "router_key"=>$router_key,
+                "delay_time"=>$delay_time
+            ];
+            return $this->exchange($this->delay_exchange_name,$this->delay_queue_name)->publish(json_encode($data));
+        }else {
+            return $this->exchange($exchange_name, $queue_name, $router_key)->publish($message, $router_key);
+        }
     }
     public function get_message_num($queue_Name,$router_key=''){
         $queue = new \AMQPQueue($this->connection);
@@ -76,7 +91,7 @@ class rabbitmq
             new Exception('500','block handle way can not use in fpm');
         }
         $queue=$this->queue($queue_name,$exchage_name,$route_key);
-        $queue->consume($fuc,AMQP_AUTOACK);
+        $queue->consume($fuc);
     }
     public function get($exchage_name,$queue_name,$route_key=''){
         $queue=$this->queue($queue_name,$exchage_name,$route_key);
@@ -87,6 +102,6 @@ class rabbitmq
         return null;
     }
     public function handle($envelope, $queue){
-        
+
     }
 }

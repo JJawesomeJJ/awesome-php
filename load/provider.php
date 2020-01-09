@@ -7,9 +7,10 @@
  */
 
 namespace load;
+use app\providers\AppServiceProvider;
 use http;
-use controller;
 use request\request;
+use system\config\config;
 use system\Exception;
 
 class provider
@@ -18,17 +19,20 @@ class provider
     protected $controller=[];
     protected $dependencies=[];
     protected $container=[];
+    protected $class_factory=[];
     public function controller($controller_name,$params=false){
-//        if($params==false) {
-//            return new $this->controller[$controller_name]();
-//        }
-//        else{
-//            return new $this->controller[$controller_name]($params);
-//        }
         return $this->controller[$controller_name];
     }
     public function get_dependencies(){
         return $this->dependencies;
+    }
+    protected function __construct()
+    {
+    }
+    public function ServiceProvider(){
+        foreach (config::provider() as $item){
+            $this->make($item)->register();
+        }
     }
     public function middleware($middleware,$request){
         if(isset($this->controller[$middleware])){
@@ -40,60 +44,56 @@ class provider
     }
     public function make($class_name)
     {
+        if(array_key_exists($class_name,$this->container)){
+            return $this->container[$class_name];
+        }
+        $needs_class=[];
+        if(!class_exists($class_name)){
+            if(array_key_exists($class_name,$this->dependencies)){
+                $class_name=$this->dependencies[$class_name];
+            }else{
+                new Exception(404,"Class $class_name Not Find");
+            }
+        }
         if (array_key_exists($class_name, $this->container)) {
             return $this->container[$class_name];
         }
-        $object=null;
-        $class_name_fact=null;
-        try {
-            if (array_key_exists($class_name, $this->dependencies)) {
-                try {
-                    $object = new \ReflectionClass($this->dependencies[$class_name]);
-                    $class_name_fact = $this->dependencies[$class_name];
+        if(array_key_exists($class_name,$this->class_factory)){
+            $info=$this->class_factory[$class_name];
+            if($info['closure'] instanceof \Closure) {
+                $object = call_user_func($info['closure']);
+                if ($info['is_singleton']) {
+                    $this->container[$class_name] = $object;
                 }
-                catch (\Throwable $throwable){
-                    $object = new \ReflectionClass("/".$this->dependencies[$class_name]);
-                    $class_name_fact = $this->dependencies[$class_name];
+                return $object;
+            }
+            else{
+                $class_object=new \ReflectionClass($class_name);
+                $params_list=$this->get_class_contruct_params($class_object);
+                $this_needs_params=[];
+                foreach ($params_list as $item){
+                    $this_needs_params[]=$this->make($item);
                 }
-            } else {
-                if(!class_exists($class_name)) {
-                    $object = new \ReflectionClass("\\$class_name");
-                    $class_name_fact = "\\$class_name";
-                }else{
-                    $object = new \ReflectionClass("$class_name");
-                    $class_name_fact = "$class_name";
+                $class_object->newInstanceArgs($this_needs_params);
+                if($info['is_singleton']){
+                    $this->controller[$class_name]=$class_object;
                 }
+                return $class_object;
             }
         }
-        catch (\Throwable $throwable){
-            $class_name_list=explode("\\",$class_name);
-            $class_name_=$class_name_list[count($class_name_list)-1];
-            $object=new \ReflectionClass("\\$class_name_");
-        }
-        catch (\Throwable $throwable){
-
-        }
+        $object=new \ReflectionClass($class_name);
         $contruct_params_list=$this->get_class_contruct_params($object);
         if ($contruct_params_list==null||count($contruct_params_list) == 0) {
-            $this->container[$class_name] = new $class_name_fact();
-            return $this->container[$class_name];
+
         } else {
             foreach ($contruct_params_list as $value) {
                 if($value==null){
                     continue;
                 }
-                if (!array_key_exists($value, $this->controller)) {
-                    $this->make($value);
-                }
+                $needs_class[]=$this->make($value);
             }
         }
-        $params_list = [];
-        foreach ($contruct_params_list as $value) {
-            $params_list[] = $this->container[$value];
-        }
-        $class_object = $object->newInstanceArgs($params_list);
-        $this->container[$class_name] = $class_object;
-        return $class_object;
+        return $object->newInstanceArgs($needs_class);
     }
     public function make_method($method,$class_name=false){
         if($class_name!=false) {
@@ -158,6 +158,33 @@ class provider
     }
     public function add_dependencies(array $dependencies){
         $this->dependencies=array_merge($this->dependencies,$dependencies);
+    }
+    //bind factory class create
+    public function bind($class_name,$closure,$is_singleton=false){
+        if(!class_exists($class_name)){
+            if(array_key_exists($class_name,$this->dependencies)){
+                $class_name=$this->dependencies[$class_name];
+            }else{
+                new Exception(404,"CLASS $class_name Not Find!");
+            }
+            $this->class_factory[$class_name]=['closure'=>$closure,'is_singleton'=>$is_singleton];
+        }else{
+            $this->class_factory[$class_name]=['closure'=>$closure,'is_singleton'=>$is_singleton];
+        }
+    }
+    //singleton
+    public function singleton($class_name,$closure){
+        $this->bind($class_name,$closure,true);
+    }
+    public function get_class_path($class_name){
+        if(class_exists($class_name)){
+            return $class_name;
+        }
+        if(array_key_exists($class_name,$this->dependencies)){
+            return $this->dependencies[$class_name];
+        }else {
+            new Exception(404, 'event path not find');
+        }
     }
     //debug when some class not define namespace php will throw a error try catch it!;
 }

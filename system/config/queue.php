@@ -20,7 +20,9 @@ class queue
         }
         return [
             "email"=>self::$home_path."/task/job/email_queue.php",
-            "asyn"=>self::$home_path."/task/job/asyn_queue.php"
+            "asyn"=>self::$home_path."/task/job/asyn_queue.php",
+            "delay_queue"=>self::$home_path."/task/rabbitmq/delay_queue.php",
+            "awesome_echo"=>self::$home_path."/swoole/awesome_echo_server.php"
         ];
     }//此处配置
     public static function homepath(){
@@ -29,5 +31,4 @@ class queue
         }
         return self::$home_path;
     }
-
 }

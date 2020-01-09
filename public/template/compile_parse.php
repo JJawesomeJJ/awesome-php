@@ -16,6 +16,7 @@ use system\common;
 use system\config\config;
 use system\Exception;
 use system\file;
+use system\kernel\facede;
 
 class compile_parse
 {
@@ -37,9 +38,13 @@ class compile_parse
         $this->cache=make('cache');
         $this->http_ip=config::request_path();
     }
-    public static function compile($template_path,array $data=[]){
-        if(self::$object==null){
+    public static function compile($template_path,array $data=[],$is_single=true){
+        if($is_single=true){
             self::$object=new compile_parse();
+        }else {
+            if (self::$object == null) {
+                self::$object = new compile_parse();
+            }
         }
         $file_name=config::env_path().'/public/template/'.$template_path.".html";
         $cache_file_path=config::env_path()."/".self::$object->cache_template_path."/".md5(self::$object->http_ip).md5_file($file_name).".php";
@@ -148,7 +153,7 @@ class compile_parse
         preg_match_all("/<script(.*[\s\S])<\/script>/",$template_component,$script_matchs,PREG_SET_ORDER);
         foreach ($script_matchs as $script){
             $start=strrpos($script[1],"/");
-            if($start==false||$start<($now_start=strrpos($script[1],"\\"))){
+            if($start==false&&$start<($now_start=strrpos($script[1],"\\"))){
                 $start=$now_start;
             }
             $start=$start+1;
@@ -160,7 +165,7 @@ class compile_parse
         preg_match_all("/<style(.*[\s\S])<\/style>/is",$template_component,$style_matchs,PREG_SET_ORDER);
         foreach ($css_matchs as $css){
             $start=strrpos($css[1],"/");
-            if($start==false||$start<($now_start=strrpos($css[1],"\\"))){
+            if($start==false&&$start<($now_start=strrpos($css[1],"\\"))){
                 $start=$now_start;
             }
             $name=substr($css[1],$start+1,strlen($css[1])-$start);
@@ -168,7 +173,7 @@ class compile_parse
         }
     }
     protected function compile_path($path,$template_data){
-        preg_match_all("/( src| href)=\"(?!http)(?!#)(?!javascript)(?!{{)(.*?)\"/",$template_data,$url_matchs,PREG_SET_ORDER);
+        preg_match_all("/( src=| href=| url\()\"(?!http)(?!#)(?!javascript)(?!{{)(.*?)\"/",$template_data,$url_matchs,PREG_SET_ORDER);
         $path=str_replace("\\","/",$this->file_path.dirname($path));
         $path=str_replace(config::project_path(true),config::project_path(false)."/",$path)."/";
         $index_path=config::index_path();
@@ -188,12 +193,20 @@ class compile_parse
     protected function compile_component($template_data){
         preg_match_all("/@component\((.*[\s\S])\)/",$template_data,$matchs,PREG_SET_ORDER);
         foreach ($matchs as $match){
-            $template_data=str_replace($match[0],$this->get_component_content($match[1],true),$template_data);
+            if(strpos($match[0],',')!==false){
+                $match_data=explode(',',$match[1]);
+                $match[1]=$match_data[0];
+                $template_data=str_replace($match[0],"<?php echo self::\$object->get_tag_content('body',view('$match_data[0]',$match_data[1]),true);?>",$template_data);
+                $this->get_component_content($match_data[0],true);
+            }
+            else {
+                $template_data = str_replace($match[0], $this->get_component_content($match[1], true), $template_data);
+            }
             $this->template_link_info[config::env_path()."/public/template/".$match[1].".html"]=md5_file(config::env_path()."/public/template/".$match[1].".html");
         }
         return $template_data;
     }
-    protected function get_component_content($template_path,$is_full=false){
+    public function get_component_content($template_path,$is_full=false){
         return $this->get_tag_content("body",$this->start_compile($template_path),$is_full);
     }
     protected function get_tag_content($tag,$content,$is_full=false){

@@ -1,0 +1,12 @@
+{
+    "name": "administrator/php",
+    "authors": [
+        {
+            "name": "jjawesome",
+            "email": "1293777844@qq.com"
+        }
+    ],
+    "require": {
+        "kosinix/grafika": "dev-master"
+    }
+}

@@ -10,6 +10,7 @@ namespace system;
 
 use system\config\config;
 use system\config\service_config;
+use task\queue\queue_handle;
 
 class system_excu
 {
@@ -27,8 +28,24 @@ class system_excu
         }
         self::$excu_object->excu($command);
     }
+    public static function kill_task($task_name){
+        $pid=self::get_task_pid($task_name);
+        if($pid==null){
+            return false;
+        }else{
+            $flag=false;
+            $pid_list=explode('_',$pid);
+            foreach($pid_list as $pid){
+                if(basename(self::get_pid_php_script_name($pid))==$task_name){
+                    $flag=true;
+                    shell_exec("kill -9 $pid");
+                }
+            }
+            return $flag;
+        }
+    }
     protected function excu($command){
-        exec("nohup php $command " . ' > /dev/null &');
+        exec("php $command " . ' > /dev/null &');
     }
     public static function get_php_pid_status($pid){
         $process_info=shell_exec("ps -aux | grep $pid");
@@ -45,7 +62,8 @@ class system_excu
     }
     public static function get_pid_php_script_name($pid){
         $process_info=shell_exec("ps -aux | grep $pid");
-        preg_match_all("/php (.*?).php/",$process_info,$process_name,PREG_SET_ORDER);
+        preg_match_all("/php (.*?)\\.php/",$process_info,$process_name,PREG_SET_ORDER);
+//        print_r($process_name);
         if(!isset($process_name[0][1])){
             return false;
         }
@@ -60,6 +78,31 @@ class system_excu
     public static function get_service_info(){
         $redis=class_define::redis();
         $redis->hgetall(config::task_record_list()["name"]);
+    }
+    public static function get_process_status($task_name){
+        $pid=self::get_task_pid($task_name);
+        if(is_null($pid)){
+            return false;
+        }
+        if(strpos($pid,'_')!==false){
+            $pid_list=explode('_',$pid);
+            foreach ($pid_list as $pid){
+                if(self::get_php_pid_status($pid)==false){
+                    return false;
+                }
+            }
+            return true;
+        }
+        return self::get_php_pid_status($pid);
+    }
+    public static function get_task_pid($task_name){
+        $info=class_define::redis()->hGet(config::task_record_list()["name"],$task_name);
+        if(is_null($info)){
+            return null;
+        }
+        else{
+            return json_decode($info,true)["pid"];
+        }
     }
     public static function record_my_pid($path,$pid=false){
         $script_name=basename($path,".php");
@@ -98,5 +141,4 @@ class system_excu
         $service_info=json_decode(class_define::redis()->hGet(config::task_record_list()["name"],basename(service_config::service_config()[$service_name],".php")),true);
         return $service_info;
     }
-
 }

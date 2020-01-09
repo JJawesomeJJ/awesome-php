@@ -9,6 +9,7 @@
 namespace system\config;
 
 
+use app\providers\AppServiceProvider;
 use request\request;
 use system\cache\cache;
 use system\common;
@@ -44,6 +45,11 @@ class config
     public static function session(){
         return self::$session;
     }
+    public static function provider(){
+        return [
+           AppServiceProvider::class,
+        ];
+    }
     //the project depenendcies path
     public static function depenendcies(){
         return [
@@ -51,13 +57,14 @@ class config
                 "system",
                 "request",
                 "db",
-                "controller"
+                "app"
             ],
             "extend"=>[
                 "alipay"=>"extend/alipay/",
                 "alipay_test"=>"extend/alipay_test/",
                 "tencent_sdk"=>"extend/tencentcloud-sdk-php/"
-            ]
+            ],
+            'controller'=>"app/controller/"
         ];
     }
     public static function is_cli(){
@@ -196,9 +203,9 @@ class config
             "mysql"=>[
                 "hostname"=>"127.0.0.1",
                 "hostport"=>"3306",
-                "database"=>"",
-                "username"=>"",
-                "password"=>"",
+                "database"=>"register",
+                "username"=>"root",
+                "password"=>".zlj19971998",
             ],
         ];
     }

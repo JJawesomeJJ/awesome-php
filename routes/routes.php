@@ -6,13 +6,7 @@
  * Time: 下午 3:59
  */
 namespace routes;
-use controller\auth\auth_controller;
-use controller\controller;
-use http\middleware\middleware;
 use load\provider_register;
-use PhpParser\Node\Expr\Closure;
-use request\request;
-use SebastianBergmann\CodeCoverage\Report\PHP;
 use system;
 
 class routes
@@ -31,6 +25,7 @@ class routes
     protected $value;//已匹配的路由信息
     public function __construct()
     {
+        provider_register::provider()->ServiceProvider();
         $this->request =make("request");
         self::$object=$this;
     }
@@ -150,15 +145,6 @@ class routes
             $this->now_request_url_list=explode('/',$this->request->get_url());
         }
         return $this->now_request_url_list;
-    }
-    function load_method($object, $fun)
-    {
-        if(method_exists($object,$fun)){
-            return $object->$fun();
-        }
-        else{
-            new system\Exception("500","controller_method_error");
-        }
     }
     public static function get($url,$controller_method,array $middleware=[]){
         self::$route["GET"][]=["request_method"=>"GET","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];

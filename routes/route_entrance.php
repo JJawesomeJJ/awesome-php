@@ -114,3 +114,4 @@ routes::get('native/banner','native_controller@banner');
 routes::get('native/index',function (){
     return view("native/native_view");
 });
+routes::post("language","language_controller@translate");
