@@ -8,6 +8,7 @@
 namespace system;
 
 
+use load\provider;
 use system\config\config;
 use system\config\service_config;
 use task\queue\queue_handle;
@@ -28,7 +29,7 @@ class system_excu
         }
         self::$excu_object->excu($command);
     }
-    public static function kill_task($task_name){
+    public static function kill_task($task_name,$signal="-15"){
         $pid=self::get_task_pid($task_name);
         if($pid==null){
             return false;
@@ -38,7 +39,7 @@ class system_excu
             foreach($pid_list as $pid){
                 if(basename(self::get_pid_php_script_name($pid))==$task_name){
                     $flag=true;
-                    shell_exec("kill -9 $pid");
+                    shell_exec("kill $signal $pid");
                 }
             }
             return $flag;
@@ -126,12 +127,12 @@ class system_excu
     }
     public static function restart_service($service_name){
         $pid=class_define::redis()->hGet(config::task_record_list()["name"],basename(service_config::service_config()[$service_name],".php"));
-        exec("kill -9 $pid");
+        exec("kill -15 $pid");
         self::excu_asyn(service_config::service_config()[$service_name]);
     }
     public static function abort_service($service_name){
         $pid=self::get_service_pid($service_name);
-        exec("kill -9 $pid");
+        exec("kill -15 $pid");
     }
     public static function service_info($service_name){
         if(!array_key_exists($service_name, service_config::service_config()))

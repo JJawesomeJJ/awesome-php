@@ -24,4 +24,8 @@ class migration_park_comment extends migration
         $this->db->string("reply_id","50","not null");
         $this->timestamp();
     }
+    public function up()
+    {
+        // TODO: Implement up() method.
+    }
 }

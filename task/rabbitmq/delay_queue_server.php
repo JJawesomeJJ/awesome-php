@@ -9,6 +9,8 @@
 namespace task\rabbitmq;
 use system\class_define;
 use system\common;
+use system\system_excu;
+
 require_once __DIR__."/../../load/auto_load.php";
 require_once __DIR__."/../../load/common.php";
 class delay_queue_server
@@ -60,7 +62,8 @@ class delay_queue_server
             echo "AsyncTask[$task_id] finished: {$data}\n";
         });
         $server->on('start',function () use ($server){
-           $this->onstart($server);
+            system_excu::record_my_pid(__FILE__);
+            $this->onstart($server);
         });
         $server->start();
     }

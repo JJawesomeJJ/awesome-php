@@ -6,7 +6,9 @@
  * Time: 下午 3:59
  */
 namespace routes;
+use load\provider;
 use load\provider_register;
+use request\request;
 use system;
 
 class routes
@@ -20,6 +22,8 @@ class routes
     ];
     protected static $object;
     protected static $now_request;
+    protected $middleware_grunp=[];//当前路由组要加载的中间件
+    protected $prefix="";
     private $request = null;
     protected $now_request_url_list;
     protected $value;//已匹配的路由信息
@@ -41,31 +45,18 @@ class routes
             }
             foreach ($values["middleware"] as $middleware) {
                 if(gettype($middleware)=="array"){
-                    switch (count($middleware)){
-                        case 2:
-                            $object = $provider->middleware($middleware[0],$this->request);
-                            call_user_func([$object,$middleware[1]]);
-                            $this->request = $object->next();
-                            //无参数调用中间件的函数
-                            break;
-                        case 3:
-                            $object=$provider->middleware($middleware[0],$this->request);
-                            if(gettype($middleware[2])=='string')
-                            {
-                                $middleware[2]=["$middleware[2]"];
-                            }
-                            //有参数的调用中间的函数
-                            call_user_func_array([$object,$middleware[1]],$middleware[2]);
-                            $this->request = $object->next();
-                            //edit request obejct which has been handle with middleware
-                            break;
-                        default:
-                            break;
+                    $middleware_name=$middleware[0];
+                    $middleware_object=$provider->middleware($middleware_name);
+                    if(count($middleware)>1){
+                        $method=$middleware[1];
+                        unset($middleware[0]);
+                        unset($middleware[1]);
+                        call_user_func_array([$middleware_object,$method],$middleware);
                     }
                 }
                 else{
-                    $object = $provider->middleware($middleware[0],$this->request);
-                    $this->request=$object->next();
+                    $object = $provider->middleware($middleware[0]);
+//                    $this->request=$object->next();
                     //加载中间件中间件在check完成自我调用
                 }
             }
@@ -147,27 +138,42 @@ class routes
         return $this->now_request_url_list;
     }
     public static function get($url,$controller_method,array $middleware=[]){
-        self::$route["GET"][]=["request_method"=>"GET","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
+        foreach (self::$object->middleware_grunp as $item){
+            $middleware[]=$item;
+        }
+        self::$route["GET"][]=["request_method"=>"GET","url"=>self::$object->prefix.$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
         self::$now_request="GET";
         return self::$object;
     }
     public static function post($url,$controller_method,array $middleware=[]){
-        self::$route["POST"][]=["request_method"=>"POST","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
+        foreach (self::$object->middleware_grunp as $item){
+            $middleware[]=$item;
+        }
+        self::$route["POST"][]=["request_method"=>"POST","url"=>self::$object->prefix.$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
         self::$now_request="POST";
         return self::$object;
     }
     public static function delete($url,$controller_method,array $middleware=[]){
-        self::$route["DELETE"][]=["request_method"=>"DELETE","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
+        foreach (self::$object->middleware_grunp as $item){
+            $middleware[]=$item;
+        }
+        self::$route["DELETE"][]=["request_method"=>"DELETE","url"=>self::$object->prefix.$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
         self::$now_request="DELETE";
         return self::$object;
     }
     public static function put($url,$controller_method,array $middleware=[]){
-        self::$route["PUT"][]=["request_method"=>"PUT","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
+        foreach (self::$object->middleware_grunp as $item){
+            $middleware[]=$item;
+        }
+        self::$route["PUT"][]=["request_method"=>"PUT","url"=>self::$object->prefix.$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
         self::$now_request="PUT";
         return self::$object;
     }
     public static function any($url,$controller_method,array $middleware=[]){
-        self::$route["ANY"][]=["request_method"=>"ANY","url"=>$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
+        foreach (self::$object->middleware_grunp as $item){
+            $middleware[]=$item;
+        }
+        self::$route["ANY"][]=["request_method"=>"ANY","url"=>self::$object->prefix.$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
         self::$now_request="ANY";
         return self::$object;
     }
@@ -183,6 +189,19 @@ class routes
             self::$route[self::$now_request][$index]["middleware"][]=[$middleware_name];
         }
         return $this;
+    }
+
+    /**
+     * @description 设置一个路由组
+     * @param array $group_info =>['middleware'=>[]]
+     * @param \Closure $fun
+     */
+    public static function group(\Closure $fun,array $middleware_group=[],string $prefix=""){
+        self::$object->prefix=$prefix;
+        self::$object->middleware_grunp=$middleware_group;
+        call_user_func($fun);
+        self::$object->middleware_grunp =[];
+        self::$object->prefix="";
     }
     public function name($name){
         $index=count(self::$route[self::$now_request])-1;

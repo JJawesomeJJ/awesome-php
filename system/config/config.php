@@ -10,6 +10,7 @@ namespace system\config;
 
 
 use app\providers\AppServiceProvider;
+use app\providers\EventServiceProvider;
 use request\request;
 use system\cache\cache;
 use system\common;
@@ -47,7 +48,8 @@ class config
     }
     public static function provider(){
         return [
-           AppServiceProvider::class,
+            AppServiceProvider::class,
+            EventServiceProvider::class,
         ];
     }
     //the project depenendcies path
@@ -57,7 +59,9 @@ class config
                 "system",
                 "request",
                 "db",
-                "app"
+                "app",
+                "extend/awesome",
+                "task"
             ],
             "extend"=>[
                 "alipay"=>"extend/alipay/",
@@ -103,7 +107,7 @@ class config
     }
     public static function env_path(){
         if(is_null(self::$dir_path)){
-            self::$dir_path=dirname(dirname(dirname(__FILE__))).'/';
+            self::$dir_path=str_replace("\\","/",dirname(dirname(dirname(__FILE__))).'/');
         }
         return self::$dir_path;
     }
@@ -235,6 +239,9 @@ class config
             ]
             //如需扫描的路径下含有不希望被扫描的路径使用在此处配置
         ];
+    }
+    public static function upload_path(string $path){
+        return self::env_path()."public/upload/$path/".date("Y-m-d")."/";
     }
     public static function http_prefix(){
         if(self::is_https()){

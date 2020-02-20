@@ -14,14 +14,17 @@ use system\kernel\ServiceProvider\ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
 {
-    protected $event_list=[
+    public static $event_list=[
         'app\Event\user_login_event'=>[
             'app\EventListener\user_login_listener'
+        ],
+        'app\Event\native_push_event'=>[
+            'app\EventListener\native_push_listener'
         ]
     ];
     public function register()
     {
-        app()->make(event_system::class)->bind_event($this->event_list);
+        app()->make(event_system::class)->bind_event(self::$event_list);
     }
     public function boot()
     {

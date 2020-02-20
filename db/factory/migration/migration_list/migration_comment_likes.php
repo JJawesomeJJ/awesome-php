@@ -22,4 +22,8 @@ class migration_comment_likes extends migration
         $this->db->string("news_id",225,"not null")->foreign_key('news_id','news','id');
         $this->timestamp();
     }
+    public function up()
+    {
+        // TODO: Implement up() method.
+    }
 }

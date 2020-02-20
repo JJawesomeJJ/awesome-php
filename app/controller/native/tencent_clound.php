@@ -23,7 +23,7 @@ class tencent_clound
     }
     public  function get_online_list(){
         try {
-            $cred = new Credential("", "");
+            $cred = new Credential("AKIDFJ9jHaxJI1VkgNcPedPyHNCqIUPWb3Xl", "CdswjKgmcDYfWN0OWTBcnjcGdplRr54x");
             $httpProfile = new HttpProfile();
             $httpProfile->setEndpoint("live.tencentcloudapi.com");
             $clientProfile = new ClientProfile();

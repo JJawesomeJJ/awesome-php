@@ -1,0 +1,49 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.header_container{
+    position: relative;
+    width: 100vw;
+    height: 50px;
+    background-color: #716ACA;
+    display: flex;
+}
+.logo{
+    position: relative;
+    width: 200px;
+    color: white;
+    font-weight: 500;
+    font-size: 27px;
+    line-height: 50px;
+    height: 100%;
+    margin-left: 10px;
+}
+.right_menu{
+    position: absolute;
+    right: 10px;
+    display: flex;
+    width: 200px;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.right_menu .icon-tongzhi{
+    color: white;
+    font-size: 25px;
+}
+.header_img{
+    margin-left: 10px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+.header_img img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+.header_container .name{
+    color: white;
+    margin-left: 10px;
+}

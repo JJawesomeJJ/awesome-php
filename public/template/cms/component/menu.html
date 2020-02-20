@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>菜单</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="../assets/icon/iconfont.css" rel="stylesheet">
+    <link href="assets/css/menu.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../../asset/jqrotate.js"></script>
+    <script src="assets/js/menu_init.js"></script>
+</head>
+<body>
+<!--菜单组件开始-->
+<div class="menu">
+    {&$menu=make('Menu')&}
+    {&$menu=$menu->compile_menu($menu->all());&}
+    {&$request=make('request')&}
+    <div class="menu-content">
+    @foreach($menu as $item)
+    <div class="menu-level-1">
+        <div class="left-menu">
+
+        </div>
+        <div class="menu-p">
+            <span class="icon iconfont {{$item['icon']}} menu-icon"></span>
+            <p class="menu-name">{{$item['name']}}</p>
+            <span class="icon iconfont left-narrow icon-youjiantou"></span>
+        </div>
+        @if(isset($item['children']))
+        <div class="menu-level-1-container">
+            @foreach($item['children'] as $value)
+            <a href="/{{$value['url']}}" class="menu-level-2 {{substr($request->get_url(),1,strlen($request->get_url()))==$value['url']?'menu-hover':''}}">
+                <span class="icon iconfont {{$value['icon']}} menu-icon-2"></span>
+                <p class="menu-name">{{$value['name']}}</p>
+            </a>
+            @endforeach
+        </div>
+        @endif
+    </div>
+    @endforeach
+    </div>
+</div>
+<!--菜单组件结束-->
+</body>
+</html>

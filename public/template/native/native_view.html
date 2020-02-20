@@ -9,10 +9,9 @@
     <script src=https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js></script>
     <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
     <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
-    <link href="https://cdn.bootcss.com/Swiper/4.5.1/css/swiper.min.css" rel="stylesheet">
-    <script src="https://cdn.bootcss.com/Swiper/4.5.1/js/swiper.min.js"></script>
+    <link href="../asset/swiper/swiper.min.css" rel="stylesheet">
+    <script src="../asset/swiper/swiper.min.js"></script>
     <script src="assets/js/common.js"></script>
-    <script src="../asset/js/translate.js"></script>
 </head>
 <body>
 <style>
@@ -177,8 +176,58 @@
         width:12px;
         height: 12px;
     }
+    .start_native{
+        position: fixed;
+        right: -82px;
+        top:50%;
+        width: 100px;
+        height: 30px;
+        border-radius: 5px;
+        background-image: linear-gradient(90deg,#0af,#0085ff);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .hidden{
+        right: -82px;
+    }
+    .narrow_show{
+        position: absolute;
+        left: 2px;
+        background-image: url("assets/images/narrow_left.png");
+        background-size: 100% 100%;
+        width: 15px;
+        height: 15px;
+    }
+    .narrow_hidden{
+        display: none;
+        left: 2px;
+        background-image: url("assets/images/narrow_right.png");
+        background-size: 100% 100%;
+        width: 15px;
+        height: 15px;
+    }
+    .loading{
+        position: fixed;
+        width: 200px;
+        height: 200px;
+        margin:0 auto;
+        top:200px;
+        bottom:0;
+        left:0;
+        right:0;
+        z-index: 999;
+    }
+    .loading img{
+        width: 100%;
+        height: 100%;
+    }
 </style>
-<div id="app">
+<div class="loading">
+    <img src="assets/images/vue_loading.gif" alt="">
+</div>
+<div id="app" style="display:none;">
     <div class="swiper-container">
         <div class="swiper-wrapper">
             <div class="swiper-slide" v-for="i in banner"><img :src="i.img" :alt="i.title"></div>
@@ -213,19 +262,19 @@
         </div>
         <div class="like_content center_between">
             <div class="like_item" v-for="i in native_data">
-                <div class="view_cover">
+                <div class="view_cover" @click="native_push.start_player(i.info.play,i.info.rtmp_url)">
                     <div class="view_info">
-                        <img class="cover_back" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1574271842190&di=cb82c4f7ffebc46218d6a9ffadbd0685&imgtype=0&src=http%3A%2F%2Fdingyue.nosdn.127.net%2Fr9OrU5OqMsjRwHySEDrC1nD1eM2dmiHtRwLk9JoZUt5fT1555512220506.jpeg" alt="">
+                        <img class="cover_back" :src="i.info.cover" alt="">
                         <div class="center_between bottom" >
-                            <div class="view_info">@{{i.title}}</div>
+                            <div class="view_info">@{{i['info']['title']}}</div>
                             <div class="view_num">
                                 <img class="hot-icon" src="assets/images/hot-white.png" alt="">
-                                <p>@{{i.hot}}</p>
+                                <p>@{{i.info.hot}}</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="view_title">@{{i.description}}</div>
+                <div class="view_title">@{{i.info.description}}</div>
                 <div class="center_between view-bottom">
                     <div class="view_lable">
                         <span class="capsule" v-for="info in i['infos']">@{{info}}</span>
@@ -235,6 +284,10 @@
             </div>
         </div>
     </div>
+    <div class="start_native">
+        <div class="narrow_show" @click="show()"></div>
+        <div class="narrow_hidden" @click="hidden()"></div>
+        <div onclick="native_push.start()">我要直播</div></div>
 </div>
 </body>
 <script>
@@ -244,33 +297,55 @@
             banner:[],
             type:[],
             is_load_banner:false,
-            native_data:[{
+            native_data:[],
+            native_data_:[{
                 title: "李佳琪的直播",
                 message: "李佳琪打假",
                 hot:"3w",
                 cover:"",
-                description:"李佳琪的直播",
+                description:"李佳琪洗白",
                 infos: ['翻车王', '良心']
             },{
                 title: "李佳琪的直播",
                 message: "李佳琪打假",
                 hot:"3w",
                 cover:"",
-                description:"李佳琪的直播",
+                description:"李佳琪洗白",
                 infos: ['翻车王', '良心']
             },{
                 title: "李佳琪的直播",
                 message: "李佳琪打假",
                 hot:"3w",
                 cover:"",
-                description:"李佳琪的直播",
+                description:"李佳琪洗白",
                 infos: ['翻车王', '良心']
             },{
                 title: "李佳琪的直播",
                 message: "李佳琪打假",
                 hot:"3w",
                 cover:"",
-                description:"李佳琪的直播",
+                description:"李佳琪洗白",
+                infos: ['翻车王', '良心']
+            },{
+                title: "李佳琪的直播",
+                message: "李佳琪打假",
+                hot:"3w",
+                cover:"",
+                description:"李佳琪洗白",
+                infos: ['翻车王', '良心']
+            },{
+                title: "李佳琪的直播",
+                message: "李佳琪打假",
+                hot:"3w",
+                cover:"",
+                description:"李佳琪洗白",
+                infos: ['翻车王', '良心']
+            },{
+                title: "李佳琪的直播",
+                message: "李佳琪打假",
+                hot:"3w",
+                cover:"",
+                description:"李佳琪洗白",
                 infos: ['翻车王', '良心']
             }]
         },
@@ -288,14 +363,9 @@
         created(){
             this.init_banner();
             this.init_type();
-            this.translate();
-            // vue_onload("#app")
+            this.init_online();
         },
         methods:{
-            translate(){
-                // var language=new zh_translate_en();
-                // language.start('/language');
-            },
             init_banner(){
                 var self=this;
                 axios.get(server+"native/banner")
@@ -306,12 +376,24 @@
                         console.log(error);
                     });
             },
+            init_online(){
+                var self=this;
+                axios.get(server+"native/online")
+                    .then(function (res) {
+                        vue_onload("#app",'.loading');
+                        self.native_data=res.data
+                    })
+                    .catch(function () {
+
+                    })
+            },
             init_type(){
                 var self=this;
                 axios.get(server+"native/type")
                     .then(function (res) {
                         self.type=res.data.data
                     }).catch(function (err) {
+
                 })
             },
             init_swiper(){
@@ -324,6 +406,16 @@
                         el: '.swiper-pagination',
                     },
                 })
+            },
+            hidden(){
+                $(".start_native").animate({right:"-82px"},150);
+                $(".narrow_show").show(150);
+                $(".narrow_hidden").hide(150);
+            },
+            show(){
+                $(".narrow_show").hide(150);
+                $(".narrow_hidden").show(150);
+                $(".start_native").animate({right:"0px"},150)
             }
         }
     })

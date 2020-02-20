@@ -6,20 +6,15 @@
  * Time: 下午 3:08
  */
 namespace db\factory;
-use extend\PHPMailer\PHPMailer;
-use request\request;
-use system\cache\cache;
-use system\common;
 use system\config\config;
 use system\Exception;
 
 class soft_db
 {
-    protected static $object_list=[];
-    //对象列表避免多次实例化浪费资源
+    protected static $con_list=[];
+    //连接对象列表避免多次实例化浪费资源
     protected $table_name=null;
     //表名
-    protected static $table_name_=null;
     protected $where_="";
     //设置查询条件
     protected $order_by_="";
@@ -32,7 +27,7 @@ class soft_db
     //联合查询
     protected $group_by_="";
     //设置聚合查询
-    private $con;
+//    private $con;
     //数据库连接对象
     protected $cache=null;
     //缓存对象
@@ -44,25 +39,33 @@ class soft_db
     //数据库名
     protected $having='';
     //聚合条件函数字段
+    protected $union_primary_key_string="";
+    //联合主键
     protected $bind=[];
     public function __construct()
     {
-        $this->init();
+    }
+    public static function con(){
+
     }
     protected function init(){
-        $database=config::pdo();
-        $driver=$database["driver"];
-        $user=$database[$driver]["username"];
-        $password=$database[$driver]["password"];
-        $this->databse_name=$database[$driver]["database"];
-        $host=$database[$driver]['hostname'];
-        $dsn="$driver:host=$host;dbname=$this->databse_name;charset=utf8";
-        $this->con = new \PDO($dsn, $user,$password);
-        $this->con->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-//        $this->con=mysqli_connect(config::database()["hostname"],$user,$password,$this->databse_name);
-//        mysqli_set_charset($this->con,"utf8");
-        //加载config数据库的配置
-        $this->table_name=self::$table_name_;
+        if($this->con==null) {
+            $database = config::pdo();
+            $driver = $database["driver"];
+            $user = $database[$driver]["username"];
+            $password = $database[$driver]["password"];
+            $this->databse_name = $database[$driver]["database"];
+            $host = $database[$driver]['hostname'];
+            $dsn = "$driver:host=$host;dbname=$this->databse_name;charset=utf8";
+            $con_unique_key = md5($dsn . $user . $password);
+            if (array_key_exists($con_unique_key, self::$con_list)) {
+                $this->con = self::$con_list[$con_unique_key];
+            } else {
+                $this->con = new \PDO($dsn, $user, $password);
+                $this->con->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+                self::$con_list[$con_unique_key] = $this->con;
+            }
+        }
     }
     public function refresh(){
         $this->where_="";
@@ -82,6 +85,10 @@ class soft_db
         }
         return $this->cache;
     }
+    public function set_table_name($table_name){
+        $this->table_name=$table_name;
+        return $this;
+    }
     public function all($is_refresh=false){
         $table_column=$this->cache()->get_cache($this->table_name."column");
         if($table_column==null||$is_refresh){
@@ -93,17 +100,18 @@ class soft_db
     }//查看缓存中是否存在该数据库的字段如果不存在则查询并载入缓存。当数据库的字段有更新时使用all(true) 来刷新字段
     //获取数据库的字段
     public static function table($table_name){
-        self::$table_name_=$table_name;
-        if(array_key_exists($table_name,self::$object_list)){
-            $object=self::$object_list[$table_name];
-            $object->refresh();
-            return $object;
-        }
-        else{
-            $object=new soft_db();
-            self::$object_list[$table_name]=$object;
-            return $object;
-        }
+        return (new soft_db())->set_table_name($table_name);
+//        self::$table_name_=$table_name;
+//        if(array_key_exists($table_name,self::$object_list)){
+//            $object=self::$object_list[$table_name];
+//            $object->refresh();
+//            return $object;
+//        }
+//        else{
+//            $object=new soft_db();
+//            self::$object_list[$table_name]=$object;
+//            return $object;
+//        }
     }//入口程序
     public function where($column_value,$condition_value,$condition="="){//defalut condition "=" you can use ">=,<=,like,in"
         $condition_key=$this->unique_key($condition_value);
@@ -514,22 +522,34 @@ class soft_db
         return $this;
     }
     public function create(){
-//        $sql="create table if not exists $this->table_name(";
         $sql="create table $this->table_name(";
+//        $sql="create table $this->table_name(";
         foreach ($this->create_table_column_list as $value){
             $sql.=$value ;
         }
+        $sql.=$this->union_primary_key_string;
         $sql.=") ENGINE=InnoDB DEFAULT CHARSET=utf8;";
         $sql=str_replace("  "," ",$sql);
         $sql=str_replace(",)",")",$sql);
         $sql=str_replace("default not null","not null",$sql);
-        $sql=str_replace(",comment"," comment",$sql);
-        echo $sql.PHP_EOL;
-        $result=$this->con->exec($sql);
+        $sql=str_replace(",comment "," comment ",$sql);
+        $sql=str_replace("default 'not null'","not null",$sql);
+        try {
+            $result = $this->con->exec($sql);
+        }
+        catch (\Throwable $exception){
+            if(strpos($exception->getMessage(),"already")!==false){
+                $result="";
+            }else {
+                echo $sql . PHP_EOL;
+                throw new \Exception($exception);
+            }
+        }
         if(is_numeric($result)){
             echo $sql.PHP_EOL;
             return true;
         }
+        echo $this->table_name." already exists".PHP_EOL;
         return false;
     }
     public function set($set_column_name,$set_value){
@@ -555,8 +575,10 @@ class soft_db
         $sql.="$set_string $this->where_";
         $sql=str_replace("  "," ",$sql);
         $sql=str_replace(", "," ",$sql);
-        $stm=$this->con->prepare($sql);
-        $result=$stm->execute($this->bind_params($sql));
+        $stm=$this->con->prepare($sql);//预处理 防止sql注入
+        $this->bind_params($sql);
+        $stm->setFetchMode(\PDO::FETCH_NAMED);
+        $result = $stm->execute($this->bind_params($sql));
         $this->refresh();
         return $result;
     }
@@ -576,8 +598,11 @@ class soft_db
         $table_name=$this->table_name;
         foreach ($diff as $key){
             $sql = "ALTER TABLE $table_name ADD $create_table_column[$key]";
-            $sql = str_replace(" ,", ";", $sql);
-            $sql = str_replace(",", ";", $sql);
+//            $sql = str_replace(" ,", ";",$sql);
+//            $sql = str_replace(",", ";",$sql);
+            if(substr($sql,strlen($sql)-1,strlen($sql))==","){
+                $sql=substr($sql,0,strlen($sql)-1).";";
+            }
             echo $sql.PHP_EOL;
             if(!$this->con->exec($sql)){
                 return false;
@@ -671,6 +696,9 @@ class soft_db
     public function get_insert_id(){
         return $this->con->lastInsertId();
     }
+    public function union_key(string $key1,string $key2){
+        $this->union_primary_key_string="primary key($key1,$key2)";
+    }
     protected function unique_key($value){
         $key=":a".strval(count($this->bind));
         $this->bind[$key]=$value;
@@ -684,11 +712,37 @@ class soft_db
         }
         return $bind_params;
     }
+    public function transactions(\Closure $things,$suceess=null,$fail=null){
+        $this->con->beginTransaction();
+        try {
+            call_user_func($things);
+            $this->con->commit();
+            if($suceess instanceof \Closure){
+                call_user_func($suceess);
+            }
+        }
+        catch (\Throwable $exception){
+            $this->con->rollBack();
+            if($fail instanceof \Closure){
+                call_user_func($fail,[$exception->getMessage()]);
+            }else {
+                throw new \Exception($exception);
+            }
+        }
+    }
     public function __sleep(){
         $this->con=null;
         return array_keys(get_object_vars($this));
     }
     public function __wakeup(){
         $this->init();
+    }
+    public function __get($name)
+    {
+        if($name=="con"){
+            $this->con=null;
+            $this->init();
+            return $this->con;
+        }
     }
 }

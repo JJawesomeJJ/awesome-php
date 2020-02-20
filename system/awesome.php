@@ -8,7 +8,9 @@
 namespace system;
 
 
+use app\providers\EventServiceProvider;
 use app\ServiceProvider;
+use db\db;
 use load\auto_load;
 use load\provider;
 use load\provider_register;
@@ -147,7 +149,7 @@ class provider_register extends provider
             $name = explode("/", $value);
             $name = str_replace(".php", "", $name[count($name) - 1]);
             $register_value = str_replace("/", "\\", str_replace(".php", "", str_replace($home_path . "/", "", $value) . "::class"));
-            if (strpos($name, "_controller") !== false) {
+            if (strpos($name, "_controller") !== false||strpos($name, "Controller") !== false||strpos($name, "controller") !== false) {
                 $controller_list[$name] = $register_value;
                 $controller_string .="        ". "\"$name\"=>$register_value," . "\n";
             }
@@ -210,7 +212,7 @@ class {{Listener}} extends EventListener
  * Date: {{time}}
  */
 namespace {{namespace}}
-use system\kernel\Chanel\Channel;
+use system\kernel\Channel\Channel;
 use system\kernel\event\Event;
 
 class {{event}} extends Event
@@ -228,7 +230,7 @@ class {{event}} extends Event
         return new Channel(false);
     }
 }';
-        $event_list=ServiceProvider::event();
+        $event_list=EventServiceProvider::$event_list;
         $env_path=config::env_path();
         foreach ($event_list as $key=>$value){
             $file_path=$env_path.'/'.$key.".php";
@@ -315,6 +317,9 @@ class $controller_name extends controller
 
 }";
         $file = new file();
+        if(is_file($controller_path)){
+            new Exception('500',"controller $name already exist!!");
+        }
         $file->write_file($controller_path, $controller_template);
         $this->update();
         $this->cli_echo_blue("controller_has_been_created");
@@ -456,6 +461,7 @@ class $middleware_name extends middleware
                 if($value[strlen($value)-1]=="\\"){
                     $value=substr($value,0,strlen($value)-1);
                 }
+                $value=explode('\\',$value)[0];
                 $name_space.="use $value;\n";
             }
         }
@@ -638,8 +644,12 @@ class $middleware_name extends middleware
                 if(isset($arr[1])){
                     $task_list=[$arr[1]];
                 }
+                $signal="-15";
+                if(isset($arr[2])){
+                    $signal=$arr[2];
+                }
                 foreach ($task_list as $item) {
-                    if(system_excu::kill_task($item)) {
+                    if(system_excu::kill_task($item,$signal)) {
                         $this->cli_echo_color_blue("process $item has been killed");
                     }
                 }

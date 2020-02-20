@@ -45,6 +45,12 @@ abstract class middleware
             }
         }
     }
+    public function cache(){
+        return make(cache::class);
+    }
+    public function request(){
+        return make(request::class);
+    }
     function sql_filter()
     {
         $black_list=[">","<","<SCRIPT>", "\\", "</SCRIPT>", "<script>", "</script>", "select", "select", "join", "join", "union", "union", "where", "where", "insert", "insert", "delete", "delete", "update", "update", "like", "like", "drop", "drop", "create", "create", "modify", "modify", "rename", "rename", "alter", "alter", "cas", "cast", "&", "&", ">", ">", "<", "<", " ", " ", "    ", "&", "'", "<br />", "''", "'", "css", "'", "CSS", "'"];

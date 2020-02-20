@@ -25,4 +25,8 @@ class migration_comment_list extends migration
         $this->db->text("likes");
         $this->timestamp();
     }
+    public function up()
+    {
+        // TODO: Implement up() method.
+    }
 }

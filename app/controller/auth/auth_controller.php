@@ -6,6 +6,8 @@
  * Time: 下午 2:29
  */
 namespace app\controller\auth;
+use db\model\model;
+use db\model\native\follow;
 use db\model\user\user;
 use request\request;
 use app\controller\controller;
@@ -56,9 +58,7 @@ class auth_controller extends controller
         }
         if($result["password"]==$request->get("password"))
         {
-            session::set("name",$request->get("name"));
-            session::set("user",$request->get("name"));
-            session::set("email",$result["email"]);
+            session::set("user",$user);
             common::remember_me($result["id"]);
             return["code" => "200", "msg" => "suceess", "data" => "ok","email"=>$result["email"],"head_img"=>$result["head_img"],"csrf_token"=>$this->middlware("csrf_middleware")->sign_csrf_token()];
             //csrf_token client should store this value by localstorage when request client request server we will check this token if fail the server refuse this request
@@ -101,13 +101,11 @@ class auth_controller extends controller
                 $head_list=json_decode(fread($file,filesize($file_name)));
                 $url=$head_list[array_rand($head_list)];
             }
-            $id=md5(microtime(true).common::rand(4));
-            $arr=["name"=>$request->get("name"),"password"=>$request->get("password"),"email"=>$request->get("email"),"sex"=>$request->get("sex"),"head_img"=>$url,"id"=>$id];
+            $arr=["name"=>$request->get("name"),"password"=>$request->get("password"),"email"=>$request->get("email"),"sex"=>$request->get("sex"),"head_img"=>$url];
             $user=new user();
-            $user->create($arr);
-            session::set("name",$request->get("name"));
-            session::set("email",$request->get("email"));
+            $id=$user->create($arr,false,true);
             common::remember_me($id);
+            session::set("user",$user->where('id',$id)->get());
 //            $token=new token();
 //            $token->set_token("user",$request->get("email"));
             return ["code" => "200", "msg" => "suceess", "head_img" => $url,"email"=>$request->get("email"),"csrf_token"=>$this->sign_csrf_token($request->get("name"))];
@@ -132,11 +130,11 @@ class auth_controller extends controller
         $result=$db->query("admin_user",['password','permission'],"name='$name'");
         return $result;
     }
-    public static function auth($is_die=true){
+    public static function auth($is_die=true,string $filed='name'){
         if(!common::is_remember($is_die)){
             return false;
         }
-        return session::get('name');
+        return session::get('user')->$filed;
 //        if(!isset($_SESSION))
 //        {
 //            session_start();
@@ -282,7 +280,24 @@ class auth_controller extends controller
         if(!self::auth(false)){
             return ['code'=>600,'message'=>"unlogin"];
         }else{
-            return ["code"=>200,"name"=>session::get("name"),"head_img"=>session::get("head_img")];
+            return ["code"=>200,"name"=>auth_controller::auth("name"),"head_img"=>auth_controller::auth("head_img")];
         }
+    }
+
+    /**
+     * @description 获取某个用户的信息
+     * @param request $request
+     * @param user $user
+     * @param follow $follow
+     * @return array
+     */
+    public function get_user_info(request $request,user $user,follow $follow){
+        $user_info=$follow->get_follow_and_fans_num($request->get('uid'));
+        $user_info['img']=$user
+            ->where("id",$request->get('uid'))
+            ->get()
+            ->head_img;
+        $user_info['name']=$user->name;
+        return $user_info;
     }
 }

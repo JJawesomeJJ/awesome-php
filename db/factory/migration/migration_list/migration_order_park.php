@@ -26,4 +26,8 @@ class migration_order_park extends migration
         $this->db->string("pay_way",30);
         $this->db->string("park_id",50,"not null");
     }
+    public function up()
+    {
+        // TODO: Implement up() method.
+    }
 }

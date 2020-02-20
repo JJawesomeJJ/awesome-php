@@ -23,4 +23,8 @@ class migration_survey extends migration
         $this->db->string("result",225);
         $this->timestamp();
     }
+    public function up()
+    {
+        // TODO: Implement up() method.
+    }
 }

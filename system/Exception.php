@@ -9,6 +9,8 @@
 namespace system;
 
 
+use system\config\config;
+
 class Exception
 {
     public function __construct($code,$message)
@@ -17,7 +19,17 @@ class Exception
             $this->throw_exception($message);
             return;
         }
-        echo json_encode(["code"=>$code,"message"=>$message]);
+        if(config::debug()['status']) {
+            try {
+                throw new \Exception($message);
+            }
+            catch (\Throwable $throwable){
+                echo json_encode(["code" => $code, "message" => $message,'details'=>$throwable->getTraceAsString()]);
+                die();
+            }
+        }else{
+            echo json_encode(["code" => $code, "message" => $message]);
+        }
         exit();
     }
     protected function throw_exception($message){

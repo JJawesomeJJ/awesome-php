@@ -23,4 +23,8 @@ class news extends migration
         $this->db->string("type",30,"normal");
         $this->db->text("title");
     }
+    public function up()
+    {
+        // TODO: Implement up() method.
+    }
 }

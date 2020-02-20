@@ -99,6 +99,7 @@ class admin_user_controller extends controller
                     redirect(index_path() . $is_redirect);
                 }
             } else {
+                session::set("admin",(new admin_user_new())->where("name",$admin_user_info['name'])->get());
                session::set("admin_permission",$admin_user_info);
             }
         }
@@ -127,6 +128,7 @@ class admin_user_controller extends controller
         $admin->where("name", $this->request()->get("name"))->or_where("email",$this->request()->get("name"))->get();
         if ($this->request()->get("password") == $admin->password) {
             $this->set_token($admin->name,$admin->permission);
+            session::set("admin",$admin);
             return
                 [
                     "code" => 200,
@@ -173,7 +175,13 @@ class admin_user_controller extends controller
     }
     public function user_login(){
         if(self::permission(false)){
-            redirect(index_path()."/admin/control/websocket");
+            return view('admin/redirect',[
+                'title'=>"欢迎你 ".session::get("admin")->name.' !',
+                'btn1'=>"前往服务控制台",
+                'btn2'=>'前往直播CMS',
+                'path1'=>'/admin/control/websocket',
+                'path2'=>'/cms/native/gift'
+            ]);
         }
         return compile_parse::compile("admin/user_login",[]);
     }
@@ -251,6 +259,7 @@ class admin_user_controller extends controller
             default:
                 break;
         }
+        return null;
     }
     public function get_online_user_info(){
         $user=new user();

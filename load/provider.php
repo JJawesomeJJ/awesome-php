@@ -21,6 +21,9 @@ class provider
     protected $container=[];
     protected $class_factory=[];
     public function controller($controller_name,$params=false){
+        if(!array_key_exists($controller_name,$this->controller)){
+            throw new \Exception($controller_name.' NOT FIND');
+        }
         return $this->controller[$controller_name];
     }
     public function get_dependencies(){
@@ -34,13 +37,8 @@ class provider
             $this->make($item)->register();
         }
     }
-    public function middleware($middleware,$request){
-        if(isset($this->controller[$middleware])){
-            return $this->controller[$middleware];
-        }
-        $middleware_obejct=new $this->middleware[$middleware]($request);
-        $this->controller[$middleware]=$middleware_obejct;
-        return $middleware_obejct;
+    public function middleware($middleware){
+        return make($this->middleware[$middleware]);
     }
     public function make($class_name)
     {
@@ -52,6 +50,7 @@ class provider
             if(array_key_exists($class_name,$this->dependencies)){
                 $class_name=$this->dependencies[$class_name];
             }else{
+                throw new \Exception($class_name);
                 new Exception(404,"Class $class_name Not Find");
             }
         }
@@ -108,7 +107,7 @@ class provider
                 }
                 return call_user_func_array([make($class_name_), $method_], $method_params);
             }
-            new Exception("500", "method_can't be resolve");
+            new Exception("500", "$method method_can't be resolve");
         }
         else{
 //            $method_=$method;
@@ -187,4 +186,16 @@ class provider
         }
     }
     //debug when some class not define namespace php will throw a error try catch it!;
+    public function call_back(){
+
+    }
+    public function setAttribute($class_name,$object){
+        if(!class_exists($class_name)) {
+            if (!array_key_exists($class_name, $this->container)) {
+                throw new \Exception("Class " . $class_name . " Not find");
+            }
+        }
+        $class_name=get_class($class_name);
+        $this->container[$class_name]=$object;
+    }
 }

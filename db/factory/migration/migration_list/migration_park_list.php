@@ -28,4 +28,8 @@ class migration_park_list extends migration
         $this->db->string("park_name",30);
         $this->db->string("latitude_longitude","40","not null")->unique();
     }
+    public function up()
+    {
+        // TODO: Implement up() method.
+    }
 }

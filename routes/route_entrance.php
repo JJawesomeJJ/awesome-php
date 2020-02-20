@@ -72,6 +72,9 @@ routes::post("test/post",function (){
     $request=make("request");
     return $request->all();
 });
+/*
+ * @description 管理员界面
+ */
 routes::post("admin/nitify","admin_user_controller@add_websocket_nitify");
 routes::get("test","test_controller@test");
 routes::post("admin/theme","admin_user_controller@theme");
@@ -79,6 +82,9 @@ routes::post("admin/theme/set","admin_user_controller@set_current_theme");
 routes::get("admin/theme/get","admin_user_controller@get_current_theme");
 routes::get("admin/theme/list","admin_user_controller@get_theme_list");
 routes::post("admin/theme/delete","admin_user_controller@delete_theme");
+/**
+ * @end
+ */
 routes::post("wechat/login","wechat_controller@login");
 routes::post("park/start","park_controller@start_park");
 routes::post("park/stop","park_controller@stop_park");
@@ -115,3 +121,50 @@ routes::get('native/index',function (){
     return view("native/native_view");
 });
 routes::post("language","language_controller@translate");
+routes::get('OAuth/add','OAuth_controller@add');
+routes::get('awesome/author',"awesome_controller@author");
+/**
+ * @description 用户频道管理
+ */
+routes::post('channel/native',"channel_controller@add_native_channel");//用户加入频道
+routes::post('channel/leave','channel_controller@leave_native_channel');//用户离开频道
+routes::post('native/barrage',"chat_controller@send_message");
+routes::get('native/page',function (){
+    return view("native/barrage");
+});
+/**
+ * @description 粉丝中心
+ */
+routes::get('native/follow',"fans_controller@follow");
+routes::get('native/fans','fans_controller@fans');
+routes::post('native/addfollow','fans_controller@follow_user');
+routes::post('native/removefollow','fans_controller@remove_follow');
+routes::get('user/details','auth_controller@get_user_info');
+routes::get('native/gift','native_controller@gifts');
+routes::post('native/gift/send','gift_controller@send_gift');
+/**
+ * @description CMS 后台管理系统
+ */
+routes::group(function (){
+    routes::get("system/menu","MenuController@index");
+    /**
+     * 菜单设置
+     */
+    routes::get("system/menu/info","MenuController@menu_info");
+    routes::post("system/menu/edit","MenuController@edit");
+    routes::post("system/menu/add","MenuController@add_memu");
+    routes::post("system/menu/del","MenuController@del");
+    /**
+     * 直播管理
+     */
+    routes::get("native/gift","NativeController@index");
+    //添加礼物
+    routes::post("native/gift/add","NativeController@add_gift");
+    routes::post("native/gift/del","NativeController@del_gift");
+    routes::get("native/gift/details","NativeController@details");
+    routes::post("native/gift/edit","NativeController@edit");
+    routes::get("admin/list","UserController@user_list");//用户控制器
+},["auth_middleware"],"cms/");
+/**
+ * @EndDescription
+ */

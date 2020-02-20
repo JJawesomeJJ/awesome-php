@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>系统人员列表</title>
+</head>
+<body>
+@extend('cms/component/cms_container')
+<div class="user_container">
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>头像</th>
+            <th>用户名</th>
+            <th>创建日期</th>
+            <th>更新日期</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($page['data'] as $key=>$item)
+        <tr>
+            <td>{{++$key}}</td>
+            <td class="header_img"><img src="{{$item['head_img']}}" alt=""></td>
+            <td>{{$item['name']}}</td>
+            <td>{{$item['created_at']}}</td>
+            <td>{{$item['updated_at']}}</td>
+            <td>  <button type="button" @click="del('{{$item['id']}}')" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon"></i></button>
+                <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" @click="edit('{{$item['id']}}')"><i class="layui-icon">&#xe642;</i></button></td>
+        </tr>
+        @endforeach
+        </tbody>
+    </table>
+</div>
+@endextend
+</body>
+</html>

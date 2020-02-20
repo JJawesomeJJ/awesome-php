@@ -10,6 +10,7 @@ namespace system;
 
 
 use Grafika\Gd\Editor;
+use system\config\config;
 
 class file
 {
@@ -54,24 +55,37 @@ class file
     }
     //get path all file include son dir
     public function base64_jpeg($base64,$path,$name){
-        $file1="/var/www/html/image/".date('Y-m-d h:i:s').".txt";
-        $fp = fopen($file1, 'w');
-        fwrite($fp,$base64);
-        fclose($fp);
+//        $file1=config::upload_path("txt").date('Y-m-d h:i:s').".txt";
+//        $fp = fopen($file1, 'w');
+//        fwrite($fp,$base64);
+//        fclose($fp);
         if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64, $result)){
             $type = $result[2];
             $new_file = $path;
-            if(!file_exists($new_file)){
+            if(!is_dir($new_file)){
                 //检查是否有该文件夹，如果没有就创建，并给予最高权限
-                mkdir($new_file, 0700);
+                $this->mkdir($new_file, 0700);
             }
+//            print_r($new_file);die();
             $new_file = $new_file.$name.".{$type}";
+            $new_file=str_replace("\\",'/',$new_file);
             if (file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64)))){
+                return str_replace("/index.php","",str_replace(config::env_path()."public",config::index_path(),$new_file));
             }else{
                 return false;
             }
         }else{
             return false;
+        }
+    }
+    public function mkdir(string $path,int $priv){
+        if(is_dir($path)){
+            return;
+        }else{
+            if(!is_dir(dirname($path))){
+                $this->mkdir(dirname($path),$priv);
+            }
+            mkdir($path,0777);
         }
     }
     //base64 to img file

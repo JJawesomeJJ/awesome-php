@@ -23,4 +23,8 @@ class migration_categories extends migration
         $this->db->integer('level',5);
         $this->db->string('path',10);
     }
+    public function up()
+    {
+        // TODO: Implement up() method.
+    }
 }

@@ -224,7 +224,7 @@ class cache
             unset($this->redis_lock[$value]);
         }//try unlock file
     }
-    public function get_non_exist_set($key,$value1,$expire='forever',$is_serialize=false,$is_return_value=false){
+    public function get_non_exist_set($key,$value1,$expire='forever',$is_serialize=false,$is_return_value=true){
         if(($value=$this->get_cache($key))==null) {
             $va = $value1;
             if ($value1 instanceof \Closure) {

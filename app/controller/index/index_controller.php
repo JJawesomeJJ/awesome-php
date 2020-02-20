@@ -4,6 +4,8 @@
  * Date: 2019-04-10 10:34:30
  */
 namespace app\controller\index;
+use app\controller\auth\auth_controller;
+use app\Event\native_push_event;
 use app\Event\user_login_event;
 use app\controller\code\code_controller;
 use app\controller\controller;
@@ -18,6 +20,7 @@ use db\model\park\map;
 use db\model\shop\categories;
 use db\model\shop\goods;
 use db\model\user\user;
+use extend\awesome\awesome_echo_tool;
 use Grafika\Grafika;
 use load\auto_load;
 use load\provider;
@@ -39,6 +42,7 @@ use system\excel;
 use system\file;
 use system\http;
 use system\lock;
+use system\LuaScript;
 use system\mail;
 use system\pay\alipay;
 use system\redis;
@@ -53,7 +57,7 @@ use template\compile_parse;
 
 class index_controller extends controller
 {
-    public function index(request $request)
+    public function index(request $request,awesome_echo_tool $awesome_echo_tool)
     {
 //        return $this->get_user_ip();
 //        $db=new db();
@@ -434,15 +438,15 @@ class index_controller extends controller
 //        echo cache_::get_cache("test").PHP_EOL;
 //        $rabitmq=new rabbitmq();
 //        echo microtime(true)-start_at;
-        $cache=new cache();
-//        event("user_login_event");
-        if(($num=$cache->lock_get_cache('num'))==null){
-            $num=1;
-            $cache->set_cache('num',1,120000);
-        }
-        $cache->lock_set_cache('num',$num+1,120000);
-        $rabbitmq=new rabbitmq();
-        return $rabbitmq->push('timer2','timer2',$num,'',10);
+//        $cache=new cache();
+////        event("user_login_event");
+//        if(($num=$cache->lock_get_cache('num'))==null){
+//            $num=1;
+//            $cache->set_cache('num',1,120000);
+//        }
+//        $cache->lock_set_cache('num',$num+1,120000);
+//        $rabbitmq=new rabbitmq();
+//        return $rabbitmq->push('timer2','timer2',$num,'',10);
 //////        $mail=new mail();
 //        $mail->send_email('1293777844@qq.com','ds','ds');
 //        lock::redis_lock('language',5,10);
@@ -465,6 +469,57 @@ class index_controller extends controller
 //        $user=new user();
 //        $user->find(1);
 //        event(new user_login_event((new user())->all()));
-        return microtime(true)-start_at;
+//        return microtime(true)-start_at;
+//        return $this->sort([1,5,9,10,2,5,7,6,1,4,10]);
+//        class_define::redis()->del('test');
+//        LuaScript::hash_add_array('test','test','sdf');
+//        var_dump(LuaScript::hash_del_key('tet1','dfd','fdfdf'));
+//        return json_decode(class_define::redis()->hGet('tet1','dfd'),true);
+//        var_dump(class_define::redis()->hGetAll('test'));
+//        $rabbitmq=new rabbitmq();
+//        return runtime();
+//        return $awesome_echo_tool->get_online_users();
+//        class_define::redis()->del('test123');
+//        LuaScript::hash_hash_add_key_value('test123','test123','test4','tes2t123',time());
+//        return class_define::redis()->hGet('test123','test123');
+        return $awesome_echo_tool->get_online_users();
+//        LuaScript::hash_add_array("AAA","AAA","AAA");
+//        return LuaScript::hash_arr_len("AAA","AAA");
+        $user=new user();
+        $user->transactions(function () use ($user){
+            echo $user->where("name","jjawesome")->get()->name;
+            $user->update(['name'=>"李春梅"]);
+            throw new \Exception("TEST");
+        });
+    }
+    public function quick(array $arr){
+        if(count($arr)<=1){
+            return $arr;
+        }
+        $base=$arr[0];
+        $left=[];
+        $right=[];
+        for($i=1;$i<count($arr);$i++){
+            if($base>=$arr[$i]){
+                $left[]=$arr[$i];
+            }else{
+                $right[]=$arr[$i];
+            }
+        }
+        $left=$this->quick($left);
+        $right=$this->quick($right);
+        return array_merge($left,[$base],$right);
+    }
+    public function sort(array $arr){
+        for($i=0;$i<count($arr);$i++){
+            for($j=$i+1;$j<count($arr);$j++){
+                if($arr[$j]>$arr[$i]){
+                    $swap=$arr[$j];
+                    $arr[$j]=$arr[$i];
+                    $arr[$i]=$swap;
+                }
+            }
+        }
+        return $arr;
     }
 }

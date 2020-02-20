@@ -12,7 +12,6 @@ use system\cache\cache;
 use system\config\config;
 use system\Exception;
 use system\file;
-//require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__."/"."provider_register.php";
 require_once dirname(__DIR__)."/"."system/config/config.php";
 class auto_load
@@ -34,6 +33,10 @@ class auto_load
             if(array_key_exists($class_name,$this->provider->get_dependencies())){
                 $class_name=str_replace('load\\',"",$this->provider->get_dependencies()[$class_name].".php");
                 $class_name= str_replace("\\","/",$class_name);
+                require_once(@$this->file_path.$class_name);
+                return;
+            }
+            if(array_key_exists($class,$this->provider->get_dependencies())){
                 require_once(@$this->file_path.$class_name);
                 return;
             }

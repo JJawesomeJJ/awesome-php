@@ -267,3 +267,116 @@ function object_content_copy(object1) {
     }
     return object2;
 }
+
+/**
+ * @description 与Android客户端共享cookie
+ * @param name
+ * @param value
+ * @param timestamp 到期的时间
+ */
+// 设置cookie
+function setCookie(name, value, timestamp) {
+    console.log("cookies has been load");
+    var expires = "";
+    if (timestamp != 0 ) {      //设置cookie生存时间
+        var date = new Date();
+        date.setTime(timestamp);
+        expires = "; expires="+date.toGMTString();
+    }
+    document.cookie = name+"="+value+expires+"; path=/";   //转码并赋值
+}
+
+/**
+ * @description 将url参数转化为对象
+ * @param params_string
+ * @returns {*}
+ */
+function params_parse_object(params_string) {
+    var params={};
+    var params_list=params_string.split("&");
+    for (var i of params_list){
+        var param=i.split("=");
+        params[param[0]]=decodeURI(param[1])
+    }
+    return params;
+}
+function object_parse_url(params) {
+    var str="";
+    for (var i in params){
+        str=str+i+"="+params[i]+"&";
+    }
+    return "?"+str.substring(0,str.length-1);
+}
+var request=function () {
+    var object_=null;
+    var then_=null;
+    var catch_=null;
+    var pre_load=[];
+    this.get=function (url,params) {
+        for (var i of pre_load){
+            i(url,params);
+        }
+        var fun1=then_;
+        then_=null;
+        var fun2=catch_;
+        catch_=null;
+        object_=axios.get(url+object_parse_url(params));
+        return this;
+    };
+    this.post=function (url,params={}) {
+        var fun1=then_;
+        then_=null;
+        var fun2=catch_;
+        catch_=null;
+        for (var i of pre_load){
+            i(url,params);
+        }
+        object_=axios.post(url,params);
+        return object_;
+    };
+    this.then=function (fun) {
+        object_.then(function (res) {
+            fun(res)
+        });
+        return this;
+    };
+    this.catch=function (fun) {
+        object_.catch(function (err) {
+            fun(err)
+        });
+        return this;
+    };
+    this.bind_pre=function (fun) {
+        pre_load.push(fun)
+    };
+};
+var Request=new request();
+Request.bind_pre(function () {
+
+});
+String.prototype.format = function(args) {
+    var result = this;
+    if (arguments.length > 0) {
+        if (arguments.length == 1 && typeof (args) == "object") {
+            for (var key in args) {
+                if(args[key]!=undefined){
+                    var reg = new RegExp("({" + key + "})", "g");
+                    result = result.replace(reg, args[key]);
+                }
+            }
+        }
+        else {
+            for (var i = 0; i < arguments.length; i++) {
+                if (arguments[i] != undefined) {
+                    var reg= new RegExp("({)" + i + "(})", "g");
+                    result = result.replace(reg, arguments[i]);
+                }
+            }
+        }
+    }
+    return result;
+};
+
+function rand(min,max) {
+    return Math.floor(Math.random()*(max-min+1)+min);
+}

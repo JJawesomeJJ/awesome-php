@@ -86,12 +86,8 @@ class common
             }
             else{
                 $user=new user();
-                $user->where("id",$user_info["id"])->get()->all();
-                session::set("name",$user->name);
-                session::set("user",$user->name);
-                session::set("email",$user->email);
-                session::set("id",$user_info["id"]);
-                session::set("head_img",$user->head_img);
+                $user->where("id",$user_info["id"])->get();
+                session::set("user",$user);
             }
         }
         return true;
@@ -249,5 +245,21 @@ class common
     }
     public static function unique_key(){
         return md5(microtime(true).self::rand(15));
+    }
+
+    /**
+     * @description 获取数组的多个字段返回
+     * @param array $arr
+     * @param array $fileds
+     * @return array
+     */
+    public static function get_hash_filed(array $arr,array $fileds){
+        $result=[];
+        foreach ($fileds as $filed){
+            if(array_key_exists($fileds,$arr)){
+                $result[$filed]=$arr[$filed];
+            }
+        }
+        return $result;
     }
 }

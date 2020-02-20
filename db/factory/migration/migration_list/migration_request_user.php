@@ -22,4 +22,8 @@ class migration_request_user extends migration
         $this->db->datetime('request_time')->commemt('访问的时间');
         $this->db->string('request_url',50)->commemt('访问的url');
     }
+    public function up()
+    {
+        // TODO: Implement up() method.
+    }
 }

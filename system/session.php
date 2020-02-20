@@ -28,14 +28,14 @@ class session
     }
     public static function set($name,$value){
         self::init();
-        $_SESSION[$name]=$value;
+        $_SESSION[$name]=serialize($value);
     }
     public static function get($name){
         self::init();
         if(!isset($_SESSION[$name])){
             return false;
         }
-        return $_SESSION[$name];
+        return unserialize($_SESSION[$name]);
     }
     public static function exist($name){
         self::init();
@@ -50,6 +50,10 @@ class session
     }
     public static function all(){
         self::init();
-        return $_SESSION;
+        $result=[];
+        foreach ($_SESSION as $key=>$value){
+            $result[$key]=unserialize($value);
+        }
+        return $result;
     }
 }

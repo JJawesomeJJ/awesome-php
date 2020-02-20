@@ -1,0 +1,122 @@
+/**{*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*}*/
+.menu{
+    position: fixed;
+    left:0;
+    top:50px;
+    width: 200px;
+    height:98vh;
+    background-color: rebeccapurple;
+}
+.menu-content{
+    position: relative;
+}
+.menu-name{
+    color: #868e96;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+}
+.iconfont{
+    color: rgba(0, 0, 0, 0.45);
+}
+.menu-icon{
+    position:absolute;
+    left: 10px;
+    top:10px;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+}
+.menu-level-1{
+    position: relative;
+    display: block;
+    text-decoration: none;
+    background-color: white;
+}
+.menu-level-1-container{
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 0px;
+}
+.container-none{
+    height: 0 !important;
+    transition: 0.5s ease-in-out;
+    display: block !important;
+}
+.container-hover{
+    position: relative;
+    overflow: hidden;
+    margin-top: 5px;
+    display: block !important;
+    height: 100%;
+}
+.menu-level-1 .left-narrow{
+    position: absolute;
+    right: 10px;
+    top:10px;
+    width: 20px;
+    font-size: 25px;
+    height: 20px;
+}
+.menu-p{
+    width: 100%;
+    padding-top: 10px;
+    height: 35px;
+}
+.menu-level-2{
+    position: relative;
+    /*padding-left: 20px;*/
+    padding-top: 8px;
+    display: block;
+    height: 35px;
+}
+.menu-icon-2{
+    position: absolute;
+    left: 30px;
+    width: 20px;
+    font-size: 16px;
+    line-height: 25px;
+    height: 20px;
+}
+.menu-level-2:hover{
+    background-color: rgba(128, 128, 128, 0.46);
+    color: #574B90 !important;
+    font-weight: 600;
+}
+.menu-level-2:hover span{
+    color: #574B90 !important;
+}
+.menu-level-2:hover p{
+    color: #574B90 !important;
+}
+.menu-hover{
+    background-color: rgba(128, 128, 128, 0.46);
+    color: #574B90 !important;
+    font-weight: 600;
+}
+.menu-hover span{
+    color: #574B90 !important;
+}
+.menu-hover p{
+    color: #574B90 !important;
+}
+.left-menu{
+    position: absolute;
+    left: 0;
+    height: 100%;
+    background-color: white;
+    width: 3px;
+    transition: 0.3s ease-in-out;
+    z-index: 999;
+}
+.menu-level-1:hover .left-menu{
+    background-color: dodgerblue;
+}
+.left-menu-hover{
+    background-color: dodgerblue !important;
+}

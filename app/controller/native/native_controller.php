@@ -6,7 +6,10 @@
 namespace app\controller\native;
 use app\controller\auth\auth_controller;
 use app\controller\controller;
+use db\model\native\gift;
 use request\request;
+use system\cache\cache;
+use system\cache\cache_;
 use system\class_define;
 use system\common;
 use system\config\config;
@@ -35,8 +38,9 @@ class native_controller extends controller
         "more"
     ];
     protected $record_push_url="record_native_push_url";
+    protected $record_room="record_room";
     public function start(request $request){
-        $user_id=auth_controller::auth();
+        $user_id=auth_controller::auth(true);
         $online=$this->online_list_key;
         foreach ($online as $key=>$item){
             $online[$key]="online_".$item;
@@ -47,27 +51,37 @@ class native_controller extends controller
         ];
         $request->verifacation($rules);
         $redis=class_define::redis();
+        //获取唯一的的房间号
         $room_num=common::rand(6,"number");
-        while ($redis->hExists($request->get("type"),$room_num)){
+        while ($redis->hExists($this->record_room,$room_num)){
             $room_num=common::rand(6,"number");
         }
         $cover=$request->get_file("cover");
         if($cover->isset_file()){
-            $cover_path=$cover->accept(["jpg", "png", "jpeg", "gif","image/*"])->max_size(2024)->store_upload_file(config::env_path()."public/image/upload");
+            $cover_path=$cover
+                ->accept(["jpg", "png", "jpeg", "gif","image/*"])
+                ->max_size(2024)
+                ->store_upload_file(config::env_path()."public/image/upload");
         }
         else{
             new Exception("404","cover_path_not_find");
         }
         $rtmp_url=$this->getPushUrl();
-        $redis->hSet($this->record_push_url,$rtmp_url['stream_name'],json_encode(["room"=>$room_num,"type"=>$request->get("type")]));//记录流名与房间名的映射关系
+        $unique_id=common::unique_key();
+        $redis->hSet($this->record_push_url,$rtmp_url['stream_name'],json_encode([
+            "room"=>$room_num,
+            "type"=>$request->get("type"),
+            "created_at"=>$this->time()
+        ]));//记录流名与房间名的映射关系
         $native_info=[
             "user_id"=>$user_id,
             "rtmp_url"=>$rtmp_url['push'],
             "play"=>$rtmp_url["play"],
             "crated_at"=>$this->time(),
-            "user_name"=>session::get("name"),
+            "user_name"=>auth_controller::auth(),
             "room"=>$room_num,
-            "cover"=>$cover_path
+            "cover"=>$cover_path,
+            "has_been_add"=>[]//曾经加入的人员id为了记录峰值人员
         ];
         $redis->hSet($request->get("type"),$room_num,json_encode($native_info));
         return $native_info;
@@ -83,7 +97,7 @@ class native_controller extends controller
         $domain="63817.livepush.myqcloud.com";
         $play_domain="play.titang.shop";
         $streamName=md5(common::rand(8).microtime(true));
-        $key="secret";
+        $key="85283ce7151b0da9c07ed020996565cc";
         $time=date('Y-m-d H:i:s',strtotime("+1 day"));
         if($key && $time){
             $txTime = strtoupper(base_convert(strtotime($time),10,16));
@@ -169,10 +183,11 @@ class native_controller extends controller
 //        ,{\"room_name\":\"837937\",\"type\":\"lol\",\"info\":{\"user_id\":\"\u8d75\u674e\u6770\",\"rtmp_url\":\"rtmp:\/\/63817.livepush.myqcloud.com\/live\/dfaf4f9bf8d011dcba1f9119c0347b7c?txSecret=66819026734242f95cc633bac3261d61&txTime=5DB7F335\",\"play\":\"http:\/\/play.titang.shop\/titang_native_app\/dfaf4f9bf8d011dcba1f9119c0347b7c.flv?txSecret=66819026734242f95cc633bac3261d61&txTime=5DB7F335\",\"crated_at\":\"2019-10-28 16:07:17\",\"user_name\":\"\u8d75\u674e\u6770\",\"room\":\"837937\",\"cover\":\"http:\/\/www.titang.shop\/image\/upload\/8f7b40b953479a8ee0dc3547ea2f5b5f.jpg\"}}
 //        ,{\"room_name\":\"837937\",\"type\":\"lol\",\"info\":{\"user_id\":\"\u8d75\u674e\u6770\",\"rtmp_url\":\"rtmp:\/\/63817.livepush.myqcloud.com\/live\/dfaf4f9bf8d011dcba1f9119c0347b7c?txSecret=66819026734242f95cc633bac3261d61&txTime=5DB7F335\",\"play\":\"http:\/\/play.titang.shop\/titang_native_app\/dfaf4f9bf8d011dcba1f9119c0347b7c.flv?txSecret=66819026734242f95cc633bac3261d61&txTime=5DB7F335\",\"crated_at\":\"2019-10-28 16:07:17\",\"user_name\":\"\u8d75\u674e\u6770\",\"room\":\"837937\",\"cover\":\"http:\/\/www.titang.shop\/image\/upload\/8f7b40b953479a8ee0dc3547ea2f5b5f.jpg\"}}
 //        ,{\"room_name\":\"837937\",\"type\":\"lol\",\"info\":{\"user_id\":\"\u8d75\u674e\u6770\",\"rtmp_url\":\"rtmp:\/\/63817.livepush.myqcloud.com\/live\/dfaf4f9bf8d011dcba1f9119c0347b7c?txSecret=66819026734242f95cc633bac3261d61&txTime=5DB7F335\",\"play\":\"http:\/\/play.titang.shop\/titang_native_app\/dfaf4f9bf8d011dcba1f9119c0347b7c.flv?txSecret=66819026734242f95cc633bac3261d61&txTime=5DB7F335\",\"crated_at\":\"2019-10-28 16:07:17\",\"user_name\":\"\u8d75\u674e\u6770\",\"room\":\"837937\",\"cover\":\"http:\/\/www.titang.shop\/image\/upload\/8f7b40b953479a8ee0dc3547ea2f5b5f.jpg\"}}]";
-        return "[{\"room_name\":\"387992\",\"type\":\"games\",\"info\":{\"user_id\":\"\u8d75\u674e\u6770\",\"rtmp_url\":\"rtmp:\/\/63817.livepush.myqcloud.com\/live\/5e89980b6c751ffeba54497178381624?txSecret=b42b1e336f50f0a7a95a6409044e0fb7&txTime=5DF732B6\",\"play\":\"http:\/\/play.titang.shop\/titang_native_app\/5e89980b6c751ffeba54497178381624.flv?txSecret=b42b1e336f50f0a7a95a6409044e0fb7&txTime=5DF732B6\",\"crated_at\":\"2019-12-15 15:31:02\",\"user_name\":\"\u8d75\u674e\u6770\",\"room\":\"387992\",\"cover\":\"http:\/\/www.titang.shop\/image\/upload\/9ac2308e1b13229fb9511afec4eacdf6.jpg\"}}]";
+        $item="[{\"room_name\":\"387992\",\"type\":\"games\",\"info\":{\"user_id\":\"\u8d75\u674e\u6770\",\"rtmp_url\":\"rtmp:\/\/63817.livepush.myqcloud.com\/live\/5e89980b6c751ffeba54497178381624?txSecret=b42b1e336f50f0a7a95a6409044e0fb7&txTime=5DF732B6\",\"play\":\"http:\/\/play.titang.shop\/titang_native_app\/5e89980b6c751ffeba54497178381624.flv?txSecret=b42b1e336f50f0a7a95a6409044e0fb7&txTime=5DF732B6\",\"crated_at\":\"2019-12-15 15:31:02\",\"user_name\":\"\u8d75\u674e\u6770\",\"room\":\"387992\",\"cover\":\"http:\/\/www.titang.shop\/image\/upload\/9ac2308e1b13229fb9511afec4eacdf6.jpg\"}}]";
         $online_info=[];
         $redis=class_define::redis();
         $tencent_clound=new tencent_clound();
+//        print_r($tencent_clound->get_online_list());die();
         foreach ($tencent_clound->get_online_list() as $value){
             $value=get_object_vars($value);
             $stream_info=json_decode($redis->hGet($this->record_push_url,$value['StreamName']),true);
@@ -198,6 +213,9 @@ class native_controller extends controller
                 }
             }
         }
+        $item=json_decode($item,true)[0];
+//        print_r($online_info);die();
+        $online_info[]=$item;
         return $online_info;
     }
     public function banner(){
@@ -226,5 +244,11 @@ class native_controller extends controller
     }
     public function type(){
         return $this->type;
+    }
+    public function gifts(gift $gift,cache $cache){
+        $cache->delete_key('native_gift');
+        return $cache->get_non_exist_set("native_gift",function () use ($gift){
+            return $gift->select(['id','name','desc_','value_','fun','icon'])->all();
+        });
     }
 }

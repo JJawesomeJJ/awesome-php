@@ -7,6 +7,7 @@
  */
 namespace request;
 use db\db;
+use system\common;
 use system\config\config;
 use system\Exception;
 use system\upload_file;
@@ -15,16 +16,23 @@ class request
 {
     public $user_input='*';
     protected $server;
+    protected static $object;
     protected static $current_url;
     protected static $request_url;
     protected static $current_url_no_params;
     protected static $current_url_params;
-    public function __construct()
+    protected function __construct()
     {
         $this->user_input=$this->all();
         unset($this->user_input['s']);
-        $this->filter();
+//        $this->filter();
         $this->server=$_SERVER;
+    }
+    public static function SingleTon(){
+        if(self::$object==null){
+            self::$object=new self();
+        }
+        return self::$object;
     }
     public function verifacation(array $rules){
         $arr=[];
@@ -71,6 +79,8 @@ class request
                         $this->is_number($this->get($key));
                         break;
                     default:
+                    case "noempty":
+                        $this->noempty($this->get($key));
                         break;
                 }
             }
@@ -219,10 +229,17 @@ class request
         else{
             new Exception("400","variable_fail_to_pass_regex");
         }
-
     }
-    public function all(){
+    protected function noempty($value){
+        if(empty($value)){
+            new Exception(400,"variable_can_not_be_empty");
+        }
+    }
+    public function all(array $accept=[]){
         if($this->user_input!='*'){
+            if(!empty($fileds)){
+                return common::get_hash_filed($this->user_input,$accept);
+            }
             return $this->user_input;
         }
         if(isset($_SERVER["CONTENT_TYPE"])) {
@@ -237,13 +254,30 @@ class request
         if($_SERVER['REQUEST_METHOD']=="POST"){
             $this->user_input=$_POST;
         }
+        if(!empty($fileds)){
+            return common::get_hash_filed($this->user_input,$accept);
+        }
         return $this->user_input;
+    }
+
+    /**
+     * @description 获取除了某个字段以外的字段
+     * @param array $fileds
+     * @return array|mixed|string
+     */
+    public function except(array $fileds=[]){
+        $user_input=$this->all();
+        foreach ($fileds as $filed){
+            unset($user_input[$filed]);
+        }
+        return $user_input;
     }
     public function get_file($name){
         return upload_file::upload_file($name);
     }
     public function request_mothod(){
         if($this->try_get("_method")){
+            unset($this->user_input['_method']);
             return $this->get("_method");
         }
         return $_SERVER["REQUEST_METHOD"];

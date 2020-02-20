@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .hidden{
+        display: none;
+    }
+    .open{
+        margin: 0 auto;
+    }
+    .open span{
+        color: white;
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+        display: block;
+    }
+    .show{
+        display: block;
+    }
+    .right{
+        position: absolute;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-right: 10px;
+        right: 10px;
+        display: block;
+        background-color: rebeccapurple;
+    }
+    .content{
+        position: relative;
+        top:45px;
+    }
+</style>
+<body>
+<div>
+    @extend('cms/component/cms_container')
+    <div class="right">
+        <button type="button" class="layui-btn" onclick="add()">
+            <i class="layui-icon">&#xe608;</i> 添加
+        </button>
+    </div>
+        <div class="content">
+            <table class="layui-table">
+                <colgroup>
+<!--                    <col width="150">-->
+<!--                    <col width="200">-->
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th width="30px">展开</th>
+                    <th>序号</th>
+                    <th>菜单名</th>
+                    <th>菜单地址</th>
+                    <th>菜单图标</th>
+                    <th>是否显示</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($menu_info as $key=>$item)
+                <tr class="layui-bg-cyan">
+                    <td class="open" data-target="{{$key}}"><span class="iconfont icon icon-youjiantou"></span></td>
+                    <td>{{$key+1}}</td>
+                    <td>{{$item['name']}}</td>
+                    <td>{{$item['url']}}</span></td>
+                    <td><span style="color: white;display: block;" class="iconfont icon {{$item['icon']}}"></span></td>
+                    <td>{{$item['type']==0?'是':'否'}}</td>
+                    <td>
+                        <button type="button" onclick="del('{{$item['id']}}')" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon"></i></button>
+                        <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="details('{{$item['id']}}')"><i class="layui-icon">&#xe642;</i></button>
+                    </td>
+                </tr>
+                @if(!empty($item['children']))
+                @foreach($item['children'] as $value)
+                <tr class="hidden" data-target="{{$key}}">
+                    <th></th>
+                    <td>{{$key+1}}</td>
+                    <td>{{$value['name']}}</td>
+                    <td>{{$value['url']}}</td>
+                    <td>{{$value['icon']}}</td>
+                    <td>{{$value['type']==0?'是':'否'}}</td>
+                    <td>
+                    <button type="button" onclick="del('{{$value['id']}}')" class="layui-btn layui-btn-sm add layui-btn-danger"><i class="layui-icon"></i></button>
+                    <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="details('{{$value['id']}}')"><i class="layui-icon">&#xe642;</i></button>
+                    </td>
+                </tr>
+                @endforeach
+                @endif
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endextend
+</div>
+<script>
+    $(".open").click(function () {
+        var target=$(this).attr("data-target");
+        var ele=$(this);
+        $("tr").each(function () {
+            if($(this).attr("data-target")==target){
+                if($(this).hasClass("hidden")){
+                    $(this).slideDown(500);
+                    ele.find("span").rotate({animateTo: 90});
+                    $(this).removeClass("hidden")
+                }
+                else {
+                    $(this).addClass("hidden");
+                    $(this).hide(100);
+                    ele.find("span").rotate({animateTo: 0});
+                }
+            }
+        })
+    });
+    function add() {
+        var page=layer.open({
+            type: 2,
+            title:"新增菜单",
+            area: ['500px', '380px'],
+            // fixed: false, //不固定
+            maxmin: true,
+            content: '/cms/system/menu/info',
+            btn:["确认新增","取消"],
+            btn1: function (index,layero) {
+                var vertify=new verification();
+                vertify.check(function () {
+                },function (err) {
+
+                });
+                var info = layero.find("iframe")[0].contentWindow.$("#form").serialize();
+                info=params_parse_object(info);
+                Request.post("/cms/system/menu/add",info).then(function (res) {
+                    if(res.data==1) {
+                        layer.alert('添加成功', {icon: 6},function () {
+                            window.location.reload();
+                        });
+                    }else {
+                        layer.msg("添加失败");
+                    }
+                    layer.close(page);
+                }).catch(function (err) {
+                    console.log(err)
+                })
+            } ,
+            btn2: function () {
+                layer.close(page)
+                parent.layer.close(indext);
+            }
+        });
+    }
+    function details(id) {
+        var page=layer.open({
+            type: 2,
+            title:"新增菜单",
+            area: ['500px', '380px'],
+            // fixed: false, //不固定
+            maxmin: true,
+            content: '/cms/system/menu/info?id='+id,
+            btn:["确认修改","取消"],
+            btn1: function (index,layero) {
+                var info = layero.find("iframe")[0].contentWindow.$("#form").serialize();
+                info=params_parse_object(info);
+                Request.post("/cms/system/menu/edit",info).then(function (res) {
+                    if(res.data==1) {
+                        layer.alert('修改成功', {icon: 6},function () {
+                            window.location.reload();
+                        });
+                    }else {
+                        layer.msg("修改失败");
+                    }
+                    layer.close(page);
+                }).catch(function (err) {
+                    console.log(err)
+                })
+            } ,
+            btn2: function () {
+                layer.close(page)
+                parent.layer.close(indext);
+            }
+        });
+    }
+    function del(id) {
+        Request.post('/cms/system/menu/del',{id:id}).then(function (res) {
+            if(res.data==1) {
+                layer.alert('删除成功', {icon: 6},function () {
+                    window.location.reload();
+                });
+            }else {
+                layer.msg("删除失败");
+            }
+        }).catch(function (err) {
+
+        })
+    }
+</script>
+</body>
+</html>

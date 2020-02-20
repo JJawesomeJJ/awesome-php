@@ -50,3 +50,17 @@ function event($event_name){
 function app(){
     return \load\provider_register::provider();
 }
+/**
+ * @description 获取当前程序运行的时间
+ * @return mixed
+ */
+function runtime(){
+    return microtime(true)-start_at;
+}
+function is_1_array(array $arr){
+    if (count($arr) == count($arr, 1)) {
+        return true;
+    } else {
+        return false;
+    }
+}

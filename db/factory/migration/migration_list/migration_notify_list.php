@@ -28,4 +28,8 @@ class migration_notify_list extends migration
         $this->db->text("show_message");
         $this->db->foreign_key("publisher","admin_user_new","name");
     }
+    public function up()
+    {
+        // TODO: Implement up() method.
+    }
 }

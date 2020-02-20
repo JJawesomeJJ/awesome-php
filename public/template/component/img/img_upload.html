@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/img_upload.js"></script>
+    <link href="css/img_upload.css" rel="stylesheet">
+</head>
+<body>
+<div class="img_upload" data-target="{{$target}}" data-src="{{$width??'100'}}px">
+    <input type="file" accept="image/*" id="img_file_container">
+    <input type="hidden" id="img_base64" name="{{$name??'img'}}">
+</div>
+</body>
+</html>

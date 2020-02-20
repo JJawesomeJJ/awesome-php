@@ -12,7 +12,9 @@ abstract class Event
 {
     public function __construct()
     {
-        $this->ShouldBroadcast();
+        if(method_exists($this,"ShouldBroadcast")) {
+            $this->ShouldBroadcast();
+        }
     }
     //是否通过awesome-echo 进行广播
     abstract function ShouldBroadcast();

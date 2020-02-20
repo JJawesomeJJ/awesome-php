@@ -10,13 +10,8 @@ namespace db\model;
 
 
 use db\factory\soft_db;
-use db\model\model_auto\model_auto;
-use db\model\user\user;
-use request\request;
-use SebastianBergmann\CodeCoverage\Report\PHP;
 use system\common;
 use system\Exception;
-use system\redis;
 
 abstract class model
 {
@@ -89,6 +84,16 @@ abstract class model
         $this->db->refresh();
         return $this;
     }
+
+    /**
+     * @description 根据现有的条件重载session
+     */
+    public function reload(){
+        $this->model_list=null;
+        $this->is_load_data=false;
+        $this->get();
+        return $this;
+    }
     public function or_where(...$arr){
         if(!in_array($arr[0],$this->table_column_list)){
             new Exception("300","this_model_not_exits_key_$arr[0]");
@@ -143,7 +148,7 @@ abstract class model
             //如果是设则实例化该模型并设置条件返回与当前模型管理的模型实例
         }
         if(!in_array($name,$this->table_column_list)){
-            new Exception("300","this_key_not_exist_in_this_model");
+            new Exception("300","this_key_not_exist_in_".get_class($this));
         }
         if(empty($this->model_list)){
             new Exception("300","model_data_unfind");
@@ -167,7 +172,7 @@ abstract class model
             $this->db->all();
         }
         $data=$this->db->get($is_refresh);
-        if($this->is_1_array($data)){
+        if($this->is_1_array($data)&&!empty($data)){
             $this->model_list=[$data];
         }
         else{
@@ -326,6 +331,7 @@ abstract class model
     }
     public function find($index){
         $this->limit($index,1);
+//        return $this->get();
         $data=$this->all();
         if(isset($this->all()[0])){
             return $data[0];
@@ -389,8 +395,12 @@ abstract class model
     }
     //数据被删除之后对应的模型重置
     public function delete(){
-        $this->db->delete();
-        $this->model_list = [];
+        $result=$this->db->delete();
+        if($result) {
+            $this->model_list = [];
+            return true;
+        }
+        return false;
     }
     public function create(array $filed_arr,$is_auto_id=false,$return_id=true){
         if (in_array("created_at", $this->table_column_list)) {
@@ -513,6 +523,9 @@ abstract class model
             $this->db->refresh();
         }
         return true;
+    }
+    public function transactions(\Closure $things,$sucess=null,$fail=null){
+        $this->db->transactions($things,$sucess,$fail);
     }
     public function __toString()
     {

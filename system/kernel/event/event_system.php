@@ -24,8 +24,8 @@ class event_system
             if(!class_exists($event_name)){
                 if(($class_path=app()->get_class_path($event_name))!=null){
                     $event_name=$class_path;
-//                    $event_object=make($event_name);
-//                    $this->handle_event($event_object,$this->event_list[get_class($event_object)]);
+                    $event_object=make($event_name);
+                    $this->handle_event($event_object,$this->event_list[get_class($event_object)]);
                 }else{
                     new Exception(404,'Event Path Not Find');
                 }

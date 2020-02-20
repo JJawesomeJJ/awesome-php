@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>礼物清单页面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<span class="layui-breadcrumb" lay-separator="-">
+      <a href="">service</a>
+                    <a href="">timed_task</a>
+                    <a><cite>timed service monitor</cite></a>
+</span>
+<div class="goods_content">
+    <table class="layui-table layui-col-xs12 col-md-12 overflow-x-sroll" style="margin-top: 20px;margin-bottom: 100px;">
+        <thead>
+        <tr>
+            <th style="width: 220px;"></th>
+            <th style="width: 220px;">任务执行时间</th>
+            <th style="width: 220px;">执行次数</th>
+            <th style="width: 220px;">间隔时间</th>
+            <th style="width: 220px;">任务类型</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($timed_task_list as $key=>$value)
+        <tr>
+            <td>{{$value['task_name']}}</td>
+            <td>{{date("Y-m-d H:i",$value['time'])}}</td>
+            <td>{{$value['times']}}</td>
+            <td>{{$value['interval']}}</td>
+            <td>{{$value['type']}}</td>
+        </tr>
+        @endforeach
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

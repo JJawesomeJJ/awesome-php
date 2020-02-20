@@ -29,7 +29,8 @@ class channel_config
             'online'=>'awesome_echo_online',//记录当前在线的用户-record online user
             'channel'=>'awesome_echo_channel',//记录当前所有的频道-record current all channel
             'channel_suffix'=>'awesome_echo',//频道的前缀
-            'user_rel_id'=>'awesome_echo_online_real'//记录当前已经验证的用户的id
+            'user_rel_id'=>'awesome_echo_online_real',//记录当前已经验证的用户的id
+            'user_token'=>'awesome_token',//用户的token
         ];
     }
 }

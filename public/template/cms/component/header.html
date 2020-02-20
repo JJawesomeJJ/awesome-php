@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>顶部</title>
+    <link href="../assets/icon/iconfont.css" rel="stylesheet">
+    <link href="assets/css/header.css" rel="stylesheet">
+</head>
+<body>
+<div class="header_container">
+    <div class="logo">
+        Titang-Admin
+    </div>
+    <div class="search"></div>
+    <div class="right_menu">
+        <span class="icon iconfont left-narrow icon-tongzhi notice"></span>
+        <div class="header_img">
+            <img src="{{\system\session::get('admin')->head_img}}" alt="头像">
+        </div>
+        <div class="name">{{\system\session::get('admin')->name}}</div>
+    </div>
+</div>
+</body>
+</html>

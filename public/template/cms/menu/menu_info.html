@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{$title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../asset/layui-v2.5.3/layui/css/layui.css">
+    <script src="../../asset/layui-v2.5.3/layui/layui.js"></script>
+</head>
+<style>
+    .container{
+        position: absolute;
+        width: 400px;
+        left: 0;
+        right: 0;
+        margin:0 auto;
+        border: 1px solid grey;
+    }
+    .container .title{
+        width: 100%;
+        text-align: center;
+        height: 30px;
+        font-size: 20px;
+    }
+</style>
+<body>
+<div class="container">
+    <div class="title">{{$title}}</div>
+    <form class="layui-form" action="" id="form">
+        <input type="hidden" name="id" value="{{$menu_info->id??''}}">
+        <div class="layui-form-item">
+            <label class="layui-form-label">父菜单</label>
+            <div class="layui-input-inline">
+                <select name="pid" lay-verify="">
+                    <option value="0">顶级菜单</option>
+                    @foreach($menu_list as $item)
+                        @if(isset($menu_info)&&($menu_info->pid==$item['id']))
+                        <option value="{{$item['id']}}" selected>|{{$item['name']}}</option>
+                        @else
+                        <option value="{{$item['id']}}">|{{$item['name']}}</option>
+                        @endif
+                        @if(isset($item['children']))
+                            @foreach($item['children'] as $value)
+                                @if(isset($menu_info)&&($menu_info->pid==$value['id']))
+                                <option value="{{$value['pid']}}" selected>|-----{{$value['name']}}</option>
+                                @else
+                                <option value="{{$value['pid']}}">|-----{{$value['name']}}</option>
+                                @endif
+                            @endforeach
+                        @endif
+                        @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" reqiure="noempty">菜单名</label>
+            <div class="layui-input-inline">
+                <input type="text" value="{{$menu_info->name??''}}" name="name" required  lay-verify="required" placeholder="请输入菜单名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" reqiure="noempty">菜单地址</label>
+            <div class="layui-input-inline">
+                <input type="text" value="{{$menu_info->url??''}}" name="url" required lay-verify="required" placeholder="请输入地址" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜单图标</label>
+            <div class="layui-input-inline">
+                <input type="text" value="{{$menu_info->icon??''}}" name="icon" required lay-verify="required" placeholder="请输入图标地址" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否显示</label>
+            <div class="layui-input-inline">
+                @if(isset($menu_info)&&$menu_info->type==0)
+                <input type="checkbox" name="type" lay-skin="switch" lay-text="开启|关闭" value="0" checked>
+                @else
+                <input type="checkbox" name="type" lay-skin="switch" lay-text="开启|关闭" value="1">
+                @endif
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">请求方式</label>
+            <div class="layui-input-inline">
+                <select name="pid" lay-verify="">
+                    @foreach($method as $item)
+                        <option value="{{$item}}" {{isset($menu_info)&&$item==$menu_info->method?'selected':''}}>{{$item}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    //Demo
+    layui.use('form', function(){
+        var form = layui.form;
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+            // layer.msg(JSON.stringify(data.field));
+            // return false;
+        });
+    });
+</script>
+</body>
+</html>

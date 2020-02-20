@@ -17,9 +17,9 @@ class controller
 
     protected $cache_=null;
     protected $request_=null;
-    public function __construct(request $request)
+    public function __construct()
     {
-        $this->request_=$request;
+        $this->request_=make(request::class);
         $this->construct();
     }
     public function middlware($middlware){

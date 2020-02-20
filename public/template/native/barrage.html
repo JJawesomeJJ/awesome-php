@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src=https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js></script>
+    <meta name=viewport content="width=device-width,initial-scale=1">
+    <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <script src="../asset/js/common.js"></script>
+    <script src="assets/js/action.js"></script>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    .pre{
+        position: relative;
+        border-radius: 10px;
+        padding: 4px;
+        margin-top: 5px;
+        top:0px;
+        color: white;
+        display: flex;
+        background-color: rgba(0, 0, 0, 0.55);
+        font-weight: bolder;
+        max-width: 150px;
+        min-height:20px;
+        /*left: -100px;*/
+        white-space: nowrap;
+        transition: 1s;
+        /*animation: show 1s ease-in-out forwards;*/
+    }
+    .pre p:nth-child(1){
+        position: absolute;
+        left: 5px;
+        color: lightblue;
+        white-space: nowrap;
+        font-weight: lighter;
+    }
+    .pre p:nth-child(2){
+        color: white;
+        font-weight: lighter;
+    }
+    .pre p{
+        white-space:pre-wrap;
+        word-break: break-word;
+    }
+    @keyframes show {
+        0%{left: -100px;}
+        100%{left: 10px;}
+    }
+    .next{
+        position: absolute;
+        transition: 1s ease-in-out;
+        left: -100px;
+    }
+    .container{
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        position: relative;
+    }
+    .top{
+        position: fixed;
+        top: 5px;
+        margin-left: 5px;
+        width: 45vw;
+        height: 40px;
+        border-radius: 20px;
+        background-color: rgba(0, 0, 0, 0.82);
+        display: flex;
+    }
+    .header{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+    .header img{
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        margin-left: 2px;
+    }
+    .anchor{
+        display: block;
+        width: 60px;
+        text-overflow: ellipsis;
+    }
+    .anchor p:nth-child(1){
+        font-size: 15px;
+        color: white;
+        font-weight: normal;
+    }
+    .anchor p:nth-child(2){
+        font-size: 14px;
+        color: white;
+        font-weight: lighter;
+        line-height: 21px;
+    }
+    .focus{
+        position: absolute;
+        right: 10px;
+        width:45px;
+        height: 30px;
+        border-radius: 12px;
+        background-color: white;
+        color: rgba(255, 0, 0, 0.92);
+        text-align: center;
+        line-height: 30px;
+        top:5px;
+    }
+    .bottom{
+        position: fixed;
+        bottom: 15px;
+        width: 100vw;
+        height: 200px;
+    }
+    .barrage{
+        position:absolute;
+        height: 200px;
+        overflow-y: scroll;
+        bottom: 40px;
+        padding-left: 10px;
+    }
+    .barrage_container{
+        position: relative;
+        height: 120px;
+        width: 100%;
+    }
+    ::-webkit-scrollbar {/*隐藏滚轮*/
+        display: none;
+    }
+    .menu{
+        position: absolute;
+        bottom: 0;
+        height: 40px;
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .menu .user_input{
+        width: 150px;
+        height: 35px;
+    }
+    #user_input{
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.49);
+        border: 0;
+        padding-left: 15px;
+        font-weight: lighter;
+    }
+    input{
+        outline: none;
+    }
+    #user_input::-webkit-input-placeholder {
+        color:white;
+    }
+    .right{
+        width: 180px;
+        margin-right: 10px;
+    }
+    .right ul{
+        display: flex;
+    }
+    .right ul li{
+        list-style: none;
+        position: relative;
+        width:40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: rgba(211, 211, 211, 0.75);
+        margin-left: 3px;
+        display: block;
+    }
+    .right ul li:nth-child(1){
+        margin-left: 0;
+    }
+    .right ul li:nth-child(1) img{
+        display: block;
+        position: relative;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        margin: 0 auto;
+        top:7px;
+    }
+    .right ul li img{
+        display: block;
+        position: relative;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        margin: 0 auto;
+        top:7px;
+    }
+    .right ul li:nth-child(2){
+        background-color: white;
+    }
+    .right ul li:nth-child(2) img{
+        background-color: white;
+        display: block;
+        position: relative;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        margin: 0 auto;
+        top:7px;
+    }
+    .orange{
+        color: orange !important;
+    }
+    .online{
+        position: fixed;
+        right: 0;
+        width: 180px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .online_num{
+        position: absolute;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: rgba(211, 211, 211, 0.75);
+        color: white;
+        line-height: 30px;
+        text-align: center;
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+    .send{
+        position: absolute;
+        display: none;
+        bottom: 0px;
+        width: 100vw;
+        height: 40px;
+        background-color: white;
+    }
+    .send input{
+        padding-left: 10px;
+        padding-right: 10px;
+        width: 100vw;
+        height: 40px;
+        border: 0;
+    }
+    .send_buttom_grey{
+        position: absolute;
+        bottom:0px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        background-image: url("assets/images/send_grey.png");
+        background-repeat: no-repeat;
+        background-position-x: 5px;
+        background-position-y: 5px;
+        background-size: 80% 80%;
+    }
+    .send_buttom_red{
+        position: absolute;
+        bottom:0px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        background-repeat: no-repeat;
+        background-position-x: 5px;
+        background-position-y: 5px;
+        background-image: url("assets/images/send_red.png");
+        background-size: 80% 80%;
+    }
+    .show_send{
+        display: flex !important;
+    }
+    #gift{
+        position: fixed;
+        top:10vh;
+        height: 40vh;
+        width: 100%;
+    }
+    .gift_item{
+        position: absolute;
+        width: 60%;
+        background-color: rgba(220, 220, 220, 0.62);
+        height: 6vh;
+        display: flex;
+        align-items: center;
+        animation: eject 1s ease-in-out;
+        border-radius: 18px;
+        margin-left: 5px;
+        /*justify-content: center;*/
+    }
+    .gift_item .head_img{
+        position: relative;
+        left: 0;
+        width: 40px;
+        height: 40px;
+        overflow: hidden;
+    }
+    .gift_item .head_img img{
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        border-radius: 50%;
+    }
+    .gift_item .gift_cover{
+        position: relative;
+        left: 0;
+        width: 40px;
+        height: 40px;
+        overflow: hidden;
+    }
+    .gift_item .gift_cover img{
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        border-radius: 50%;
+    }
+    .gift_num{
+        position: absolute;
+        right: 10px;
+    }
+    @keyframes eject {
+        0%{left: -80%}
+        100%{left: 0}
+    }
+    .gift_container{
+        position: fixed;
+        bottom: 0;
+        width: 100vw;
+        height: 200px;
+        background-color: rgba(0, 0, 0, 0.93);
+        z-index: 999;
+        animation: top-show 1s ease-in-out;
+    }
+    @keyframes top-show {
+        0%{bottom:-300px}
+        100%{bottom:0}
+    }
+    .gift_container{
+        position: relative;
+        display: none;
+        padding: 5px;
+        flex-wrap: wrap;
+        z-index: 999;
+    }
+    .gift_list_item{
+        position: relative;
+        width:25%;
+        height: 98px;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .gift_list_item img{
+        position: relative;
+        display: block;
+        top:5px;
+        width: 60px;
+        height: 60px;
+        border-radius: 10px;
+        margin: 0 auto;
+        margin-bottom: 4px;
+    }
+    .gift_list_item p{
+        color: white;
+        font-size: 14px;
+        width: 100%;
+        text-align: center;
+        font-weight: lighter;
+        margin-top: -3px;
+    }
+    .pirce{
+        font-size: 11px !important;
+        margin-top: 0 !important;
+    }
+    .send_gift{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 19px;
+        background-color: #ff1c0c;
+        color: white;
+        text-align: center;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        animation: send 0.3s ease-in-out;
+    }
+    @keyframes send {
+        0%{bottom: -19px}
+        100%{bottom: 0}
+    }
+    .gift-item-hover{
+        background-color: black;
+    }
+    .gift-item-hover .send_gift{
+        display: flex;
+    }
+</style>
+<body>
+<div class="container" id="app">
+    <!--顶部信息-->
+    <div class="top">
+        <div class="header">
+            <img src="https://dss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1694681277,1453280371&fm=26&gp=0.jpg" alt="">
+        </div>
+        <div class="anchor">
+            <p>熊猫烧香</p>
+            <p>2000月亮</p>
+        </div>
+        <div class="focus">
+            关注
+        </div>
+    </div>
+    <div class="online">
+        <div class="online_num">
+           @{{compute_online_num(online_num)}}
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="barrage">
+            <div class="barrage_container">
+                <div class="pre" v-for="i in message">
+                    <p v-bind:class="{'orange':i['user_name']=='系统'}">@{{i['user_name']}}:</p><p v-html="get_msg_char(i['user_name'],i['msg'])"></p>
+                </div>
+            </div>
+        </div>
+        <div class="gift_container">
+            <div class="gift_list_item" v-for="i in gifts">
+                <img :src="i['icon']" alt="">
+                <p class="pirce">@{{i['value_']}}渊币</p>
+                <p>@{{i['name']}}</p>
+                <div class="send_gift" @click="send_gift(i['id'])">发送</div>
+            </div>
+        </div>
+        <div class="menu">
+            <div class="user_input">
+                <input type="text" v-model="msg" placeholder="说点什么..." id="user_input">
+            </div>
+            <div class="right">
+                <ul>
+                    <li>
+                        <img src="assets/images/heart.png" alt="">
+                    </li>
+                    <li class="show_gift_container">
+                        <img src="assets/images/gift.png" alt="">
+                    </li>
+                    <li>
+                        <img src="assets/images/left.png" alt="">
+                    </li>
+                    <li>
+                        <img src="assets/images/close.png" alt="">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="send" :class="{'show_send':is_show}">
+        <input type="text" id="msg" v-model="msg" placeholder="说点什么...">
+        <div @click="barrage" class="send_buttom" :class="{'send_buttom_grey':msg=='','send_buttom_red':msg!=''}"></div>
+    </div>
+    <div id="gift">
+    </div>
+</div>
+<script>
+    $(function () {
+        $("body").on('click','.gift_list_item',function () {
+            var ele=$(this);
+            $(this).attr("data-src","hover");
+            $(".gift_list_item").each(function () {
+                if($(this).attr("data-src")!="hover"){
+                    $(this).removeClass("gift-item-hover");
+                }
+            });
+            // $(this).removeAttr("data-src");
+            $(this).addClass("gift-item-hover");
+        });
+    });
+    new Vue({
+        el: '#app',
+        data: {
+            notice:[
+                {msg:"我们呼吁包括广大平台、机构、主播在内的直播全行业，自觉遵守国家法律法规、政策要求，依法积极配合监管，恪守职业道德，自觉抵制不良行为",user_name:"系统"},
+                {msg:"我们倡导，直播全行业主动加强践行社会主义核心价值观，不断提升互联网泛娱乐新业态对社会文化繁荣发展的建设性作用",user_name:"系统"},
+                {msg:"不得宣传或发布违法信息、违反社会公德的信息，或不利于精神文明建设的信息，包括但不限于色情、赌博、邪教、恐怖主义等内容",user_name:"系统"}
+            ],
+            message:[],
+            msg:"",
+            fd:null,
+            _token:null,
+            move_now:true,
+            event_loop:[],
+            timer:null,
+            online_num:1,
+            online_fans:[],
+            img:"",
+            is_show:false,
+            channel_name:"",
+            is_hidden:true,
+            gifts:[],
+        },
+        watch:{
+            message(oldvalue,newvalue){
+                this.move_now=true;
+            }
+        },
+        updated(){
+
+        },
+        mounted(){
+            var self=this;
+            $("#user_input").focus(function () {
+                self.is_show=true;
+            });
+            $("#msg").blur(function () {
+                console.log("fsdfsd");
+                self.is_show=false;
+            });
+            var self=this;
+            $(".show_gift_container").click(function () {
+                self.is_hidden=false;
+                self.show_gift_container();
+            });
+            $("#app").click(function () {
+                if(self.is_hidden) {
+                    $(".gift_container").hide(300);
+                }
+            });
+            $(".gift_container").click(function () {
+                self.is_hidden=false;
+                setTimeout(function () {
+                    self.is_hidden=true;
+                },1);
+            })
+        },
+        created(){
+            var self=this;
+            for(var i of self.notice){
+                self.push_message(JSON.stringify(i));
+            }
+            window['push_ele'] = function(msg){
+                self.push_message(msg)
+            };
+            window['init']=function (fd,_token,channel_name) {
+                self.init_com(fd,_token,channel_name);
+            };
+            this.get_gifts();
+        },
+        methods:{
+            compute_online_num(num){
+                if(num<1000){
+                    return num;
+                }
+                if(num>1000){
+                    return (Number(num)/1000).toFixed(1)+"k";
+                }
+                if(num>10000){
+                    return (Number(num)/10000).toFixed(1)+"w";
+                }
+            },
+            show_gift_container(){
+                this.is_hidden=false;
+                var self=this;
+                // $("#app").unbind();
+                $(".gift_container").css("display","flex");
+                setTimeout(function () {
+                    // $("#app").click(function () {
+                    //     if(self.is_hidden) {
+                    //         $(".gift_container").hide(300);
+                    //     }
+                    // });
+                    self.is_hidden=true;
+                },301);
+            },
+            init_dis(){
+
+            },
+            init_com(fd,_token,channel_name){
+                this.fd=fd;
+                this._token=_token;
+                this.channel_name=channel_name;
+            },
+            push_message(jsonobject){
+                var self=this;
+                var info=JSON.parse(jsonobject);
+                if(info.hasOwnProperty("online")){
+                    self.online_num=Object.keys(info["online"]).length;
+                }
+                this.message.push(info);
+                var pre=self.message.length-1;
+                if(this.move_now){
+                    var self=this;
+                    this.event_loop.push(function () {
+                        self.timer=setTimeout(function () {
+                            var height=$(".pre").eq(pre).height()+10;
+                            var top1=$(".barrage").scrollTop();
+                            var top=Number(top1)+Number(height)*1.12;
+                            $(".barrage").animate({scrollTop:top},1000);
+                            self.timer=null;
+                            if(self.event_loop.length>0) {
+                                var f = self.event_loop.shift();
+                                f.call();
+                            }
+                        },1000);
+                    });
+                    if(this.timer==null){
+                        var f=this.event_loop.shift();
+                        f.call();
+                    }
+                    this.is_move=false;
+                }
+            },
+            get_msg_char(name,msg){
+                var ele="";
+                var chinese_length=this.match_chinese(name);
+                var length=name.length-chinese_length;
+                for(var i=0;i<(Math.ceil(chinese_length*3.8)+length+1);i++){
+                    ele+="&nbsp;"
+                }
+                return ele+msg;
+            },
+            match_chinese(str){
+                var reg=/[\u4e00-\u9fa5]+/g;
+                var length=0;
+                if(typeof str!="string"){
+                    return 0;
+                }
+                var result=str.match(reg);
+                if(result==null){
+                    return 0;
+                }
+                for (var i of result){
+                    length+=i.length;
+                }
+                return length;
+            },
+            //发送弹幕
+            barrage(){
+                var self=this;
+                if(self.msg==""){
+                    return;
+                }
+                var self=this;
+                axios.post("/native/barrage",{fd:self.fd,_token:self._token,msg:self.msg,channel_name:self.channel_name})
+                    .then(function (res) {
+                        console.log("h5res/native/barrage"+JSON.stringify(res.data));
+                        self.msg="";
+                        self.is_show=false;
+                    }).catch(function (err) {
+                        console.log("h5error//native/barrage"+err);
+                        self.msg="";
+                        self.is_show=false;
+                    });
+            },
+            send_gift(id){
+                var self=this;
+                axios.post("/native/gift/send",{fd:self.fd,_token:self._token,id:id,num:1,channel_name:self.channel_name}).then(function (res) {
+                    console.log("h5res"+JSON.stringify(res.data));
+                }).catch(function (err) {
+
+                })
+            },
+            get_gifts(){
+                var self=this;
+                axios.get("/native/gift",{}).then(function (res) {
+                    self.gifts=res.data;
+                }).catch(function (err) {
+
+                });
+            },
+            send(){}
+        }
+    });
+    function rand(min,max) {
+        return Math.floor(Math.random()*(max-min+1)+min);
+    }
+</script>
+</body>
+</html>

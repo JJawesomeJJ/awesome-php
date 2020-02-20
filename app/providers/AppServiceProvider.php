@@ -6,10 +6,13 @@
  * Time: 下午 10:56
  */
 namespace app\providers;
+use extend\awesome\awesome_driver_rabbitmq;
+use extend\awesome\awesome_echo_tool;
 use request\request;
 use system\class_define;
 use system\kernel\event\event_system;
 use system\kernel\ServiceProvider\ServiceProvider;
+use task\rabbitmq;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,10 +29,16 @@ class AppServiceProvider extends ServiceProvider
             return event_system::SingleTon();
         });
         app()->singleton(request::class,function (){
-            return new request();
+            return request::SingleTon();
         });
         app()->singleton(\Redis::class,function (){
             return class_define::redis();
+        });
+        app()->singleton(awesome_echo_tool::class,function (){
+            return new awesome_echo_tool(new awesome_driver_rabbitmq());
+        });
+        app()->singleton(rabbitmq::class,function (){
+            return new rabbitmq();
         });
     }
 }

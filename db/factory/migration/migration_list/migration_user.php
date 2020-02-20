@@ -16,7 +16,7 @@ class migration_user extends migration
     public $table_name="user";
     public function create()
     {
-        $this->db->string("id",50,"not null",true);
+        $this->db->integer("id",50,"not null",true,true);
         $this->db->string("name",30,"not null")->unique();
         $this->db->string("password",100);
         $this->db->string("sex","6","man")->commemt("性别");
@@ -27,6 +27,11 @@ class migration_user extends migration
         $this->db->integer("tele",11)->unique();
         $this->db->integer("email_status",1,0)->commemt("邮箱是否验证0即为否1为已验证");
         $this->db->integer("tele_status",1,0)->commemt("手机是否验证0即为否1为已验证");
+        $this->db->decimal("amount",10,2,0)->commemt("TB的余额");
         $this->timestamp();
+    }
+    public function up()
+    {
+        // TODO: Implement up() method.
     }
 }

@@ -26,4 +26,8 @@ class migration_titang_theme extends migration
         $this->timestamp();
         $this->db->foreign_key("creator","admin_user_new","name");
     }
+    public function up()
+    {
+        // TODO: Implement up() method.
+    }
 }

@@ -23,6 +23,7 @@ abstract class migration
         {
             new Exception("400","table_name_undefined");
         }
+        $this->db=soft_db::table($this->table_name);
         if(!is_array($this->table_name)){
             $this->db=soft_db::table($this->table_name);
         }
@@ -42,6 +43,7 @@ abstract class migration
                 $return_value[$table]=$result;
                 if($result) {
                     $this->db->get_table_column_cache(true);
+                    $this->up();
                 }
             }
         }
@@ -52,6 +54,7 @@ abstract class migration
             $return_value[$this->table_name]=$result;
             if($result) {
                 $this->db->get_table_column_cache(true);
+                $this->up();
             }
         }
         return $return_value;
@@ -77,6 +80,8 @@ abstract class migration
                 $this->db=soft_db::table($value);
                 $this->create();
                 $result=$this->db->update_table_filed();
+                $cache=new cache();
+                $cache->delete_key($value."column");
                 if($result){
                     $this->db->get_table_column();
                 }
@@ -87,6 +92,8 @@ abstract class migration
             $this->db=soft_db::table($this->table_name);
             $this->create();
             $result=$this->db->update_table_filed();
+            $cache=new cache();
+            $cache->delete_key($this->table_name."column");
             if($result){
                 $this->db->get_table_column();
             }
@@ -108,4 +115,6 @@ abstract class migration
         }
         return $return_arr;
     }
+    abstract function up();
+//    abstract function down();
 }

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>礼物管理</title>
+</head>
+<style>
+    .right{
+        position: absolute;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-right: 10px;
+        right: 10px;
+        display: block;
+        background-color: rebeccapurple;
+    }
+    .content{
+        position: relative;
+        top:45px;
+    }
+    .gift{
+        position: relative;
+        width: 450px;
+        height: 400px;
+    }
+</style>
+<body>
+@extend('cms/component/cms_container')
+<div class="right">
+    <button type="button" class="layui-btn" @click="add()">
+        <i class="layui-icon">&#xe608;</i> 添加
+    </button>
+</div>
+<div class="content">
+<table class="layui-table">
+    <colgroup>
+<!--        <col width="150">-->
+<!--        <col width="200">-->
+<!--        <col>-->
+    </colgroup>
+    <thead>
+    <tr>
+        <th>序号</th>
+        <th>礼物名字</th>
+        <th>礼物图样</th>
+        <th>礼物价格</th>
+        <th>礼物描述</th>
+        <th>礼物函数</th>
+        <th>礼物发布者</th>
+        <th>创建日期</th>
+        <th>更新时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach($gift as $key=>$item)
+    <tr class="layui-bg-cyan">
+        <td>{{$key+1}}</td>
+        <td>{{$item['name']}}</td>
+        <td class="gift_img"><img src="{{$item['icon']}}" alt=""></td>
+        <td>{{$item['value_']}}</td>
+        <td>{{$item['desc_']}}</td>
+        <td>{{$item['fun']}}</td>
+        <td>{{$item['uid']}}</td>
+        <td>{{$item['created_at']}}</td>
+        <td>{{$item['updated_at']}}</td>
+        <td>
+            <button type="button" @click="del('{{$item['id']}}')" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon"></i></button>
+            <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" @click="edit('{{$item['id']}}')"><i class="layui-icon">&#xe642;</i></button>
+        </td>
+    </tr>
+    @endforeach
+    </tbody>
+</table>
+</div>
+<div class="gift" style="display: none">
+    <form class="layui-form" action="" id="form">
+    <div class="title" style="width: 100%;text-align: center;margin-bottom: 15px;">@{{title}}</div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" reqiure="noempty">礼物名称</label>
+            <div class="layui-input-inline">
+                <input type="text" v-model="gift['name']" name="name" required lay-verify="required" placeholder="请输入礼物名字" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" reqiure="noempty">礼物图样</label>
+            <div class="layui-input-inline">
+                <img :src="gift['icon']" id="gift_img" alt="" style="width: 80px;height: 80px;">
+                @component(component/img/img_upload,['target'=>'#gift_img','name'=>'icon'])
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" reqiure="noempty">礼物价格</label>
+            <div class="layui-input-inline">
+                <input type="text" v-model="gift['value_']" name="value_" required lay-verify="required" placeholder="请输入价格" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" reqiure="noempty">展现函数</label>
+            <div class="layui-input-inline">
+                <input type="text" v-model="gift['fun']" name="fun" required lay-verify="required" placeholder="请输入礼物展示函数" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" reqiure="noempty">礼物描述</label>
+            <div class="layui-input-block">
+                <textarea style="width:250px;" cols="20" name="desc_" v-model="gift['desc_']" placeholder="暂无描述" class="layui-textarea"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+@endextend
+<script>
+    layui.use('form', function(){
+        var form = layui.form;
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+            // layer.msg(JSON.stringify(data.field));
+            // return false;
+        });
+    });
+    new Vue({
+        el:"#app",
+        data:{
+            title:"添加礼物",
+            gift_:{},
+            gift:{
+                name:null,
+                icon:"template/asset/image/upload.png",
+                value_:null,
+                desc_:null,
+                fun:null,
+                uid:null,
+            },
+
+        },
+        methods:{
+            add(){
+                layer.open({
+                    type: 1,
+                    content: $('.gift'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                    area: ['450px', '530px'],
+                    btn:['确认',"取消"],
+                    btn1:function (index,layero) {
+                        var user_input=decodeURIComponent($("#form").serialize());
+                        Request.post("/cms/native/gift/add",params_parse_object(user_input)).then(function (res) {
+                            if(Number(res.data)>=1){
+                                layer.alert('创建成功', {icon: 6},function () {
+                                    window.location.reload();
+                                });
+                            }
+                        }).catch(function (err) {
+
+                        })
+                    },
+                    btn2:function (index,layero) {
+
+                    }
+                });
+            },
+            del(id){
+                Request.post('/cms/native/gift/del',{id:id}).then(function (res) {
+                    if(Number(res.data)>=1){
+                        layer.alert('删除成功', {icon: 6},function () {
+                            window.location.reload();
+                        });
+                    }
+                }).catch(function (err) {
+
+                })
+            },
+            edit(id){
+                var self=this;
+                Request.get('/cms/native/gift/details',{id:id}).then(function (res) {
+                    self.gift=res.data;
+                    layer.open({
+                        type: 1,
+                        content: $('.gift'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                        area: ['450px', '530px'],
+                        btn:['确认',"取消"],
+                        btn1:function (index,layero) {
+                            var user_input=decodeURIComponent($("#form").serialize());
+                            user_input=params_parse_object(user_input);
+                            user_input['id']=id;
+                            Request.post("/cms/native/gift/edit",user_input).then(function (res) {
+                                if(Number(res.data)>=1){
+                                    layer.alert('修改成功', {icon: 6},function () {
+                                        window.location.reload();
+                                    });
+                                }
+                            }).catch(function (err) {
+
+                            })
+                        },
+                        btn2:function (index,layero) {
+
+                        },
+                        end:function () {
+                            self.gift=self.gift_;
+                        }
+                    });
+                }).catch(function (err) {
+
+                });
+            }
+        },
+        created(){
+            this.gift_=this.gift;
+        },
+    })
+</script>
+</body>
+</html>

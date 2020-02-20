@@ -12,12 +12,12 @@ use task\rabbitmq;
 
 class Channel
 {
-    public function __construct($channel_name,$params='')
+    public function __construct(string $channel_name,string $params='')
     {
         if($channel_name!=false){
             $config=channel_config::config();
             if($config['driver']=='rabbitmq') {
-                $rabbitmq=new rabbitmq();
+                $rabbitmq=make(rabbitmq::class);
                 $rabbitmq_config=channel_config::rabbitmq();
                 $rabbitmq->push($rabbitmq_config['exchange'],$rabbitmq_config['queue'],json_encode(['type'=>'notice_channel','channel_name'=>$channel_name,'data'=>$params]));
             }
