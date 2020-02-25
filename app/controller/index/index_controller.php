@@ -13,6 +13,7 @@ use db\db;
 use db\factory\migration\migration;
 use db\factory\migration\migration_list\migration_comment_list;
 use db\factory\soft_db;
+use db\factory\SqlRouter;
 use db\model\comment_list\comment_list;
 use db\model\model;
 use db\model\model_auto\model_auto;
@@ -57,7 +58,7 @@ use template\compile_parse;
 
 class index_controller extends controller
 {
-    public function index(request $request,awesome_echo_tool $awesome_echo_tool)
+    public function index(request $request,user $user)
     {
 //        return $this->get_user_ip();
 //        $db=new db();
@@ -482,15 +483,23 @@ class index_controller extends controller
 //        class_define::redis()->del('test123');
 //        LuaScript::hash_hash_add_key_value('test123','test123','test4','tes2t123',time());
 //        return class_define::redis()->hGet('test123','test123');
-        return $awesome_echo_tool->get_online_users();
+//        return $awesome_echo_tool->get_online_users();
 //        LuaScript::hash_add_array("AAA","AAA","AAA");
 //        return LuaScript::hash_arr_len("AAA","AAA");
-        $user=new user();
-        $user->transactions(function () use ($user){
-            echo $user->where("name","jjawesome")->get()->name;
-            $user->update(['name'=>"李春梅"]);
-            throw new \Exception("TEST");
-        });
+//        $user=new user();
+//        $user->transactions(function () use ($user){
+//            echo $user->where("name","jjawesome")->get()->name;
+//            $user->update(['name'=>"李春梅"]);
+//            throw new \Exception("TEST");
+//        });
+//        class_define::redis()->del("sql-router");
+//        return $_SERVER['SERVER_ADDR'];
+//        print_r($user->all());
+        echo $user->where('id',1)->update([
+            "sex"=>"women"
+        ]);
+        return runtime();
+
     }
     public function quick(array $arr){
         if(count($arr)<=1){

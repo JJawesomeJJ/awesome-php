@@ -43,7 +43,7 @@ abstract class model
         $this->db=soft_db::table($this->table_name);
         $this->refresh();
         //实例化数据库对象
-        $this->table_column_list=$this->db->get_table_column_cache(true);
+        $this->table_column_list=$this->db->get_table_column_cache(false);
         //初始化表单字段
     }
     public function where(...$arr){

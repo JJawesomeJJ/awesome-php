@@ -161,4 +161,54 @@ EOT;
 EOT;
         return class_define::redis()->eval($script,func_get_args(),2);
     }
+
+    /**
+     * @description 用于负载均衡计算
+     * @description 不过每一次有一个redis-io 在分布式中考虑增加一层redis集群
+     * @description 获取数据中最小的访问次数且加一返回最小的key
+     * @param string $key
+     * @param array $arr
+     * @return false|string
+     */
+    public static function string_hash_min_increase(string $key,array $arr){
+        $placeholder="a_";
+        foreach ($arr as &$value){
+            $value=$placeholder.$value;
+        }
+        $script=<<<EOT
+        local result=redis.call('get',KEYS[1]);
+        local ip_adress_list=cjson.decode(KEYS[2])
+        if result==nil or result==false then
+           result={}
+           for key,value in pairs(ip_adress_list) do
+               result[value]=0 
+           end
+           result[ip_adress_list[1]]=1 
+           redis.call('set',KEYS[1],cjson.encode(result))
+           return ip_adress_list[1]
+        else
+            result=cjson.decode(result)
+            if result[ip_adress_list[1]]==nil then
+               result[ip_adress_list[1]]=0
+            end
+            local min_key=ip_adress_list[1]
+            local min=result[ip_adress_list[1]]
+            for key,value in pairs(ip_adress_list) do
+                if result[value]==nil then
+                   result[value]=0
+                end
+                if (result[value]<min) then
+                   min=result[value]
+                   min_key=value
+                end
+            end
+            result[min_key]=result[min_key]+1
+            redis.call('set',KEYS[1],cjson.encode(result))
+            return min_key
+        end
+EOT;
+        $result=class_define::redis()->eval($script,[$key,json_encode(array_unique($arr))],2);
+        $placeholder_len=mb_strlen($placeholder);
+        return mb_substr($result,$placeholder_len,mb_strlen($result)-$placeholder_len);
+    }
 }

@@ -203,6 +203,7 @@ class config
     }
     public static function pdo(){
         return[
+            "EnableMasterCluster"=>true,//是否开启读写分离多实例
             "driver"=>"mysql",
             "mysql"=>[
                 "hostname"=>"127.0.0.1",

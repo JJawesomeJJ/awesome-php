@@ -2,72 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c14f6098-fa7f-43ad-a3d3-0833492a1ddb" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_OAuth.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/system/LuaScript.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/system/script.lua" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/factory/SqlRouter.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test_cli.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controller/admin_user/admin_user_controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/admin_user/admin_user_controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controller/auth/auth_controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/auth/auth_controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controller/controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/controller.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/controller/index/index_controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/index/index_controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controller/native/native_controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/native/native_controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controller/native/tencent_clound.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/native/tencent_clound.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/providers/AppServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/providers/EventServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/providers/EventServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/factory/migration/migration.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/factory/migration/migration.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_admin_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_admin_user.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_categories.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_categories.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_comment_likes.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_comment_likes.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_comment_list.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_comment_list.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_goods.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_goods.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_native.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_native.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_notify_list.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_notify_list.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_order_park.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_order_park.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_park_comment.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_park_comment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_park_list.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_park_list.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_request_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_request_user.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_survey.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_survey.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_titang_theme.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_titang_theme.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/factory/migration/migration_list/migration_user.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/factory/migration/migration_list/news.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/factory/migration/migration_list/news.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/factory/soft_db.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/factory/soft_db.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/model/model.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/model/model.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/model/user/user.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/model/user/user.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/extend/SuperClosure/vendor/myclabs/deep-copy" beforeDir="false" afterPath="$PROJECT_DIR$/extend/SuperClosure/vendor/myclabs/deep-copy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/extend/SuperClosure/vendor/nikic/php-parser" beforeDir="false" afterPath="$PROJECT_DIR$/extend/SuperClosure/vendor/nikic/php-parser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/extend/SuperClosure/vendor/phpunit/phpunit" beforeDir="false" afterPath="$PROJECT_DIR$/extend/SuperClosure/vendor/phpunit/phpunit" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/extend/SuperClosure/vendor/sebastian/resource-operations" beforeDir="false" afterPath="$PROJECT_DIR$/extend/SuperClosure/vendor/sebastian/resource-operations" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/filesystem/cache/88ca5fb494e84af161f7fc477396e77d.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/http/middleware/middleware.php" beforeDir="false" afterPath="$PROJECT_DIR$/http/middleware/middleware.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/load/auto_load.php" beforeDir="false" afterPath="$PROJECT_DIR$/load/auto_load.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/load/common.php" beforeDir="false" afterPath="$PROJECT_DIR$/load/common.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/load/provider.php" beforeDir="false" afterPath="$PROJECT_DIR$/load/provider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/load/provider_register.php" beforeDir="false" afterPath="$PROJECT_DIR$/load/provider_register.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/template/admin/user_login.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/template/admin/user_login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/template/asset/css/reset_password.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/template/asset/css/reset_password.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/template/asset/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/template/asset/js/common.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/template/compile_parse.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/template/compile_parse.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/template/native/assets/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/template/native/assets/js/common.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/template/native/native_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/template/native/native_view.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/request/request.php" beforeDir="false" afterPath="$PROJECT_DIR$/request/request.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/route_entrance.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/route_entrance.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/routes.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swoole/awesome_echo.php" beforeDir="false" afterPath="$PROJECT_DIR$/swoole/awesome_echo.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/Exception.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/Exception.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/awesome.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/awesome.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/cache/cache.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/cache/cache.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/common.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/common.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/config/channel_config.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/config/channel_config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/LuaScript.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/LuaScript.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/system/config/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/config/config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/config/queue.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/config/queue.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/file.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/file.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/kernel/Channel/Channel.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/kernel/Channel/Channel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/kernel/event/Event.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/kernel/event/Event.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/kernel/event/event_system.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/kernel/event/event_system.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/session.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/session.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/system_excu.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/system_excu.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/rabbitmq/delay_queue_server.php" beforeDir="false" afterPath="$PROJECT_DIR$/task/rabbitmq/delay_queue_server.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,11 +46,11 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="tsconfig.json" />
         <option value="NewLua" />
         <option value="CSS File" />
         <option value="JavaScript File" />
         <option value="HTML File" />
+        <option value="tsconfig.json" />
       </list>
     </option>
   </component>
@@ -652,7 +598,12 @@
       <workItem from="1581907573250" duration="38374000" />
       <workItem from="1582029185049" duration="5734000" />
       <workItem from="1582088856695" duration="22067000" />
-      <workItem from="1582179579473" duration="5760000" />
+      <workItem from="1582179579473" duration="6359000" />
+      <workItem from="1582263702236" duration="1296000" />
+      <workItem from="1582297348204" duration="2792000" />
+      <workItem from="1582346975272" duration="727000" />
+      <workItem from="1582455249937" duration="43220000" />
+      <workItem from="1582601518236" duration="7800000" />
     </task>
     <servers />
   </component>
@@ -664,10 +615,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="38" y="66" key="#Plugins/0.0.1536.824@0.0.1536.824" timestamp="1581652054508" />
-    <state x="137" y="164" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1582107746409">
+    <state x="137" y="164" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1582533707180">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="137" y="164" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1582107746409" />
+    <state x="137" y="164" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1582533707180" />
     <state x="299" y="11" key="CommitChangelistDialog2" timestamp="1581930388706">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -676,14 +627,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="386" y="163" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1581654795308" />
-    <state x="230" y="246" key="NewPhpClassDialog" timestamp="1582125757173">
+    <state x="230" y="246" key="NewPhpClassDialog" timestamp="1582297248810">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="230" y="246" key="NewPhpClassDialog/0.0.1536.824@0.0.1536.824" timestamp="1582125757173" />
-    <state x="391" y="344" key="NewPhpFileDialog" timestamp="1581830796974">
+    <state x="230" y="246" key="NewPhpClassDialog/0.0.1536.824@0.0.1536.824" timestamp="1582297248810" />
+    <state x="391" y="344" key="NewPhpFileDialog" timestamp="1582557308448">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="391" y="344" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1581830796974" />
+    <state x="391" y="344" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1582557308448" />
     <state x="372" y="5" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1581512133994">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -692,10 +643,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="319" y="24" width="807" height="716" key="dock-window-1/0.0.1536.824@0.0.1536.824" timestamp="1581777072607" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1582183039849">
+    <state x="62" y="192" key="run.anything.popup" timestamp="1582551328519">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1582183039849" />
+    <state x="62" y="192" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1582551328519" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1582456208279">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1582456208279" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

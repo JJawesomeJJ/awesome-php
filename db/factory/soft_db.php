@@ -6,6 +6,7 @@
  * Time: 下午 3:08
  */
 namespace db\factory;
+use system\class_define;
 use system\config\config;
 use system\Exception;
 
@@ -49,8 +50,8 @@ class soft_db
 
     }
     protected function init(){
-        if($this->con==null) {
-            $database = config::pdo();
+        $database=config::pdo();
+        if($this->con==null&&$database['EnableMasterCluster']==false) {
             $driver = $database["driver"];
             $user = $database[$driver]["username"];
             $password = $database[$driver]["password"];
@@ -65,6 +66,8 @@ class soft_db
                 $this->con->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
                 self::$con_list[$con_unique_key] = $this->con;
             }
+        }else{
+            $this->con=SqlRouter::SingleTon(config::env_path()."/filesystem",class_define::redis());
         }
     }
     public function refresh(){
