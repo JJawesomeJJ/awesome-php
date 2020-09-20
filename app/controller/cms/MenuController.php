@@ -7,6 +7,7 @@ namespace app\controller\cms;
 use app\controller\controller;
 use db\factory\soft_db;
 use db\model\cms\Menu;
+use extend\PHPMailer\Exception;
 use request\request;
 use system\config\config;
 
@@ -40,7 +41,7 @@ class MenuController extends controller
     public function index(Menu $menu){
         return view("cms/menu/menu",[
             "menu_info"=>$menu->compile_menu($menu->all()),
-            "title"=>"菜单设置"
+            "title"=>"菜单设置",
             ]);
     }
 
@@ -59,6 +60,7 @@ class MenuController extends controller
         }
         $params['method']=$this->request_method;
         $params['menu_list']=$menu->compile_menu($menu2->all());
+        $params['icon']=AssetsController::IconFont();
         return view("cms/menu/menu_info",$params);
     }
 

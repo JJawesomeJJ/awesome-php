@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>banner设置</title>
+    <script src="../../asset/vue/vue2.2.2_min.js"></script>
+</head>
+<body>
+<style>
+    #post{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .item{
+        position: relative;
+        width: 300px;
+        height: 250px;
+        border-radius: 5px;
+        margin-left: 10px;
+        margin-top: 30px;
+        display: inline-block;
+    }
+    .item img{
+        width: 100%;
+        height: 180px;
+        margin-left: 10px;
+    }
+</style>
+@extend('cms/component/cms_container')
+<div id="ele">
+<form id="post" method="post">
+    <div style="width: 100vw;position: relative">
+<div class="item" v-for="i,index in banner">
+    <div class="img">
+        <img :src="i.img" alt="banner图已失效">
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">标题</label>
+        <div class="layui-input-block">
+            <input type="text" :name="get_name('native[{index}][title]',index)" v-model="i.title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">图片CDN</label>
+        <div class="layui-input-block">
+            <input type="text" :name="get_name('native[{index}][img]',index)" v-model="i.img" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+</div>
+    </div>
+    <button  type="submit" style="display: block;margin-top: 10px;margin-left: 60px;" class="layui-btn">确认修改</button>
+</form>
+</div>
+@endextend
+</body>
+<script>
+    new Vue({
+        el:"#ele",
+        data:{
+            "banner":{{json_encode($banner)}}
+        },
+        methods:{
+            get_name(name,index){
+                return name.format({index:index})
+            }
+        }
+    })
+</script>
+</html>

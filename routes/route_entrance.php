@@ -8,6 +8,7 @@
 
 namespace routes;
 //the route entrance should design as resetful api style url=>resource the http request mothod as ["get","post","put","delete"]
+use db\model\user\user;
 use request\request;
 routes::post("user/login","auth_controller@user_login")->middleware("limit_flow_middleware","ip_limit",50);
 routes::post("user/server","auth_controller@request_connect_websocket");
@@ -90,10 +91,10 @@ routes::post("park/start","park_controller@start_park");
 routes::post("park/stop","park_controller@stop_park");
 routes::get("park/oder","park_controller@get_oder");
 routes::get("park/status","park_controller@get_current_money");
-routes::get('jquery/{user_id}/{sex}',function (request $request){
-   $request=make('request');
+routes::get('jquery/{user_id}/{sex}',function (){
+   $request=make(request::class);
    print_r($request->all());
-   return microtime(true)-$GLOBALS['time'];
+   return runtime();
 });
 routes::get("pay/alipay","pay_controller@alipay");
 routes::get('shop/index','shop_controller@index');
@@ -129,19 +130,32 @@ routes::get('awesome/author',"awesome_controller@author");
 routes::post('channel/native',"channel_controller@add_native_channel");//用户加入频道
 routes::post('channel/leave','channel_controller@leave_native_channel');//用户离开频道
 routes::post('native/barrage',"chat_controller@send_message");
-routes::get('native/page',function (){
-    return view("native/barrage");
+routes::get("assets/iconfont","AssetsController@IconFont");
+routes::get('native/page',function (request $request,user $user){
+    return view("native/barrage",[
+        'user'=>$user->where("id",$request->get("playerid"))->first_cache()->get()
+    ]);
+});
+routes::get('native/page/player',function (request $request,user $user){
+    return view("native/barrage",[
+        "is_show"=>false,
+        'user'=>$user->where("id",$request->get("playerid"))->first_cache()->get()
+    ]);
 });
 /**
  * @description 粉丝中心
  */
+routes::post("native/gift/total","gift_controller@getGiftTotal");
 routes::get('native/follow',"fans_controller@follow");
-routes::get('native/fans','fans_controller@fans');
-routes::post('native/addfollow','fans_controller@follow_user');
-routes::post('native/removefollow','fans_controller@remove_follow');
+routes::get('native/fans/is','fans_controller@is_follow');
+routes::get('native/fans/follow','fans_controller@follow_user');
+routes::get('native/fans/unfollow','fans_controller@remove_follow');
 routes::get('user/details','auth_controller@get_user_info');
 routes::get('native/gift','native_controller@gifts');
 routes::post('native/gift/send','gift_controller@send_gift');
+routes::post('native/islike','gift_controller@is_like');
+routes::post("native/like","gift_controller@like");
+routes::post("native/dislike","gift_controller@dislike");
 /**
  * @description CMS 后台管理系统
  */
@@ -158,12 +172,22 @@ routes::group(function (){
      * 直播管理
      */
     routes::get("native/gift","NativeController@index");
+    routes::get("native/online","NativeController@online");
+    routes::post("native/online/num","chat_controller@get_online_num");
+    routes::get("native/onlineuser","chat_controller@get_online_users_num");
+    routes::post("native/giftsinfo","gift_controller@GetGifts");
     //添加礼物
     routes::post("native/gift/add","NativeController@add_gift");
     routes::post("native/gift/del","NativeController@del_gift");
     routes::get("native/gift/details","NativeController@details");
     routes::post("native/gift/edit","NativeController@edit");
     routes::get("admin/list","UserController@user_list");//用户控制器
+    /**
+     * @description 添加数据库
+     */
+    routes::get("database","DatabaseController@index");
+    routes::post("database/test","DatabaseController@test");
+    routes::any("native/banner","native_controller@banner_page");
 },["auth_middleware"],"cms/");
 /**
  * @EndDescription

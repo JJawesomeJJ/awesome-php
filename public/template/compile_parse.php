@@ -46,7 +46,9 @@ class compile_parse
         if(self::$object->is_restart_compile($template_path)||!is_file($cache_file_path)){
             $cache_file_path=self::$object->compile_template($template_path);
         }
-        $data['request']=make('request');
+        if(!is_cli()) {
+            $data['request'] = make('request');
+        }
         foreach ($data as $key=>$value){
             $$key=$value;
         }

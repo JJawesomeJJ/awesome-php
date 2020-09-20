@@ -6,6 +6,7 @@
  * Time: 下午 3:59
  */
 namespace routes;
+use app\Event\AppEndEvent;
 use load\provider;
 use load\provider_register;
 use request\request;
@@ -62,19 +63,18 @@ class routes
             }
             $response = null;
             if (gettype($values["controller_method"]) == "object") {
-                $response = call_user_func($values["controller_method"]);//if is a object which is a anonymous return value so it is echo value
+                $response = app()->make_closure($values['controller_method']);//if is a object which is a anonymous return value so it is echo value
             } else {
                 $controller_method = explode("@", $values["controller_method"]);
                 //$response = $this->load_method($provider->controller($controller_method[0], $this->request), $controller_method[1]);
                 $response = $provider->make_method($controller_method[1],$provider->controller($controller_method[0]));
             }
             if (gettype($response) == 'array') {
-                echo json_encode($response);
-                return;
-            } else {
-                echo $response;
-                return;
+                $response=json_encode($response);
             }
+            event(new AppEndEvent($response));
+            echo $response;
+            exit();
         }
         echo json_encode(['code'=>'404','message'=>'page_not_exist']);
     }

@@ -21,10 +21,13 @@ class request
     protected static $request_url;
     protected static $current_url_no_params;
     protected static $current_url_params;
+    protected $request_method=null;
     protected function __construct()
     {
         $this->user_input=$this->all();
-        unset($this->user_input['s']);
+        if(array_key_exists('s',$this->user_input)) {
+            unset($this->user_input['s']);
+        }
 //        $this->filter();
         $this->server=$_SERVER;
     }
@@ -276,11 +279,15 @@ class request
         return upload_file::upload_file($name);
     }
     public function request_mothod(){
-        if($this->try_get("_method")){
-            unset($this->user_input['_method']);
-            return $this->get("_method");
+        if(is_null($this->request_method)){
+            if($this->try_get("_method")){
+                $this->request_method=$this->get("_method");
+                unset($this->user_input['_method']);
+            }else{
+                $this->request_method=$_SERVER["REQUEST_METHOD"];
+            }
         }
-        return $_SERVER["REQUEST_METHOD"];
+        return $this->request_method;
     }//get_request_mothod like get/post/put/delete
     public function get_referer_url(){
         return $_SERVER["HTTP_REFERER"];

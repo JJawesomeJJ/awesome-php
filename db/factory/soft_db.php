@@ -9,6 +9,7 @@ namespace db\factory;
 use system\class_define;
 use system\config\config;
 use system\Exception;
+use system\LuaScript;
 
 class soft_db
 {
@@ -43,21 +44,31 @@ class soft_db
     protected $union_primary_key_string="";
     //联合主键
     protected $bind=[];
+    protected $redis_cache_key="redis_db_cache_data";
     public function __construct()
     {
     }
     public static function con(){
 
     }
+    public function setConnect($host,$port,$database,$user,$password){
+        $dsn = "mysql".":host=$host;port=$port;dbname={$database};charset=utf8";
+        $this->con = new \PDO($dsn, $user, $password);
+        $this->con->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        return $this;
+    }
     protected function init(){
         $database=config::pdo();
         if($this->con==null&&$database['EnableMasterCluster']==false) {
             $driver = $database["driver"];
+
             $user = $database[$driver]["username"];
             $password = $database[$driver]["password"];
             $this->databse_name = $database[$driver]["database"];
             $host = $database[$driver]['hostname'];
-            $dsn = "$driver:host=$host;dbname=$this->databse_name;charset=utf8";
+            $port=$database[$driver]['hostport'];
+            $dsn = "mysql".":host=$host;port=$port;dbname={$this->databse_name};charset=utf8";
+
             $con_unique_key = md5($dsn . $user . $password);
             if (array_key_exists($con_unique_key, self::$con_list)) {
                 $this->con = self::$con_list[$con_unique_key];
@@ -67,7 +78,7 @@ class soft_db
                 self::$con_list[$con_unique_key] = $this->con;
             }
         }else{
-            $this->con=SqlRouter::SingleTon(config::env_path()."/filesystem",class_define::redis());
+            $this->con=SqlRouter::SingleTon(config::env_path(),class_define::redis());
         }
     }
     public function refresh(){
@@ -126,6 +137,29 @@ class soft_db
         }
         return $this;
     }//设置条件
+
+    /**
+     * @Description 当读写分离时设置向主库读取数据
+     * @throws \Exception
+     * @return soft_db
+     */
+    public function ReadMaster(){
+        if($this->con instanceof SqlRouter){
+            $this->con=SqlRouter::SingleTon(config::env_path(),class_define::redis())->GetConnection("W");
+        }
+        return $this;
+    }
+
+    /**
+     * @Description 当设置了从主库读取数据之后切换为自动读取数据
+     * @return $this
+     */
+    public function SetReadAuto(){
+        if($this->con instanceof SqlRouter){
+            $this->con=SqlRouter::SingleTon(config::env_path(),class_define::redis());
+        }
+        return $this;
+    }
     public function where_like($column_value,$condition_value){
         $this->where($column_value,"%$condition_value%","like");
         return $this;
@@ -360,6 +394,39 @@ class soft_db
         }
         $this->query_list=[];
         return $result;
+    }
+    /**
+     * @description 是否优先从缓存中获取值
+     * @param string $expire
+     * @param bool $is_refresh
+     * @return array|bool|mixed|null
+     */
+    public function first_cache($expire="forever",$is_refresh=false){
+        $query_string="";
+        foreach ($this->query_list as $key=>$value){
+            $query_string.="$value,";
+        }
+        $sql="select $query_string from $this->table_name $this->join_ $this->where_ $this->group_by_ $this->having $this->limit_ $this->order_by_";
+        $sql=str_replace("  "," ",$sql);
+        $sql=str_replace(", "," ",$sql);
+        $key=md5($sql.json_encode($this->bind_params($sql)));
+        return $this->cache()->get_non_exist_set($key,function () use ($key,$is_refresh){
+            LuaScript::hash_add_hash($this->redis_cache_key,$this->table_name,$key,time());
+            return $this->get($is_refresh);
+        },$expire);
+    }
+    /**
+     * @description 当数据更新的时候删除缓存
+     */
+    public function flush_cache(){
+        $result=class_define::redis()->hGet($this->redis_cache_key,$this->table_name);
+        if($result!=null){
+            $result=json_decode($result,true);
+            foreach ($result as $key=>$item){
+                $this->cache()->delete_key($key);
+            }
+            class_define::redis()->hDel($this->redis_cache_key,$this->table_name);
+        }
     }
     public function get_table_column(){
         $result_arr=[];

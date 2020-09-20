@@ -20,6 +20,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         'app\Event\native_push_event'=>[
             'app\EventListener\native_push_listener'
+        ],
+        'app\Event\AppStartEvent'=>[
+            'app\EventListener\AppStartEventListener'
+        ],
+        'app\Event\AppEndEvent'=>[
+            'app\EventListener\AppEndtEventListener'
         ]
     ];
     public function register()

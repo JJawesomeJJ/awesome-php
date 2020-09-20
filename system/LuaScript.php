@@ -211,4 +211,66 @@ EOT;
         $placeholder_len=mb_strlen($placeholder);
         return mb_substr($result,$placeholder_len,mb_strlen($result)-$placeholder_len);
     }
+
+    /**
+     * @description hash 中某个字段原子递增
+     * @param string $hash_key
+     * @param string $key
+     * @param int $default 默认值
+     * @return mixed
+     */
+    public static function hash_increase(string $hash_key,string $key,int $default=0,int $default_inr_num=1){
+        $script=<<<EOT
+        local result=redis.call('hGet',KEYS[1],KEYS[2]);
+        if result==nil or result==false then
+           result=ARGV[1];
+        end
+        result=result+ARGV[2]
+        redis.call('hSet',KEYS[1],KEYS[2],result)
+        return result
+EOT;
+        return class_define::redis()->eval($script,[$hash_key,$key,$default,$default_inr_num],2);
+    }
+
+    /**
+     * @description hash中的某个字段原子递减
+     * @param string $hash_key
+     * @param string $key
+     * @return mixed
+     */
+    public static function hash_decrease(string $hash_key,string $key,int $default=0,int $default_dec=1){
+        $script=<<<EOT
+        local result=redis.call('hGet',KEYS[1],KEYS[2]);
+        if result==nil or result==false then
+           result=ARGV[1];
+        end
+        result=result-ARGV[2]
+        redis.call('hSet',KEYS[1],KEYS[2],result)
+        return result
+EOT;
+        return class_define::redis()->eval($script,[$hash_key,$key,$default,$default_dec],2);
+    }
+
+    /**
+     * @description 检查hash中是否有某个key
+     * @param string $hash
+     * @param string $hash_key
+     * @param string $key
+     * @return mixed
+     */
+    public static function hash_has_key(string $hash,string $hash_key,string $key){
+        $script=<<<EOT
+        local result=redis.call('hGet',KEYS[1],KEYS[2]);
+        if result==nil or result==false then
+           return false;
+        end
+        result=cjson.decode(result)
+        if result[ARGV[1]]==nil then
+           return false
+        end
+        return true
+EOT;
+        return class_define::redis()->eval($script,func_get_args(),2);
+
+    }
 }

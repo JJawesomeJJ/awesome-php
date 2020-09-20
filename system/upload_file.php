@@ -11,6 +11,7 @@ use system\config\config;
 
 class upload_file
 {
+    const img=['jpg','jpeg','gif','png','svg'];
     protected static $file_name;
     protected static $upload_file_object;
     public function __construct($file_name)

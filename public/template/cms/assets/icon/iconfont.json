@@ -20,11 +20,25 @@
       "unicode_decimal": 58927
     },
     {
+      "icon_id": "559585",
+      "name": "在线",
+      "font_class": "zaixian",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
       "icon_id": "593507",
       "name": "下",
       "font_class": "weibiaoti35",
       "unicode": "e635",
       "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "924715",
+      "name": "数据库",
+      "font_class": "shujuku",
+      "unicode": "e620",
+      "unicode_decimal": 58912
     },
     {
       "icon_id": "4236654",
@@ -60,6 +74,13 @@
       "font_class": "tongzhi",
       "unicode": "e737",
       "unicode_decimal": 59191
+    },
+    {
+      "icon_id": "13547745",
+      "name": "轮播图",
+      "font_class": "lunbotu",
+      "unicode": "e64a",
+      "unicode_decimal": 58954
     }
   ]
 }

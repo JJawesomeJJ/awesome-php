@@ -262,7 +262,7 @@
         </div>
         <div class="like_content center_between">
             <div class="like_item" v-for="i in native_data">
-                <div class="view_cover" @click="native_push.start_player(i.info.play,i.info.rtmp_url)">
+                <div class="view_cover" @click="native_push.start_player(i.info.play,i.info.rtmp_url,i.info.user_id)">
                     <div class="view_info">
                         <img class="cover_back" :src="i.info.cover" alt="">
                         <div class="center_between bottom" >
@@ -356,7 +356,10 @@
         },
         updated(){
             if(this.is_load_banner){
-                this.init_swiper();
+                var self=this;
+                setTimeout(function () {
+                    self.init_swiper();
+                },300);
                 this.is_load_banner=false;
             }
         },
@@ -364,6 +367,10 @@
             this.init_banner();
             this.init_type();
             this.init_online();
+            var self=this;
+            setInterval(function () {
+                self.init_online();
+            },2000);
         },
         methods:{
             init_banner(){
@@ -416,7 +423,7 @@
                 $(".narrow_show").hide(150);
                 $(".narrow_hidden").show(150);
                 $(".start_native").animate({right:"0px"},150)
-            }
+            },
         }
     })
 </script>

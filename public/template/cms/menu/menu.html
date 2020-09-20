@@ -134,14 +134,13 @@
                 var info = layero.find("iframe")[0].contentWindow.$("#form").serialize();
                 info=params_parse_object(info);
                 Request.post("/cms/system/menu/add",info).then(function (res) {
-                    if(res.data==1) {
+                    if(res.data!=0) {
                         layer.alert('添加成功', {icon: 6},function () {
                             window.location.reload();
                         });
                     }else {
                         layer.msg("添加失败");
                     }
-                    layer.close(page);
                 }).catch(function (err) {
                     console.log(err)
                 })
@@ -165,7 +164,7 @@
                 var info = layero.find("iframe")[0].contentWindow.$("#form").serialize();
                 info=params_parse_object(info);
                 Request.post("/cms/system/menu/edit",info).then(function (res) {
-                    if(res.data==1) {
+                    if(res.data!=0) {
                         layer.alert('修改成功', {icon: 6},function () {
                             window.location.reload();
                         });

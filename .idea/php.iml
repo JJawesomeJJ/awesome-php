@@ -2,6 +2,7 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/filesystem" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/awesomephp/controller" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/awesomephp/db" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/awesomephp/http" />

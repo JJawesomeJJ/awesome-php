@@ -34,7 +34,7 @@ class provider
     }
     public function ServiceProvider(){
         foreach (config::provider() as $item){
-            $this->make($item)->register();
+            $this->make_method("register",$item);
         }
     }
     public function middleware($middleware){
@@ -50,8 +50,8 @@ class provider
             if(array_key_exists($class_name,$this->dependencies)){
                 $class_name=$this->dependencies[$class_name];
             }else{
-                throw new \Exception($class_name);
-                new Exception(404,"Class $class_name Not Find");
+//                throw new \Exception($class_name);
+                throw new \Exception(404,"Class $class_name Not Find");
             }
         }
         if (array_key_exists($class_name, $this->container)) {
@@ -197,5 +197,20 @@ class provider
         }
         $class_name=get_class($class_name);
         $this->container[$class_name]=$object;
+    }
+
+    /**
+     *
+     * @param \Closure $closure
+     * @return mixed
+     * @throws \ReflectionException
+     */
+    public function make_closure(\Closure $closure){
+        $object=new \ReflectionFunction($closure);
+        $params=[];
+        foreach ($object->getParameters() as $parameter){
+            $params[]=$this->make($parameter->getClass()->getName());
+        }
+        return call_user_func_array($closure,$params);
     }
 }

@@ -8,6 +8,7 @@ use app\controller\auth\auth_controller;
 use app\controller\controller;
 use db\model\native\follow;
 use request\request;
+use system\session;
 
 class fans_controller extends controller
 {
@@ -47,5 +48,15 @@ class fans_controller extends controller
      */
     public function remove_follow(follow $follow,request $request){
         return $follow->remove_follow(auth_controller::auth(true,'id'),$request->get('uid'));
+    }
+
+    /**
+     * 检查这个主播是否已被关注
+     * @param request $request
+     * @param follow $follow
+     * @return bool
+     */
+    public function is_follow(request $request,follow $follow){
+        return $follow->is_follow(session::get('user')->id,$request->get("uid"));
     }
 }

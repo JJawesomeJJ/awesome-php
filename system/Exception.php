@@ -24,7 +24,7 @@ class Exception
                 throw new \Exception($message);
             }
             catch (\Throwable $throwable){
-                echo json_encode(["code" => $code, "message" => $message,'details'=>$throwable->getTraceAsString()]);
+                echo json_encode(["code" => $code, "message" => $message,'details'=>explode(PHP_EOL,$throwable->getTraceAsString())]);
                 die();
             }
         }else{

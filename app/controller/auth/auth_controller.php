@@ -9,6 +9,7 @@ namespace app\controller\auth;
 use db\model\model;
 use db\model\native\follow;
 use db\model\user\user;
+use load\provider;
 use request\request;
 use app\controller\controller;
 use db\db;
@@ -84,8 +85,8 @@ class auth_controller extends controller
         {
             $url="";
             if($request->get("sex")=="man"){
-                $man_json_list=["/var/www/html/head_img_src/头像男生帅气背影.json",
-                    "/var/www/html/head_img_src/欧美头像男.json"
+                $man_json_list=[config::env_path()."/filesystem/head_img_src/头像男生帅气背影.json",
+                    config::env_path()."/filesystem/"."head_img_src/欧美头像男.json"
                 ];
                 $file_name=$man_json_list[array_rand($man_json_list,1)];
                 $file=fopen(@$file_name,"r");
@@ -93,8 +94,8 @@ class auth_controller extends controller
                 $url=$head_list[array_rand($head_list)];
             }
             else{
-                $man_json_list=["/var/www/html/head_img_src/女生可爱头像.json",
-                    "/var/www/html/head_img_src/欧美头像女.json"
+                $man_json_list=[config::env_path()."/filesystem/head_img_src/女生可爱头像.json",
+                    config::env_path()."/filesystem/head_img_src/欧美头像女.json"
                 ];
                 $file_name=$man_json_list[array_rand($man_json_list,1)];
                 $file=fopen(@$file_name,"r");
@@ -248,28 +249,30 @@ class auth_controller extends controller
         $name=$user->name;
         $token=md5($user->name.$this->time());
         $this->cache()->set_cache($user->name."reset_token",$token,108000);
-        $queue=new queue();
         $mail=new mail();
         $email=$user->email;
 //        $queue->push("email",["title"=>"忘记密码","url"=>index_path()."/user/reset?token=$token&name=$name","template"=>"user/reset_link","user"=>$user->email],"email");
         queue::asyn(function ()use ($mail,$email,$token,$name){
             $mail->send_email($email,view('user/reset_link',
-                ["title"=>"忘记密码","url"=>index_path()."/user/reset?token=$token&name=$name","template"=>"user/reset_link","user"=>$name]),'reset');
+                [
+                    "title"=>"忘记密码",
+                    "url"=>index_path()."/user/reset?token=$token&name=$name",
+                    "template"=>"user/reset_link",
+                    "user"=>$name,
+                    "img"=>"http://39.108.236.127/image/logo.png"
+                ]),'reset');
         });
         return ["code"=>"200","message"=>"ok"];
     }
-    public function update_password(){
+    public function update_password(cache $cache,request $request){
         $name=$this->request()->get("name");
-        $this->cache()->set_cache('xiajie','test',1200);
-        echo $this->cache()->get_cache($name.'reset_token').PHP_EOL;
-        print_r($this->cache()->get_all());
         if($this->cache()->get_cache($name."reset_token")==$this->request()->get("token")){
             $user=new user();
             $user->where("name",$name)->get();
             $user->password=$this->request()->get("password");
             $user->update();
             $this->cache()->delete_key($name."reset_token");
-            header(config::index_path());
+            redirect(config::index_path());
         }
         return ["code"=>"403","message"=>"token_error"];
     }

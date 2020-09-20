@@ -9,9 +9,11 @@
 namespace task\queue;
 
 
+use load\provider_register;
 use system\cache\cache;
 use system\config\config;
 use system\Exception;
+use system\log;
 use task\job\email_queue;
 
 abstract class queue_handle
@@ -24,6 +26,7 @@ abstract class queue_handle
     public function __construct()
     {
         $this->redis=new \Redis();
+//        provider_register::provider()->ServiceProvider();
         $this->redis->connect(config::redis()["host"],config::redis()["port"]);
         $this->redis->hSet(\system\config\queue::$job_list,$this->listen_queue,date("Y-m-d H:i:s"));
         $this->get_queue();
@@ -38,6 +41,8 @@ abstract class queue_handle
                 $this->handle($queue_data);
             }
             catch (\Throwable $throwable){
+                $log=new log();
+                $log->write_log($throwable);
                 echo "出现异常".$throwable->getMessage().PHP_EOL;
                 $queue_data["fail"]=$throwable->getMessage();
                 $this->redis->rPush($this->listen_queue."fail",serialize($queue_data));

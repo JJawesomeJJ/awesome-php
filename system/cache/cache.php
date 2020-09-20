@@ -6,6 +6,7 @@
  * Time: 下午 10:38
  */
 namespace system\cache;
+use system\class_define;
 use function Couchbase\fastlzDecompress;
 use system\Exception;
 use system\file;
@@ -228,7 +229,7 @@ class cache
         if(($value=$this->get_cache($key))==null) {
             $va = $value1;
             if ($value1 instanceof \Closure) {
-                $va = call_user_func($value1);
+                $va = app()->make_closure($value1);
             }
             $this->set_cache($key, $va, $expire, $is_serialize);
             if($is_return_value) {

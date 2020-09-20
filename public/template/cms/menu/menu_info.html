@@ -68,7 +68,15 @@
         <div class="layui-form-item">
             <label class="layui-form-label">菜单图标</label>
             <div class="layui-input-inline">
-                <input type="text" value="{{$menu_info->icon??''}}" name="icon" required lay-verify="required" placeholder="请输入图标地址" autocomplete="off" class="layui-input">
+                <select name="icon" lay-verify="required">
+                    @foreach($icon as $key=>$value)
+                    @if(!empty($menu_info)&&$menu_info->icon==$value)
+                        <option value="{{$value}}" selected="selected">{{$key}}</option>
+                    @else
+                        <option value="{{$value}}">{{$key}}</option>
+                    @endif
+                    @endforeach
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
@@ -84,9 +92,9 @@
         <div class="layui-form-item">
             <label class="layui-form-label">请求方式</label>
             <div class="layui-input-inline">
-                <select name="pid" lay-verify="">
+                <select name="Method" lay-verify="">
                     @foreach($method as $item)
-                        <option value="{{$item}}" {{isset($menu_info)&&$item==$menu_info->method?'selected':''}}>{{$item}}</option>
+                        <option value="{{$item}}" {{isset($menu_info)&&$item==($menu_info->__toArray()['method']??'')?'selected':''}}>{{$item}}</option>
                     @endforeach
                 </select>
             </div>

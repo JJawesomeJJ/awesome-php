@@ -9,7 +9,6 @@
 namespace extend\awesome;
 
 
-use db\model\user\user;
 use request\request;
 use system\class_define;
 use system\config\channel_config;

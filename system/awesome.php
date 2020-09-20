@@ -11,6 +11,7 @@ namespace system;
 use app\providers\EventServiceProvider;
 use app\ServiceProvider;
 use db\db;
+use db\factory\SqlRouter;
 use load\auto_load;
 use load\provider;
 use load\provider_register;
@@ -140,7 +141,7 @@ class provider_register extends provider
             $name = explode("/", $value);
             $name = str_replace(".php", "", $name[count($name) - 1]);
             $register_value = str_replace("/", "\\", str_replace(".php", "", str_replace($home_path . "/", "", $value) . "::class"));
-            if (strpos($name, "_middleware") !== false) {
+            if (strpos($name, "_middleware") !== false||strpos($name, "Middlware") !== false||strpos($name, "middlware") !== false) {
                 $middlerware_list[$name] = $register_value;
                 $middlerware_string .= "        "."\"$name\"=>$register_value," . "\n";
             }
@@ -608,6 +609,16 @@ class $middleware_name extends middleware
 //                }
 //            }
 //        }
+    }
+    public function flushsql(){
+        $keys=[
+            SqlRouter::$sql_router_key,
+            SqlRouter::$fail_node
+        ];
+        foreach ($keys as $key){
+            class_define::redis()->del($key);
+        }
+        $this->cli_echo_color_green("Sql Router Cache has been flushed!!");
     }
     public function task(...$arr){
         switch ($arr[0]){

@@ -30,4 +30,17 @@ class chat_controller extends controller
         $message['user_name']=auth_controller::auth();
         event(new native_push_event($message));
     }
+
+    /**
+     * 获取某个频道在线的人数
+     * @param request $request
+     * @param awesome_echo_tool $awesome_echo_tool
+     * @return mixed
+     */
+    public function get_online_num(request $request,awesome_echo_tool $awesome_echo_tool){
+        return $awesome_echo_tool->channel_online_count($request->get("channel_name"));
+    }
+    public function get_online_users_num(awesome_echo_tool $awesome_echo_tool){
+        return count($awesome_echo_tool->get_online_users());
+    }
 }

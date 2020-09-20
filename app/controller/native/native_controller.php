@@ -7,6 +7,7 @@ namespace app\controller\native;
 use app\controller\auth\auth_controller;
 use app\controller\controller;
 use db\model\native\gift;
+use db\model\user\user;
 use request\request;
 use system\cache\cache;
 use system\cache\cache_;
@@ -15,6 +16,7 @@ use system\common;
 use system\config\config;
 use system\Exception;
 use system\session;
+use system\upload_file;
 
 class native_controller extends controller
 {
@@ -38,6 +40,9 @@ class native_controller extends controller
         "more"
     ];
     protected $record_push_url="record_native_push_url";
+    public function native_page(request $request,user $user){
+
+    }
     protected $record_room="record_room";
     public function start(request $request){
         $user_id=auth_controller::auth(true);
@@ -59,7 +64,7 @@ class native_controller extends controller
         $cover=$request->get_file("cover");
         if($cover->isset_file()){
             $cover_path=$cover
-                ->accept(["jpg", "png", "jpeg", "gif","image/*"])
+                ->accept(upload_file::img)
                 ->max_size(2024)
                 ->store_upload_file(config::env_path()."public/image/upload");
         }
@@ -74,7 +79,7 @@ class native_controller extends controller
             "created_at"=>$this->time()
         ]));//记录流名与房间名的映射关系
         $native_info=[
-            "user_id"=>$user_id,
+            "user_id"=>session::get('user')->id,
             "rtmp_url"=>$rtmp_url['push'],
             "play"=>$rtmp_url["play"],
             "crated_at"=>$this->time(),
@@ -183,7 +188,7 @@ class native_controller extends controller
 //        ,{\"room_name\":\"837937\",\"type\":\"lol\",\"info\":{\"user_id\":\"\u8d75\u674e\u6770\",\"rtmp_url\":\"rtmp:\/\/63817.livepush.myqcloud.com\/live\/dfaf4f9bf8d011dcba1f9119c0347b7c?txSecret=66819026734242f95cc633bac3261d61&txTime=5DB7F335\",\"play\":\"http:\/\/play.titang.shop\/titang_native_app\/dfaf4f9bf8d011dcba1f9119c0347b7c.flv?txSecret=66819026734242f95cc633bac3261d61&txTime=5DB7F335\",\"crated_at\":\"2019-10-28 16:07:17\",\"user_name\":\"\u8d75\u674e\u6770\",\"room\":\"837937\",\"cover\":\"http:\/\/www.titang.shop\/image\/upload\/8f7b40b953479a8ee0dc3547ea2f5b5f.jpg\"}}
 //        ,{\"room_name\":\"837937\",\"type\":\"lol\",\"info\":{\"user_id\":\"\u8d75\u674e\u6770\",\"rtmp_url\":\"rtmp:\/\/63817.livepush.myqcloud.com\/live\/dfaf4f9bf8d011dcba1f9119c0347b7c?txSecret=66819026734242f95cc633bac3261d61&txTime=5DB7F335\",\"play\":\"http:\/\/play.titang.shop\/titang_native_app\/dfaf4f9bf8d011dcba1f9119c0347b7c.flv?txSecret=66819026734242f95cc633bac3261d61&txTime=5DB7F335\",\"crated_at\":\"2019-10-28 16:07:17\",\"user_name\":\"\u8d75\u674e\u6770\",\"room\":\"837937\",\"cover\":\"http:\/\/www.titang.shop\/image\/upload\/8f7b40b953479a8ee0dc3547ea2f5b5f.jpg\"}}
 //        ,{\"room_name\":\"837937\",\"type\":\"lol\",\"info\":{\"user_id\":\"\u8d75\u674e\u6770\",\"rtmp_url\":\"rtmp:\/\/63817.livepush.myqcloud.com\/live\/dfaf4f9bf8d011dcba1f9119c0347b7c?txSecret=66819026734242f95cc633bac3261d61&txTime=5DB7F335\",\"play\":\"http:\/\/play.titang.shop\/titang_native_app\/dfaf4f9bf8d011dcba1f9119c0347b7c.flv?txSecret=66819026734242f95cc633bac3261d61&txTime=5DB7F335\",\"crated_at\":\"2019-10-28 16:07:17\",\"user_name\":\"\u8d75\u674e\u6770\",\"room\":\"837937\",\"cover\":\"http:\/\/www.titang.shop\/image\/upload\/8f7b40b953479a8ee0dc3547ea2f5b5f.jpg\"}}]";
-        $item="[{\"room_name\":\"387992\",\"type\":\"games\",\"info\":{\"user_id\":\"\u8d75\u674e\u6770\",\"rtmp_url\":\"rtmp:\/\/63817.livepush.myqcloud.com\/live\/5e89980b6c751ffeba54497178381624?txSecret=b42b1e336f50f0a7a95a6409044e0fb7&txTime=5DF732B6\",\"play\":\"http:\/\/play.titang.shop\/titang_native_app\/5e89980b6c751ffeba54497178381624.flv?txSecret=b42b1e336f50f0a7a95a6409044e0fb7&txTime=5DF732B6\",\"crated_at\":\"2019-12-15 15:31:02\",\"user_name\":\"\u8d75\u674e\u6770\",\"room\":\"387992\",\"cover\":\"http:\/\/www.titang.shop\/image\/upload\/9ac2308e1b13229fb9511afec4eacdf6.jpg\"}}]";
+        $item="[{\"room_name\":\"387992\",\"type\":\"games\",\"info\":{\"user_id\":\"1\",\"rtmp_url\":\"http://5815.liveplay.myqcloud.com/live/5815_89aad37e06ff11e892905cb9018cf0d4_900.flv\",\"play\":\"http://5815.liveplay.myqcloud.com/live/5815_89aad37e06ff11e892905cb9018cf0d4_900.flv\",\"crated_at\":\"2019-12-15 15:31:02\",\"user_name\":\"赵李杰\",\"room\":\"387992\",\"cover\":\"http://www.titang.shop/image/upload/9ac2308e1b13229fb9511afec4eacdf6.jpg\"}}]";
         $online_info=[];
         $redis=class_define::redis();
         $tencent_clound=new tencent_clound();
@@ -218,7 +223,11 @@ class native_controller extends controller
         $online_info[]=$item;
         return $online_info;
     }
-    public function banner(){
+    public function banner(cache $cache,request $request){
+//        $cache->delete_key("native_banner");
+        if(!empty($data=$cache->get_cache("native_banner"))){
+            return $data;
+        }
         return [
             [
                 "img"=>"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572452937315&di=13170aecf0192f5996e17c947564387c&imgtype=0&src=http%3A%2F%2Fimage.namedq.com%2Fuploads%2F20181219%2F22%2F1545229622-TLOjqJABCH.jpg",
@@ -241,6 +250,16 @@ class native_controller extends controller
                 "title"=>"刺激战场"
             ]
         ];
+    }
+    public function banner_page(cache $cache,request $request){
+        if($request->request_mothod()=="POST"){
+            $cache->set_cache("native_banner",$request->get("native"),'forever');
+            return redirect("/cms/native/banner");
+        }
+        return view("cms/native/banner",[
+            'banner'=>$this->banner($cache,$request),
+            'title'=>"轮播图设置"
+        ]);
     }
     public function type(){
         return $this->type;

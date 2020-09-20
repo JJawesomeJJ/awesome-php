@@ -5,9 +5,12 @@
  */
 namespace app\controller\cms;
 use app\controller\controller;
+use db\model\cms\Menu;
 use db\model\native\gift;
+use db\model\native\native;
 use request\request;
 use system\cache\cache;
+use system\common;
 use system\config\config;
 use system\file;
 use system\session;
@@ -82,5 +85,12 @@ class NativeController extends controller
         $cache->delete_key("native_gift");
         return $gift->where("id",$request->get("id"))
             ->update($gift_info);
+    }
+    public function online(request $request,native $native,gift $gift){
+        return view("cms/native/online",[
+            "title"=>"直播在线流",
+            "natives"=>$native->get_native_type(),
+            "gifts"=>str_replace("\r\t","",urlencode(json_encode(common::array_group_by_key($gift->first_cache()->all(),'id',false),true)))
+        ]);
     }
 }

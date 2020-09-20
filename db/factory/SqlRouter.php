@@ -7,8 +7,6 @@
  */
 namespace db\factory;
 
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
-
 class SqlRouter
 {
     //某个表对应的数据库如对数据一致性要求相对严格我们获取优先向这个对应的主库进行读
@@ -28,6 +26,7 @@ class SqlRouter
     protected $max_fail_times;//最大的失败次数
     protected $max_fail_per=0.3;//配置最大的失败节点比例
     protected $one_node_max_fail_times=5;//配置单个节点的最大失败次数超过后该节点不会连接改mysql实例
+    protected $enable_check_num=5;//开启多节点检查数量
     /**
      * @description 添加连接配置
      * @param string $ip
@@ -116,7 +115,8 @@ class SqlRouter
         $password =$config["password"];
         $database =$config["database"];
         $host = $config['ip'];
-        $dsn = "mysql".":host=$host;dbname=$database;charset=utf8";
+        $port=$config['port'];
+        $dsn = "mysql".":host=$host;port=$port;dbname=$database;charset=utf8";
         try {
             $con= new \PDO($dsn, $user, $password);
             $con->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
@@ -143,7 +143,7 @@ class SqlRouter
      * @return mixed|\PDO
      * @throws \Exception
      */
-    protected function GetConnection(string $mode){
+    public function GetConnection(string $mode){
         $rules=['R',"W"];
         if(!in_array($mode,$rules)) {
             throw new \Exception("Undefined type $mode accept-" . implode("|", $rules));
@@ -153,7 +153,11 @@ class SqlRouter
             foreach ($this->node_config[$mode] as $item){
                 $config_list[$this->ConfigToString($item)]=$item;
             }
-            $node=$config_list[$this->balance($this->BlockFailNode(array_keys($config_list)))];
+            $select_unique_id=$this->balance($this->BlockFailNode(array_keys($config_list)));
+            if(empty($select_unique_id)){
+                throw new \Exception("No useful node please recover the Node of $mode");
+            }
+            $node=$config_list[$select_unique_id];
             return $this->Connection($node,$mode);
         }else{
             return reset($this->connect_pool[$mode]);
@@ -181,13 +185,6 @@ class SqlRouter
      * @return false|string
      */
     protected function balance(array $nodes){
-        if(empty($nodes)) {
-            throw new \Exception("No useful node please recover the Node");
-        }
-        $placeholder="a_";
-        foreach ($nodes as &$value){
-            $value=$placeholder.$value;
-        }
         $script=<<<EOT
         local result=redis.call('get',KEYS[1]);
         local ip_adress_list=cjson.decode(KEYS[2])
@@ -220,9 +217,7 @@ class SqlRouter
             return min_key
         end
 EOT;
-        $result=$this->redis->eval($script,[self::$sql_router_key,json_encode(array_unique($nodes))],2);
-        $placeholder_len=mb_strlen($placeholder);
-        return mb_substr($result,$placeholder_len,mb_strlen($result)-$placeholder_len);
+        return $this->redis->eval($script,[self::$sql_router_key,json_encode(array_unique($nodes))],2);
     }
 
     /**
@@ -294,7 +289,7 @@ EOT;
         }else{
             $ip=$this->node_config['ServerIp'];
         }
-        $unique_id=$config['ip'].'-'.$config['port'].md5($config['database']);
+        $unique_id=$this->ConfigToString($config);
         $script=<<<EOT
         local result=redis.call('hGet',KEYS[1],KEYS[2]);
         if result==nil or result==false then
@@ -325,26 +320,109 @@ EOT;
     protected function BlockFailNode(array $NodeConfigList){
         $node_num=count($this->node_config["R"])+count($this->node_config["W"]);
         foreach ($NodeConfigList as $key=>$value) {
-            if (array_key_exists($value, $this->fail_nodes)) {
-                if (count($this->fail_nodes[$value]) > $this->max_fail_per * $node_num) {
-                    unset($NodeConfigList[$key]);//当节点被总节点的*一定的比例认为失败 认定此节点为失败节点 需要人员手动恢复
-                    continue;
-                }
-                if (isset($this->fail_nodes[$value][$this->node_config['ServerIp']]) && $this->fail_nodes[$value][$this->node_config['ServerIp']] >= $this->one_node_max_fail_times) {
-                    unset($NodeConfigList[$key]);//当节点被总节点的*一定的比例认为失败 认定此节点为失败节点 需要人员手动恢复
-                    continue;
-                }
+            if(!$this->CheckIsOk($value)){
+                unset($NodeConfigList[$key]);
             }
         }
         return array_values($NodeConfigList);
     }
 
     /**
+     * @description 输出失败的节点
+     * @return array
+     */
+    public function GetFailNodeInfo(){
+        return $this->fail_nodes;
+    }
+
+    /**
+     * @description 检查状态是否可用
+     * @param string $unique_id
+     * @return bool
+     */
+    protected function CheckIsOk(string $unique_id){
+        $value=$unique_id;
+        if (array_key_exists($value, $this->fail_nodes)) {
+            $node_num = count($this->node_config["R"]) + count($this->node_config["W"]);
+            if ($node_num > $this->enable_check_num && count($this->fail_nodes[$value]) > $this->max_fail_per * $node_num) {
+                return false;
+            }
+            if (isset($this->fail_nodes[$value][$this->node_config['ServerIp']]) && $this->fail_nodes[$value][$this->node_config['ServerIp']] >= $this->one_node_max_fail_times) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public function GetNodeRequestInfo(){
+        $node_info=$this->node_config;
+        $node_request_info=json_decode($this->redis->get(self::$sql_router_key),true);
+        foreach ($node_info["W"] as &$item){
+            $unqie_id=$this->ConfigToString($item);
+            $item['unique_id']=$unqie_id;
+            if(isset($node_request_info[$unqie_id])){
+                $item['request']=$node_request_info[$unqie_id];
+            }else{
+                $item['request']=0;
+            }
+            if(isset($this->fail_nodes[$unqie_id])){
+                $item['fail']=$this->fail_nodes[$unqie_id];
+            }else{
+                $item['fail']=0;
+            }
+            $item['status']=$this->CheckIsOk($unqie_id);
+        }
+        foreach ($node_info["R"] as &$item){
+            $unqie_id=$this->ConfigToString($item);
+            $item['unique_id']=$unqie_id;
+            if(isset($node_request_info[$unqie_id])){
+                $item['request']=$node_request_info[$unqie_id];
+            }else{
+                $item['request']=0;
+            }
+            if(isset($this->fail_nodes[$unqie_id])){
+                $item['fail']=$this->fail_nodes[$unqie_id];
+            }else{
+                $item['fail']=0;
+            }
+            $item['status']=$this->CheckIsOk($unqie_id);
+        }
+        return $node_info;
+    }
+    /**
+     * @description 尝试恢复节点
+     */
+    public function Recover(string $NodeID){
+        $config=[];
+        foreach (array_merge($this->node_config["R"],$this->node_config["W"]) as $item){
+            if($NodeID==$this->ConfigToString($item)){
+                $config=$item;
+                continue;
+            }
+        }
+        if(empty($config)){
+            throw new \Exception("fail find node may node info has been changed");
+        }
+        $user = $config["user"];
+        $password =$config["password"];
+        $database =$config["database"];
+        $host = $config['ip'];
+        $dsn = "mysql".":host=$host;dbname=$database;charset=utf8";
+        try {
+            $con= new \PDO($dsn, $user, $password);
+            $con->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            return  $this->redis->hDel(self::$fail_node,$NodeID);
+        }
+        catch (\Exception $exception){
+            $this->FailConnectionHandle($config);
+            throw new \Exception($exception->getMessage());
+        }
+    }
+    /**
      * @description 获取连接的唯一id
      * @param array $config
      * @return string
      */
     protected function ConfigToString(array $config){
-        return $config['ip'].'-'.$config['port'].md5($config['database']);
+        return $config['ip'].'-'.$config['port'].md5(json_encode($config));
     }
 }

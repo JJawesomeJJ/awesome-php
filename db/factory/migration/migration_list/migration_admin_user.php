@@ -10,6 +10,7 @@ namespace db\factory\migration\migration_list;
 
 
 use db\factory\migration\migration;
+use db\factory\soft_db;
 use db\model\admin_user_new\admin_user_new;
 
 class migration_admin_user extends migration
@@ -30,8 +31,8 @@ class migration_admin_user extends migration
     }
     public function up()
     {
-        $admin_user=new admin_user_new();
-        $admin_user->create([
+        $admin_user=soft_db::table($this->table_name);
+        $admin_user->insert([
             "name"=>"admin",
             "password"=>md5("19971998"),
             'tele'=>'13036591969',

@@ -28,7 +28,7 @@ class Privilege
         $menu_list=common::array_group_by_key($menu_list,"url");
         $user_priv=$cache->get_non_exist_set("user_priv".session::get("admin")->id,function (){
 
-        })
+        });
         if(array_key_exists($request->get_url(),$menu_list)){
             $menu_details=common::array_group_by_key($menu_list[$request->get_url()],"method");
             if(isset($menu_details[$request->request_mothod()])){

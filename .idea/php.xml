@@ -2,14 +2,7 @@
 <project version="4">
   <component name="PhpIncludePathManager">
     <include_path>
-      <path value="$APPLICATION_HOME_DIR$/swoole-ide-helper-master" />
-      <path value="$APPLICATION_HOME_DIR$/ide-helper" />
-      <path value="$PROJECT_DIR$/vendor/awesomephp/http" />
-      <path value="$PROJECT_DIR$/vendor/composer" />
-      <path value="$PROJECT_DIR$/vendor/awesomephp/controller" />
-      <path value="$PROJECT_DIR$/vendor/kosinix/grafika" />
-      <path value="$PROJECT_DIR$/vendor/awesomephp/db" />
-      <path value="$PROJECT_DIR$/vendor/awesomephp/system" />
+      <path value="$PROJECT_DIR$/../swoole-ide-helper" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />

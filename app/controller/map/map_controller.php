@@ -63,11 +63,10 @@ class map_controller extends controller
             "id"=>$arr["id"]
         ];
     }
-    public function adress_to_coordinate(){
+    public function adress_to_coordinate(request $request){
         $reules=[
             "adress"=>"required:get"
         ];
-        $request=new request();
         $adress=$request->get("adress");
         $url="http://api.map.baidu.com/geocoder/v2/?address=$adress&output=json&ak=4nthVhrx2bl2m8bciabolGutzg44OI3Q&callback=";
         $respone=json_decode(http::get("$url"),true);

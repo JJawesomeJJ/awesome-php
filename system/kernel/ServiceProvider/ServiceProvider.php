@@ -14,6 +14,6 @@ abstract class ServiceProvider
     public function __construct()
     {
     }
-    abstract function register();
+//    abstract function register();
     abstract function boot();
 }

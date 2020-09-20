@@ -21,6 +21,7 @@ class file
     private $path;
     private function get_file_list($dir,$except){
         $dir=str_replace("//","/",$dir);
+        $arr=[];
         if(in_array($dir,$except))
         {
             return [];
@@ -32,17 +33,18 @@ class file
             while(($file = readdir($handle)) !== false) {
                 if($file != ".." && $file != ".") {
                     if(is_dir($dir."/".$file)) {
-                        $files[] =$this->get_file_list($dir."/".$file,$except);
+                        foreach ($this->get_file_list($dir."/".$file,$except) as $item){
+                            $arr[]=$item;
+                        }
                     } else {
-                        $files[] = $file;
-                        $this->arr[]=str_replace("//","/",$dir."/".iconv('GB2312', 'UTF-8',$file));
+                        $arr[]=str_replace("//","/",$dir."/".iconv('GB2312', 'UTF-8',$file));
                     }
                 }
             }
             closedir($handle);
-            $file_list=$this->arr;
-            return $file_list;
+            return $arr;
         }
+        return [];
     }//please don't direct call method,use file_walk!
     //when file too many may cause out of memory!!
     public function file_walk($path,$except=[]){
@@ -50,7 +52,6 @@ class file
             new Exception(404,$path." not find");
         }
         $file_list=call_user_func_array([$this,"get_file_list"],[$path,$except]);
-        $this->arr=[];
         return $file_list;
     }
     //get path all file include son dir

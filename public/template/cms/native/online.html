@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>直播在线流</title>
+    <script src="../../asset/vue/vue2.2.2_min.js"></script>
+    <script src="../../asset/js/flv.min.js"></script>
+</head>
+<body>
+<style>
+    .gifts_icon{
+        position: relative;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+    }
+</style>
+@extend('cms/component/cms_container')
+<div class="search">
+    <form class="layui-form" action="" style="border-bottom: 1px solid lightgrey;display: flex;align-items:center;justify-content: space-between;">
+        <div class="layui-form-item" style="width: 300px;margin: auto">
+            <label class="layui-form-label">在线人数:</label>
+            <div class="layui-input-block" style="display: flex;">
+                <button class="layui-btn" style="display: flex;flex-wrap: nowrap;justify-content: center;align-items: center;" type="button"><div id="refresh" @click="get_online_user_num" class="layui-icon layui-icon-refresh" style="font-size: 15px; color: white;"></div> <span class="layui-badge layui-bg-gray">@{{online_user_num}}人</span></button>
+            </div>
+        </div>
+        <div class="layui-form-item" style="width: 300px;margin: auto">
+            <label class="layui-form-label">直播类型:</label>
+            <div class="layui-input-block">
+                <select name="city" lay-verify="required">
+                    <option value="">全部</option>
+                    @foreach($natives as $item)
+                    <option value="{{$item['type']}}">{{$item['name']}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin: 0 auto">
+            <button type="submit" class="layui-btn">搜索</button>
+        </div>
+    </form>
+</div>
+<div class="user_container">
+    <div class="mainContainer" id="video_container" style="width: 500px;height: 500px;display: none;">
+        <video id="videoElement" class="centeredVideo" controls autoplay width="1024" height="576">Your browser is too old which doesn't support HTML5 video.</video>
+    </div>
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>类型</th>
+            <th>封面</th>
+            <th>创建日期</th>
+            <th>创建者</th>
+            <th>在线人数</th>
+            <th>礼物列表</th>
+            <th>观看</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="i,index in online">
+            <td>@{{index+1}}</td>
+            <td>@{{i['type']}}</td>
+            <td><img :src="i['info']['cover']" style="width:100px;height: 100px;" alt=""></td>
+            <td>@{{i['info']['crated_at']}}</td>
+            <td>@{{i['info']['user_id']}}</td>
+            <td><span class="online_num" :data-src="i['info']['rtmp_url']" class="layui-badge-dot layui-bg-black">@{{get_online_users(i['info']['rtmp_url'])}}</span></td>
+            <td style="max-height: 100px;overflow-y: scroll;"><div v-for="i,index in gifts[i['info']['rtmp_url']]" style="display: flex;align-items: center;justify-content: center;">
+                <img class="gifts_icon" :src="get_gift_details(index)" alt="">
+                &nbsp;&nbsp;
+                <div>*@{{compute_gifts_num(index,i)['num']}}</div>&nbsp;&nbsp;&nbsp;
+                <div>合计：@{{compute_gifts_num(index,i)['amount_total']}}渊币</div>
+            </div>
+            </td>
+            <td><span @click="play(i['info']['play'])" class="layui-icon layui-icon-play"></span></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+@endextend
+<script>
+    layui.use('form', function(){
+        var form = layui.form;
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+            // layer.msg(JSON.stringify(data.field));
+            // return false;
+        });
+    });
+    new Vue({
+        el:"#app",
+        data:{
+            gifts_details:JSON.parse(decodeURIComponent('{{($gifts)}}')),
+            online:[],
+            gifts:{"3":[{"amount_id":"933","num":1,"amount_total":3},{"amount_id":"934","num":1,"amount_total":3},{"amount_id":"935","num":1,"amount_total":3},{"amount_id":"936","num":1,"amount_total":3},{"amount_id":"937","num":1,"amount_total":3},{"amount_id":"938","num":1,"amount_total":3},{"amount_id":"939","num":1,"amount_total":3},{"amount_id":"940","num":1,"amount_total":3},{"amount_id":"941","num":1,"amount_total":3},{"amount_id":"942","num":1,"amount_total":3},{"amount_id":"943","num":1,"amount_total":3},{"amount_id":"944","num":1,"amount_total":3},{"amount_id":"945","num":1,"amount_total":3},{"amount_id":"946","num":1,"amount_total":3},{"amount_id":"947","num":1,"amount_total":3},{"amount_id":"948","num":1,"amount_total":3}]},
+            online_user_num:1,
+            deg:0,
+            flvPlayer:null
+        },
+        watch: {
+            online(val, oldVal) {
+                for(var i of val){
+                    var channel_name=i['info']['rtmp_url'];
+                    // if(this.gifts.hasOwnProperty(channel_name)==false){
+                        this.get_gifts_info(channel_name);
+                    // }
+                }
+            }
+        },
+        created(){
+            this.get_online_list();
+            this.get_online_user_num();
+            var self=this;
+            setInterval(function () {
+                self.get_online_list();
+                self.get_online_user_num();
+                for(var i of self.online){
+                    self.get_gifts_info(i['info']['rtmp_url'])
+                }
+            },3000);
+            // this.gifts_details=JSON.parse(this.gifts_details);
+            // console.log(this.gifts_details)
+        },
+        methods: {
+            gift_exist(id){
+                if(this.gifts_details.hasOwnProperty(id)){
+                    return true;
+                }
+                return false;
+            },
+            play(src){
+                var self=this;
+                layer.open({
+                    type: 1,
+                    title: false,
+                    closeBtn: 0,
+                    area: ['1000px',"600px"],
+                    shadeClose: true,
+                    content: $('#video_container'),
+                    end:function () {
+                        self.flv_destroy();
+                    }
+                });
+                var player = document.getElementById('videoElement');
+                if (flvjs.isSupported()) {
+                     this.flvPlayer = flvjs.createPlayer({
+                        type: 'flv',
+                        url: src
+                    });
+                    this.flvPlayer.attachMediaElement(videoElement);
+                    this.flvPlayer.load(); //加载
+                }
+            },
+            get_gift_details(index){
+                if(this.gifts_details.hasOwnProperty(index)) {
+                    return this.gifts_details[index][0]['icon']
+                }
+            },
+            flv_destroy() {
+                this.flvPlayer.pause();
+                this.flvPlayer.unload();
+                this.flvPlayer.detachMediaElement();
+                this.flvPlayer.destroy();
+                this.flvPlayer = null;
+            },
+            get_online_list() {
+                var self=this;
+                Request.get("http://www.titang.shop/native/online").then(function (res) {
+                    self.online=res.data;
+                    console.log(res.data)
+                }).catch(function (err) {
+
+                });
+            },
+            get_online_users(channel_name){
+                Request.post("/cms/native/online/num",{channel_name,channel_name}).then(function (res) {
+                   $('.online_num').each(function () {
+                       if($(this).attr("data-src")==channel_name){
+                           $(this).text(res.data)
+                       }
+                   })
+                }).catch(function (err) {
+
+                });
+                return 0;
+            },
+            get_online_user_num(){
+                var self=this;
+                $("#refresh").rotate({animateTo: self.deg});
+                self.deg=self.deg+360;
+                Request.get("/cms/native/onlineuser").then(function (res) {
+                    self.online_user_num=res.data
+                }).catch(function (err) {
+
+                })
+            },
+            get_gifts_info(channel_name){
+                var self=this;
+                Request.post("http://www.titang.shop/cms/native/giftsinfo",{channel_name:channel_name}).then(function (res) {
+                    var result=self.gifts;
+                    result[channel_name]=res.data;
+                    self.gifts=[];
+                    self.gifts=result;
+                }).catch(function (err) {
+
+                })
+            },
+            compute_gifts_num(index,data){
+                var result={'num':0,'amount_total':0};
+                for(var i of data){
+                    result['num']=result['num']+i['num'];
+                    result['amount_total']=result['amount_total']+i['amount_total']
+                }
+                console.log(result);
+                return result
+            }
+        }
+    });
+</script>
+</body>
+</html>

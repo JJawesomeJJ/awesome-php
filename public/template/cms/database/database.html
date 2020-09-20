@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数据库配置</title>
+</head>
+<style>
+    .panel-container{
+        position: relative;
+        width: 90%;
+        top:10px;
+        margin: 0 auto;
+        display: flex;
+    }
+    .panel{
+        width: 200px;
+        height: 80px;
+        background-color: rgba(0, 0, 0, 0.76);
+        border-radius: 5px;
+        display: flex;
+        margin-left: 10px;
+    }
+    .panel i{
+        color: white;
+        font-size: 30px;
+    }
+    .panel .icon-shujuku{
+        position: relative;
+        top:25px;
+        left: 5px;
+        width: 50px;
+        height: 50px;
+    }
+    .panel p{
+        width: 100%;
+        text-align:left;
+        color: white;
+    }
+    .left_info{
+        width:110px;
+        height: 100%;
+    }
+    .control{
+        position: relative;
+        width: 60px;
+    }
+</style>
+<body>
+@extend('cms/component/cms_container')
+<div class="panel-container">
+    @foreach($database["R"] as $item)
+    <div class="panel">
+        <i class="iconfont icon-shujuku icon"></i>
+        <div class="left_info">
+            <p style="font-size: 10px;color:lightskyblue">节点类型:Master</p>
+            <p style="font-size: 10px;">节点IP:{{$item['ip']}}</p>
+            <p style="font-size: 10px;">节点端口:{{$item['port']}}</p>
+            <p style="font-size: 10px;">节点数据库名:{{$item['database']}}</p>
+            <p style="font-size: 10px;">节点访问次数{{$item['request']}}</p>
+            <p style="font-size: 10px;color: red">节点失败次数{{is_numeric($item['fail'])?$item['fail']:array_sum(array_values($item['fail']))}}</p>
+        </div>
+        <div class="control">
+            <div class="status" style="display: flex;width: 90%">
+                <p style="font-size: 13px;width: 10px;white-space: nowrap;">状态:</p>
+                <i style="font-size: 17px;width: 15px;height: 15px;display: flex;margin-left: 22px;color: lightseagreen" class="layui-icon layui-icon-ok-circle"></i>
+            </div>
+            <button style="margin-top:20px;margin-left: 5px;" onclick="test('{{$item['unique_id']}}')" type="button" class="layui-btn layui-bg-blue layui-btn-xs">测试</button>
+        </div>
+    </div>
+    @endforeach
+    @foreach($database["W"] as $item)
+    <div class="panel">
+        <i class="iconfont icon-shujuku icon"></i>
+        <div class="left_info">
+            <p style="font-size: 10px;color:lightskyblue">节点类型:Cluster</p>
+            <p style="font-size: 10px;">节点IP:{{$item['ip']}}</p>
+            <p style="font-size: 10px;">节点端口:{{$item['port']}}</p>
+            <p style="font-size: 10px;">节点数据库名:{{$item['database']}}</p>
+            <p style="font-size: 10px;">节点访问次数{{$item['request']}}</p>
+            <p style="font-size: 10px;color: red">节点失败次数{{is_numeric($item['fail'])?$item['fail']:array_sum(array_values($item['fail']))}}</p>
+        </div>
+    </div>
+    @endforeach
+</div>
+@endextend
+</body>
+<script>
+    function test(id) {
+        Request.post("/cms/database/test",{id:id}).then(function (res) {
+            if(res.data==1){
+                layer.msg("状态正常")
+            }else {
+                layer.msg("状态异常")
+            }
+        }).catch(function (err) {
+
+        })
+    }
+</script>
+</html>

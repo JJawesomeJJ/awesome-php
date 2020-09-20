@@ -1,5 +1,5 @@
 <?php
-/*update_at 2020-02-19 22:34:43
+/*update_at 2020-04-19 21:43:08
 *create_by awesome-jj
 */
 namespace load;
@@ -37,6 +37,8 @@ class provider_register extends provider
         "auth_controller"=>app\controller\auth\auth_controller::class,
         "awesome_controller"=>app\controller\awesome_echo\awesome_controller::class,
         "channel_controller"=>app\controller\channel\channel_controller::class,
+        "AssetsController"=>app\controller\cms\AssetsController::class,
+        "DatabaseController"=>app\controller\cms\DatabaseController::class,
         "MenuController"=>app\controller\cms\MenuController::class,
         "NativeController"=>app\controller\cms\NativeController::class,
         "SystemController"=>app\controller\cms\SystemController::class,
@@ -65,6 +67,9 @@ class provider_register extends provider
     ];
     protected $dependencies=[
         "awesome"=>system\awesome::class,
+        "CacheDriver"=>system\cache\abstract_\CacheDriver::class,
+        "CacheDriverFile"=>system\cache\abstract_\driver\CacheDriverFile::class,
+        "CacheDriverRedis"=>system\cache\abstract_\driver\CacheDriverRedis::class,
         "cache"=>system\cache\cache::class,
         "cache_"=>system\cache\cache_::class,
         "class_define"=>system\class_define::class,
@@ -128,6 +133,7 @@ class provider_register extends provider
         "migration_user"=>db\factory\migration\migration_list\migration_user::class,
         "news"=>db\model\news\news::class,
         "soft_db"=>db\factory\soft_db::class,
+        "SqlRouter"=>db\factory\SqlRouter::class,
         "admin_user_new"=>db\model\admin_user_new\admin_user_new::class,
         "Menu"=>db\model\cms\Menu::class,
         "comment_list"=>db\model\comment_list\comment_list::class,
@@ -136,6 +142,7 @@ class provider_register extends provider
         "account"=>db\model\native\account::class,
         "follow"=>db\model\native\follow::class,
         "gift"=>db\model\native\gift::class,
+        "native"=>db\model\native\native::class,
         "Oauth"=>db\model\Oauth::class,
         "map"=>db\model\park\map::class,
         "oder_park"=>db\model\park\oder_park::class,
@@ -148,8 +155,11 @@ class provider_register extends provider
         "auth_controller"=>app\controller\auth\auth_controller::class,
         "awesome_controller"=>app\controller\awesome_echo\awesome_controller::class,
         "channel_controller"=>app\controller\channel\channel_controller::class,
+        "AssetsController"=>app\controller\cms\AssetsController::class,
+        "DatabaseController"=>app\controller\cms\DatabaseController::class,
         "MenuController"=>app\controller\cms\MenuController::class,
         "NativeController"=>app\controller\cms\NativeController::class,
+        "Privilege"=>app\controller\cms\Privilege::class,
         "SystemController"=>app\controller\cms\SystemController::class,
         "UserController"=>app\controller\cms\UserController::class,
         "code_controller"=>app\controller\code\code_controller::class,
@@ -175,12 +185,17 @@ class provider_register extends provider
         "system_controller"=>app\controller\system\system_controller::class,
         "test_controller"=>app\controller\test\test_controller::class,
         "wechat_controller"=>app\controller\wechat\wechat_controller::class,
+        "AppEndEvent"=>app\Event\AppEndEvent::class,
+        "AppStartEvent"=>app\Event\AppStartEvent::class,
         "native_push_event"=>app\Event\native_push_event::class,
         "user_login_event"=>app\Event\user_login_event::class,
+        "AppEndtEventListener"=>app\EventListener\AppEndtEventListener::class,
+        "AppStartEventListener"=>app\EventListener\AppStartEventListener::class,
         "native_push_listener"=>app\EventListener\native_push_listener::class,
         "user_login_listener"=>app\EventListener\user_login_listener::class,
         "AppServiceProvider"=>app\providers\AppServiceProvider::class,
         "EventServiceProvider"=>app\providers\EventServiceProvider::class,
+        "MiddlewareProvider"=>app\providers\MiddlewareProvider::class,
         "awesome_driver_rabbitmq"=>extend\awesome\awesome_driver_rabbitmq::class,
         "awesome_echo_driver"=>extend\awesome\awesome_echo_driver::class,
         "awesome_echo_tool"=>extend\awesome\awesome_echo_tool::class,

@@ -312,7 +312,7 @@ var request=function () {
     var then_=null;
     var catch_=null;
     var pre_load=[];
-    this.get=function (url,params) {
+    this.get=function (url,params={},header={}) {
         for (var i of pre_load){
             i(url,params);
         }
@@ -323,7 +323,7 @@ var request=function () {
         object_=axios.get(url+object_parse_url(params));
         return this;
     };
-    this.post=function (url,params={}) {
+    this.post=function (url,params={},header={}) {
         var fun1=then_;
         then_=null;
         var fun2=catch_;
@@ -331,7 +331,7 @@ var request=function () {
         for (var i of pre_load){
             i(url,params);
         }
-        object_=axios.post(url,params);
+        object_=axios.post(url,params,{headers:header});
         return object_;
     };
     this.then=function (fun) {

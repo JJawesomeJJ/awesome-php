@@ -9,8 +9,31 @@
     <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
     <script src="../asset/js/common.js"></script>
     <script src="assets/js/action.js"></script>
+    <script src="assets/js/likes.js"></script>
 </head>
 <style>
+    .hidden{
+        transform: scale(2);
+        opacity: 0;
+        transition: 0.5s;
+    }
+    .show_like{
+        /*transform: scale(0.5);*/
+        transition: 1s;
+        animation: show123 1s ease-in-out;
+    }
+    @keyframes show123 {
+        0% {transform: scale(0.5);}
+        40% {transform: scale(1.3);}
+        60%{transform: scale(1.1);}
+        70%{transform: scale(1.3);}
+        100% {transform: scale(1.0);}
+    }
+    .dislike{
+        transform: scale(0);
+        opacity: 0;
+        transition: 0.5s;
+    }
     *{
         margin: 0;
         padding: 0;
@@ -103,14 +126,16 @@
     .focus{
         position: absolute;
         right: 10px;
-        width:45px;
         height: 30px;
         border-radius: 12px;
-        background-color: white;
-        color: rgba(255, 0, 0, 0.92);
+        color: white;
+        background-color: rgba(255, 0, 0, 0.92);
         text-align: center;
         line-height: 30px;
         top:5px;
+        transition: 0.2ms ease-in-out;
+        padding-left: 3px;
+        padding-right: 3px;
     }
     .bottom{
         position: fixed;
@@ -412,14 +437,17 @@
     <!--顶部信息-->
     <div class="top">
         <div class="header">
-            <img src="https://dss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1694681277,1453280371&fm=26&gp=0.jpg" alt="">
+            <img src="{{$user->head_img}}" alt="">
         </div>
         <div class="anchor">
-            <p>熊猫烧香</p>
-            <p>2000月亮</p>
+            <p>{{$user->name}}</p>
+            <p>@{{money}}渊币</p>
         </div>
-        <div class="focus">
+        <div class="focus" v-if="is_follow==false" @click="follow">
             关注
+        </div>
+        <div class="focus" @click="unfollow" style="background-color: grey" v-if="is_follow">
+           取消关注
         </div>
     </div>
     <div class="online">
@@ -447,10 +475,13 @@
             <div class="user_input">
                 <input type="text" v-model="msg" placeholder="说点什么..." id="user_input">
             </div>
-            <div class="right">
+            <div class="right" v-if="is_user=='true'">
                 <ul>
-                    <li>
+                    <li v-if="is_like" @click="dis_like">
                         <img src="assets/images/heart.png" alt="">
+                    </li>
+                    <li v-if="is_like==false" @click="start_like">
+                        <img src="assets/images/heart_white.png" alt="">
                     </li>
                     <li class="show_gift_container">
                         <img src="assets/images/gift.png" alt="">
@@ -472,6 +503,7 @@
     <div id="gift">
     </div>
 </div>
+<script src="assets/js/awesome_compile.js"></script>
 <script>
     $(function () {
         $("body").on('click','.gift_list_item',function () {
@@ -496,6 +528,7 @@
             ],
             message:[],
             msg:"",
+            money:0,
             fd:null,
             _token:null,
             move_now:true,
@@ -503,11 +536,15 @@
             timer:null,
             online_num:1,
             online_fans:[],
+            is_follow:false,
             img:"",
             is_show:false,
-            channel_name:"",
+            channel_name:"uninit",
             is_hidden:true,
             gifts:[],
+            is_like:false,
+            is_user:'{{$is_show??"true"}}',
+            player_id:'{{$user->id}}'
         },
         watch:{
             message(oldvalue,newvalue){
@@ -523,7 +560,6 @@
                 self.is_show=true;
             });
             $("#msg").blur(function () {
-                console.log("fsdfsd");
                 self.is_show=false;
             });
             var self=this;
@@ -541,7 +577,12 @@
                 setTimeout(function () {
                     self.is_hidden=true;
                 },1);
-            })
+            });
+            setTimeout(function () {
+                get_money();
+                self.is_fans();
+            },300);
+
         },
         created(){
             var self=this;
@@ -551,12 +592,71 @@
             window['push_ele'] = function(msg){
                 self.push_message(msg)
             };
+            //初始化websview
             window['init']=function (fd,_token,channel_name) {
                 self.init_com(fd,_token,channel_name);
+            };
+            window['get_money']=function () {
+                self.get_money();
             };
             this.get_gifts();
         },
         methods:{
+            is_fans(){
+                var self=this;
+                axios.get("/native/fans/is?uid="+self.player_id).then(function (res) {
+                    self.is_follow=res.data;
+                }).catch(function (err) {
+
+                })
+            },
+            follow(){
+                var self=this;
+                axios.get("/native/fans/follow?uid="+self.player_id).then(function (res) {
+                    self.is_follow=true;
+                }).catch(function (err) {
+
+                })
+            },
+            unfollow(){
+                var self=this;
+                axios.get("/native/fans/unfollow?uid="+self.player_id).then(function (res) {
+                    self.is_follow=false;
+                }).catch(function (err) {
+
+                })
+            },
+            start_like(){
+                this.is_like=true;
+                start_like();
+                var self=this;
+                axios.post("/native/like",{channel_name:self.channel_name}).then(function (res) {
+                    console.log("like---"+JSON.stringify(res.data));
+                    console.log("ok");
+                    self.like_num=res.data;
+                }).catch(function (err) {
+                    console.log("err");
+                    console.log(err)
+                })
+            },
+            get_money(){
+                var self=this;
+                axios.post("/native/gift/total",{channel_name:self.channel_name}).then(function (res) {
+                    self.money=res.data;
+                }).catch(function (err) {
+
+                })
+            },
+            dis_like(){
+                this.is_like=false;
+                dis_like();
+                var self=this;
+                axios.post("/native/dislike",{channel_name:self.channel_name}).then(function (res) {
+                    self.like_num=res.data;
+                }).catch(function () {
+
+                })
+            },
             compute_online_num(num){
                 if(num<1000){
                     return num;
@@ -589,6 +689,17 @@
                 this.fd=fd;
                 this._token=_token;
                 this.channel_name=channel_name;
+                this.is_like_();
+            },
+            is_like_(){
+                var self=this;
+                axios.post("/native/islike",{channel_name:self.channel_name}).then(function (res) {
+                    console.log("islike>>"+JSON.stringify(res.data));
+                    self.is_like=res.data['is_like'];
+                    self.like_num=res.data['num'];
+                }).catch(function (err) {
+
+                })
             },
             push_message(jsonobject){
                 var self=this;

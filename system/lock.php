@@ -9,6 +9,7 @@
 namespace system;
 
 
+
 class lock
 {
     protected static $lock_key_list=[];
@@ -17,9 +18,9 @@ class lock
         $lock_key="redis_lock_key".md5($key);
         $redis=class_define::redis();
         while (!$redis->setnx($lock_key,time())){
-            $time=$time+100000/1000000;
+            $time=($time+100000)/1000000;
             if($time>=$max_delay_time){
-                new Exception(403,'get lock timeout!');
+                throw new \Exception(403,'get lock timeout!');
             }
             usleep(100000);//休息0.1s
         }
@@ -33,13 +34,24 @@ class lock
         if(in_array($key,self::$lock_key_list)){
             class_define::redis()->del($lock_key);
         }else{
-            new Exception(404,'DO NOT HAVE PERMISSION TO DELETE IT!!');
+            throw new \Exception('DO NOT HAVE PERMISSION TO DELETE IT!!');
         }
     }
     public function flush_all(){
         $lock_key="redis_lock_key";
         foreach (self::$lock_key_list as $key){
             class_define::redis()->del($lock_key.md5($key));
+        }
+    }
+    public static function sync(string $key,int $lock_time,int $max_delay,\Closure $closure){
+        self::redis_lock($key,$lock_time,$max_delay);
+        try {
+            call_user_func($closure);
+        }
+        catch (\Throwable $exception){
+
+        } finally {
+            self::redis_unlock($key);
         }
     }
 }

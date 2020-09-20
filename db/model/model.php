@@ -38,6 +38,8 @@ abstract class model
     protected $permitted_set_table_name_list=[];
     //由于在使用set_table_name时可能有外部输入,所有可能被恶意输入导致数据的信息全部暴露
     //所以在有可能使用set_table_name 的方法的模型中重载$set_table_list防止被恶意输入
+    protected $enable_query_cache=false;//是否开启查询缓存
+    private $is_read_cache=false;//是否在查询是预先读取缓存
     public function __construct()
     {
         $this->db=soft_db::table($this->table_name);
@@ -45,6 +47,25 @@ abstract class model
         //实例化数据库对象
         $this->table_column_list=$this->db->get_table_column_cache(false);
         //初始化表单字段
+    }
+
+    /**
+     * @description 设置为从主库读取数据
+     * @return $this
+     * @throws \Exception
+     */
+    public function ReadMaster(){
+        $this->db->ReadMaster();
+        return $this;
+    }
+
+    /**
+     * @description 切换为自动读取数据
+     * @return $this
+     */
+    public function SetReadAuto(){
+        $this->db->SetReadAuto();
+        return $this;
     }
     public function where(...$arr){
         if(!in_array($arr[0],$this->table_column_list)){
@@ -148,7 +169,7 @@ abstract class model
             //如果是设则实例化该模型并设置条件返回与当前模型管理的模型实例
         }
         if(!in_array($name,$this->table_column_list)){
-            new Exception("300","this_key_not_exist_in_".get_class($this));
+            new Exception("300","$name._this_key_not_exist_in_".get_class($this));
         }
         if(empty($this->model_list)){
             new Exception("300","model_data_unfind");
@@ -171,7 +192,12 @@ abstract class model
         if(empty($this->db->get_select_column())) {
             $this->db->all();
         }
-        $data=$this->db->get($is_refresh);
+        if($this->enable_query_cache&&$this->is_read_cache){
+            $data=$this->db->first_cache("forever",$is_refresh);
+            $this->is_read_cache=false;
+        }else {
+            $data = $this->db->get($is_refresh);
+        }
         if($this->is_1_array($data)&&!empty($data)){
             $this->model_list=[$data];
         }
@@ -232,6 +258,9 @@ abstract class model
             else{
                 $this->db->set($key,$value);
             }
+        }
+        if($this->enable_query_cache){
+            $this->db->flush_cache();
         }
         return $this->db->update();
     }
@@ -393,9 +422,11 @@ abstract class model
         }
         return $filed_list;
     }
-    //数据被删除之后对应的模型重置
     public function delete(){
         $result=$this->db->delete();
+        if($this->enable_query_cache){
+            $this->db->flush_cache();
+        }
         if($result) {
             $this->model_list = [];
             return true;
@@ -417,6 +448,9 @@ abstract class model
             $filed_arr["id"]=md5(microtime(true).common::rand(4));
         }
         $result=$this->db->insert($filed_arr);
+        if($this->enable_query_cache){
+            $this->db->flush_cache();
+        }
         if($return_id){
             if($result){
                 return $this->db->get_insert_id();
@@ -426,6 +460,10 @@ abstract class model
             }
         }
         return $result;
+    }
+    public function first_cache(){
+        $this->is_read_cache=true;
+        return $this;
     }
     public function where_like($column_value,$condition_value){
         $this->db->where_like($column_value,"%$condition_value%");

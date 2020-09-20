@@ -33,6 +33,7 @@ function Action() {
         var flag=setTimeout(function () {
             var element=compile_html(info,run_level);
             $(target).append(element);
+            get_money();
             setTimeout(function () {
                 // $(".gift-level-"+run_level).remove();
                 delete run_timer[run_level]

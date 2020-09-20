@@ -13,6 +13,7 @@ class user extends model
 {
     protected $table_name="user";
     protected $guard=["id","email"];
+    protected $enable_query_cache=true;
     public function comment_list(){
         return $this->has("db\model\comment_list\comment_list","name","user_id");
     }

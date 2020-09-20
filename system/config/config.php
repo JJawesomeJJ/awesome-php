@@ -11,6 +11,7 @@ namespace system\config;
 
 use app\providers\AppServiceProvider;
 use app\providers\EventServiceProvider;
+use app\providers\MiddlewareProvider;
 use request\request;
 use system\cache\cache;
 use system\common;
@@ -50,6 +51,7 @@ class config
         return [
             AppServiceProvider::class,
             EventServiceProvider::class,
+            MiddlewareProvider::class
         ];
     }
     //the project depenendcies path
@@ -203,14 +205,14 @@ class config
     }
     public static function pdo(){
         return[
-            "EnableMasterCluster"=>true,//是否开启读写分离多实例
+            "EnableMasterCluster"=>false,//是否开启读写分离多实例
             "driver"=>"mysql",
             "mysql"=>[
-                "hostname"=>"127.0.0.1",
-                "hostport"=>"3306",
-                "database"=>"register",
-                "username"=>"root",
-                "password"=>".zlj19971998",
+                "hostname"=>"180.97.151.90",
+                "hostport"=>"1033",
+                "database"=>"liandong",
+                "username"=>"liandong",
+                "password"=>"liandong123***",
             ],
         ];
     }

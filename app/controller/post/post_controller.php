@@ -49,7 +49,7 @@ class post_controller extends controller
             }
             $redis->hset($this->news_cache_record,$key,time());//记录已经添加的键
         }
-        $data=["url"=>$request->get("url"),"reply_who"=>$request->get("url"),"user_id"=>auth_controller::auth("user"),"comment_content"=>$request->get("comment"),"reply_id"=>$id,"id"=>$id,"likes"=>json_encode([]),"head_img"=>session::get("head_img")];
+        $data=["url"=>$request->get("url"),"reply_who"=>$request->get("url"),"user_id"=>auth_controller::auth("user"),"comment_content"=>$request->get("comment"),"reply_id"=>$id,"id"=>$id,"likes"=>json_encode([]),"head_img"=>session::get("user")->head_img];
         $redis->hSet($key,$data['id'],json_encode($data));
         return ["code"=>200,"message"=>"ok"];
     }

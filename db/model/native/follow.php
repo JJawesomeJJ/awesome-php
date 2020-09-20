@@ -89,15 +89,9 @@ class follow extends model
         }
     }
     public function remove_follow(string $id,string $uid){
-        $result=$this->where('id',$id)
-            ->get();
-        if(empty($result->uid)){
-            return false;
-        }
-        if($result->uid!=$uid){
-            new Exception(403,'No permission to Access It!');
-        }
-        return $this->delete();
+        return $this->where('uid',$id)
+            ->where("follow_uid",$uid)
+            ->delete();
     }
 
     /**

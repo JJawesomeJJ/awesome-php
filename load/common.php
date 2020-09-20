@@ -6,7 +6,9 @@
  * Time: 下午 3:35
  */
 //register_shutdown_function("on_app_stop");
-//set_error_handler("on_app_stop", E_ALL | E_STRICT);
+set_error_handler(function ($errno, $errstr, $errfile, $errline){
+    throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+}, E_ALL | E_STRICT);
 //set_exception_handler("on_app_stop");
 function make($class_name)
 {
@@ -64,3 +66,4 @@ function is_1_array(array $arr){
         return false;
     }
 }
+$app=load\provider_register::provider();
