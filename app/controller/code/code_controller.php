@@ -78,7 +78,7 @@ class code_controller extends controller
             $filter = Grafika::createFilter('Blur', 80);
             $name=time()."_".self::code(6)."_". ".jpg";
             $path = config::env_path().'/public/'."image/code_drop/" .$name;
-            setcookie("vertify_code_drop", json_encode(["src" => config::project_path().'/image/code_drop/'.$name, "height" => $start_y]), time()+3600,"/",$_SERVER['HTTP_HOST'],false,false);
+            setcookie("vertify_code_drop", json_encode(["src" => config::project_path().'/image/code_drop/'.$name, "height" => $start_y]), time()+3600,"/");
             $editor->save($image, $path);
             $editor->apply($image, $filter);
             $editor->open($image1, $image_src);

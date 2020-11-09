@@ -70,7 +70,8 @@ class config
                 "alipay_test"=>"extend/alipay_test/",
                 "tencent_sdk"=>"extend/tencentcloud-sdk-php/"
             ],
-            'controller'=>"app/controller/"
+            'controller'=>"app/controller/",
+            'console'=>'app/console'
         ];
     }
     public static function is_cli(){
@@ -207,12 +208,19 @@ class config
         return[
             "EnableMasterCluster"=>false,//是否开启读写分离多实例
             "driver"=>"mysql",
+//            "mysql"=>[
+//                "hostname"=>"180.97.151.90",
+//                "hostport"=>"1033",
+//                "database"=>"liandong",
+//                "username"=>"liandong",
+//                "password"=>"liandong123***",
+//            ],
             "mysql"=>[
-                "hostname"=>"180.97.151.90",
-                "hostport"=>"1033",
-                "database"=>"liandong",
-                "username"=>"liandong",
-                "password"=>"liandong123***",
+                "hostname"=>"localhost",
+                "hostport"=>"3306",
+                "database"=>"register",
+                "username"=>"root",
+                "password"=>".zlj19971998",
             ],
         ];
     }

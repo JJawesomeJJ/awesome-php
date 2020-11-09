@@ -15,7 +15,11 @@ class index
         require_once __DIR__."/../load/common.php";
         try {
             $route=new routes();
-            require_once __DIR__."/../routes/route_entrance.php";
+            if(!is_cli()) {
+                require_once __DIR__ . "/../routes/route_entrance.php";
+            }else{
+                require_once __DIR__ . "/../routes/route_console.php";
+            }
             $route->start();
         }
         catch (Throwable $throwable){

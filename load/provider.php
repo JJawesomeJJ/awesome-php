@@ -20,11 +20,22 @@ class provider
     protected $dependencies=[];
     protected $container=[];
     protected $class_factory=[];
+    protected $console=[];
     public function controller($controller_name,$params=false){
-        if(!array_key_exists($controller_name,$this->controller)){
-            throw new \Exception($controller_name.' NOT FIND');
+        if(class_exists($controller_name)){
+            return $controller_name;
         }
-        return $this->controller[$controller_name];
+        if(!is_cli()) {
+            if (!array_key_exists($controller_name, $this->controller)) {
+                throw new \Exception($controller_name . ' NOT FIND');
+            }
+            return $this->controller[$controller_name];
+        }else{
+            if (!array_key_exists($controller_name, $this->console)) {
+                throw new \Exception($controller_name . ' NOT FIND');
+            }
+            return $this->console[$controller_name];
+        }
     }
     public function get_dependencies(){
         return $this->dependencies;

@@ -1,5 +1,5 @@
 <?php
-/*update_at 2020-04-19 21:43:08
+/*update_at 2020-11-09 23:40:09
 *create_by awesome-jj
 */
 namespace load;
@@ -62,7 +62,14 @@ class provider_register extends provider
         "survey_controller"=>app\controller\survey\survey_controller::class,
         "system_controller"=>app\controller\system\system_controller::class,
         "test_controller"=>app\controller\test\test_controller::class,
+        "test_controller"=>app\controller\test_controller::class,
+        "WebController"=>app\controller\WebController::class,
         "wechat_controller"=>app\controller\wechat\wechat_controller::class,
+
+    ];
+     protected  $console=[
+        "ConsoleController"=>app\console\ConsoleController::class,
+        "testController"=>app\console\demo\controllers\testController::class,
 
     ];
     protected $dependencies=[
@@ -100,6 +107,8 @@ class provider_register extends provider
         "LuaScript"=>system\LuaScript::class,
         "mail"=>system\mail::class,
         "alipay"=>system\pay\alipay::class,
+        "ControllerRoute"=>system\route\ControllerRoute::class,
+        "RouteConfig"=>system\route\RouteConfig::class,
         "session"=>system\session::class,
         "system_excu"=>system\system_excu::class,
         "template"=>system\template::class,
@@ -151,8 +160,11 @@ class provider_register extends provider
         "test"=>task\test::class,
         "testdasda"=>db\model\test\testdasda::class,
         "user"=>db\model\user\user::class,
+        "ConsoleController"=>app\console\ConsoleController::class,
+        "testController"=>app\console\demo\controllers\testController::class,
         "admin_user_controller"=>app\controller\admin_user\admin_user_controller::class,
         "auth_controller"=>app\controller\auth\auth_controller::class,
+        "module"=>app\controller\auto\module::class,
         "awesome_controller"=>app\controller\awesome_echo\awesome_controller::class,
         "channel_controller"=>app\controller\channel\channel_controller::class,
         "AssetsController"=>app\controller\cms\AssetsController::class,
@@ -164,6 +176,7 @@ class provider_register extends provider
         "UserController"=>app\controller\cms\UserController::class,
         "code_controller"=>app\controller\code\code_controller::class,
         "controller"=>app\controller\controller::class,
+        "DataMap"=>app\controller\index\DataMap::class,
         "index_controller"=>app\controller\index\index_controller::class,
         "language_controller"=>app\controller\language\language_controller::class,
         "map_controller"=>app\controller\map\map_controller::class,
@@ -183,7 +196,8 @@ class provider_register extends provider
         "survey_controller"=>app\controller\survey\survey_controller::class,
         "survey_html_create"=>task\survey_html_create::class,
         "system_controller"=>app\controller\system\system_controller::class,
-        "test_controller"=>app\controller\test\test_controller::class,
+        "test_controller"=>app\controller\test_controller::class,
+        "WebController"=>app\controller\WebController::class,
         "wechat_controller"=>app\controller\wechat\wechat_controller::class,
         "AppEndEvent"=>app\Event\AppEndEvent::class,
         "AppStartEvent"=>app\Event\AppStartEvent::class,

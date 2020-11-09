@@ -63,8 +63,14 @@ use template\compile_parse;
 
 class index_controller extends controller
 {
-    public function index(request $request)
+    public function index(request $request,cache $cache,categories $categories)
     {
+        echo "load";
+        $key="fsdfsdfsdfsfdfsdfs";
+        print_r($categories->all());
+//        $cache->set_cache($key,1,60*60);
+        $cache->increase($key,1);
+        var_dump($cache->get_cache($key));
 //        return $this->get_user_ip();
 //        $db=new db();
 ////        return $db->show_columns("user");
@@ -549,6 +555,8 @@ class index_controller extends controller
 //        return $user->ReadMaster()->where("name","赵李杰")->update([
 //            "sex"=>"man"
 //        ]);
+        return common::getNameSpace($this);
+        return self::class;
         $num=<<<num
 18
 20

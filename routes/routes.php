@@ -22,17 +22,26 @@ class routes
         "PUT"=>[],
     ];
     protected static $object;
+    protected $route_conifg;
     protected static $now_request;
     protected $middleware_grunp=[];//当前路由组要加载的中间件
     protected $prefix="";
+
+    /**
+     * @var mixed|object|request $request|null
+     */
     private $request = null;
     protected $now_request_url_list;
     protected $value;//已匹配的路由信息
     public function __construct()
     {
         provider_register::provider()->ServiceProvider();
+        /**
+         * @var request
+         */
         $this->request =make("request");
         self::$object=$this;
+        $this->route_conifg=system\route\RouteConfig::conifg();
     }
     protected function start()
     {
@@ -75,6 +84,17 @@ class routes
             event(new AppEndEvent($response));
             echo $response;
             exit();
+        }else{
+            $request=request::SingleTon();
+            $url=$request->get_url();
+            $url_info=explode("/",$url);
+            $url_info=array_values(array_filter($url_info));
+            if(count($url_info)<2){
+                echo json_encode(['code'=>'404','message'=>'page_not_exist']);
+                exit();
+            }
+//            if(!empty($this->route_conifg["Register"][$url_info[0]]));
+
         }
         echo json_encode(['code'=>'404','message'=>'page_not_exist']);
     }
@@ -87,7 +107,13 @@ class routes
 
     // when no url match routes then app echo 404 page
     protected function pathinfo(){
-        foreach (array_merge(self::$route[$this->request->request_mothod()],self::$route["ANY"]) as $route){
+        if(is_cli()){
+            $routes=array_merge(self::$route[$this->request->request_mothod()],self::$route["ANY"]);
+        }
+        else{
+            $routes=self::$route["CLI"];
+        }
+        foreach ($routes as $route){
             if (strrpos($route["url"], "{") !== false) {
                 if($this->vertify_pathinfo($route)){
                     return true;
@@ -97,9 +123,17 @@ class routes
                 }
             }
             else{
-                if('/'.$route["url"]==$this->request->get_url()){
-                    $this->value=$route;
-                    return true;
+                if(!is_cli()){
+                    if('/'.$route["url"]==$this->request->get_url()){
+                        $this->value=$route;
+                        return true;
+                    }
+                }
+                else{
+                    if($route["url"]==$this->request->get_url()){
+                        $this->value=$route;
+                        return true;
+                    }
                 }
             }
         }
@@ -109,6 +143,7 @@ class routes
         $route_rule_list = explode('/', '/'.$route["url"]);
         $route_params = [];
         $now_request_url = $this->get_now_request_url();
+        var_dump($now_request_url);die();
         if(count($now_request_url)!=count($route_rule_list))
         {
             return false;
@@ -207,5 +242,13 @@ class routes
         $index=count(self::$route[self::$now_request])-1;
         self::$route[self::$now_request][$index]['name']=$name;
         return $this;
+    }
+    public static function cli($url,$controller_method,array $middleware=[]){
+        foreach (self::$object->middleware_grunp as $item){
+            $middleware[]=$item;
+        }
+        self::$route["CLI"][]=["request_method"=>"CLI","url"=>self::$object->prefix.$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
+        self::$now_request="CLI";
+        return self::$object;
     }
 }

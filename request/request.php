@@ -105,6 +105,9 @@ class request
         }
     }//get user input but if key not exist process will throw new Exception and process will shutdown
     public function get_ip_address(){
+        if(is_cli()){
+            return "127.0.0.1";
+        }
         return $_SERVER['REMOTE_ADDR'];
     }
     // get user ip address but this not only
@@ -239,6 +242,10 @@ class request
         }
     }
     public function all(array $accept=[]){
+        if(is_cli()){
+            $this->user_input=[];
+            $this->user_input["input"]=$_SERVER["argv"];
+        }
         if($this->user_input!='*'){
             if(!empty($fileds)){
                 return common::get_hash_filed($this->user_input,$accept);
@@ -279,6 +286,9 @@ class request
         return upload_file::upload_file($name);
     }
     public function request_mothod(){
+        if(is_cli()){
+            return "CLI";
+        }
         if(is_null($this->request_method)){
             if($this->try_get("_method")){
                 $this->request_method=$this->get("_method");
@@ -293,6 +303,9 @@ class request
         return $_SERVER["HTTP_REFERER"];
     }//get_request_referer_url;
     public function get_url(){
+        if(is_cli()){
+            self::$request_url=$_SERVER['argv'][1];
+        }
         if(!is_null(self::$request_url)){
             return self::$request_url;
         }

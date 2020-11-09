@@ -15,6 +15,7 @@ use db\factory\SqlRouter;
 use load\auto_load;
 use load\provider;
 use load\provider_register;
+use routes\routes;
 use system\cache\cache;
 use system\config\config;
 require_once __DIR__."/../load/auto_load.php";
@@ -42,7 +43,13 @@ class awesome
     public function load_method()
     {
         $argv = $_SERVER['argv'];
+        if(count($argv)<=1){
+            $this->help();
+            $this->cli_echo_color_green("Route can't be resolve beacuse of too less params input");
+            return;
+        }
         $method_name=$argv[1];
+
         $params=[];
         if(strpos($method_name,":")!==false){
             $method_name_parmas=explode(":",$method_name);
@@ -64,28 +71,18 @@ class awesome
             }
             $params[]=$value;
         }
-        $method_obejct=new \ReflectionMethod($this,$method_name);
-        $num=count($method_obejct->getParameters());
-        if($num==0){
-            call_user_func([$this,$method_name]);
+        if(method_exists($this,$method_name)){
+            $method_obejct=new \ReflectionMethod($this,$method_name);
+            $num=count($method_obejct->getParameters());
+            if($num==0){
+                call_user_func([$this,$method_name]);
+            }
+            else{
+                call_user_func_array([$this,$method_name],$params);
+            }
+        }else{
+            require_once dirname(__DIR__)."/public/index.php";
         }
-        else{
-            call_user_func_array([$this,$method_name],$params);
-        }
-//        if (count($argv) == 2) {
-//            $method_name = $argv[1];
-//            $this->$method_name();
-//        }
-//        if (count($argv) == 3) {
-//            $method_params = explode(":", $argv[1]);
-//            $method_name = $method_params[0];
-//            if(!isset($method_params[1])) {
-//                $this->$method_name($argv[2]);
-//            }
-//            else {
-//                $this->$method_name($method_params[1], $argv[2]);
-//            }
-//        }
     }
 
     public function controller($controller_name)
@@ -127,16 +124,22 @@ class provider_register extends provider
     protected  \$controller=[
 {{controller}}
     ];
+     protected  \$console=[
+{{console}}
+    ];
     protected \$dependencies=[];
 }";
         $home_path = dirname(dirname(__FILE__));
         $controller_path = "$home_path/".config::depenendcies()['controller'];
         $middlerware_path = "$home_path/http/middleware/";
+        $console_path="$home_path/".config::depenendcies()['console'];
         $file = new file();
         $middlerware_list = [];
         $controller_list = [];
         $middlerware_string = "";
         $controller_string = "";
+        $console_string="";
+        $console_list=[];
         foreach ($file->file_walk($middlerware_path) as $value) {
             $name = explode("/", $value);
             $name = str_replace(".php", "", $name[count($name) - 1]);
@@ -155,7 +158,17 @@ class provider_register extends provider
                 $controller_string .="        ". "\"$name\"=>$register_value," . "\n";
             }
         }
+        foreach ($file->file_walk($console_path) as $value) {
+            $name = explode("/", $value);
+            $name = str_replace(".php", "", $name[count($name) - 1]);
+            $register_value = str_replace("/", "\\", str_replace(".php", "", str_replace($home_path . "/", "", $value) . "::class"));
+            if (strpos($name, "_controller") !== false||strpos($name, "Controller") !== false||strpos($name, "controller") !== false) {
+                $console_list[$name] = $register_value;
+                $console_string .="        ". "\"$name\"=>$register_value," . "\n";
+            }
+        }
         $template_register = str_replace("{{middleware}}", $middlerware_string, str_replace("{{controller}}", $controller_string, $template_register));
+        $template_register=str_replace("{{console}}",$console_string,$template_register);
         $file->write_file("$home_path/load/provider_register.php", $template_register);
     }
 

@@ -7,6 +7,7 @@
  */
 
 namespace template;
+use request\request;
 use system\common;
 use system\config\config;
 use system\Exception;
@@ -47,6 +48,9 @@ class compile_parse
             $cache_file_path=self::$object->compile_template($template_path);
         }
         if(!is_cli()) {
+            /**
+             * @var request $data['request']
+             */
             $data['request'] = make('request');
         }
         foreach ($data as $key=>$value){

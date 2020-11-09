@@ -262,4 +262,9 @@ class common
         }
         return $result;
     }
+    public static function getNameSpace($obj){
+        $class_name=get_class($obj);
+        $index=strrpos($class_name,"\\");
+        return substr($class_name,0,$index);
+    }
 }

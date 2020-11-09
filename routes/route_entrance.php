@@ -8,8 +8,12 @@
 
 namespace routes;
 //the route entrance should design as resetful api style url=>resource the http request mothod as ["get","post","put","delete"]
+use db\model\model_auto\model_auto;
 use db\model\user\user;
 use request\request;
+use system\cache\cache;
+use function Co\run;
+
 routes::post("user/login","auth_controller@user_login")->middleware("limit_flow_middleware","ip_limit",50);
 routes::post("user/server","auth_controller@request_connect_websocket");
 routes::get("user/head_img","auth_controller@get_head_img");
@@ -53,7 +57,8 @@ routes::get("user/bitch/buy",function (){
 routes::post("admin_user/register","admin_user_controller@register");
 routes::post("admin_user/login","admin_user_controller@login");
 routes::any("admin_user/login/email","admin_user_controller@email_code_login");
-routes::get("vertify","code_controller@img_cut_square",[["limit_flow_middleware","ip_limit","50"]]);
+routes::get("vertify","code_controller@img_cut_square");
+//routes::get("vertify","code_controller@img_cut_square",[["limit_flow_middleware","ip_limit","50"]]);
 routes::get("vertify/slide","code_controller@slide_code");
 routes::post("vertify/silde/x","code_controller@vertify_slide");
 routes::get("admin/user","admin_user_controller@user_login");
@@ -192,3 +197,7 @@ routes::group(function (){
 /**
  * @EndDescription
  */
+routes::get("test/test",function (user $user,cache $cache){
+   echo model_auto::model("user")->count().PHP_EOL;
+   return runtime();
+});
