@@ -34,9 +34,11 @@ class AppServiceProvider extends ServiceProvider
         app()->singleton(request::class,function (){
             return request::SingleTon();
         });
-        app()->singleton(\Redis::class,function (){
-            return class_define::redis();
-        });
+        if(class_exists(\Redis::class)) {
+            app()->singleton(\Redis::class, function () {
+                return class_define::redis();
+            });
+        }
         app()->singleton(awesome_echo_tool::class,function (){
             return new awesome_echo_tool(new awesome_driver_rabbitmq());
         });

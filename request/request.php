@@ -242,9 +242,13 @@ class request
         }
     }
     public function all(array $accept=[]){
+        if(!empty($this->user_input)&&is_array($this->user_input)){
+            return $this->user_input;
+        }
         if(is_cli()){
             $this->user_input=[];
             $this->user_input["input"]=$_SERVER["argv"];
+            return $this->user_input;
         }
         if($this->user_input!='*'){
             if(!empty($fileds)){

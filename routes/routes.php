@@ -140,10 +140,13 @@ class routes
         return false;
     }
     protected function vertify_pathinfo($route){
-        $route_rule_list = explode('/', '/'.$route["url"]);
+        if(!is_cli()) {
+            $route_rule_list = explode('/', '/' . $route["url"]);
+        }else{
+            $route_rule_list = explode('/',  $route["url"]);
+        }
         $route_params = [];
         $now_request_url = $this->get_now_request_url();
-        var_dump($now_request_url);die();
         if(count($now_request_url)!=count($route_rule_list))
         {
             return false;

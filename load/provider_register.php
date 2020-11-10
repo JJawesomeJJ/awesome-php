@@ -1,5 +1,5 @@
 <?php
-/*update_at 2020-11-09 23:40:09
+/*update_at 2020-11-10 11:58:22
 *create_by awesome-jj
 */
 namespace load;
@@ -38,7 +38,6 @@ class provider_register extends provider
         "awesome_controller"=>app\controller\awesome_echo\awesome_controller::class,
         "channel_controller"=>app\controller\channel\channel_controller::class,
         "AssetsController"=>app\controller\cms\AssetsController::class,
-        "DatabaseController"=>app\controller\cms\DatabaseController::class,
         "MenuController"=>app\controller\cms\MenuController::class,
         "NativeController"=>app\controller\cms\NativeController::class,
         "SystemController"=>app\controller\cms\SystemController::class,
@@ -62,7 +61,6 @@ class provider_register extends provider
         "survey_controller"=>app\controller\survey\survey_controller::class,
         "system_controller"=>app\controller\system\system_controller::class,
         "test_controller"=>app\controller\test\test_controller::class,
-        "test_controller"=>app\controller\test_controller::class,
         "WebController"=>app\controller\WebController::class,
         "wechat_controller"=>app\controller\wechat\wechat_controller::class,
 
@@ -168,7 +166,6 @@ class provider_register extends provider
         "awesome_controller"=>app\controller\awesome_echo\awesome_controller::class,
         "channel_controller"=>app\controller\channel\channel_controller::class,
         "AssetsController"=>app\controller\cms\AssetsController::class,
-        "DatabaseController"=>app\controller\cms\DatabaseController::class,
         "MenuController"=>app\controller\cms\MenuController::class,
         "NativeController"=>app\controller\cms\NativeController::class,
         "Privilege"=>app\controller\cms\Privilege::class,
@@ -196,15 +193,11 @@ class provider_register extends provider
         "survey_controller"=>app\controller\survey\survey_controller::class,
         "survey_html_create"=>task\survey_html_create::class,
         "system_controller"=>app\controller\system\system_controller::class,
-        "test_controller"=>app\controller\test_controller::class,
+        "test_controller"=>app\controller\test\test_controller::class,
         "WebController"=>app\controller\WebController::class,
         "wechat_controller"=>app\controller\wechat\wechat_controller::class,
-        "AppEndEvent"=>app\Event\AppEndEvent::class,
-        "AppStartEvent"=>app\Event\AppStartEvent::class,
         "native_push_event"=>app\Event\native_push_event::class,
         "user_login_event"=>app\Event\user_login_event::class,
-        "AppEndtEventListener"=>app\EventListener\AppEndtEventListener::class,
-        "AppStartEventListener"=>app\EventListener\AppStartEventListener::class,
         "native_push_listener"=>app\EventListener\native_push_listener::class,
         "user_login_listener"=>app\EventListener\user_login_listener::class,
         "AppServiceProvider"=>app\providers\AppServiceProvider::class,
