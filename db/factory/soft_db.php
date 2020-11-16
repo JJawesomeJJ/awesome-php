@@ -15,7 +15,7 @@ class soft_db
 {
     protected static $con_list=[];
     //连接对象列表避免多次实例化浪费资源
-    protected $table_name=null;
+    public $table_name=null;
     //表名
     protected $where_="";
     //设置查询条件
@@ -37,7 +37,7 @@ class soft_db
     //创建表的列表字段
     protected $set_list=[];
     //更新字段
-    protected $databse_name=null;
+    public $databse_name=null;
     //数据库名
     protected $having='';
     //聚合条件函数字段
@@ -45,8 +45,10 @@ class soft_db
     //联合主键
     protected $bind=[];
     protected $redis_cache_key="redis_db_cache_data";
+    protected $executeSql=null;
     public function __construct()
     {
+        $this->initConfig();
     }
     public static function con(){
 
@@ -57,18 +59,30 @@ class soft_db
         $this->con->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         return $this;
     }
+    public function executeSql(string $sql){
+        $this->executeSql=$sql;
+        return $this;
+    }
+    public function initConfig(){
+        $database=config::pdo();
+        $driver = $database["driver"];
+        $user = $database[$driver]["username"];
+        $password = $database[$driver]["password"];
+        $this->databse_name = $database[$driver]["database"];
+        $host = $database[$driver]['hostname'];
+        $port=$database[$driver]['hostport'];
+        $dsn = "mysql".":host=$host;port=$port;dbname={$this->databse_name};charset=utf8";
+    }
     protected function init(){
         $database=config::pdo();
         if($this->con==null&&$database['EnableMasterCluster']==false) {
             $driver = $database["driver"];
-
             $user = $database[$driver]["username"];
             $password = $database[$driver]["password"];
             $this->databse_name = $database[$driver]["database"];
             $host = $database[$driver]['hostname'];
             $port=$database[$driver]['hostport'];
             $dsn = "mysql".":host=$host;port=$port;dbname={$this->databse_name};charset=utf8";
-
             $con_unique_key = md5($dsn . $user . $password);
             if (array_key_exists($con_unique_key, self::$con_list)) {
                 $this->con = self::$con_list[$con_unique_key];
@@ -113,6 +127,9 @@ class soft_db
         return $this;
     }//查看缓存中是否存在该数据库的字段如果不存在则查询并载入缓存。当数据库的字段有更新时使用all(true) 来刷新字段
     //获取数据库的字段
+    public function getTableComment(){
+        return $this->executeSql("select COLUMN_NAME,COLUMN_COMMENT from INFORMATION_SCHEMA.Columns where table_name='{$this->table_name}' and table_schema='{$this->databse_name}'")->get(true);
+    }
     public static function table($table_name){
         return (new soft_db())->set_table_name($table_name);
 //        self::$table_name_=$table_name;
@@ -376,10 +393,16 @@ class soft_db
         $sql="select $query_string from $this->table_name $this->join_ $this->where_ $this->group_by_ $this->having $this->limit_ $this->order_by_";
         $sql=str_replace("  "," ",$sql);
         $sql=str_replace(", "," ",$sql);
-        $stm=$this->con->prepare($sql);//预处理 防止sql注入
+        if($this->executeSql!=null) {
+            $sql=$this->executeSql;
+        }
+        $stm = $this->con->prepare($sql);//预处理 防止sql注入
         $this->bind_params($sql);
         $stm->setFetchMode(\PDO::FETCH_NAMED);
         $result = $stm->execute($this->bind_params($sql));
+        if($this->executeSql!=null) {
+            $this->executeSql=null;
+        }
         if($is_refresh){
             $this->refresh();
         }

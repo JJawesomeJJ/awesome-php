@@ -32,5 +32,7 @@ class index
         }
     }
 }
+define("DIR_PATH",dirname(__DIR__)."/");
+define("WWW_PATH",__DIR__."/");
 define('start_at',microtime(true));//定义程序初始化时间
 $index=new index();

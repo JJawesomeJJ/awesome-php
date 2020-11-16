@@ -1,10 +1,12 @@
 <?php
 namespace routes;
 use app\console\demo\controllers\testController;
+use app\console\tool\controllers\modelController;
 use db\model\user\user;
 use request\request;
 use system\mail;
 
+routes::cli("model/create/{table}",modelController::class."@create");
 routes::cli("start",function (){
     echo microtime(true)-start_at;
 });

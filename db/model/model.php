@@ -18,7 +18,10 @@ abstract class model
     protected $total=null;
     protected $table_name=null;
     //定义对应的表
-    protected $db=null;
+    /**
+     * @var soft_db|null
+     */
+    public $db=null;
     //创建数据库对象默认使用soft_db
     protected $primary_key=null;
     //设置主键
@@ -49,6 +52,23 @@ abstract class model
         //初始化表单字段
     }
 
+    /**
+     * 获取某个字段的中文名
+     * @param $field
+     * @return mixed
+     */
+    public function getFiledAttribute($field){
+        return self::attributes()[$field]??$field;
+    }
+    /**
+     * 配置字段中文名称
+     * @return array
+     */
+    public static function attributes(){
+        return [
+
+        ];
+    }
     /**
      * @description 设置为从主库读取数据
      * @return $this
