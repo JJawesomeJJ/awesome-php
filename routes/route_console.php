@@ -20,6 +20,9 @@ routes::cli("echo/{name}",function (request $request){
     while (1)
     echo microtime(true).PHP_EOL;
 });
+routes::cli("t_company",function (){
+
+});
 routes::group(function (){
 
 },[],"test/");

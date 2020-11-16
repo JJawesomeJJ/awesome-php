@@ -2,31 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c14f6098-fa7f-43ad-a3d3-0833492a1ddb" name="Default" comment="优化匿名函数IOC">
-      <change afterPath="$PROJECT_DIR$/app/console/ConsoleController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/console/demo/controllers/testController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controller/WebController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controller/auto/module.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/route_console.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/system/route/ControllerRoute.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/system/route/RouteConfig.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controller/code/code_controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/code/code_controller.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/controller/index/index_controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/index/index_controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/extend/SuperClosure/vendor/myclabs/deep-copy" beforeDir="false" afterPath="$PROJECT_DIR$/extend/SuperClosure/vendor/myclabs/deep-copy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/extend/SuperClosure/vendor/nikic/php-parser" beforeDir="false" afterPath="$PROJECT_DIR$/extend/SuperClosure/vendor/nikic/php-parser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/extend/SuperClosure/vendor/phpunit/phpunit" beforeDir="false" afterPath="$PROJECT_DIR$/extend/SuperClosure/vendor/phpunit/phpunit" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/extend/SuperClosure/vendor/sebastian/resource-operations" beforeDir="false" afterPath="$PROJECT_DIR$/extend/SuperClosure/vendor/sebastian/resource-operations" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/load/provider.php" beforeDir="false" afterPath="$PROJECT_DIR$/load/provider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/load/provider_register.php" beforeDir="false" afterPath="$PROJECT_DIR$/load/provider_register.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/template/compile_parse.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/template/compile_parse.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/request/request.php" beforeDir="false" afterPath="$PROJECT_DIR$/request/request.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/route_entrance.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/route_entrance.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/routes.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/awesome.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/awesome.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/common.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/common.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/config/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/config/config.php" afterDir="false" />
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -95,7 +75,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/controller/index" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -117,6 +97,18 @@
       <recent name="E:\PhpStorm 2018.1.3\php\public\template\native\assets\images" />
       <recent name="E:\PhpStorm 2018.1.3\php\public\template\native" />
     </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
   </component>
   <component name="RunManager" selected="JavaScript Debug.CacheDriverRedis.php">
     <configuration name="CacheDriverRedis.php" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/php/system/cache/abstract_/driver/CacheDriverRedis.php" useBuiltInWebServerPort="true">
@@ -145,7 +137,6 @@
       <item itemvalue="JavaScript Debug.excel.php" />
       <item itemvalue="JavaScript Debug.limit_flow_middleware.php" />
       <item itemvalue="JavaScript Debug.CacheDriverRedis.php" />
-      <item itemvalue="Lua Application.script.lua" />
       <item itemvalue="PHP Script.index_controller.php" />
     </list>
     <recent_temporary>
@@ -688,6 +679,9 @@
       <workItem from="1604224995468" duration="2784000" />
       <workItem from="1604619372975" duration="843000" />
       <workItem from="1604932377230" duration="4086000" />
+      <workItem from="1604980624737" duration="8923000" />
+      <workItem from="1605060203544" duration="1666000" />
+      <workItem from="1605501221098" duration="264000" />
     </task>
     <task id="LOCAL-00001" summary="优化匿名函数IOC">
       <created>1600607856838</created>
@@ -696,11 +690,31 @@
       <option name="project" value="LOCAL" />
       <updated>1600607856838</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="优化匿名函数IOC">
+      <created>1605008442883</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1605008442884</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="优化匿名函数IOC" />

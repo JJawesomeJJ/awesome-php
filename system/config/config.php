@@ -216,11 +216,11 @@ class config
 //                "password"=>"liandong123***",
 //            ],
             "mysql"=>[
-                "hostname"=>"localhost",
-                "hostport"=>"3306",
-                "database"=>"register",
-                "username"=>"root",
-                "password"=>".zlj19971998",
+                "hostname"=>"47.97.11.193",
+                "hostport"=>"8066",
+                "database"=>"dsj_jstz_show",
+                "username"=>"mycat",
+                "password"=>"NwJdyBd78g5yTvSq5OJ22D0M82r4oFbD",
             ],
         ];
     }

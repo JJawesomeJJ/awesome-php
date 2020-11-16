@@ -555,6 +555,7 @@ class index_controller extends controller
 //        return $user->ReadMaster()->where("name","赵李杰")->update([
 //            "sex"=>"man"
 //        ]);
+
         return common::getNameSpace($this);
         return self::class;
         $num=<<<num
