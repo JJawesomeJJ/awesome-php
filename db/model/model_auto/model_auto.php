@@ -16,6 +16,11 @@ class model_auto extends model
         $this->table_name=$table_name;
         parent::__construct();
     }
+
+    /**
+     * @param $table_name
+     * @return model_auto|mixed
+     */
     public static function model($table_name){
         if(array_key_exists($table_name,self::$model_list_)){
             return self::$model_list_[$table_name];

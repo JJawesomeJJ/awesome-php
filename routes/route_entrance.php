@@ -8,6 +8,7 @@
 
 namespace routes;
 //the route entrance should design as resetful api style url=>resource the http request mothod as ["get","post","put","delete"]
+use db\model\jstz\t_company;
 use db\model\model_auto\model_auto;
 use db\model\user\user;
 use request\request;
@@ -197,6 +198,27 @@ routes::group(function (){
 /**
  * @EndDescription
  */
+routes::get("company",function (t_company $company,request $request){
+    $data=$company->select(["id","name","pid",'layer'])->all();
+    function compile_menu(array $menu_list,int $pid=0,$layer=2){
+        $result=[];
+        foreach ($menu_list as $item){
+            if($pid==0&&$item["layer"]!=2&&!empty($layer)){
+                continue;
+            }
+            if($item['pid']==$pid){//
+                $children=compile_menu($menu_list,$item['id']);
+                if(!empty($children)){
+                    $item['children']=$children;
+                }
+                $result[]=$item;
+            }
+        }
+        return $result;
+    }
+    $data=compile_menu($data,0,$request->get("layer",""));
+    print_r($data);
+});
 routes::get("test/test",function (user $user,cache $cache){
    echo model_auto::model("user")->count().PHP_EOL;
    return runtime();

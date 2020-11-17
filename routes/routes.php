@@ -107,7 +107,7 @@ class routes
 
     // when no url match routes then app echo 404 page
     protected function pathinfo(){
-        if(is_cli()){
+        if(!is_cli()){
             $routes=array_merge(self::$route[$this->request->request_mothod()],self::$route["ANY"]);
         }
         else{

@@ -2,6 +2,7 @@
 namespace routes;
 use app\console\demo\controllers\testController;
 use app\console\tool\controllers\modelController;
+use db\model\jstz\t_company;
 use db\model\user\user;
 use request\request;
 use system\mail;
@@ -22,8 +23,24 @@ routes::cli("echo/{name}",function (request $request){
     while (1)
     echo microtime(true).PHP_EOL;
 });
-routes::cli("t_company",function (){
 
+routes::cli("company",function (t_company $company){
+    $data=$company->select(["id","name","pid",'layer'])->all();
+    function compile_menu(array $menu_list,int $pid=0,int $layer=2){
+        $result=[];
+        foreach ($menu_list as $item){
+            if($item['pid']==$pid){//
+                $children=compile_menu($menu_list,$item['id']);
+                if(!empty($children)){
+                    $item['children']=$children;
+                }
+                $result[]=$item;
+            }
+        }
+        return $result;
+    }
+    $data=compile_menu($data,0);
+    print_r($data);
 });
 routes::group(function (){
 

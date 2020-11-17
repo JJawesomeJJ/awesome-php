@@ -97,7 +97,7 @@ class request
         if(isset($this->user_input[$key])){
             return $this->user_input[$key];
         }
-        if($default!=false){
+        if($default!==false){
             return $default;
         }
         else{
