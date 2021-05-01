@@ -37,7 +37,7 @@ class cache
         $this->driver=config::cache()['driver'];
         $this->path=config::cache()['path'];
     }//when cache init we will check driver and init_driver;
-    public  function set_cache($key,$value,$expire,$is_serialize=false,$is_timestamp=false){
+    public  function set_cache($key,$value,$expire="forever",$is_serialize=false,$is_timestamp=false){
         if(!$is_timestamp){
             if(is_numeric($expire)) {
                 $expire = $expire + time();

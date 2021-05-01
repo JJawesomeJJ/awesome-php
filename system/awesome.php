@@ -18,6 +18,8 @@ use load\provider_register;
 use routes\routes;
 use system\cache\cache;
 use system\config\config;
+use task\TimeTask\TimeTask;
+
 require_once __DIR__."/../load/auto_load.php";
 require_once __DIR__."/../load/common.php";
 class awesome
@@ -26,6 +28,7 @@ class awesome
 
     public function __construct()
     {
+        config::home_path();
         if ($this->is_cli() == false) {
             $this->cli_echo_color_red("please operate in cli!");
             exit();
@@ -39,7 +42,9 @@ class awesome
     {
         return preg_match("/cli/i", php_sapi_name()) ? true : false;
     }
-
+    public function timer(){
+        TimeTask::SingleTon()->run();
+    }
     public function load_method()
     {
         $argv = $_SERVER['argv'];

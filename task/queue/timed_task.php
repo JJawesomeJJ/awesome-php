@@ -24,7 +24,6 @@ class timed_task
     protected $task_handle_num="timed_task_handle_num";
     public function __construct()
     {
-        echo "load";
         require_once __DIR__."/../../load/auto_load.php";
         if(!$this->is_cli()){
             new Exception("403","forbidden");

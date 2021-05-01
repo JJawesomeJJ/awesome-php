@@ -2,15 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c14f6098-fa7f-43ad-a3d3-0833492a1ddb" name="Default" comment="优化匿名函数IOC">
+      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sshConfigs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/console/book/BookController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task/timeTask/TimeTask.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task/timeTask/command/CommandFaced.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task/timeTask/command/LinuxCommand.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task/timeTask/command/WindowsCommad.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task/timeTask/command/command.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task/timeTask/task.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/model/model_auto/model_auto.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/model/model_auto/model_auto.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/console/ConsoleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/console/ConsoleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controller/survey/survey_controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/survey/survey_controller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/load/auto_load.php" beforeDir="false" afterPath="$PROJECT_DIR$/load/auto_load.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/load/provider_register.php" beforeDir="false" afterPath="$PROJECT_DIR$/load/provider_register.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/public/.htaccess" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/request/request.php" beforeDir="false" afterPath="$PROJECT_DIR$/request/request.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/route_console.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/route_console.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/route_entrance.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/route_entrance.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/routes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/awesome.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/awesome.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/cache/cache.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/cache/cache.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/file.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/file.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/queue/timed_task.php" beforeDir="false" afterPath="$PROJECT_DIR$/task/queue/timed_task.php" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,9 +32,7 @@
   </component>
   <component name="ComposerSettings" doNotAsk="true">
     <pharConfigPath />
-    <execution>
-      <executable />
-    </execution>
+    <execution />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -66,27 +78,37 @@
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SearchEverywhereHistoryKey" value="a&#9;FILE&#9;file://E:/PhpStorm 2018.1.3/php/admin" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/task/timeTask" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.JSON" />
+    <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\project\php\awesome-php\task\timeTask" />
+      <recent name="E:\PhpStorm 2018.1.3\php\app\controller\index" />
+      <recent name="E:\PhpStorm 2018.1.3\php\public\template\cms\assets\icon" />
+      <recent name="E:\PhpStorm 2018.1.3\php\filesystem" />
+      <recent name="E:\PhpStorm 2018.1.3\php\public\template\native\assets\images" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\PhpStorm 2018.1.3\php\public\template\component\img" />
       <recent name="E:\PhpStorm 2018.1.3\php\public\template\cms\component\assets\js" />
@@ -94,25 +116,6 @@
       <recent name="E:\PhpStorm 2018.1.3\php\template\component\vertify\js" />
       <recent name="E:\PhpStorm 2018.1.3\php\template\user" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\PhpStorm 2018.1.3\php\app\controller\index" />
-      <recent name="E:\PhpStorm 2018.1.3\php\public\template\cms\assets\icon" />
-      <recent name="E:\PhpStorm 2018.1.3\php\filesystem" />
-      <recent name="E:\PhpStorm 2018.1.3\php\public\template\native\assets\images" />
-      <recent name="E:\PhpStorm 2018.1.3\php\public\template\native" />
-    </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager" selected="JavaScript Debug.CacheDriverRedis.php">
     <configuration name="CacheDriverRedis.php" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/php/system/cache/abstract_/driver/CacheDriverRedis.php" useBuiltInWebServerPort="true">
@@ -152,6 +155,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -688,6 +692,17 @@
       <workItem from="1605501221098" duration="6953000" />
       <workItem from="1605579595472" duration="1150000" />
       <workItem from="1605584679623" duration="604000" />
+      <workItem from="1608977717883" duration="308000" />
+      <workItem from="1608978048534" duration="12000" />
+      <workItem from="1615817218191" duration="1733000" />
+      <workItem from="1616218257941" duration="2439000" />
+      <workItem from="1616773833065" duration="597000" />
+      <workItem from="1617014815000" duration="5245000" />
+      <workItem from="1618930887973" duration="1361000" />
+      <workItem from="1619364397884" duration="307000" />
+      <workItem from="1619783955904" duration="1523000" />
+      <workItem from="1619785540680" duration="13371000" />
+      <workItem from="1619841050793" duration="323000" />
     </task>
     <task id="LOCAL-00001" summary="优化匿名函数IOC">
       <created>1600607856838</created>
@@ -714,50 +729,53 @@
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
-        <entry key="MAIN">
+        <entry key="1">
           <value>
             <State>
-              <option name="COLUMN_ORDER" />
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
             </State>
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="1" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="优化匿名函数IOC" />
     <option name="LAST_COMMIT_MESSAGE" value="优化匿名函数IOC" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="418" y="7" key="CommitChangelistDialog2" timestamp="1600616648964">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="418" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1600616648964" />
-    <state x="386" y="163" key="FileChooserDialogImpl" timestamp="1597633629089">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="386" y="163" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1597633629089" />
-    <state x="230" y="246" key="NewPhpClassDialog" timestamp="1604935376303">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="230" y="246" key="NewPhpClassDialog/0.0.1536.824@0.0.1536.824" timestamp="1604935376303" />
-    <state x="599" y="344" key="NewPhpFileDialog" timestamp="1604932682175">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="599" y="344" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1604932682175" />
-    <state x="272" y="58" key="SettingsEditor" timestamp="1600607653160">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="272" y="58" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1600607653160" />
-    <state x="361" y="149" key="Vcs.Push.Dialog.v2" timestamp="1600616805182">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="361" y="149" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1600616805182" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

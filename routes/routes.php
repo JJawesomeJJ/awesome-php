@@ -11,6 +11,7 @@ use load\provider;
 use load\provider_register;
 use request\request;
 use system;
+use task\timeTask\task;
 
 class routes
 {
@@ -20,6 +21,7 @@ class routes
         "DELETE"=>[],
         "ANY"=>[],
         "PUT"=>[],
+        "CLI"=>[]
     ];
     protected static $object;
     protected $route_conifg;
@@ -252,6 +254,6 @@ class routes
         }
         self::$route["CLI"][]=["request_method"=>"CLI","url"=>self::$object->prefix.$url,"controller_method"=>$controller_method,"middleware"=>$middleware];
         self::$now_request="CLI";
-        return self::$object;
+        return new task($url);
     }
 }

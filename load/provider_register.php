@@ -1,5 +1,5 @@
 <?php
-/*update_at 2020-11-10 11:58:22
+/*update_at 2021-04-30 23:43:11
 *create_by awesome-jj
 */
 namespace load;
@@ -66,8 +66,10 @@ class provider_register extends provider
 
     ];
      protected  $console=[
+        "BookController"=>app\console\book\BookController::class,
         "ConsoleController"=>app\console\ConsoleController::class,
         "testController"=>app\console\demo\controllers\testController::class,
+        "modelController"=>app\console\tool\controllers\modelController::class,
 
     ];
     protected $dependencies=[
@@ -158,8 +160,10 @@ class provider_register extends provider
         "test"=>task\test::class,
         "testdasda"=>db\model\test\testdasda::class,
         "user"=>db\model\user\user::class,
+        "BookController"=>app\console\book\BookController::class,
         "ConsoleController"=>app\console\ConsoleController::class,
         "testController"=>app\console\demo\controllers\testController::class,
+        "modelController"=>app\console\tool\controllers\modelController::class,
         "admin_user_controller"=>app\controller\admin_user\admin_user_controller::class,
         "auth_controller"=>app\controller\auth\auth_controller::class,
         "module"=>app\controller\auto\module::class,
@@ -196,8 +200,12 @@ class provider_register extends provider
         "test_controller"=>app\controller\test\test_controller::class,
         "WebController"=>app\controller\WebController::class,
         "wechat_controller"=>app\controller\wechat\wechat_controller::class,
+        "AppEndEvent"=>app\Event\AppEndEvent::class,
+        "AppStartEvent"=>app\Event\AppStartEvent::class,
         "native_push_event"=>app\Event\native_push_event::class,
         "user_login_event"=>app\Event\user_login_event::class,
+        "AppEndtEventListener"=>app\EventListener\AppEndtEventListener::class,
+        "AppStartEventListener"=>app\EventListener\AppStartEventListener::class,
         "native_push_listener"=>app\EventListener\native_push_listener::class,
         "user_login_listener"=>app\EventListener\user_login_listener::class,
         "AppServiceProvider"=>app\providers\AppServiceProvider::class,
@@ -221,7 +229,7 @@ class provider_register extends provider
         "timer_task2"=>task\rabbitmq\timer_task2::class,
         "rabbitmq"=>task\rabbitmq::class,
         "store"=>task\store::class,
-        "task"=>task\task::class,
+        "task"=>task\timeTask\task::class,
         "task_list"=>task\task_list::class,
         "test11"=>task\test11::class,
         "test2"=>task\test2::class,
@@ -230,5 +238,10 @@ class provider_register extends provider
         "closure_task"=>task\timed_task\timed_task_list\closure_task::class,
         "swoole_dev"=>task\timed_task\timed_task_list\swoole_dev::class,
         "timed_task_schedule"=>task\timed_task\timed_task_list\timed_task_schedule::class,
+        "command"=>task\timeTask\command\command::class,
+        "CommandFaced"=>task\timeTask\command\CommandFaced::class,
+        "LinuxCommand"=>task\timeTask\command\LinuxCommand::class,
+        "WindowsCommad"=>task\timeTask\command\WindowsCommad::class,
+        "TimeTask"=>task\timeTask\TimeTask::class,
 ];
 }

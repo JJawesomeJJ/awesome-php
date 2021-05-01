@@ -37,7 +37,11 @@ class file
                             $arr[]=$item;
                         }
                     } else {
-                        $arr[]=str_replace("//","/",$dir."/".iconv('GB2312', 'UTF-8',$file));
+                        if (preg_match("/[\x{4e00}-\x{9fa5}]+/u",$dir."/".$file)){
+                           // $arr[]=str_replace("//","/",$dir."/".iconv('GB2312', 'UTF-8',$file));
+                        }else{
+                            $arr[]=str_replace("//","/",$dir."/".$file);
+                        }
                     }
                 }
             }

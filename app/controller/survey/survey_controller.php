@@ -31,7 +31,7 @@ class survey_controller extends controller
     {
         $redis = new \Redis();
         $redis->connect("127.0.0.1", 6379);
-        $request = new request([]);
+        $request = request::SingleTon();
         $arr = ["controller_name" => "survey_html_create", "method" => "get_post_info", "arg" => ["to" => $request->get("to"), "answer" => $request->get("answer")]];
         $task = new add_task();
         $task->add("survey_html_create", "get_post_info", ["to" => $request->get("to"), "answer" => $request->get("answer")]);
@@ -110,7 +110,7 @@ class survey_controller extends controller
     }
     public function draw_survey(){
         auth_controller::auth('user');
-        $request=new request(["name"=>"required:post"]);
+        $request=request::SingleTon();
         $name=$request->get("name");
         try {
             $data = "";
@@ -295,7 +295,7 @@ class survey_controller extends controller
     public function delete_database_file()
     {
         $writer=auth_controller::auth('user');
-        $request=new request([]);
+        $request=request::SingleTon();
         $name=$request->get("name");
         $sql = "DROP TABLE $name";
         $this->con->query($sql);

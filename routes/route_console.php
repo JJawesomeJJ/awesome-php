@@ -1,8 +1,8 @@
 <?php
 namespace routes;
+use app\console\book\BookController;
 use app\console\demo\controllers\testController;
 use app\console\tool\controllers\modelController;
-use db\model\jstz\t_company;
 use db\model\user\user;
 use request\request;
 use system\mail;
@@ -45,3 +45,10 @@ routes::cli("company",function (t_company $company){
 routes::group(function (){
 
 },[],"test/");
+routes::cli("explode",function (){
+    print_r(explode('文',"中文 符号"));
+});
+routes::cli("book",BookController::class."@index")->tick("2021-04-30",60*2);
+//routes::cli("loadTask",function (mail $mail){
+//    $mail->send_email("1293777844@qq.com","test","test");
+//})->tick("2021-05-01 00:00:00",60*10);

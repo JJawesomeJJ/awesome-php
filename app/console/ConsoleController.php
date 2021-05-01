@@ -1,7 +1,7 @@
 <?php
 namespace app\console;
 
-class consoleController
+class ConsoleController
 {
 
 }
