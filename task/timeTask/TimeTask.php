@@ -59,7 +59,7 @@ class TimeTask
         ];
     }
     protected function loadCache(){
-        foreach ($this->runTask as $key=>$value){
+        foreach ($this->runTask as $key=>&$value){
             $info=$this->cache->get_cache($key.__CLASS__);
             if (!empty($info)){
                 $value["startAt"]=$info["startAt"];
@@ -77,17 +77,15 @@ class TimeTask
         while (true){
             try {
                 $route=new routes();
-                echo date('Y-m-d H:i:s').PHP_EOL;
                 $this->loadRoute();
-                print_r($this->runTask);
                 $this->loadCache();
-                print_r($this->runTask);
                 foreach ($this->runTask as $key=>&$item){
                     $startTime=$item["startAt"];
                     if (strtotime($startTime)<time()){
                         CommandFaced::getDirver()->run("awesome {$item["path"]}","php");
                         $log->write_log("执行任务===>{$item['path']}");
                         $item["startAt"]=$this->getNextTime($item["startAt"],$item["tick"]);
+                        echo $item["startAt"].PHP_EOL;
                         $this->cache->set_cache($key.__CLASS__,$item);
                     }
                 }
@@ -103,7 +101,9 @@ class TimeTask
     }
     public function getNextTime($time,int $tick){
         $timestamp=strtotime($time);
+        echo "开始时间".$timestamp.PHP_EOL;
         $timestamp+=$tick;
+        echo "结束时间".$timestamp.PHP_EOL;
         if ($timestamp<time()){
             return $this->getNextTime(date("Y-m-d H:i:s",$timestamp),$tick);
         }

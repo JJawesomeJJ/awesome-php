@@ -51,4 +51,4 @@ routes::cli("explode",function (){
 routes::cli("book",BookController::class."@index")->tick("2021-04-30",60*2);
 //routes::cli("loadTask",function (mail $mail){
 //    $mail->send_email("1293777844@qq.com","test","test");
-//})->tick("2021-05-01 00:00:00",60*10);
+//})->tick("2021-05-01 00:00:00",60);

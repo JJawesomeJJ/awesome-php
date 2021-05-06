@@ -1,29 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c14f6098-fa7f-43ad-a3d3-0833492a1ddb" name="Default" comment="优化匿名函数IOC">
-      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sshConfigs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/console/book/BookController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/timeTask/TimeTask.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/timeTask/command/CommandFaced.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/timeTask/command/LinuxCommand.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/timeTask/command/WindowsCommad.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/timeTask/command/command.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task/timeTask/task.php" afterDir="false" />
+    <list default="true" id="c14f6098-fa7f-43ad-a3d3-0833492a1ddb" name="Default" comment="重写定时任务 去除redis依赖">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/console/ConsoleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/console/ConsoleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controller/survey/survey_controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/survey/survey_controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/load/auto_load.php" beforeDir="false" afterPath="$PROJECT_DIR$/load/auto_load.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/load/provider_register.php" beforeDir="false" afterPath="$PROJECT_DIR$/load/provider_register.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/public/.htaccess" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/route_console.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/route_console.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/routes.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/awesome.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/awesome.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/cache/cache.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/cache/cache.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/file.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/file.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/queue/timed_task.php" beforeDir="false" afterPath="$PROJECT_DIR$/task/queue/timed_task.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/timeTask/TimeTask.php" beforeDir="false" afterPath="$PROJECT_DIR$/task/timeTask/TimeTask.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +73,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/task/timeTask" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../yii-application" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -702,7 +683,13 @@
       <workItem from="1619364397884" duration="307000" />
       <workItem from="1619783955904" duration="1523000" />
       <workItem from="1619785540680" duration="13371000" />
-      <workItem from="1619841050793" duration="323000" />
+      <workItem from="1619841050793" duration="1766000" />
+      <workItem from="1619966244216" duration="713000" />
+      <workItem from="1620121568031" duration="625000" />
+      <workItem from="1620187634303" duration="172000" />
+      <workItem from="1620220055803" duration="3689000" />
+      <workItem from="1620232201055" duration="597000" />
+      <workItem from="1620306864737" duration="331000" />
     </task>
     <task id="LOCAL-00001" summary="优化匿名函数IOC">
       <created>1600607856838</created>
@@ -725,7 +712,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605501637852</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="重写定时任务 去除redis依赖">
+      <created>1619841498845</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1619841498845</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -775,7 +769,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="优化匿名函数IOC" />
-    <option name="LAST_COMMIT_MESSAGE" value="优化匿名函数IOC" />
+    <MESSAGE value="重写定时任务 去除redis依赖" />
+    <option name="LAST_COMMIT_MESSAGE" value="重写定时任务 去除redis依赖" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
