@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="00731a3a-c1d5-4aec-ae3e-53913b462b96" name="39.108.236.127">
-        <fileTransfer rootFolder="/var/www/html/php" accessType="SFTP" host="39.108.236.127" port="22" sshConfigId="0d8eb4d0-9b4c-482f-b12a-d188aef729b4" sshConfig="root@39.108.236.127:22 password">
+        <fileTransfer rootFolder="/var/www/docker/web/awesome-php" accessType="SFTP" host="39.108.236.127" port="22" sshConfigId="0d8eb4d0-9b4c-482f-b12a-d188aef729b4" sshConfig="root@39.108.236.127:22 password">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

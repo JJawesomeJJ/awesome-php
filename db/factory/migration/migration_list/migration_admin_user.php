@@ -32,12 +32,12 @@ class migration_admin_user extends migration
     public function up()
     {
         $admin_user=soft_db::table($this->table_name);
-        $admin_user->insert([
-            "name"=>"admin",
-            "password"=>md5("19971998"),
-            'tele'=>'13036591969',
-            'email'=>"1293777844@qq.com",
-            "head_img"=>"https://dss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1050973335,3741690257&fm=115&gp=0.jpg"
-        ]);
+//        $admin_user->insert([
+//            "name"=>"admin",
+//            "password"=>md5("19971998"),
+//            'tele'=>'13036591969',
+//            'email'=>"1293777844@qq.com",
+//            "head_img"=>"https://dss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1050973335,3741690257&fm=115&gp=0.jpg"
+//        ]);
     }
 }
