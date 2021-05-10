@@ -208,19 +208,12 @@ class config
         return[
             "EnableMasterCluster"=>false,//是否开启读写分离多实例
             "driver"=>"mysql",
-//            "mysql"=>[
-//                "hostname"=>"180.97.151.90",
-//                "hostport"=>"1033",
-//                "database"=>"liandong",
-//                "username"=>"liandong",
-//                "password"=>"liandong123***",
-//            ],
             "mysql"=>[
-                "hostname"=>"my-mysql",
-                "hostport"=>"3306",
-                "database"=>"test",
-                "username"=>"root",
-                "password"=>"123456",
+                "hostname"=>"",
+                "hostport"=>"",
+                "database"=>"",
+                "username"=>"",
+                "password"=>"",
             ],
         ];
     }
