@@ -10,6 +10,7 @@ use system\cache\cache;
 use system\config\config;
 use system\file;
 use system\log;
+use system\system_excu;
 use task\TimeTask\command\CommandFaced;
 
 class TimeTask
@@ -22,6 +23,13 @@ class TimeTask
     protected $templatePath;
     protected $file;
     protected function __construct(cache $cache){
+        $key=__CLASS__.self::TIMER_TASK_KEY."_main";
+        $pid=$cache->get_cache($key);
+        if ($pid!=null&&system_excu::get_php_pid_status($pid)){
+            echo "main process has already running should't start again";
+            die();
+        }
+        $cache->set_cache($key,getmypid());
         $this->consolePath=config::env_path()."/routes/route_console.php";
         $this->templatePath=config::env_path()."filesystem/template/";
         $this->cache=$cache;

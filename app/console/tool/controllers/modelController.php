@@ -6,7 +6,7 @@ use db\factory\soft_db;
 use request\request;
 use system\file;
 
-class modelController extends consoleController
+class modelController extends ConsoleController
 {
     public function create(request $request){
         $table_name=$request->get("table");

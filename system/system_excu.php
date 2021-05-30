@@ -50,8 +50,9 @@ class system_excu
     }
     public static function get_php_pid_status($pid){
         $process_info=shell_exec("ps -aux | grep $pid");
+//        print_r($process_info);die();
 //$process_info="root 2623 0.0 1.4 302904 29416 ? S 10:39 0:00 php timed_task.php www-data 4469 0.0 0.0 4628 796 ? S 20:12 0:00 sh -c ps -aux | grep 2623 www-data 4471 0.0 0.0 11464 1000 ? S 20:12 0:00 grep 2623";
-        preg_match_all("/php (.*?).php/",$process_info,$process_name,PREG_SET_ORDER);
+        preg_match_all("/php (.*?)$/is",$process_info,$process_name,PREG_SET_ORDER);
         preg_match_all("/S  ([0-9|:| ]*?) [a-zA-Z]/",$process_info,$time_info,PREG_SET_ORDER);
         if(!isset($process_name[0][1])){
             return false;

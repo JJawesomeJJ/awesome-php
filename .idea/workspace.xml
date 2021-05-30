@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c14f6098-fa7f-43ad-a3d3-0833492a1ddb" name="Default" comment="重写定时任务 去除redis依赖">
+      <change afterPath="$PROJECT_DIR$/start.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/route_console.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/route_console.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/console/demo/controllers/testController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/console/demo/controllers/testController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/console/tool/controllers/modelController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/console/tool/controllers/modelController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/system_excu.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/system_excu.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/task/timeTask/TimeTask.php" beforeDir="false" afterPath="$PROJECT_DIR$/task/timeTask/TimeTask.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,7 +76,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../yii-application" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../tool/env/environment" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -689,7 +692,10 @@
       <workItem from="1620187634303" duration="172000" />
       <workItem from="1620220055803" duration="3689000" />
       <workItem from="1620232201055" duration="597000" />
-      <workItem from="1620306864737" duration="331000" />
+      <workItem from="1620306864737" duration="377000" />
+      <workItem from="1621173832947" duration="3844000" />
+      <workItem from="1621695908747" duration="3704000" />
+      <workItem from="1622385593099" duration="4018000" />
     </task>
     <task id="LOCAL-00001" summary="优化匿名函数IOC">
       <created>1600607856838</created>
@@ -719,7 +725,14 @@
       <option name="project" value="LOCAL" />
       <updated>1619841498845</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="重写定时任务 去除redis依赖">
+      <created>1620307207024</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1620307207024</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

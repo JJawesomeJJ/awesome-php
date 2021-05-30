@@ -1,10 +1,10 @@
 <?php
 namespace app\console\demo\controllers;
 
-use app\console\consoleController;
+use app\console\ConsoleController;
 use request\request;
 
-class testController extends consoleController
+class testController extends ConsoleController
 {
     public function index(request $request){
         return $request->all();
