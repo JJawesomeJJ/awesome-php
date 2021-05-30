@@ -19,7 +19,7 @@ class migration_comment_likes extends migration
     {
         $this->db->integer("id",10,'not null',true,true);
         $this->db->text("user_id",true);
-        $this->db->string("news_id",225,"not null")->foreign_key('news_id','news','id');
+        $this->db->string("news_id",225,"not null");
         $this->timestamp();
     }
     public function up()

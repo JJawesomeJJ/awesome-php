@@ -17,7 +17,8 @@ class migration_goods extends migration
     public function create()
     {
         $this->db->integer('id',10,'not null',true,true);
-        $this->db->integer('cid',10)->foreign_key('cid','categories','id');
+        $this->db->integer('cid',10);
+            //->foreign_key('cid','categories','id');
         $this->db->integer('comment_num',10)->commemt('评论的人数');
         $this->db->string('title',100)->commemt('商品名称');
         $this->db->string('keywords',225)->commemt('关键字');

@@ -24,7 +24,7 @@ class migration_titang_theme extends migration
         $this->db->text("night");
         $this->db->string("creator","30","not null");
         $this->timestamp();
-        $this->db->foreign_key("creator","admin_user_new","name");
+        //$this->db->foreign_key("creator","admin_user_new","name");
     }
     public function up()
     {

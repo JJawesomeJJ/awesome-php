@@ -26,7 +26,7 @@ class migration_notify_list extends migration
         $this->db->integer("expired","20");
         $this->db->string("notify_way","20");
         $this->db->text("show_message");
-        $this->db->foreign_key("publisher","admin_user_new","name");
+//        $this->db->foreign_key("publisher","admin_user_new","name");
     }
     public function up()
     {
