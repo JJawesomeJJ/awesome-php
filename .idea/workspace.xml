@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c14f6098-fa7f-43ad-a3d3-0833492a1ddb" name="Default" comment="重写定时任务 去除redis依赖">
-      <change afterPath="$PROJECT_DIR$/start.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/console/demo/controllers/testController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/console/demo/controllers/testController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/console/tool/controllers/modelController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/console/tool/controllers/modelController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/system_excu.php" beforeDir="false" afterPath="$PROJECT_DIR$/system/system_excu.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/timeTask/TimeTask.php" beforeDir="false" afterPath="$PROJECT_DIR$/task/timeTask/TimeTask.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Event/AppEndEvent.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Event/AppStartEvent.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/EventListener/AppEndtEventListener.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/EventListener/AppStartEventListener.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -695,7 +693,7 @@
       <workItem from="1620306864737" duration="377000" />
       <workItem from="1621173832947" duration="3844000" />
       <workItem from="1621695908747" duration="3704000" />
-      <workItem from="1622385593099" duration="4018000" />
+      <workItem from="1622385593099" duration="4436000" />
     </task>
     <task id="LOCAL-00001" summary="优化匿名函数IOC">
       <created>1600607856838</created>
@@ -732,7 +730,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620307207024</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="重写定时任务 去除redis依赖">
+      <created>1622389872982</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1622389872982</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
