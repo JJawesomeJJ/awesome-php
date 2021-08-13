@@ -165,9 +165,9 @@ class config
     }
     public static function redis(){
         return [
-            "host"=>"my-redis",
+            "host"=>"redis",
             "port"=>"6379",
-            "password"=>"4fLUBcePHV@sxzr69pOo",
+            "password"=>"",
             "index"=>"10"
         ];
     }
@@ -213,7 +213,7 @@ class config
             "mysql"=>[
                 "hostname"=>"127.0.0.1",
                 "hostport"=>"3307",
-                "database"=>"e_local",
+                "database"=>"",
                 "username"=>"root",
                 "password"=>"",
             ],
