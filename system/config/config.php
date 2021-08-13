@@ -215,7 +215,7 @@ class config
                 "hostport"=>"3307",
                 "database"=>"e_local",
                 "username"=>"root",
-                "password"=>"hMzJyACHNaW6@2KZvGt3",
+                "password"=>"",
             ],
         ];
     }
