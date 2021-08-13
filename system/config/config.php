@@ -165,8 +165,10 @@ class config
     }
     public static function redis(){
         return [
-            "host"=>"127.0.0.1",
-            "port"=>"6379"
+            "host"=>"my-redis",
+            "port"=>"6379",
+            "password"=>"4fLUBcePHV@sxzr69pOo",
+            "index"=>"10"
         ];
     }
     public static function class_path(){
@@ -209,11 +211,11 @@ class config
             "EnableMasterCluster"=>false,//是否开启读写分离多实例
             "driver"=>"mysql",
             "mysql"=>[
-                "hostname"=>"",
-                "hostport"=>"",
-                "database"=>"",
-                "username"=>"",
-                "password"=>"",
+                "hostname"=>"127.0.0.1",
+                "hostport"=>"3307",
+                "database"=>"e_local",
+                "username"=>"root",
+                "password"=>"hMzJyACHNaW6@2KZvGt3",
             ],
         ];
     }
@@ -260,19 +262,19 @@ class config
             "aes_key"=>"19971998abc",
             //对称加密的的秘钥
             "rsa_private"=>"-----BEGIN RSA PRIVATE KEY-----
-MIICXQIBAAKBgQC+8n93UPCYVbG612UKEvRPlCV4QqarbpraEw9yg3gctUlylPKl
-ZzafARS8OkXCa4/wIGQIfFzggIEAv3+TT+s9xMFX2eCeCSUfeBNEUn/3Vs2fgglt
-FsidMQ3f82SB24P7IECuaOYI43gOiLnGRn6eN25HneAfBylYh/NYnUEXPwIDAQAB
-AoGAMwdHPTGqOmucRZxOajTKiYHDybG2LNYwF9tEI4wyyyk/aZmYhs9gb3mweuTv
-w5dPLhLZ6NKjV3PABd0nUMzoxnDStV+aKJls06Kwyox29gmnO/43+5a1boUOf41Q
-wPZupHzr/JKpy1b3I5xSC7HBswOj9sHDzyQt4hM3Dp6ppPECQQDk0DikeUFWeoZJ
-B9F7721Gnzt0tzD2aUliGAkl4vYDeUP9kINGudknz4YzL8Ewb35wG7xjIQEn1tuv
-sVhrGRfdAkEA1aKCbGY4EviFIu+KnbZNTnWydwflcDHhUmjdcQkC7MY8iRZKFSEE
-5Pzki5jtyi1XL6wyrzSfhjPny4ZLEVKnywJBANJvUXiqb9XJz5CA2T9jPpvRvAum
-oygsQqotstQePOWK9GXSL3mvWLENYb3XsJQMJjuStppwczChoN+fedLdfB0CQQC4
-qyiIoXe5VmBnyZ8OI4cB2pWxdP7tFAENJp681ihUGiw76CuTxh4f/0dkMIbkrHrg
-N778WsXG0Vl+QhDj4YovAkBondDcw1w/eDexdjyDNo65O+pPillnEacXH2ulI7dY
-HMcPnsFzUUxVTy5Gw+5h3OnEIYwC1oaEnaQw++C+BwRd
+MIICXgIBAAKBgQDTaYFYxyQUYIQ8mmAHsIkmg4qNtY/8QovKinkc/yLObI/QmnBW
+lMYypr3u+Ex1m/w7JPmAiHe8ZR5W5Fu8IR0DvHhqGeKUTy3T+xLbgxUsYMIj64+n
+n4pjRYUYJVfWjvMqVzSonCJpfdg/6y7tiw4Uiw7Tv3Q+E5CHvsWhmczwqQIDAQAB
+AoGAITGln3zVC2YEHUfX4B01y5hHvuxNCTyhmlGXppfgrSyagBRfoxiE7hsEI2tV
+BfpR5i9uBWJn+mqeEuKUDLveRBjYpO0cvDFOORBvdfixICSyMQt0VFtpWyx3hna2
+h4ac2pebby/DfShVmsOco2ertLG393OH566A3M8GXCG9wiECQQDssL0YunxNcxnC
+4dJ1VeKCTwzWYIQ6iZZ9p1miz1bfFJbO+GX03ihjeOqGzBDyAXCtK8oiMJY1nFWf
+ft1q2rAdAkEA5KjVA+bUb4hp8evppzhtGfNeyp0n4Q34kkKtlimbLJnU84LLzcMD
+KO6oAiGBYq/iRsIeeZrACezyyMUFXNM0/QJBAMV7vXrZdgdFBvSEaI4AB8rD3Cku
+RIV28PqMXAysxIXC7wVnWeJSTg6Y/81SjLzvGK1UQQX/1gSLGSHHv0R9jL0CQQDB
+6K8kbOcwYlW+E9sEtSRIgoubdWSxRSDMIAGHO2ddjmL50qy0pLEUUDdn/zPzFcbl
+TI99fo9mm2tUeUhP7MidAkEA3IkDviZ3NQzGMPxOdQjSi6I70jp0FG5A6bfP2Mqq
+R/ZbR+9Nra8dyL9QN7tHo2S/pWeGJTSsJ8HfyKCEbXXInw==
 -----END RSA PRIVATE KEY-----",
 //            非对称的的私钥
             "rsa_public"=>"-----BEGIN PUBLIC KEY-----

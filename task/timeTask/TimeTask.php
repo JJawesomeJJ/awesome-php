@@ -23,13 +23,6 @@ class TimeTask
     protected $templatePath;
     protected $file;
     protected function __construct(cache $cache){
-        $key=__CLASS__.self::TIMER_TASK_KEY."_main";
-        $pid=$cache->get_cache($key);
-        if ($pid!=null&&system_excu::get_php_pid_status($pid)){
-            echo "main process has already running should't start again";
-            die();
-        }
-        $cache->set_cache($key,getmypid());
         $this->consolePath=config::env_path()."/routes/route_console.php";
         $this->templatePath=config::env_path()."filesystem/template/";
         $this->cache=$cache;
@@ -81,6 +74,14 @@ class TimeTask
         return self::$obj;
     }
     public function run(){
+        $cache=make(cache::class);
+        $key=__CLASS__.self::TIMER_TASK_KEY."_main";
+        $pid=$cache->get_cache($key);
+        if ($pid!=null&&system_excu::get_php_pid_status($pid)&&$pid!=getmypid()){
+            echo "main process has already running should't start again";
+            die();
+        }
+        $cache->set_cache($key,getmypid());
         $log=new log();
         while (true){
             try {
@@ -104,7 +105,7 @@ class TimeTask
                 $log->write_log($exception);
             }
 
-            sleep(10);
+            sleep(3);
         }
     }
     public function getNextTime($time,int $tick){
@@ -112,8 +113,8 @@ class TimeTask
         echo "开始时间".$timestamp.PHP_EOL;
         $timestamp+=$tick;
         echo "结束时间".$timestamp.PHP_EOL;
-        if ($timestamp<time()){
-            return $this->getNextTime(date("Y-m-d H:i:s",$timestamp),$tick);
+        while ($timestamp<time()){
+            $timestamp+=$tick;
         }
         return date("Y-m-d H:i:s",$timestamp);
     }

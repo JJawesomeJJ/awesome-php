@@ -16,8 +16,15 @@ class class_define
     protected static $redis;
     public static function redis(){
         if(self::$redis==null){
+            $config = config::redis();
             self::$redis=new \Redis();
-            self::$redis->connect(config::redis()["host"],config::redis()["port"]);
+            self::$redis->connect($config["host"],$config["port"]);
+            if (!empty($config['password'])){
+                self::redis()->auth($config['password']);
+            }
+            if (!empty($config['index'])){
+                self::redis()->select($config['index']);
+            }
         }
         return self::$redis;
     }

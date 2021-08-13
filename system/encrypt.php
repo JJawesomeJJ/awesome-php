@@ -53,4 +53,17 @@ class encrypt
         openssl_private_decrypt(base64_decode($str), $decrypted, $pi_key);//私钥解密
         return $decrypted;
     }
+
+    static public function ras_decrypt_public($str) {
+        $decrypted = '';
+        $pi_key =  openssl_pkey_get_public(config::encrypt()["rsa_public"]);
+        openssl_public_decrypt(base64_decode($str), $decrypted, $pi_key);//私钥解密
+        return $decrypted;
+    }
+    static public function ras_encrypt_private($str) {
+        $encrypted = '';
+        $pi_key =  openssl_pkey_get_private(config::encrypt()["rsa_private"]);
+        openssl_private_encrypt($str, $encrypted, $pi_key);//私钥解密
+        return base64_encode($encrypted);
+    }
 }

@@ -49,13 +49,17 @@ class controller
             return false;
         }
     }
+
+    /**
+     * @return cache
+     */
     public function cache(){
-        if($this->cache_==null){
-            $this->cache_=new cache();
-            return $this->cache_;
-        }
-        return $this->cache_;
+        return make(cache::class);
     }//magic method try to instance a cache object
+
+    /**
+     * @return request
+     */
     protected function request(){
         return $this->request_;
     }//magic method try to instance a request

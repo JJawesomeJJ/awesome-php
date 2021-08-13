@@ -9,7 +9,7 @@ class CommandFaced
     /**
      * @return LinuxCommand|WindowsCommad
      */
-    public static function getDirver(){
+    public static function getDirver():command{
         if(command::getRunVersion()=="Linux"){
             return new LinuxCommand();
         }

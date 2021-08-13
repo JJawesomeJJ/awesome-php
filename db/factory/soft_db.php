@@ -6,6 +6,7 @@
  * Time: 下午 3:08
  */
 namespace db\factory;
+use app\Event\DataBaseExcuteEvent;
 use system\class_define;
 use system\config\config;
 use system\Exception;
@@ -155,6 +156,15 @@ class soft_db
         return $this;
     }//设置条件
 
+    public function whereString($string){
+        if($this->where_==""){
+            $this->where_="where $string ";
+        }
+        else{
+            $this->where_=$this->where_." and $string";
+        }
+        return $this;
+    }
     /**
      * @Description 当读写分离时设置向主库读取数据
      * @throws \Exception
@@ -385,7 +395,7 @@ class soft_db
         $this->having="having ".$this->unique_key($having_condition);
         return $this;
     }
-    public function get($is_refresh=false){
+    protected function buildSql(){
         $query_string="";
         foreach ($this->query_list as $key=>$value){
             $query_string.="$value,";
@@ -396,10 +406,32 @@ class soft_db
         if($this->executeSql!=null) {
             $sql=$this->executeSql;
         }
-        $stm = $this->con->prepare($sql);//预处理 防止sql注入
-        $this->bind_params($sql);
-        $stm->setFetchMode(\PDO::FETCH_NAMED);
-        $result = $stm->execute($this->bind_params($sql));
+        return $sql;
+    }
+    public function getExecuteSql(){
+        $sql = $this->buildSql();
+        $params = $this->bind_params($sql);
+        foreach ($params as $key=>$value){
+            $sql = str_replace($key,'"'.$value.'"',$sql);
+        }
+        return $sql;
+    }
+    public function get($is_refresh=false){
+        $sql = $this->buildSql();
+        $excuteSql = $this->getExecuteSql();
+        $startAt = microtime(true);
+
+        try {
+            $stm = $this->con->prepare($sql);//预处理 防止sql注入
+            $this->bind_params($sql);
+            $stm->setFetchMode(\PDO::FETCH_NAMED);
+            $result = $stm->execute($this->bind_params($sql));
+            event(new DataBaseExcuteEvent($excuteSql,microtime(true)-$startAt));
+        }
+        catch (\Throwable $exception){
+            event(new DataBaseExcuteEvent($excuteSql,microtime(true)-$startAt,$exception));
+            throw new \PDOException($exception->getMessage());
+        }
         if($this->executeSql!=null) {
             $this->executeSql=null;
         }

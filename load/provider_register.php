@@ -1,5 +1,5 @@
 <?php
-/*update_at 2021-04-30 23:43:11
+/*update_at 2021-07-16 20:16:48
 *create_by awesome-jj
 */
 namespace load;
@@ -43,6 +43,7 @@ class provider_register extends provider
         "SystemController"=>app\controller\cms\SystemController::class,
         "UserController"=>app\controller\cms\UserController::class,
         "code_controller"=>app\controller\code\code_controller::class,
+        "TrieController"=>app\controller\compute\tree\TrieController::class,
         "controller"=>app\controller\controller::class,
         "index_controller"=>app\controller\index\index_controller::class,
         "language_controller"=>app\controller\language\language_controller::class,
@@ -82,6 +83,7 @@ class provider_register extends provider
         "class_define"=>system\class_define::class,
         "code"=>system\code::class,
         "common"=>system\common::class,
+        "Trie"=>system\compute\Trie::class,
         "channel_config"=>system\config\channel_config::class,
         "config"=>system\config\config::class,
         "pay"=>system\config\pay::class,
@@ -176,6 +178,7 @@ class provider_register extends provider
         "SystemController"=>app\controller\cms\SystemController::class,
         "UserController"=>app\controller\cms\UserController::class,
         "code_controller"=>app\controller\code\code_controller::class,
+        "TrieController"=>app\controller\compute\tree\TrieController::class,
         "controller"=>app\controller\controller::class,
         "DataMap"=>app\controller\index\DataMap::class,
         "index_controller"=>app\controller\index\index_controller::class,

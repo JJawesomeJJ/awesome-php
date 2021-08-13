@@ -26,6 +26,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         'app\Event\AppEndEvent'=>[
             'app\EventListener\AppEndtEventListener'
+        ],
+        'app\Event\DataBaseExcuteEvent'=>[
+            'app\EventListener\DataBaseExcuteListener'
         ]
     ];
     public function register()

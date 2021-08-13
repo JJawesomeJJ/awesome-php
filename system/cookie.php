@@ -11,11 +11,11 @@ namespace system;
 
 class cookie
 {
-    public static function set($key,$value,$expired,$http_only=true,$path="/",$is_encrypt=true,$is_secure=false){
+    public static function set($key,$value,$expired,$http_only=true,$path="/",$is_encrypt=true,$is_secure=false,$host=null){
         if($is_encrypt){
             $value=encrypt::aes_encrypt($value);
         }
-        setcookie($key,$value,time()+$expired,$path,$_SERVER['HTTP_HOST'],$is_secure,$http_only);
+        setcookie($key,$value,time()+$expired,$path,$host??$_SERVER['HTTP_HOST'],$is_secure,$http_only);
     }
     public static function get($key,$is_decrypt=true){
         if(isset($_COOKIE[$key])){
