@@ -8,12 +8,13 @@
 
 namespace routes;
 //the route entrance should design as resetful api style url=>resource the http request mothod as ["get","post","put","delete"]
-use db\model\jstz\t_company;
 use db\model\model_auto\model_auto;
 use db\model\user\user;
+use http\Cookie;
 use request\request;
+use request\response;
 use system\cache\cache;
-use function Co\run;
+use system\log;
 
 routes::post("user/login","auth_controller@user_login")->middleware("limit_flow_middleware","ip_limit",50);
 routes::post("user/server","auth_controller@request_connect_websocket");
@@ -222,4 +223,15 @@ routes::get("company",function (t_company $company,request $request){
 routes::get("test/test",function (user $user,cache $cache){
    echo model_auto::model("user")->count().PHP_EOL;
    return runtime();
+});
+routes::get("user/auth",function (request $request,log $log){
+//    \system\cookie::set("test","test",60*60*24,true,'/',true,false,'192.168.23.132');
+    $log->write_log(\system\cookie::get("test"));
+//    header('HTTP/1.1 500 Internal Server Error');
+    return [
+        "msg"=>"验证失败"
+    ];
+});
+routes::get("jjawesome",function (){
+   print_r($_SERVER);
 });

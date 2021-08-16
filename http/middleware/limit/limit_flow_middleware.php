@@ -61,6 +61,7 @@ class limit_flow_middleware extends middleware
                  $leaky_bucket_cache["now_capacity"]=$leaky_bucket_cache["now_capacity"]+1;
                  cache_::lock_set_cache($this->request_->get_url(),$leaky_bucket_cache,"forever");
                  app()->add_call_back($this,"leavy_leaky_bucket");
+                 app()->call_back();
              }
          }
      }//when user try to request app check the max_capacity

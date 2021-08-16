@@ -164,13 +164,13 @@ class admin_user_controller extends controller
         $admin_user->where("name",$this->request()->get("name"))->or_where("email",$this->request()->get("name"))->get();
         $email=$admin_user->email;
         $code=code_controller::code(4,"admin_user");
-//        queue::asyn(function () use ($email,$code){
+        queue::asyn(function () use ($email,$code){
             $mail=new mail();
             $compile=new compile();
             $title="欢迎登录Titang管理系统";
             $content="we learn you wanna login titang controller system it is vertify code if not yourself operate don't mind it!";
             $mail->send_email($email,$compile->view("tool/email",["code"=>$code,"title"=>$title,"content"=>$content]),$title);
-//        });
+        });
         return ["code"=>200,"message"=>"ok"];
     }
     public function user_login(){

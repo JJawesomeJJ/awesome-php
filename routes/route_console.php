@@ -133,8 +133,20 @@ routes::cli("sql-test",function (){
         ->or_where('user','赵李杰')
         ->get();
 });
+routes::cli('cache-',function (cache $cache){
+    return $cache->get_non_exist_set('jjawesome',function (request $request) {
+        return microtime(true);
+    },3);
+});
+
 //routes::cli('jjawesome',function (){
 //    echo "load".PHP_EOL;
 //    sleep(10);
 //})->tick("2021-07-02",5);
+
+routes::cli('time-compute',function (){
+   $day =  common::get_diff_time(strtotime(date('Y-m-d')),strtotime('2022-02-19'));
+   $day = str_replace('天','',$day);
+   return ((intval($day)+1)/365)*10;
+});
 

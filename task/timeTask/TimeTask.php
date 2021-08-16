@@ -36,6 +36,7 @@ class TimeTask
             if (!is_file($templatePath)){
                 file_put_contents($templatePath,file_get_contents($this->consolePath));
             }
+            routes::resetRoute();
             include $templatePath;
         }
         catch (\Throwable $exception){

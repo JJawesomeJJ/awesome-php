@@ -1,5 +1,5 @@
 <?php
-/*update_at 2021-07-16 20:16:48
+/*update_at 2021-08-13 19:55:11
 *create_by awesome-jj
 */
 namespace load;
@@ -205,10 +205,12 @@ class provider_register extends provider
         "wechat_controller"=>app\controller\wechat\wechat_controller::class,
         "AppEndEvent"=>app\Event\AppEndEvent::class,
         "AppStartEvent"=>app\Event\AppStartEvent::class,
+        "DataBaseExcuteEvent"=>app\Event\DataBaseExcuteEvent::class,
         "native_push_event"=>app\Event\native_push_event::class,
         "user_login_event"=>app\Event\user_login_event::class,
         "AppEndtEventListener"=>app\EventListener\AppEndtEventListener::class,
         "AppStartEventListener"=>app\EventListener\AppStartEventListener::class,
+        "DataBaseExcuteListener"=>app\EventListener\DataBaseExcuteListener::class,
         "native_push_listener"=>app\EventListener\native_push_listener::class,
         "user_login_listener"=>app\EventListener\user_login_listener::class,
         "AppServiceProvider"=>app\providers\AppServiceProvider::class,

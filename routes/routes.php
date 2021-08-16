@@ -11,6 +11,7 @@ use load\provider;
 use load\provider_register;
 use request\request;
 use system;
+use system\Exception;
 use task\timeTask\task;
 
 class routes
@@ -44,6 +45,16 @@ class routes
         $this->request =make("request");
         self::$object=$this;
         $this->route_conifg=system\route\RouteConfig::conifg();
+    }
+    protected static function resetRoute(){
+        self::$route=[
+            "GET"=>[],
+            "POST"=>[],
+            "DELETE"=>[],
+            "ANY"=>[],
+            "PUT"=>[],
+            "CLI"=>[]
+        ];
     }
     protected function start()
     {
@@ -106,7 +117,11 @@ class routes
             $this->start();
         }
     }
-
+    public static function __callStatic($func,$arguments){
+       if ($func=='resetRoute'){
+           self::resetRoute();
+       }
+    }
     // when no url match routes then app echo 404 page
     protected function pathinfo(){
         if(!is_cli()){
