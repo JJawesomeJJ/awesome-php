@@ -49,9 +49,12 @@ class provider
         }
     }
     public function middleware($middleware){
+        if (class_exists($middleware)){
+            return make($middleware);
+        }
         return make($this->middleware[$middleware]);
     }
-    public function make($class_name)
+    public function make($class_name,$args=[])
     {
         if(array_key_exists($class_name,$this->container)){
             return $this->container[$class_name];
@@ -71,7 +74,7 @@ class provider
         if(array_key_exists($class_name,$this->class_factory)){
             $info=$this->class_factory[$class_name];
             if($info['closure'] instanceof \Closure) {
-                $object = call_user_func($info['closure']);
+                $object = $this->make_closure($info['closure']);
                 if ($info['is_singleton']) {
                     $this->container[$class_name] = $object;
                 }

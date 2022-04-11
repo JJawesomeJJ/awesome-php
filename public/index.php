@@ -13,9 +13,13 @@ class index
     {
         require_once __DIR__."/../load/auto_load.php";
         require_once __DIR__."/../load/common.php";
+        //加载composer 自动加载
+        if(file_exists(__DIR__."/../vendor/autoload.php")){
+            require_once __DIR__."/../vendor/autoload.php";
+        }
         try {
             $route=new routes();
-            if(!is_cli()) {
+            if(!is_cli() || defined('AWESOME-HTTP')) {
                 require_once __DIR__ . "/../routes/route_entrance.php";
             }else{
                 require_once __DIR__ . "/../routes/route_console.php";

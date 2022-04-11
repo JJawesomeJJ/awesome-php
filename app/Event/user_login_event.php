@@ -2,7 +2,7 @@
 /**
  * Created by awesome-cli.
  * User: Administrator
- * Date: 2019-12-23 21:12:56
+ * Date: 2022-04-11 16:04:06
  */
 namespace app\Event;
 use system\kernel\Channel\Channel;
@@ -10,10 +10,8 @@ use system\kernel\event\Event;
 
 class user_login_event extends Event
 {
-    public $user;
-    public function __construct($user)
+    public function __construct()
     {
-        $this->user=$user;
         parent::__construct();
     }
     /*
@@ -22,6 +20,6 @@ class user_login_event extends Event
     */
      public function ShouldBroadcast()
     {
-        return new Channel('event',$this->user);
+        return new Channel(false);
     }
 }

@@ -48,7 +48,8 @@ abstract class middleware
     public function cache(){
         return make(cache::class);
     }
-    public function request(){
+    public function request():request
+    {
         return make(request::class);
     }
     function sql_filter()

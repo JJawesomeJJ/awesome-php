@@ -273,4 +273,31 @@ EOT;
         return class_define::redis()->eval($script,func_get_args(),2);
 
     }
+
+    public static function lRangePop($key,$length){
+        $item = class_define::redis()->lRange($key,0,$length-1);
+        if (count($item)>0){
+            class_define::redis()->lTrim($key,count($item),-1);
+        }
+        return $item;
+        $script=<<<script
+        local llenghth=redis.call('lLen',KEYS[1]);
+        if llenghth==nil or llenghth==false then
+            return {};
+        else
+            local llenghthNumber=tonumber(llenghth)
+            if llenghthNumber==0 then
+                return {};
+            end
+            local popLength=tonumber(ARGV[1])
+            if popLength>llenghthNumber then
+                popLength=llenghthNumber
+            end
+            local result=redis.call('lRange',KEYS[1],llenghthNumber-popLength,llenghthNumber)
+            redis.call('lTrim',KEYS[1],0,llenghthNumber-popLength-1)
+            return result;
+        end
+script;
+        return class_define::redis()->eval($script,func_get_args(),1);
+    }
 }

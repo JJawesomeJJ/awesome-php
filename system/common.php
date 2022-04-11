@@ -24,6 +24,22 @@ class common
             return false;
         }
     }
+    public static function arrayExportToFile(array $arr, $path): void
+    {
+        $midArr = var_export($arr, true);
+        $templete = <<<tem
+return {$midArr};
+tem;
+        file_put_contents($path, '<?php'.PHP_EOL. $templete);
+    }
+    public static function convertUnderline1 ( $str , $ucfirst = true)
+    {
+        while(($pos = strpos($str , '_'))!==false)
+            $str = substr($str , 0 , $pos).ucfirst(substr($str , $pos+1));
+
+        return $ucfirst ? ucfirst($str) : $str;
+    }
+
     public static function get_array_value(array $keys,array $arr,$without_of_key=false){
         $return_arr=[];
         foreach ($keys as $key){
@@ -266,5 +282,31 @@ class common
         $class_name=get_class($obj);
         $index=strrpos($class_name,"\\");
         return substr($class_name,0,$index);
+    }
+    public static function computeAppVersionSort(string $appSort,int $itemLength = 4,int $totalCount = 4 ):string
+    {
+        $sortList = explode('.',$appSort);//按照.进行切割
+        $sortList = array_slice($sortList,0,$totalCount);
+        for ($i = count($sortList); $i < $totalCount; $i++){//补位
+            $sortList[] = '';
+        }
+        $res = '';
+        foreach ($sortList as $key => $value){
+            preg_match_all('/\d+/u',$value,$matchs);
+            $itemSortInteger = '';
+            if (empty($matchs[0])){
+                $itemSortInteger = '0';
+            }else{
+                foreach ($matchs[0] as $match){
+                    $itemSortInteger.=$match;
+                }
+            }
+            $itemSortInteger = substr($itemSortInteger,0,$itemLength);//最长保留4位
+            for ($i=strlen($itemSortInteger);$i<$itemLength;$i++){
+                $itemSortInteger = '0'.$itemSortInteger;//位数不够填充0
+            }
+            $res .= $itemSortInteger;
+        }
+        return $res;
     }
 }

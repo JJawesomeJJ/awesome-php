@@ -10,6 +10,7 @@ use db\factory\SqlRouter;
 use extend\awesome\awesome_driver_rabbitmq;
 use extend\awesome\awesome_echo_tool;
 use request\request;
+use request\response;
 use system\class_define;
 use system\config\config;
 use system\kernel\event\event_system;
@@ -34,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
         app()->singleton(request::class,function (){
             return request::SingleTon();
         });
+        app()->call_back();
         if(class_exists(\Redis::class)) {
             app()->singleton(\Redis::class, function () {
                 return class_define::redis();
@@ -48,5 +50,9 @@ class AppServiceProvider extends ServiceProvider
         app()->singleton(SqlRouter::class,function (){
             return SqlRouter::SingleTon(config::env_path()."filesystem/",make(\Redis::class));
         });
+        app()->singleton(response::class, function (){
+            return new response();
+        });
+
     }
 }

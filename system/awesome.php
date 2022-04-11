@@ -50,7 +50,7 @@ class awesome
         $argv = $_SERVER['argv'];
         if(count($argv)<=1){
             $this->help();
-            $this->cli_echo_color_green("Route can't be resolve beacuse of too less params input");
+            $this->cli_echo_color_green("Route can't be resolve because of too less params input");
             return;
         }
         $method_name=$argv[1];
@@ -253,6 +253,7 @@ class {{event}} extends Event
         $env_path=config::env_path();
         foreach ($event_list as $key=>$value){
             $file_path=$env_path.'/'.$key.".php";
+            $file_path = str_replace('/','\\',$file_path);
             if(!is_file($file_path)){
                 if(!is_dir(dirname($file_path))){
                     mkdir(dirname($file_path));
