@@ -67,7 +67,7 @@ class code_controller extends controller
             $crop_height = 100;
             $editor = Grafika::createEditor();
             $file = new file();
-            $file_list = $file->file_walk(config::www_path()."image/code_img/");
+            $file_list = $file->file_walk(WWW_PATH."image/code_img/");
             $image_src = $file_list[array_rand($file_list)];
             $editor->open($image, $image_src);
             $width = $image->getWidth();
