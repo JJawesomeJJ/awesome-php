@@ -165,9 +165,9 @@ class config
     }
     public static function redis(){
         return [
-            "host"=>"my-redis",
+            "host"=>"redis",
             "port"=>"6379",
-            "password"=>"4fLUBcePHV@sxzr69pOo",
+            "password"=>"",
             "index"=>"10"
         ];
     }
@@ -213,7 +213,7 @@ class config
             "mysql"=>[
                 "hostname"=>"127.0.0.1",
                 "hostport"=>"3307",
-                "database"=>"e_local",
+                "database"=>"",
                 "username"=>"root",
                 "password"=>"",
             ],
@@ -261,28 +261,9 @@ class config
         return [
             "aes_key"=>"19971998abc",
             //对称加密的的秘钥
-            "rsa_private"=>"-----BEGIN RSA PRIVATE KEY-----
-MIICXgIBAAKBgQDTaYFYxyQUYIQ8mmAHsIkmg4qNtY/8QovKinkc/yLObI/QmnBW
-lMYypr3u+Ex1m/w7JPmAiHe8ZR5W5Fu8IR0DvHhqGeKUTy3T+xLbgxUsYMIj64+n
-n4pjRYUYJVfWjvMqVzSonCJpfdg/6y7tiw4Uiw7Tv3Q+E5CHvsWhmczwqQIDAQAB
-AoGAITGln3zVC2YEHUfX4B01y5hHvuxNCTyhmlGXppfgrSyagBRfoxiE7hsEI2tV
-BfpR5i9uBWJn+mqeEuKUDLveRBjYpO0cvDFOORBvdfixICSyMQt0VFtpWyx3hna2
-h4ac2pebby/DfShVmsOco2ertLG393OH566A3M8GXCG9wiECQQDssL0YunxNcxnC
-4dJ1VeKCTwzWYIQ6iZZ9p1miz1bfFJbO+GX03ihjeOqGzBDyAXCtK8oiMJY1nFWf
-ft1q2rAdAkEA5KjVA+bUb4hp8evppzhtGfNeyp0n4Q34kkKtlimbLJnU84LLzcMD
-KO6oAiGBYq/iRsIeeZrACezyyMUFXNM0/QJBAMV7vXrZdgdFBvSEaI4AB8rD3Cku
-RIV28PqMXAysxIXC7wVnWeJSTg6Y/81SjLzvGK1UQQX/1gSLGSHHv0R9jL0CQQDB
-6K8kbOcwYlW+E9sEtSRIgoubdWSxRSDMIAGHO2ddjmL50qy0pLEUUDdn/zPzFcbl
-TI99fo9mm2tUeUhP7MidAkEA3IkDviZ3NQzGMPxOdQjSi6I70jp0FG5A6bfP2Mqq
-R/ZbR+9Nra8dyL9QN7tHo2S/pWeGJTSsJ8HfyKCEbXXInw==
------END RSA PRIVATE KEY-----",
+            "rsa_private"=>"",
 //            非对称的的私钥
-            "rsa_public"=>"-----BEGIN PUBLIC KEY-----
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC+8n93UPCYVbG612UKEvRPlCV4
-QqarbpraEw9yg3gctUlylPKlZzafARS8OkXCa4/wIGQIfFzggIEAv3+TT+s9xMFX
-2eCeCSUfeBNEUn/3Vs2fggltFsidMQ3f82SB24P7IECuaOYI43gOiLnGRn6eN25H
-neAfBylYh/NYnUEXPwIDAQAB
------END PUBLIC KEY-----"
+            "rsa_public"=>""
             ];
 //        非对称加密的公钥
 //
