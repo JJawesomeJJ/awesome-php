@@ -269,6 +269,7 @@ class {{event}} extends Event
             }
             foreach ($value as $listener){
                 $file_path=$env_path.'/'.$listener.".php";
+                $file_path = str_replace('\\','/',$file_path);
                 $name_list=explode('\\',$listener);
                 if(!is_file($file_path)) {
                     if (!is_dir(dirname($file_path))) {
