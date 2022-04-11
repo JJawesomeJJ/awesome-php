@@ -253,7 +253,7 @@ class {{event}} extends Event
         $env_path=config::env_path();
         foreach ($event_list as $key=>$value){
             $file_path=$env_path.'/'.$key.".php";
-            $file_path = str_replace('/','\\',$file_path);
+            $file_path = str_replace('\\','/',$file_path);
             if(!is_file($file_path)){
                 if(!is_dir(dirname($file_path))){
                     mkdir(dirname($file_path));
