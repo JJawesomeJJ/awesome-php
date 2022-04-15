@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投票通道</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="http://cdn-file.ludashi.com/assets/vue/vue.js"></script>
+    <script src="http://uc-inc.ludashi.com/assets/cascade/js/jquery-1.10.2.min.js"></script>
+    <link href="https://cdn-ssl-wan.ludashi.com/assets/js/skin/layer.css" rel="stylesheet">
+    <script src="https://cdn-ssl-wan.ludashi.com/assets/js/layer.js"></script>
+</head>
+<style>
+    .title{
+        position: relative;
+        margin: 0 auto;
+        text-align: center;
+        margin-top: 5px;
+    }
+    body{
+        background-image: url("/asset/image/bak.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100vw;
+        height: 100vh;
+        padding: 0;
+        margin: 0;
+    }
+    .item-ul{
+        position: relative;
+        display: block;
+        padding: 10px;
+    }
+    .item-ul .item{
+        position: relative;
+        width: 95%;
+        margin: 0 auto;
+        height: 300px;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+    .left{
+        left: -100vw;
+        animation: showleft 1s ease-in-out forwards;
+    }
+    @keyframes showleft {
+        0%{left: -100px}
+        100%{left: 0}
+    }
+    .right{
+        right: -100vw;
+        animation: showright 1s ease-in-out forwards;
+    }
+    @keyframes showright {
+        0%{right: -100px}
+        100%{right: 0}
+    }
+    .item-ul .item .item_bak{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: lightgoldenrodyellow;
+        filter: blur(2px);
+        opacity: 0.6;
+    }
+    .container{
+        height: 100vh;
+        overflow-y: scroll;
+    }
+    .support{
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        width: 100px;
+        height: 30px;
+        background-color: #3A96FF;
+        text-align: center;
+        color: white;
+        border-radius: 5px;
+        line-height: 28px;
+    }
+    video::-webkit-media-controls-fullscreen-button {
+        display: none;
+    }
+      video::-webkit-media-controls-play-button {
+          display: none;
+      }
+
+      video::-webkit-media-controls-timeline {
+          display: none;
+      }
+
+      video::-webkit-media-controls-current-time-display{
+          display: none;
+      }
+
+      video::-webkit-media-controls-time-remaining-display {
+          display: none;
+      }
+      video::-webkit-media-controls-mute-button {
+          display: none;
+      }
+        video::-webkit-media-controls-toggle-closed-captions-button {
+            display: none;
+        }
+      video::-webkit-media-controls-volume-slider {
+          display: none;
+      }
+
+      video::-webkit-media-controls-enclosure{
+          display: none;
+      }
+      .theme{
+          background-image: url("asset/image/font/theme.png");
+          width: 100%;
+          height: 80px;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          margin-top: -10px;
+      }
+      .result{
+          position: fixed;
+          bottom: 0px;
+          width: 100%;
+          height: 100%;
+      }
+      .topUl{
+          width: 100%;
+          position: absolute;
+          bottom: 0px;
+          display: flex;
+          padding-left: 10%;
+          padding-right: 10%;
+      }
+      .item-top{
+          width: 33%;
+          position: relative;
+      }
+      .total{
+          width: 50px;
+          height: 500px;
+          border-radius: 5px;
+          background-color: lightskyblue;
+          opacity: 0.9;
+          top:-30px;
+          position: absolute;
+      }
+      .header{
+          position: relative;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background-color: lightslategray;
+          text-align: center;
+          line-height: 40px;
+          color: white;
+          margin-left: 3px;
+      }
+      .item-num{
+          text-align: center;
+          color: white;
+      }
+      .line{
+          position: absolute;
+          bottom: 50px;
+          width: 100%;
+          height: 3px;
+          background-color: #533030;
+      }
+      #app{
+          display: none;
+      }
+</style>
+<body>
+<div class="container" id="app">
+    <div class="title theme"></div>
+    <div class="item-ul" v-if="showSupport">
+        <div class="item" :class="{left:index%2==0,right:index%2!=0}" v-for="(i,index) in item">
+            <div class="item_bak"></div>
+            <div class="title">@{{i['name']}}</div>
+            <div class="bak">
+                <video style="width: 100%;height: 240px;margin: 0 auto;position: relative;opacity: 0.8" controls>
+                    <source src="movie.mp4" type="video/mp4">
+                    您的浏览器不支持Video标签。
+                </video>
+            </div>
+            <div class="support" @click="support">支持我</div>
+        </div>
+    </div>
+    <div class="result" v-if="!showSupport">
+        <div class="line"></div>
+        <div class="topUl" style="display: flex">
+            <div class="item-top" v-for="(i,index) in top">
+                <div class="total" :data-src="i['number']">
+                    <div class="item-num">@{{i['number']}}</div>
+                </div>
+                <div class="header">
+                    @{{getName(i['name'])}}
+                </div>
+            </div>
+    </div>
+</div>
+</div>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            showSupport:true,
+            item:[
+                {
+                    name:"乘风破浪的妹妹"
+                },
+                {
+                    name: "丽人行"
+                },
+                {
+                    name:"将军舞剑"
+                }
+            ],
+            colors:[
+                "#FC5634",
+                "#005CE5",
+                "#4BC96D"
+            ],
+            top:[
+                {
+                    name:"乘风破浪的妹妹",
+                    number:3
+                },
+                {
+                    name:"丽人行",
+                    number:15
+                },
+                {
+                    name:"将军舞剑",
+                    number:14
+                }
+            ]
+        },
+        watch:{
+            top:{ //监听的对象
+                deep:true, //深度监听设置为 true
+                handler:function(newV,oldV){
+                    this.animation();
+                }
+            }
+        },
+        methods:{
+            support() {
+                let key  = "support"
+                if (localStorage.getItem(key)){
+                    layer.msg("您只有一票哦,让你的朋友帮帮我吧!!");
+                }else {
+                    localStorage.setItem(key,"time")
+                    layer.msg("感谢你的支持!!!");
+                }
+                return;
+                this.showSupport = false;
+            },
+            getName(name){
+                return name.substr(0,1)
+            },
+            animation(){
+                let eles = $('.total');
+                let total = 1;
+                let maxHeight = 300;
+                let minHeight = 300;
+                let percent = []
+                for (let i of this.top){
+                    total+=i.number
+                }
+                for (let i of this.top){
+                    percent.push(i.number/total)
+                }
+                let maxNumber = 100;
+                if (total>maxNumber){
+                    maxHeight = (maxHeight*(maxNumber/20))
+                }else {
+                    maxHeight = (maxHeight*(total/20))
+                }
+                if (maxHeight<minHeight){
+                    maxHeight = minHeight;
+                }
+                let index = 0;
+                eles.each(function (){
+                    $(this).animate(
+                        {
+                            "height":(percent[index]*maxHeight)+"px",
+                            "margin-top":-(percent[index]*maxHeight)+"px"
+                        })
+                    index+=1;
+                })
+            },
+            test(){
+                for (let i of this.top){
+                    i.number+=Math.floor((Math.random()*10));
+                }
+            }
+        },
+        created(){
+            document.querySelector('#app').style.display = 'block';
+            window.test = this.test;
+        },
+        mounted(){
+            this.animation();
+        },
+        updated(){
+            this.animation();
+        }
+    })
+</script>
+</body>
+</html>
