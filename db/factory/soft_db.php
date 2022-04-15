@@ -12,6 +12,11 @@ use system\config\config;
 use system\Exception;
 use system\LuaScript;
 
+/**
+ * Class soft_db
+ * @package db\factory
+ * @property soft_db $con
+ */
 class soft_db
 {
     protected static $con_list=[];
