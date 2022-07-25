@@ -29,6 +29,9 @@ class event_system
                 }else{
                     new Exception(404,'Event Path Not Find');
                 }
+            }else{
+                $event_object=make($event_name);
+                $this->handle_event($event_object,$this->event_list[get_class($event_object)]);
             }
         }
     }
