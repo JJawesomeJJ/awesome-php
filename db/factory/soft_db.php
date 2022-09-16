@@ -56,8 +56,9 @@ class soft_db
     {
         $this->initConfig();
     }
-    public static function con(){
-
+    public static function getIntance(): self
+    {
+        return (new soft_db());
     }
     public function setConnect($host,$port,$database,$user,$password){
         $dsn = "mysql".":host=$host;port=$port;dbname={$database};charset=utf8";
