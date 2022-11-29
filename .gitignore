@@ -12,3 +12,4 @@ yarn-error.log*
 /filesystem
 /vendor/
 .idea
+.ssh
