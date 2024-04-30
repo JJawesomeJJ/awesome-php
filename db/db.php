@@ -12,7 +12,7 @@ class db
     public function __construct()
     {
         $user="root";
-        $password=".zlj19971998";
+        $password="";
         $this->con=mysqli_connect("localhost",$user,$password,"register");
         mysqli_set_charset($this->con,"utf8");
         if(mysqli_connect_errno())
